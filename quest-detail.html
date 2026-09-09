@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>퀘스트 상세 · 로나월드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* =========================================================
+   로나월드 — 디자인 토큰 (메이플 나무액자 퀘스트창 스타일)
+   ========================================================= */
+:root{
+  --bg: #FDECC0;
+  --paper: #FFF7E2;
+  --paper-soft: #FFF1CE;
+  --wood: #7A4A20;
+  --wood-dark: #4E2D10;
+  --wood-light: #C98A46;
+  --ink: #46280D;
+  --ink-soft: #8A6640;
+  --line: #E3C08A;
+
+  --leaf: #4C9A2A;
+  --leaf-soft: #E1F2D2;
+  --leaf-ink: #2C6614;
+
+  --berry: #E2405F;
+  --berry-soft: #FCE1E7;
+  --berry-ink: #A01D3C;
+
+  --sun: #F5A928;
+  --sun-soft: #FFEEC4;
+  --sun-ink: #8A5A06;
+
+  --sky: #3E9BD6;
+  --sky-soft: #DFF1FB;
+  --sky-ink: #1E5C86;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
+  --pop: 4px 4px 0 var(--wood-dark);
+  --pop-sm: 3px 3px 0 var(--wood-dark);
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 6%, rgba(255,255,255,.55), transparent 34%),
+    radial-gradient(circle at 92% 10%, rgba(255,255,255,.4), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(76,154,42,.10), transparent 45%);
+  color: var(--ink);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  line-height:1.55;
+}
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+button{ font:inherit; }
+
+.font-display{
+  font-family: "Jua", "Pretendard", sans-serif;
+  letter-spacing: -.01em;
+}
+
+.wrap{ max-width:1180px; margin:0 auto; padding:20px 18px 64px; }
+
+/* ---------- 헤더 ---------- */
+.site-header{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:16px; margin-bottom:18px; flex-wrap:wrap;
+}
+.site-title{
+  display:flex; align-items:center; gap:10px;
+}
+.site-title .mark{
+  width:44px; height:44px; flex:none;
+  filter: drop-shadow(2px 2px 0 rgba(78,45,16,.35));
+}
+.site-title h1{
+  font-size:28px; margin:0; font-weight:400;
+  color:var(--ink);
+  text-shadow: 2px 2px 0 var(--paper), 3px 3px 0 var(--wood-dark);
+}
+.site-title p{
+  margin:3px 0 0; font-size:13px; color:var(--ink-soft); font-weight:600;
+}
+.reset-btn{
+  border:2px solid var(--wood-dark); background:var(--paper);
+  color:var(--ink); padding:9px 14px; border-radius:999px;
+  cursor:pointer; font-size:13px; font-weight:700;
+  box-shadow: var(--pop-sm);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.reset-btn:hover{ background: var(--sun-soft); }
+.reset-btn:active{ transform: translate(3px,3px); box-shadow:none; }
+
+/* ---------- 탭 ---------- */
+.tabs{
+  display:flex; gap:8px; overflow-x:auto; padding:4px 4px 10px; margin-bottom:14px;
+}
+.tab{
+  flex:none;
+  display:flex; align-items:center; gap:6px;
+  border:2px solid var(--wood-dark); background:var(--paper);
+  color: var(--ink);
+  padding:9px 16px; border-radius:999px; cursor:pointer;
+  font-size:14px; font-weight:700; white-space:nowrap;
+  box-shadow: var(--pop-sm);
+  transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
+}
+.tab:active{ transform: translate(3px,3px); box-shadow:none; }
+.tab .n{
+  font-size:11px; font-weight:800; padding:1px 7px; border-radius:999px;
+  background: var(--bg); color: var(--ink); border:1.5px solid var(--wood-dark);
+}
+.tab.on{
+  background: var(--sun); border-color: var(--wood-dark); color:var(--ink);
+  transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--wood-dark);
+}
+.tab.on .n{ background: var(--paper); }
+
+/* ---------- 필터 보드 ---------- */
+.board{
+  background: var(--paper);
+  border:3px solid var(--wood-dark);
+  border-radius: var(--radius-lg);
+  padding:16px;
+  margin-bottom:20px;
+  box-shadow: var(--pop);
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px,1fr));
+  gap:14px;
+  position:relative;
+}
+.field label{
+  display:block; font-size:12px; color:var(--ink-soft); margin-bottom:6px; font-weight:700;
+}
+.field input[type="text"],
+.field input[type="number"],
+.field select{
+  width:100%; border:2px solid var(--line); background:#fff;
+  border-radius: var(--radius-sm); padding:9px 11px; font-size:14px; color:var(--ink);
+  font-weight:600;
+}
+.field input:focus, .field select:focus{
+  outline:none; border-color: var(--sun);
+}
+.level-range-row{ display:flex; align-items:center; gap:6px; }
+.lv-input{ min-width:0; flex:1 1 0; text-align:center; }
+.lv-sep{ color:var(--ink-soft); flex:none; font-size:13px; font-weight:700; }
+.chips{ display:flex; flex-wrap:wrap; gap:7px; grid-column: 1 / -1; }
+.chip{
+  border:2px solid var(--wood-dark); background:#fff; color:var(--ink);
+  padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:700; cursor:pointer;
+  display:flex; align-items:center; gap:5px;
+  box-shadow: 2px 2px 0 var(--wood-dark);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.chip:active{ transform: translate(2px,2px); box-shadow:none; }
+.chip.on{
+  background: var(--leaf); border-color:var(--wood-dark); color:#fff;
+  transform: translate(2px,2px); box-shadow:none;
+}
+.hint{ grid-column: 1/-1; font-size:12px; color:var(--ink-soft); font-weight:600; }
+
+/* ---------- 목록 그리드 ---------- */
+.grid{
+  display:grid; gap:16px;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+}
+@media (min-width:640px){ .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (min-width:980px){ .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); } }
+.hidden{ display:none !important; }
+
+/* ---------- 퀘스트 카드 (나무액자 퀘스트창) ---------- */
+.qcard{
+  position:relative;
+  background: var(--paper);
+  border:3px solid var(--wood-dark);
+  border-radius: var(--radius-lg);
+  padding:16px 15px 13px;
+  box-shadow: var(--pop);
+  display:block;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.qcard::before, .qcard::after{
+  content:''; position:absolute; width:7px; height:7px; border-radius:50%;
+  background: var(--wood-light); border:1.5px solid var(--wood-dark); top:8px;
+}
+.qcard::before{ left:8px; }
+.qcard::after{ right:8px; }
+.qcard:hover{ transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--wood-dark); }
+.qcard .ribbon{
+  position:absolute; top:-12px; left:16px; right:16px;
+  display:flex; flex-wrap:wrap; gap:6px;
+}
+.ribbon-pill{
+  font-size:11px; font-weight:800; padding:4px 10px 3px;
+  border:2px solid var(--wood-dark);
+  border-radius:999px; display:flex; align-items:center; gap:4px;
+  box-shadow: 2px 2px 0 var(--wood-dark);
+}
+.qcard .top{ display:flex; gap:10px; margin-top:10px; }
+.qcard .thumb{
+  width:54px; height:54px; object-fit:contain; background:#fff;
+  border:2px solid var(--wood-dark); border-radius:11px; padding:5px; flex:none;
+}
+.qcard .meta-title{ min-width:0; }
+.qcard .code{ font-size:11.5px; color:var(--ink-soft); font-weight:800; }
+.qcard .title{ font-size:15.5px; font-weight:800; margin-top:1px; line-height:1.3;
+  overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+.qcard .meta{ font-size:12px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
+.qcard .exp-row{ margin-top:10px; }
+.qcard .bar{ height:8px; border-radius:999px; background:#fff; overflow:hidden; border:1.5px solid var(--wood-dark); }
+.qcard .bar > div{ height:100%; background: linear-gradient(90deg, var(--leaf), var(--sun)); }
+.qcard .exp-text{ font-size:10.5px; color:var(--ink-soft); margin-top:4px; text-align:right; font-weight:700; }
+.qcard .card-body{ display:block; color:inherit; text-decoration:none; }
+
+.qcard .job-row{ font-size:11px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
+.qcard .reward-names{ font-size:11px; color:var(--ink-soft); margin-top:6px; line-height:1.4; font-weight:600; }
+.qcard .fame-chip{
+  display:inline-flex; align-items:center; gap:3px; margin-top:6px;
+  font-size:11px; font-weight:800; color:var(--sun-ink); background:var(--sun-soft);
+  border:1.5px solid var(--wood-dark);
+  padding:2px 8px; border-radius:999px;
+}
+
+.qcard .complete-zone{ margin-top:11px; padding-top:11px; border-top:2px dashed var(--line); }
+.complete-btn{
+  width:100%; border:2px solid var(--wood-dark); background:var(--leaf-soft); color:var(--leaf-ink);
+  font-weight:800; font-size:12.5px; padding:9px 10px; border-radius:var(--radius-sm);
+  cursor:pointer; box-shadow: 2px 2px 0 var(--wood-dark);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.complete-btn:hover{ background: var(--leaf); color:#fff; }
+.complete-btn:active{ transform: translate(2px,2px); box-shadow:none; }
+.done-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.done-badge{
+  font-size:12px; font-weight:800; color:#fff; background:var(--leaf);
+  border:2px solid var(--wood-dark);
+  padding:6px 10px; border-radius:999px; flex:1; text-align:center;
+}
+.undo-btn{
+  border:none; background:none; color:var(--ink-soft); font-size:11px; font-weight:700; cursor:pointer;
+  text-decoration:underline; flex:none;
+}
+.choice-box{ display:flex; flex-direction:column; gap:6px; }
+.choice-box .choice-label{ font-size:11.5px; color:var(--ink-soft); font-weight:700; }
+.choice-item{
+  display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; padding:6px 8px;
+  border:2px solid var(--line); border-radius: var(--radius-sm); cursor:pointer; background:#fff;
+}
+.choice-item input{ accent-color: var(--leaf); }
+.choice-confirm-btn{
+  border:2px solid var(--wood-dark); background: var(--leaf); color:#fff; font-weight:800; font-size:12.5px;
+  padding:8px 10px; border-radius: var(--radius-sm); cursor:pointer; margin-top:2px;
+  box-shadow: 2px 2px 0 var(--wood-dark);
+}
+.choice-confirm-btn:active{ transform: translate(2px,2px); box-shadow:none; }
+
+/* type color variants */
+.t-talk.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
+.t-hunt.ribbon-pill{ background:var(--berry-soft); color:var(--berry-ink); }
+.t-collect.ribbon-pill{ background:var(--sun-soft); color:var(--sun-ink); }
+.t-deliver.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
+.t-use.ribbon-pill{ background:var(--sun-soft); color:var(--sun-ink); }
+.t-move.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
+.t-investigate.ribbon-pill{ background:var(--leaf-soft); color:var(--leaf-ink); }
+.t-etc.ribbon-pill{ background:#EEE4D2; color:var(--ink-soft); }
+
+/* ---------- 빈 상태 ---------- */
+.empty{
+  grid-column: 1/-1;
+  text-align:center; padding:56px 20px; color:var(--ink-soft);
+  background: var(--paper-soft); border:3px dashed var(--wood-light);
+  border-radius: var(--radius-lg);
+}
+.empty .big{ font-family:"Jua",sans-serif; font-size:19px; color:var(--ink); margin-bottom:6px; }
+
+/* ---------- 상세 페이지 공통 ---------- */
+.back-link{
+  display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:800;
+  color: var(--ink); margin-bottom:16px;
+}
+.back-link:hover{ color: var(--berry-ink); }
+
+.detail-header{
+  background: var(--paper);
+  border:3px solid var(--wood-dark);
+  border-radius: var(--radius-lg);
+  padding:20px 22px;
+  margin-bottom:18px;
+  box-shadow: var(--pop);
+  position:relative;
+}
+.detail-header::before, .detail-header::after{
+  content:''; position:absolute; width:8px; height:8px; border-radius:50%;
+  background: var(--wood-light); border:1.5px solid var(--wood-dark); top:10px;
+}
+.detail-header::before{ left:10px; }
+.detail-header::after{ right:10px; }
+.detail-header .type-tag{
+  display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:800;
+  border:2px solid var(--wood-dark);
+  padding:4px 11px; border-radius:999px; margin-bottom:10px;
+}
+.detail-header h1{
+  font-family:"Jua",sans-serif; font-weight:400; font-size:25px; margin:0 0 6px;
+  text-shadow: 2px 2px 0 rgba(78,45,16,.15);
+}
+.detail-header .sub{ font-size:13px; color:var(--ink-soft); font-weight:700; }
+
+.card{
+  background: var(--paper); border:2.5px solid var(--wood-dark); border-radius: var(--radius-md);
+  padding:16px;
+}
+.section{ margin-bottom:22px; }
+.section > h2{
+  font-size:13px; font-weight:800; color:var(--ink-soft); margin:0 0 10px;
+  text-transform:none;
+}
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:640px){ .two-col{ grid-template-columns:1fr; } }
+
+.ibox{
+  display:flex; align-items:center; gap:10px; padding:9px 10px;
+  border:2px solid var(--line); border-radius: var(--radius-sm); background:#fff;
+  transition: background .15s;
+}
+.ibox:hover{ background: var(--paper-soft); border-color: var(--wood-light); }
+.ibox .thumb{ width:44px; height:44px; object-fit:contain; background:#fff; border:2px solid var(--line); border-radius:10px; padding:4px; flex:none; }
+.ibox .lbl{ font-size:11px; color:var(--ink-soft); font-weight:700; }
+.ibox .val{ font-size:13.5px; font-weight:800; }
+.ibox-grid{ display:grid; gap:9px; grid-template-columns: 1fr 1fr; }
+@media (max-width:520px){ .ibox-grid{ grid-template-columns:1fr; } }
+
+.req-check{
+  width:20px; height:20px; border-radius:6px; border:2px solid var(--wood-dark);
+  flex:none; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  color:transparent; font-size:13px; font-weight:900;
+}
+.req-check.done{ background: var(--leaf); border-color:var(--wood-dark); color:#fff; }
+
+.bubble-list{ display:flex; flex-direction:column; gap:10px; }
+.brow{ display:flex; align-items:flex-start; gap:8px; }
+.brow.right{ justify-content:flex-end; }
+.avatar{ width:38px; height:38px; border-radius:50%; border:2px solid var(--wood-dark); object-fit:cover; background:#fff; flex:none; }
+.bubble{
+  position:relative; max-width:78%; padding:10px 13px; border-radius:15px; line-height:1.5; font-size:13.5px;
+  border:2px solid var(--wood-dark);
+}
+.bubble .name{ font-weight:800; font-size:12px; margin-bottom:2px; }
+.bubble.left{ background:#fff; color:var(--ink); border-bottom-left-radius:4px; }
+.bubble.right{ background: var(--berry); color:#fff; border-bottom-right-radius:4px; border-color: var(--wood-dark); }
+.bubble.right .name{ color: rgba(255,255,255,.9); }
+
+.chain-link{ display:flex; align-items:center; gap:10px; }
+.chain-link .arrow{ color: var(--ink-soft); font-size:18px; flex:none; }
+
+.desc-box{ font-size:14px; line-height:1.7; color: var(--ink); font-weight:500; }
+.desc-box p{ margin:0; }
+
+.count-badge{
+  display:inline-flex; align-items:center; font-size:13px; font-weight:800; color:#fff;
+  background:var(--berry); border:2px solid var(--wood-dark);
+  padding:2px 10px; border-radius:999px; margin-left:6px; vertical-align:2px;
+}
+
+/* ---------- 서브 패널 (퀘스트/아이템/몬스터 상세를 페이지 이동 없이 보여줌) ---------- */
+.panel-overlay{
+  position:fixed; inset:0; background:rgba(70,40,13,.45);
+  display:flex; justify-content:flex-end; z-index:100;
+}
+.panel-overlay.hidden{ display:none; }
+.panel-box{
+  position:relative; width:min(640px, 100%); height:100%;
+  background: var(--bg); box-shadow: -6px 0 24px rgba(0,0,0,.25);
+  overflow-y:auto; padding:20px 20px 40px;
+  animation: panelSlideIn .18s ease-out;
+}
+@keyframes panelSlideIn{ from{ transform:translateX(24px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+@media (max-width:640px){ .panel-box{ width:100%; } }
+.panel-close{
+  position:sticky; top:0; float:right; margin-left:12px;
+  width:36px; height:36px; border-radius:50%; border:2px solid var(--wood-dark);
+  background:var(--paper); color:var(--ink); font-size:16px; font-weight:800; cursor:pointer;
+  box-shadow: var(--pop-sm); z-index:2;
+}
+.panel-back{
+  position:sticky; top:0; float:left;
+  border-radius:999px; border:2px solid var(--wood-dark);
+  background:var(--paper); color:var(--ink); font-size:13px; font-weight:800; cursor:pointer;
+  padding:8px 14px; box-shadow: var(--pop-sm); z-index:2;
+}
+.panel-back.hidden{ display:none; }
+.panel-content{ clear:both; }
+.panel-content .back-link{ display:none; }
+.panel-content nav.tabs{ display:none; }
+.panel-content .ibox-grid{ grid-template-columns: 1fr; }
+.chain-chip{
+  flex:none; padding:6px 12px; border-radius:14px; border:2px solid var(--wood-dark);
+  white-space:nowrap; background:#fff; color:var(--ink-soft);
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  max-width:120px;
+}
+.chain-chip .chain-code{ font-size:12px; font-weight:800; }
+.chain-chip .chain-title{
+  font-size:10px; font-weight:600; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.chain-chip.current{ background:var(--sun); color:var(--ink); }
+.notready{
+  padding:40px 20px; text-align:center; color:var(--ink-soft);
+  background: var(--paper-soft); border:3px dashed var(--wood-light); border-radius: var(--radius-lg);
+}
+
+</style>
+</head>
+<body>
+<div class="wrap" style="max-width:820px;">
+  <a class="back-link" href="index.html?tab=quests">← 퀘스트 목록으로</a>
+  <nav class="tabs" style="margin-bottom:16px;">
+    <a class="tab on" href="index.html?tab=quests">📜 퀘스트</a>
+    <a class="tab" href="index.html?tab=monsters">🐾 몬스터</a>
+    <a class="tab" href="index.html?tab=items">🎒 아이템</a>
+    <a class="tab" href="index.html?tab=npc">💬 NPC</a>
+    <a class="tab" href="index.html?tab=maps">🗺️ 맵</a>
+  </nav>
+
+  <div id="detail"></div>
+</div>
+
+<script>
+window.QUESTS = [
+  {
+    "id": 1031,
+    "code": "히나 1-1",
+    "title": "히나와 세라",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=12ARM7TcWjf7yUgnZJfRezS8McvrqKR4h&sz=w400",
+    "rewards": [
+      {
+        "exp": 35,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1021,
+    "code": "로저 1-1",
+    "title": "로저와 사과",
+    "region": "메이플로드",
+    "type": "아이템 사용",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1HMmAggKjdJqanxfjsQTEtSYShTmnzu4w&sz=w400",
+    "rewards": [
+      {
+        "name": "빨간포션",
+        "qty": 3,
+        "img": "https://drive.google.com/thumbnail?id=1sYPOa2w-UU_fKO7SQ-7R-fhRUYNE0alC&sz=w200"
+      },
+      {
+        "name": "파란포션",
+        "qty": 3,
+        "img": "https://drive.google.com/thumbnail?id=1Sql3X7512_6rqbxNXLu8aYcph8qZ0k_G&sz=w200"
+      },
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1032,
+    "code": "다나 1-1",
+    "title": "다나의 동생 센",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+    "rewards": [
+      {
+        "exp": 49,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1033,
+    "code": "다나 1-2",
+    "title": "센이 먹고 싶은 것",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
+    "rewards": [
+      {
+        "exp": 49,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1034,
+    "code": "다나 1-3",
+    "title": "맛있는 버섯사탕",
+    "region": "메이플로드",
+    "type": "아이템 전달",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+    "rewards": [
+      {
+        "name": "버섯 사탕",
+        "qty": 2,
+        "img": "https://drive.google.com/thumbnail?id=1wDugpIjzCeRbqCkQOut5x2NHeKvKeXi0&sz=w200"
+      },
+      {
+        "exp": 140,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1035,
+    "code": "토드 1-1",
+    "title": "토드의 사냥법",
+    "region": "메이플로드",
+    "type": "아이템 수집, 몬스터 사냥",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+    "rewardChoice": true,
+    "rewards": [
+      {
+        "name": "초록색 가죽 모자",
+        "itemId": "1002053",
+        "img": "https://drive.google.com/thumbnail?id=1NQScHwGrZyV40FJHJp7fPcgL3hsZxwRJ&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "갈색 가죽 모자",
+        "itemId": "1002008",
+        "img": "https://drive.google.com/thumbnail?id=1cZJ62f76_Irj5T6_dH1yekCgYMswtQMg&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "빨간색 머리띠",
+        "itemId": "1002014",
+        "img": "https://drive.google.com/thumbnail?id=1QQPdHCzX6uPnoLaGosNBkJqFW62zb2Lo&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "노란색 머리띠",
+        "itemId": "1002068",
+        "img": "https://drive.google.com/thumbnail?id=1MPm-Y4HpxqbA6bnUHZWQYaThxiintl2_&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "파란색 머리띠",
+        "itemId": "1002069",
+        "img": "https://drive.google.com/thumbnail?id=1NJi-XBZYiuI18lKlXzFDkYEn_jcGt9Yt&sz=w200",
+        "chance": 20
+      },
+      {
+        "exp": 210,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1036,
+    "code": "로빈 1-1",
+    "title": "만물박사 로빈",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
+    "rewards": [
+      {
+        "exp": 280,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1037,
+    "code": "쌤 1-1",
+    "title": "달팽이 사냥 돕기",
+    "region": "메이플로드",
+    "type": "몬스터 사냥",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+    "rewards": [
+      {
+        "exp": 420,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1009,
+    "code": "레인 1-1",
+    "title": "레인의 메이플 퀴즈 1",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 14,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1010,
+    "code": "레인 1-2",
+    "title": "레인의 메이플 퀴즈 2",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 28,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1011,
+    "code": "레인 1-3",
+    "title": "레인의 메이플 퀴즈 3",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 42,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1012,
+    "code": "레인 1-4",
+    "title": "레인의 메이플 퀴즈 4",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1013,
+    "code": "레인 1-5",
+    "title": "레인의 메이플 퀴즈 5",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1014,
+    "code": "레인 1-6",
+    "title": "레인의 메이플 퀴즈 6",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1015,
+    "code": "레인 1-7",
+    "title": "레인의 메이플 퀴즈 7",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 140,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1008,
+    "code": "피오 1-1",
+    "title": "피오의 재활용품 수거",
+    "region": "암허스트",
+    "type": "아이템 수집",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+    "rewards": [
+      {
+        "exp": 700,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      },
+      {
+        "name": "메소",
+        "qty": 200,
+        "img": "https://drive.google.com/thumbnail?id=1DaKmV5jEHVr7yW2AzdZfYPzi89jgEBpI&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1020,
+    "code": "피오 1-2",
+    "title": "피오의 재활용품 활용",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+    "rewards": [
+      {
+        "name": "릴렉스 체어",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1I7dJVQle_9HYgo3rf45gfJTYuJQxYxBN&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1038,
+    "code": "쌤 1-2",
+    "title": "마리아의 편지",
+    "region": "암허스트",
+    "type": "아이템 전달",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1nvI50wbkATpkC9HOZsFL1yVCDwoRzTw-&sz=w400",
+    "rewards": [
+      {
+        "name": "빨간포션",
+        "qty": 5,
+        "img": "https://drive.google.com/thumbnail?id=1sYPOa2w-UU_fKO7SQ-7R-fhRUYNE0alC&sz=w200"
+      },
+      {
+        "name": "파란포션",
+        "qty": 5,
+        "img": "https://drive.google.com/thumbnail?id=1Sql3X7512_6rqbxNXLu8aYcph8qZ0k_G&sz=w200"
+      },
+      {
+        "exp": 280,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1039,
+    "code": "유나 1-1",
+    "title": "유나 도와주기",
+    "region": "암허스트",
+    "type": "몬스터 처치",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1Sjbaerx_GCNUUbbOa0IDOS2LBRTanyJG&sz=w400",
+    "rewards": [
+      {
+        "exp": 700,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  }
+];
+
+window.QUEST_DETAILS = {
+  "1008": {
+    "id": 1008,
+    "code": "피오 1-1",
+    "title": "피오의 재활용품 수거",
+    "type": "아이템 수집",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "피오",
+        "img": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+        "id": "10000"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "피오",
+        "img": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+        "id": "10000"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "피오",
+        "text": "아~ 쓸만한 것들이 버려지고 있단 말이야. 내가 마을을 이리저리 돌아다니다 보니까 재활용을 할 수 있는 물건들이 많겠더라구~? 그런 것들을 모아다주지 않을래? 대신 보수는 서운하지 않을 정도로 줄 테니까 말야."
+      },
+      {
+        "who": "피오",
+        "text": "그렇지! 메이플 아일랜드의 구석구석에 방치 되어 있는 쓸모가 없어진 물건들을 내게 가져다 줘. 그럼 내가 당신에게 적당한 보수를 지급해 주지. 핫핫핫!!"
+      },
+      {
+        "who": "피오",
+        "text": "여기까지 오는 동안 곳곳에 버려져 있는 나무 상자를 보았는지 모르겠는데... 봤어? 그런 상자를 부숴서 안에 있는 재활용품을 수거해 오는 일이야. 낡은 상자를 부수면 낡은 나무 판자, 오래된 나사를 수거할 수 있어. 각각 1개씩 모아다 주면 돼."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "피오",
+        "text": "이렇게 재활용해서 쓸 수 있는 물건들이 많은데~ 늘 버려지고 있단 말씀이야? 대책을 좀 세워 봐야겠군! 고마워. 당신 덕분에 쉽게 모을 수 있었어~ 앞으로도 당신처럼 날 도와줄 사람이 많이 오겠지? 다음에 또 만나!"
+      }
+    ],
+    "descHtml": "모험가의 수련장 입구 마을에서 고장난 모든 것을 고치는데 능통하기로 소문난 피오씨를 만났다. 피오씨는 마을 곳곳에 쓸모가 없어진 상자들을 부서뜨려 오래된 나사와 낡은 나무 판자를 모아오라고 한다. 그러고 보니 여기저기 쓸모없는 나무 상자가 있는 것 같은데...",
+    "reqs": [
+      {
+        "kind": "item",
+        "name": "오래된 나사",
+        "qty": 1,
+        "id": "4031161",
+        "img": "https://drive.google.com/thumbnail?id=1-G6tjdlGS5K0W3gUbuzg4yenRfV6MlAP&sz=w200"
+      },
+      {
+        "kind": "item",
+        "name": "낡은 나무 판자",
+        "qty": 1,
+        "id": "4031162",
+        "img": "https://drive.google.com/thumbnail?id=1XDg-0xK9wEcrQaMNR3Wqh1tlCao5G-sZ&sz=w200"
+      }
+    ],
+    "tips": [
+      {
+        "kind": "object",
+        "subtitle": "TIP",
+        "name": "나무 상자를 일반 공격으로 공격",
+        "id": "",
+        "img": ""
+      }
+    ],
+    "rewards": [
+      {
+        "exp": 700,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      },
+      {
+        "name": "메소",
+        "qty": 200,
+        "img": "https://drive.google.com/thumbnail?id=1DaKmV5jEHVr7yW2AzdZfYPzi89jgEBpI&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": [
+      {
+        "id": "1020",
+        "title": "피오의 재활용품 활용"
+      }
+    ]
+  },
+  "1009": {
+    "id": 1009,
+    "code": "레인 1-1",
+    "title": "레인의 메이플 퀴즈 1",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "안녕하세요? 당신은 아직 이 곳의 생활이 완전히 적응되지 않았군요? 이 레인은 여기에서 메이플 월드에 대해 간단히 설명을 하고, 메이플 퀴즈를 내는 일을 하고 있어요. 모두 풀고 나면 자그마한 선물도 드리는데, 어떠세요? 메이플 퀴즈에 한 번 도전해 볼래요?"
+      },
+      {
+        "who": "레인",
+        "text": "후훗, 문제가 쉬울 거라고 생각하진 말아요. 이 곳에 대해 아직 모르는 것이 가득할 테니~ 한 번 정도는 자세히 설명을 할게요. 재빠르게 설명할 테니~ 새겨 들으세요. 제가 내는 퀴즈에 모두 나올 수 있는 것들이랍니다."
+      },
+      {
+        "who": "레인",
+        "text": "사냥은 해 보셨나요? 몬스터를 공격할 때 어떤 키를 눌렀었죠? Ctrl 키로 공격을 하고 Alt 키로 점프하셨었죠? 그리고 아이템을 주울 땐 Z키로 하셨을 테구요.\n우측 하단의 키세팅(Key Setting) 기능을 이용하여 자신에게 알맞은 형태로 변경도 가능해요~ 으음~ 설명이 너무 복잡해진 듯도 하네요. 이런 것들은 차차 이 곳에서 생활을 하면서 익혀나가도록 해요."
+      },
+      {
+        "who": "레인",
+        "text": "가장 중요한 전직에 관련된 이야기를 살짝 해드릴게요.\n이곳에서 지내며 더욱 강인한 모험가가 되길 원한다면 직업이라는 것이 있어야 한답니다. 직업을 갖기 위해서는 이 메이플 아일랜드가 아닌 빅토리아 아일랜드로 떠나야 해요.\n전사, 궁수, 도적, 해적은 10 레벨이 되면 선택할 수 있고 마법사는 8 레벨이 되면 선택할 수 있죠. 직업마다 장단점이 있으니 앞으로의 진로를 잘 결정해야 한답니다."
+      },
+      {
+        "who": "레인",
+        "text": "퀴즈로 낼 것들을 모두 설명해 드린 것은 아니니까~ 너무 안심하진 마세요! 자! 그럼 퀴즈를 풀어볼까요!"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "아이템 인벤토리 창을 여는 단축키는 무엇인가요?"
+      },
+      {
+        "who": "레인",
+        "text": "그렇죠!! 아이템 인벤토리를 여는 단축키는 I죠."
+      }
+    ],
+    "descHtml": "레인이 내는 메이플 퀴즈를 풀어보자.",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 14,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": [
+      {
+        "id": 1010,
+        "title": "레인의 메이플 퀴즈 2"
+      }
+    ]
+  },
+  "1010": {
+    "id": 1010,
+    "code": "레인 1-2",
+    "title": "레인의 메이플 퀴즈 2",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "자~ 그럼 다음 퀴즈를 풀 준비가 되면 저에게 말을 걸어 주세요."
+      },
+      {
+        "who": "레인",
+        "text": "캐릭터 아이템에 마우스를 대고 더블클릭을 하는 것만으로도 착용이 가능할까요?"
+      },
+      {
+        "who": "나",
+        "text": "그렇다"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "네, 더블클릭을 하는 것만으로도 착용이 가능합니다. 만약 아이템을 착용할 수 없다면 자신의 능력치나 레벨이 아이템 착용 조건에 맞는지 확인을 해보셔야 해요~"
+      }
+    ],
+    "descHtml": "두번째 메이플 퀴즈는 어떤 문제일까?",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 28,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1009",
+        "title": "레인의 메이플 퀴즈 1"
+      }
+    ],
+    "nexts": [
+      {
+        "id": "1011",
+        "title": "레인의 메이플 퀴즈 3"
+      }
+    ]
+  },
+  "1011": {
+    "id": 1011,
+    "code": "레인 1-3",
+    "title": "레인의 메이플 퀴즈 3",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "제가 내는 메이플 퀴즈는 그리 어려운 것이 아닙니다~ 틀리더라도 안심하고 제 설명을 잘 들으면 통과할 수 있어요. 세번째 퀴즈를 풀 준비가 되면 다시 저에게 말을 걸어 주세요."
+      },
+      {
+        "who": "레인",
+        "text": "캐릭터 장비창을 열기 위해서 사용되는 단축키는 무엇이죠?"
+      },
+      {
+        "who": "나",
+        "text": "단축키 E"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "빙고~ 자신의 캐릭터가 어떤 장비를 착용하고 있는지 확인을 하고 싶을 때는 E 키를 누르면 되죠."
+      }
+    ],
+    "descHtml": "세번째 문제는 어떨까? 나의 실력이라면야~",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 42,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1010",
+        "title": "레인의 메이플 퀴즈 2"
+      }
+    ],
+    "nexts": [
+      {
+        "id": "1012",
+        "title": "레인의 메이플 퀴즈 4"
+      }
+    ]
+  },
+  "1012": {
+    "id": 1012,
+    "code": "레인 1-4",
+    "title": "레인의 메이플 퀴즈 4",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "짝짝짝~ 드디어 네번째 문제입니다. 총 7 문제를 준비하고 있어요. 준비가 되면 다시 저에게 말을 걸어 주세요."
+      },
+      {
+        "who": "레인",
+        "text": "바닥에 떨어진 아이템을 줍기 위해서는 어떤 키를 입력하면 될까~요?"
+      },
+      {
+        "who": "나",
+        "text": "단축키 Z"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "네, 정답입니다. 몬스터를 사냥하거나 하면 떨어지는 아이템을 줍기 위해서는 단축키 Z를 누르면~ 돼요. 키보드의 우측의 숫자키의 0번을 눌러도 아이템 줍기가 가능해요~\n아참! 그리고 팁 하나 더! 다소 생소한 단축키 X 는 의자에 앉을 때 사용이 됩니다. 언젠가 빅토리아 아일랜드에 가게 되면 그 곳에 있는 의자에 앉아 보세요. 그냥 서 있을 때 보다 회복 속도가 빠르답니다."
+      }
+    ],
+    "descHtml": "레인이 내는 문제는 조금만 신경을 쓰면 풀 수 있는 문제들이다. 방심하지 말고 풀자.",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1011",
+        "title": "레인의 메이플 퀴즈 3"
+      }
+    ],
+    "nexts": [
+      {
+        "id": "1013",
+        "title": "레인의 메이플 퀴즈 5"
+      }
+    ]
+  },
+  "1013": {
+    "id": 1013,
+    "code": "레인 1-5",
+    "title": "레인의 메이플 퀴즈 5",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "이제 초보자를 벗어나 전직할 시기가 점점 다가오고 있습니다. 당신은 어떤 직업을 선택할지 기대가 되네요. 자아~ 다섯번째 퀴즈를 풀 준비가 되면 저에게 말을 걸어 주세요."
+      },
+      {
+        "who": "레인",
+        "text": "전사, 궁수, 도적, 해적으로 전직하기 위해서는 레벨이 10 이 되어야 합니다. 그렇다면 마법사는 몇 레벨에서 전직을 할 수 있을까요?"
+      },
+      {
+        "who": "나",
+        "text": "레벨 8"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "정답!! 전사, 궁수, 도적, 해적으로 전직하기 위해서는 레벨 10 이 되어야 합니다. 마법사만은 레벨 8이 되면 전직할 수가 있는데, 메이플 아일랜드를 떠나 빅토리아 아일랜드 엘리니아로 가면 대 마법사 하인즈를 통해 그 길을 선택할 수 있다고 하네요. 다른 직업들도 각각의 마을에서 전직을 시켜준다고 하니, 잘 알아보세요."
+      }
+    ],
+    "descHtml": "드디어 다섯번째! 어떤 문제를 낼 것인가?",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1012",
+        "title": "레인의 메이플 퀴즈 4"
+      }
+    ],
+    "nexts": [
+      {
+        "id": "1014",
+        "title": "레인의 메이플 퀴즈 6"
+      }
+    ]
+  },
+  "1014": {
+    "id": 1014,
+    "code": "레인 1-6",
+    "title": "레인의 메이플 퀴즈 6",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "메이플 퀴즈를 잘 맞추시네요. 레벨업을 할 때마다 주어지는 스킬 포인트 (SP)는 잘 분배하고 있나요? 자신의 스킬을 잘 활용하여야 강해질 수 있어요. 6번째 퀴즈 시작할 준비가 되면 저에게 말을 걸어주세요."
+      },
+      {
+        "who": "레인",
+        "text": "모험가도 달팽이 세마리와 같은 스킬을 사용할 수 있습니다. 자신이 가지고 있는 스킬을 확인할 수 있는 스킬창을 여는 단축키는 무엇일까요?"
+      },
+      {
+        "who": "나",
+        "text": "K"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "네, 그렇습니다. 레벨 1업을 할 때 마다 1포인트가 주어지게 되죠. 레벨업을 할 때 마다 모험의 기술을 배울 수 있는 SP(스킬 포인트)가 1 포인트씩 생깁니다. 레벨업을 할 때마다 K키를 누르면 캐릭터의 스킬을 확인하고 올릴 수 있는 창이 뜨니까, 원하는 스킬을 배워보세요."
+      }
+    ],
+    "descHtml": "드디어 여섯번째 문제이다. 나의 메이플 지식이 이렇게 활용 되다니 뿌듯하다.",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1013",
+        "title": "레인의 메이플 퀴즈 5"
+      }
+    ],
+    "nexts": [
+      {
+        "id": "1015",
+        "title": "레인의 메이플 퀴즈 7"
+      }
+    ]
+  },
+  "1015": {
+    "id": 1015,
+    "code": "레인 1-7",
+    "title": "레인의 메이플 퀴즈 7",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "레인",
+        "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+        "id": "12101"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "레인",
+        "text": "드디어 마.지.막.문.제입니다. 준비가 되면 다시 저에게 말 걸어주는 것~ 잊지 않으셨죠?"
+      },
+      {
+        "who": "레인",
+        "text": "이제 마지막 문제입니다. 아주~ 중요한 부분이기도 하구요. 전직은 빅토리아 아일랜드에 가야 할 수가 있습니다. 현재의 메이플 아일랜드에서 빅토리아 아일랜드로 이동을 해야하기 위해서는 어디에서 배를 타고 이동해야 할까요?"
+      },
+      {
+        "who": "나",
+        "text": "사우스페리에서 배를 타고 이동한다."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "레인",
+        "text": "네, 맞습니다. 사우스페리에서 배를 타고 빅토리아 아일랜드로 가면 된답니다. 선장 바실리가 배를 운영하고 있으니, 그에게 말을 걸어 보세요."
+      },
+      {
+        "who": "레인",
+        "text": "우선 빅토리아 아일랜드에 도착하면 전직이 가장 우선이 되겠죠? 전직에 알맞는 레벨과 스탯을 맞추어 직업별 마을로 이동하여 직업을 선택하세요. 전사는 페리온, 궁수는 헤네시스, 도적은 커닝시티, 마법사는 엘리니아로 이동하시면 됩니다. 현재 자신의 위치와 그 마을의 위치가 궁금하다면 W를 누르면 월드맵을 열 수 있습니다. 자신의 위치를 확인해가며 모험을 즐겨보세요.\n그럼~ 즐거운 메이플스토리!! 이제부터 진짜 모험이 시작됩니다!!"
+      }
+    ],
+    "descHtml": "마지막 문제를 풀면 초보의 티를 벗을 수 있을까? 두근두근~",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 140,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1014",
+        "title": "레인의 메이플 퀴즈 6"
+      }
+    ],
+    "nexts": []
+  },
+  "1020": {
+    "id": 1020,
+    "code": "피오 1-2",
+    "title": "피오의 재활용품 활용",
+    "type": "대화",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "피오",
+        "img": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+        "id": "10000"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "피오",
+        "img": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+        "id": "10000"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "피오",
+        "text": "모아다 준 재료를 재활용품을 제작하는데 쓰고 나니 재료가 좀 남았어. 남는 재료로 당신에게 무언가 도움이 되는 것을 만들어줄까 하는데, 어때?"
+      },
+      {
+        "who": "피오",
+        "text": "좋아! 흐음~ 일전에 모아두었던 초록색 천이 어딘가에 있었던 것 같은데. 흠흠, 그리고 이 나무를 자르고... 나사를 박아서... 흠? 조금만 있다가 찾아와. 그때까지 완성시켜 두도록 하지!"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "피오",
+        "text": "완성된 걸 알고 찾아 온 거야? 이 친구 눈치가 빠른걸~"
+      },
+      {
+        "who": "피오",
+        "text": "굉장히 편안해 보이지? HP와 MP가 떨어졌다 싶으면 촤악~ 하고 꺼내 앉아 보라구!! 회복 쫙쫙!"
+      },
+      {
+        "who": "피오",
+        "text": "긴장감이 사르르~ 풀려서 회복이 팡팡 될 거야. 그런 의미에서!! 이름을 뭘로 지었냐하면~ 릴렉스~체어!! 어때 이름 딱이지? 이 피오님의 작품이라는 걸 잊지 말라구!"
+      }
+    ],
+    "descHtml": "피오씨는 손재주가 좋다고 하던데... 뭘 만들어 줄까? 무척 기대되는걸~",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "name": "릴렉스 체어",
+        "qty": 1,
+        "itemId": "3010000",
+        "img": "https://drive.google.com/thumbnail?id=1I7dJVQle_9HYgo3rf45gfJTYuJQxYxBN&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1008",
+        "title": "피오의 재활용품 수거"
+      }
+    ],
+    "nexts": []
+  },
+  "1021": {
+    "id": 1021,
+    "code": "로저 1-1",
+    "title": "로저와 사과",
+    "type": "아이템 사용",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "로저",
+        "img": "https://drive.google.com/thumbnail?id=1HMmAggKjdJqanxfjsQTEtSYShTmnzu4w&sz=w400",
+        "id": "2000"
+      },
+      "place": {
+        "name": "달팽이동산",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "20000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "로저",
+        "img": "https://drive.google.com/thumbnail?id=1HMmAggKjdJqanxfjsQTEtSYShTmnzu4w&sz=w400",
+        "id": "2000"
+      },
+      "place": {
+        "name": "달팽이동산",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "20000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "로저",
+        "text": "이봐~ 예쁜이! 시간 있어? 아하하! 나는 자기처럼 귀여운 여자아이에게 좋은 정보를 주는 로저야."
+      },
+      {
+        "who": "로저",
+        "text": "그런 걸 누가 하라고 시켰냐구? 아하하! you는 호기심이 많군! 좋아 좋아~ 이건 내가 자진해서 하는 일이야."
+      },
+      {
+        "who": "로저",
+        "text": "자... 그럼 장난 좀 쳐볼까? 에잇!"
+      },
+      {
+        "who": "로저",
+        "text": "놀랐지? HP가 0이 되면 큰일 난다구. 자, 로저의 사과를 줄 테니 먹어봐. 힘이 날 거야. 아이템 창을 열어서 더블클릭해봐. 아이템 창은 I키를 누르면 간단히 열린다구."
+      },
+      {
+        "who": "로저",
+        "text": "내가 준 로저의 사과, 전부 먹어야 돼. 먹으면 바로 HP가 회복되는 것이 보일 거야. HP를 전부 회복한 후 다시 말을 걸어줘."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "로저",
+        "text": "아이템을 먹는 거... 어때? 간단하지? 오른쪽 하단 슬롯에 단축 아이콘으로 설정할 수도 있다구. 몰랐지? 하하~ 하지만 아이템이 없으면 가만히 있어도 알아서 회복되기도 해. 느리다는 단점이 있지만 초보 시절엔 이런 회복도 나쁘지 않은 방법이야."
+      },
+      {
+        "who": "로저",
+        "text": "좋았어! 많은 걸 배웠으니 선물을 주지. 여행을 하려면 꼭 배워둬야 하는 거니까 나한테 고마워하라구! 위급할 때 사용해."
+      },
+      {
+        "who": "로저",
+        "text": "내가 가르쳐 줄 수 있는 건 여기까지야. 아쉽지만 이제 헤어져야 할 시간이로군. 아무쪼록 몸조심하라구. 그럼 잘 가~!!!"
+      }
+    ],
+    "descHtml": "단축기 I 를 눌러 소비창에 있는 로저의 사과를 소비하고 로저에게 말을 걸자.",
+    "reqs": [
+      {
+        "kind": "use",
+        "name": "로저의 사과",
+        "qty": 1,
+        "id": "2010007",
+        "img": "https://drive.google.com/thumbnail?id=1oDarPbWp6Nj8lFUeMMbPvpnKEdAbLtVI&sz=w200"
+      }
+    ],
+    "tips": [],
+    "rewards": [
+      {
+        "name": "빨간포션",
+        "qty": 3,
+        "itemId": "2000000",
+        "img": "https://drive.google.com/thumbnail?id=1sYPOa2w-UU_fKO7SQ-7R-fhRUYNE0alC&sz=w200"
+      },
+      {
+        "name": "파란포션",
+        "qty": 3,
+        "itemId": "2000003",
+        "img": "https://drive.google.com/thumbnail?id=1Sql3X7512_6rqbxNXLu8aYcph8qZ0k_G&sz=w200"
+      },
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": []
+  },
+  "1031": {
+    "id": 1031,
+    "code": "히나 1-1",
+    "title": "히나와 세라",
+    "type": "대화",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "히나",
+        "img": "https://drive.google.com/thumbnail?id=12ARM7TcWjf7yUgnZJfRezS8McvrqKR4h&sz=w400",
+        "id": "2101"
+      },
+      "place": {
+        "name": "버섯동산",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "10000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "세라",
+        "img": "https://drive.google.com/thumbnail?id=1TqUjYQ-5cbUBVNrfQ2UEJNpBkrexh3Ez&sz=w400",
+        "id": "2100"
+      },
+      "place": {
+        "name": "버섯동산",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "10000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "히나",
+        "text": "안녕하세요? 새로운 여행자시로군요? 당신의 이름은... (캐릭터 이름)님? 만나서 반가워요. 아직 메이플 월드가 많이 낯설죠? 하지만 걱정하지 마세요. 이 세계는 당신을 환영하고 있으니까요."
+      },
+      {
+        "who": "히나",
+        "text": "저희에게 말을 거는 방법은 아시죠? 마우스로 저희를 클릭하면 된답니다. 마우스를 올려 놓았을 때 조그만 말풍선이 뜨는 사람이나 사물과는 모두 대화할 수 있어요."
+      },
+      {
+        "who": "히나",
+        "text": "특히 머리 위에 전구가 반짝이는 사람은 퀘스트를 가지고 있는 사람이랍니다. 당신이 말을 걸어주기만을 애타게 기다리고 있을 테니, 그런 사람을 보면 망설이지 말고 클릭해 주세요."
+      },
+      {
+        "who": "히나",
+        "text": "아, 그러고보니 세라 언니도 새로운 여행자와 대화하고 싶다고 했었는데... 어때요? 괜찮으시다면 세라 언니와도 인사해 보시겠어요?"
+      },
+      {
+        "who": "히나",
+        "text": "퀘스트를 수락하셨군요! 그럼 먼저 화면 좌측에 있는 미니맵을 확인해 주세요. M키로 열고 닫을 수 있는 미니맵에서는 여러 색으로 사람들이 표시되는데, 그 중에서 녹색으로 깜빡이는 게 바로 메이플 월드의 주민이라는 뜻이에요."
+      },
+      {
+        "who": "히나",
+        "text": "지금 미니맵에는 두 개의 녹색이 있어요. 그 중에서 왼쪽이 바로 저 히나이고 오른쪽이 세라 언니죠. 그러니 오른쪽으로 조금만 가면 빨래를 널고 있는 세라 언니를 만나실 수 있을 거예요."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "세라",
+        "text": "...어머? 안녕하세요? 새로운 여행자분이시군요? 히나에게서 이야기를 듣고 오신 모양이네요. 정말 반가워요."
+      },
+      {
+        "who": "세라",
+        "text": "메이플 아일랜드는 작은 섬이지만 이렇게 새로운 여행자를 처음 만날 수 있다는 점에서 무척 즐거운 곳인 것 같아요. 낯선 사람과 친구가 되는 것만큼 기쁜 일이 또 어디 있겠어요. (캐릭터 이름)님께서도 이 곳에서 많은 친구 사귀시길 바랄게요."
+      },
+      {
+        "who": "세라",
+        "text": "계속해서 앞으로 나아가고 싶다면 오른쪽의 포탈을 이용하세요. 반짝이는 빛무리를 내는 것이 포탈이랍니다. 그 위에서 ↑키를 누르면 이동할 수 있어요.  그럼 이만... 당신의 앞날에 빛이 있기를"
+      }
+    ],
+    "descHtml": "",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 35,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": []
+  },
+  "1032": {
+    "id": 1032,
+    "code": "다나 1-1",
+    "title": "다나의 동생 센",
+    "type": "대화",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "다나",
+        "img": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+        "id": "2102"
+      },
+      "place": {
+        "name": "달팽이꽃밭",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "30000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "센",
+        "img": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
+        "id": "2001"
+      },
+      "place": {
+        "name": "버섯마을민가",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "30001"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "다나",
+        "text": "앗, 여행자님이시죠? 마침 잘 됐네요. 바쁘시지 않다면 제 부탁 하나만 들어주시겠어요? 오른쪽으로 조금만 가면 노란색 지붕의 집이 있거든요? 그 집이 바로 저희 집인데 ... 지금 집에는 제 동생 센이 혼자 집을 보고 있어요."
+      },
+      {
+        "who": "다나",
+        "text": "떼도 안 쓰고 혼자 집을 잘 봤으니 센에게 상을 줘야 할 텐데 뭘 줘야할지 모르겠어요. 뭔가 맛있는 거라도 주면 좋으려나 …? 그러니 여행자님께서 센에게 가서 뭐가 먹고 싶은지 물어보고 돌아와 주세요."
+      },
+      {
+        "who": "다나",
+        "text": "감사합니다. 집 안으로 들어갈 때는 포탈을 탈 때와 마찬가지로 방향키↑을 누르시면 돼요."
+      }
+    ],
+    "completionDialogues": [],
+    "descHtml": "다나는 그녀의 동생 센이 무엇을 먹고 싶어하는지 알아봐 달라고 부탁했다. 센은 <strong>버섯마을 민가</strong> 안에 있으니, 집 안으로 들어가 보자.",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 49,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": [
+      {
+        "id": "1033",
+        "title": "센이 먹고 싶은 것"
+      }
+    ]
+  },
+  "1033": {
+    "id": 1033,
+    "code": "다나 1-2",
+    "title": "센이 먹고 싶은 것",
+    "type": "대화",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "센",
+        "img": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
+        "id": "2001"
+      },
+      "place": {
+        "name": "버섯마을민가",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "30001"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "다나",
+        "img": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+        "id": "2102"
+      },
+      "place": {
+        "name": "달팽이꽃밭",
+        "img": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800",
+        "code": "30000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "센",
+        "text": "우웅... 누구세요? 네? 누나가 뭐가 먹고 싶은지 물어봐 달라고 했다고요? 우웅... 갑자기 먹고 싶은 거라니... 아참. 전에 누나가 직접 만든 맛있는 버섯사탕이 있었지! 여행자님, 누나에게 센은 맛있는 버섯사탕이 너무 먹고 싶다고 전해 주세요.!"
+      },
+      {
+        "who": "센",
+        "text": "누나가 어디 있는지는 당연히 아시죠? 방금 만나셨으니까요."
+      }
+    ],
+    "completionDialogues": [],
+    "descHtml": "",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 49,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1032",
+        "title": "다나의 동생 센"
+      }
+    ],
+    "nexts": [
+      {
+        "id": "1034",
+        "title": "맛있는 버섯사탕"
+      }
+    ]
+  },
+  "1034": {
+    "id": 1034,
+    "code": "다나 1-3",
+    "title": "맛있는 버섯사탕",
+    "type": "아이템 전달",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "다나",
+        "img": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+        "id": "2102"
+      },
+      "place": {
+        "name": "달팽이꽃밭",
+        "img": "https://drive.google.com/thumbnail?id=1U5usCFqzg38Y9Z75nKS9FHl9N50197hd&sz=w800",
+        "code": "30000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "센",
+        "img": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
+        "id": "2001"
+      },
+      "place": {
+        "name": "버섯마을민가",
+        "img": "https://drive.google.com/thumbnail?id=1G-fTo4f9JKIC3qg-fuVyE-UC_7pL34CC&sz=w800",
+        "code": "30001"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "다나",
+        "text": "센이 뭘 먹고 싶어하던가요? 네? 센이 버섯사탕을 먹고 싶다고 했다고요? 호호. 요새 이가 상한 것 같아서 계속 못 먹게 했더니 먹고 싶어진 모양이네요. 착한 일을 했으니 이번만은 사탕을 줘야겠어요."
+      },
+      {
+        "who": "다나",
+        "text": "자, 여기 버섯사탕 10개예요. 여행자님께서 가시는 길에 센에게 전해주세요. 그럼 부탁 드릴게요."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "센",
+        "text": "와아! 누나가 버섯사탕을 줬군요! 에헤헤. 달콤한 버섯사탕이 너무너무 먹고 싶었는데 정말 기뻐요! 전해 주셔서 감사합니다."
+      },
+      {
+        "who": "센",
+        "text": "아참. 여행자님도 드세요. 맛있는 건 나눠먹는 거라고 누나가 그랬어요."
+      }
+    ],
+    "descHtml": "다나에게 센이 버섯사탕을 먹고 싶어한다고 알려 주었다. 그러자 다나는 주머니에서 버섯사탕 10개를 꺼내 센에게 전해 달라고 말했다. 그럼 센에게 가자.",
+    "reqs": [
+      {
+        "kind": "item",
+        "name": "버섯 사탕",
+        "qty": 10,
+        "id": "4031792",
+        "img": "https://drive.google.com/thumbnail?id=1wDugpIjzCeRbqCkQOut5x2NHeKvKeXi0&sz=w200"
+      }
+    ],
+    "tips": [],
+    "rewards": [
+      {
+        "name": "버섯 사탕",
+        "qty": 2,
+        "itemId": "4031792",
+        "img": "https://drive.google.com/thumbnail?id=1wDugpIjzCeRbqCkQOut5x2NHeKvKeXi0&sz=w200"
+      },
+      {
+        "exp": 140,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1033",
+        "title": "센이 먹고 싶은 것"
+      }
+    ],
+    "nexts": []
+  },
+  "1035": {
+    "id": 1035,
+    "code": "토드 1-1",
+    "title": "토드의 사냥법",
+    "type": "아이템 수집, 몬스터 사냥",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "rewardChoice": true,
+    "start": {
+      "npc": {
+        "name": "토드",
+        "img": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+        "id": "2004"
+      },
+      "place": {
+        "name": "작은숲속",
+        "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w800",
+        "code": "40000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "피터",
+        "img": "https://drive.google.com/thumbnail?id=1Q0N2HuHImV9ceq1DC3HBN2M_gpyHNDc6&sz=w400",
+        "id": "2002"
+      },
+      "place": {
+        "name": "작은숲속",
+        "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w800",
+        "code": "40000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "토드",
+        "text": "이야~ 새로운 여행자인가? 내 이름은 토드야. 이곳에서 새로운 여행자들에게 몬스터 사냥법에 대해 알려주고 있지. 버섯마을 안에는 몬스터가 없지만 마을에서 조금만 벗어나도 몬스터들이 우글대고 있어서, 처음 여행하는 사람들은 위험하거든."
+      },
+      {
+        "who": "토드",
+        "text": "우선 기본 공격은 Ctrl 키로 할 수 있어. 닿지 않도록 조심하면서 몬스터에게 다가가서 공격하면 돼. 별로 어렵지 않지? 그럼 어디 한 번 직접 몬스터 사냥을 해볼래?"
+      },
+      {
+        "who": "토드",
+        "text": "그럼 저 옆에 있는 주니어 스톤볼을 사냥해봐. 원래는 강한 몬스터이지만 초보 모험가를 위해 대마법사 하인즈님이 봉인 마법을 걸어 놓은 녀석이니 너도 안심하고 사냥할 수 있을 거야."
+      },
+      {
+        "who": "토드",
+        "text": "주니어 스톤볼을 사냥하면 주니어 스톤볼의 돌조각을 전리품으로 얻을 수 있어. 아이템은 Z키로 주울 수 있으니, 사냥 후 주니어 스톤볼의 돌조각을 주워서 피터에게 가봐. 피터라면 너에게 스킬로 공격하는 법을 알려줄 거야."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "피터",
+        "text": "주니어 스톤볼의 돌조각을 가지고 있을 걸 보니, 당신은 토드에게 사냥법을 배운 여행자로군. 그렇다면 기본 공격은 잘 알고 있을 테고, 스킬 사용법을 알려줄게."
+      },
+      {
+        "who": "피터",
+        "text": "스킬은 K키를 눌러 스킬창을 열면 확인할 수 있어. 기본공격과 달리 스킬 포인트로 스킬의 레벨을 올려야만 사용할 수 있지. 스킬 포인트는 네가 레벨업을 할 때마다 얻을 수 있지만, 스킬 레벨을 올릴 때는 신중해야 해."
+      },
+      {
+        "who": "피터",
+        "text": "스킬을 사용할 땐 하단의 퀵슬롯에 지정해 놓으면 편해. 스킬창에 있는 아이콘을 드래그 해서 올려놓기만 하면 되니까, 지정도 쉽지. 아직은 기본 공격이 더 편하겠지만, 전직을 해서 스킬이 많이 생기면 여러 스킬을 잘 사용할 수 있어야 할 거야."
+      },
+      {
+        "who": "피터",
+        "text": "그럼 스킬에 대한 설명은 이 정도면 되겠지? 당신에게 선물로 머리에 착용할 수 있는 아이템을 줬으니 잘 사용하도록 해. 인벤토리에서 아이템을 더블클릭하면 바로 장착할 수 있어. 장착한 모습을 확인하려면 E키를 누르면 되고. 그럼 좋은 여행 되길."
+      }
+    ],
+    "descHtml": "",
+    "reqs": [
+      {
+        "kind": "item",
+        "name": "주니어 스톤볼의 돌조각",
+        "qty": 1,
+        "id": "4000142",
+        "img": "https://drive.google.com/thumbnail?id=1l5w_4BGE773dosvRoYaNP1PfDIDtE8bt&sz=w200"
+      },
+      {
+        "kind": "monster",
+        "name": "주니어 스톤볼",
+        "qty": 1,
+        "id": "9300018",
+        "img": "https://drive.google.com/thumbnail?id=1HDmfr1C8q2LfEF0Y5aJiwJPMvJfswAgU&sz=w200"
+      }
+    ],
+    "tips": [],
+    "rewards": [
+      {
+        "name": "초록색 가죽 모자",
+        "itemId": "1002053",
+        "img": "https://drive.google.com/thumbnail?id=1NQScHwGrZyV40FJHJp7fPcgL3hsZxwRJ&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "갈색 가죽 모자",
+        "itemId": "1002008",
+        "img": "https://drive.google.com/thumbnail?id=1cZJ62f76_Irj5T6_dH1yekCgYMswtQMg&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "빨간색 머리띠",
+        "itemId": "1002014",
+        "img": "https://drive.google.com/thumbnail?id=1QQPdHCzX6uPnoLaGosNBkJqFW62zb2Lo&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "노란색 머리띠",
+        "itemId": "1002068",
+        "img": "https://drive.google.com/thumbnail?id=1MPm-Y4HpxqbA6bnUHZWQYaThxiintl2_&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "파란색 머리띠",
+        "itemId": "1002069",
+        "img": "https://drive.google.com/thumbnail?id=1NJi-XBZYiuI18lKlXzFDkYEn_jcGt9Yt&sz=w200",
+        "chance": 20
+      },
+      {
+        "exp": 210,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": []
+  },
+  "1036": {
+    "id": 1036,
+    "code": "로빈 1-1",
+    "title": "만물박사 로빈",
+    "type": "대화",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "로빈",
+        "img": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
+        "id": "2003"
+      },
+      "place": {
+        "name": "위험한 숲속",
+        "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w800",
+        "code": "50000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "로빈",
+        "img": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
+        "id": "2003"
+      },
+      "place": {
+        "name": "위험한 숲속",
+        "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w800",
+        "code": "50000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "로빈",
+        "text": "흠... 새로운 모험가님이시군! 레벨 2가 되었다면 아마도 SP가 생겼을 텐데, SP 분배는 잘 했어? 혹시 SP가 뭔지 생소하다면, 나에게 맡겨 줘. 스탯과 전직, SP를 완벽하게 익힐 수 있도록 퀴즈를 내줄게."
+      },
+      {
+        "who": "로빈",
+        "text": "그럼 나를 다시 클릭해서 모르는 부분을 물어줘. 한 개씩 상세하게 설명해 줄테니까. 모두 알겠다 싶을 때 만물박사 로빈 퀘스트를 클릭해서 퀴즈를 시작하면 돼."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "로빈",
+        "text": "문제를 풀 준비가 되신 모양이군. 그럼 시작할게. 첫번째 문제! 레벨업을 할 때마다 얻을 수 있는 스킬 포인트, SP를 소모하여 달팽이 세마리와 같은 스킬을 배우는 것이 가능할까?"
+      },
+      {
+        "who": "나",
+        "text": "가능하다"
+      },
+      {
+        "who": "로빈",
+        "text": "정답이야! 그럼 두번째 문제! 처음 시작할 때는 초보자이지만 일정한 레벨이 되면 너도 전직을 할 수 있어. 보통은 레벨이 10이 되어야만 전직이 가능하지만 이 직업만은 레벨 8에도 전직할 수 있다고해, 이 직업은 무엇일까?"
+      },
+      {
+        "who": "나",
+        "text": "마법사"
+      },
+      {
+        "who": "로빈",
+        "text": "정답이야! 마법사만은 레벨 8에서도 전직이 가능하지. 그럼 세번째 문제! 다음 중 직업과 전직 장소가 잘못된 것은 무엇일까?"
+      },
+      {
+        "who": "나",
+        "text": "도적 - 노틸러스"
+      },
+      {
+        "who": "로빈",
+        "text": "정답이야! 도적은 커닝시티에서 전직이 가능하다구! 노틸러스호에서는 해적으로 전직할 수 있지! 짝짝짝! 세 문제 모두 훌륭히 통과했어. 축하해! SP와 스탯, 전직에 대한 지식이 풍부한데? 이 정도면 원하는 직업을 선택하는데 어려움이 없을 것 같아."
+      },
+      {
+        "who": "로빈",
+        "text": "어떤 직업을 선택할지는 초보자 시절, 아니 그 이전부터 미리 생각해 놓는 것이 좋아. 어떤 직업으로 전직할지 곰곰히 생각해봐."
+      }
+    ],
+    "descHtml": "로빈은 전직, SP에 대한 것을 알려줄 테니 잘 읽어 보고 그가 내는 문제를 맞춰보라고 했다. 일단 SP에 대한 지식을 습득한 후 만물박사 로빈 퀘스트를 계속 수행하자",
+    "reqs": [],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 280,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": []
+  },
+  "1037": {
+    "id": 1037,
+    "code": "쌤 1-1",
+    "title": "달팽이 사냥 돕기",
+    "type": "몬스터 사냥",
+    "region": "메이플로드",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "쌤",
+        "img": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+        "id": "2005"
+      },
+      "place": {
+        "name": "위험한 숲속",
+        "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w800",
+        "code": "50000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "마리아",
+        "img": "https://drive.google.com/thumbnail?id=1nvI50wbkATpkC9HOZsFL1yVCDwoRzTw-&sz=w400",
+        "id": "2103"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w800",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "쌤",
+        "text": "흐음... 마리아는 잘 하고 있을까...? 아, 여행자님. 안녕하세요? 지금 혹시 암허스트를 향해 동쪽으로 가고 계신가요? 그렇다면 부탁 하나만 들어주시지 않겠어요?"
+      },
+      {
+        "who": "쌤",
+        "text": "암허스트에 사는 마리아가 버섯을 따러 이 근처로 오기로 했는데 통 오질 않네요. 아무래도 달팽이들이 무서워서 움직이지 못하는 것 같아요."
+      },
+      {
+        "who": "쌤",
+        "text": "그러니 당신게서 가는 길에 달팽이 10마리만 퇴치해 주시면 안 될까요? 달팽이를 퇴치한 후, 암허스트에 있는 마리아에게 걱정하지 말고 움직이라는 말까지 전해 주시면 감사하겠습니다."
+      },
+      {
+        "who": "쌤",
+        "text": "암허스트는 동쪽으로 가면, 도착할 수 있습니다. 단축키 W를 눌러 월드맵을 보시면, 이동시에 매우 편리하답니다."
+      }
+    ],
+    "completionDialogues": [],
+    "descHtml": "쌤은 마리아를 위해 달팽이를 퇴치해 달라고 했다. 달팽이 10마리를 퇴치하고 마리아에게 달팽이가 없어졌으니 안심하라고 말해주자.",
+    "reqs": [
+      {
+        "kind": "monster",
+        "name": "달팽이",
+        "qty": 10,
+        "id": "100000",
+        "img": "https://drive.google.com/thumbnail?id=1zR127JUMFS__fQtMZaN61jaTZzvwPz9E&sz=w200"
+      }
+    ],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 420,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": [
+      {
+        "id": 1038,
+        "title": "마리아의 편지"
+      }
+    ]
+  },
+  "1038": {
+    "id": 1038,
+    "code": "쌤 1-2",
+    "title": "마리아의 편지",
+    "type": "아이템 전달",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "마리아",
+        "img": "https://drive.google.com/thumbnail?id=1nvI50wbkATpkC9HOZsFL1yVCDwoRzTw-&sz=w400",
+        "id": "2103"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "루카스",
+        "img": "https://drive.google.com/thumbnail?id=1fS17tGLu54Wr2EA7GenxcRolmx-48UiP&sz=w400",
+        "id": "12000"
+      },
+      "place": {
+        "name": "암허스트",
+        "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500",
+        "code": "1000000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "마리아",
+        "text": "어머, 안녕하세요? 새로운 여행자이신 모양인데, 열심히 사냥하신 것 같네요. 네에? 쌤이 달팽이를 퇴치해 달라고 당신께 부탁했다고요?"
+      },
+      {
+        "who": "마리아",
+        "text": "아아, 감사합니다. 버섯마을 주변에는 맛있는 버섯이 많이 나는데, 가는 길에 달팽이가 너무 많아서 망설이고 있었거든요. 덕분에 바로 쌤에게 갈 수 있겠네요. 정말 고마워요."
+      },
+      {
+        "who": "마리아",
+        "text": "모처럼 달팽이들이 없어졌으니 여유 있게 버섯을 따다가 조금 늦게 돌아가도 괜찮겠네요. 음... 여행자님. 죄송하지만 부탁 한 가지 더 드려도 될까요?"
+      },
+      {
+        "who": "마리아",
+        "text": "제가 늦게 돌아가면 마을의 장로이신 루카스님께서 무척 걱정하실 거예요. 그러니 이 편지를 루카스님께 전해 주세요"
+      },
+      {
+        "who": "마리아",
+        "text": "혹시라도 편지를 잃어버리면 다시 저에게 오세요. 얼마든지 다시 써드릴 테니까요."
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "루카스",
+        "text": "음... 새로운 여행자 같은데 내게는 무슨 볼 일인가? 음? 마리아가 편지를 보냈다고? 무슨 일이지...?"
+      },
+      {
+        "who": "루카스",
+        "text": "오오, 자네가 마리아를 도와 주었다고? 정말 친절한 여행자로군. 고맙네. 마리아는 다른 건 별로 무서워하지 않는데 달팽이만큼은 질색이라 곤란하거든. 덕분에 마리아가 편하게 버섯을 딸 수 있게 되었어."
+      },
+      {
+        "who": "루카스",
+        "text": "감사의 의미로 자네에게 무언가 보답을 하고 싶군. 아직 수련이 필요한 초보 여행자 같으니 무엇보다 중요한 건 강해지는 거겠지? 자네가 강해질 수 있도록 수련을 시켜 줄 사람을 소개시켜 줄 테니, 여유가 생기거든 다시 나에게 말을 걸게."
+      }
+    ],
+    "descHtml": "마리아는 달팽이가 퇴치 되었으니 안심하고 버섯을 따야겠다며, 조금 늦게 들어가도 걱정하지 않도록 암허스트 마을의 장로 루카스에게 편지를 전해 달라고 말했다",
+    "reqs": [
+      {
+        "kind": "item",
+        "name": "마리아의 편지",
+        "qty": 1,
+        "id": "4031000",
+        "img": "https://drive.google.com/thumbnail?id=1PfkZuDooN5wqZqqhPU56e3eOE2uKFl8Y&sz=w200"
+      }
+    ],
+    "tips": [],
+    "rewards": [
+      {
+        "name": "빨간포션",
+        "qty": 5,
+        "itemId": "2000000",
+        "img": "https://drive.google.com/thumbnail?id=1sYPOa2w-UU_fKO7SQ-7R-fhRUYNE0alC&sz=w200"
+      },
+      {
+        "name": "파란포션",
+        "qty": 5,
+        "itemId": "2000003",
+        "img": "https://drive.google.com/thumbnail?id=1Sql3X7512_6rqbxNXLu8aYcph8qZ0k_G&sz=w200"
+      },
+      {
+        "exp": 280,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [
+      {
+        "id": "1037",
+        "title": "달팽이 사냥 돕기"
+      }
+    ],
+    "nexts": []
+  },
+  "1039": {
+    "id": 1039,
+    "code": "유나 1-1",
+    "title": "유나 도와주기",
+    "type": "몬스터 처치",
+    "region": "암허스트",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "start": {
+      "npc": {
+        "name": "유나",
+        "img": "https://drive.google.com/thumbnail?id=1Sjbaerx_GCNUUbbOa0IDOS2LBRTanyJG&sz=w400",
+        "id": "20100"
+      },
+      "place": {
+        "name": "모험가의 수련장 입구",
+        "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000",
+        "code": "1010000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "name": "유나",
+        "img": "https://drive.google.com/thumbnail?id=1Sjbaerx_GCNUUbbOa0IDOS2LBRTanyJG&sz=w400",
+        "id": "20100"
+      },
+      "place": {
+        "name": "모험가의 수련장 입구",
+        "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000",
+        "code": "1010000"
+      }
+    },
+    "dialogues": [
+      {
+        "who": "유나",
+        "text": "아아~ 어떻게 하지?! 누가 좀 도와줘요! 앗! 당신은 새로운 여행자이시군요? 혹시 파란 달팽이하고 스포아를 사냥할 수 있으신가요? 가능하다면 좀 도와주세요!"
+      },
+      {
+        "who": "유나",
+        "text": "마리아 언니가 버섯을 따러 갔다는 말을 듣고, 뒤따라 갈까 하고 마을 밖으로 나왔는데 갑자기 몬스터들이 몰려들어 버렸어요! 제발 파란 달팽이 10마리와 스포아 10마리를 퇴치해 주세요!"
+      }
+    ],
+    "completionDialogues": [
+      {
+        "who": "유나",
+        "text": "앗, 파란 달팽이와 스포아를 모두 해치우셨군요!"
+      },
+      {
+        "who": "유나",
+        "text": "정말 대단해요! 감사합니다. 이제 마을로 돌아갈 수 있겠네요."
+      }
+    ],
+    "descHtml": "마을 밖으로 잠시 나온 사이에 몬스터들이 많아져 오도가도 못하게 된 유나. 그녀는 집에 돌아갈 수 있도록 파란 달팽이와 스포아를 퇴치해 달라고 말했다.",
+    "reqs": [
+      {
+        "kind": "monster",
+        "name": "파란 달팽이",
+        "qty": 10,
+        "id": "100001",
+        "img": "https://drive.google.com/thumbnail?id=1NHfy8hYrClJJWty8pOWa5L2ASCyYNOvw&sz=w200"
+      },
+      {
+        "kind": "monster",
+        "name": "스포아",
+        "qty": 10,
+        "id": "120100",
+        "img": "https://drive.google.com/thumbnail?id=1-TgapVeQYiORFWaHdybvTi-a-71ka5B8&sz=w200"
+      }
+    ],
+    "tips": [],
+    "rewards": [
+      {
+        "exp": 700,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ],
+    "prereqs": [],
+    "nexts": []
+  }
+};
+
+</script>
+<script>
+(function(){
+  'use strict';
+  var QUESTS = window.QUESTS || [];
+  var QUEST_DETAILS = window.QUEST_DETAILS || {};
+
+  var params = new URLSearchParams(location.search);
+  var id = params.get('id');
+  if (!id){
+    // quest-1008.html 형태의 파일명에서도 id를 뽑아본다
+    var m = location.pathname.match(/quest-(\d+)/);
+    if (m) id = m[1];
+  }
+
+  var listItem = QUESTS.find(function(q){ return String(q.id)===String(id); });
+  var detail = QUEST_DETAILS[String(id)];
+
+  var TYPE_MAP = {
+    '대화':{cls:'t-talk'}, '몬스터 사냥':{cls:'t-hunt'}, '아이템 수집':{cls:'t-collect'},
+    '아이템 전달':{cls:'t-deliver'}, '아이템 사용':{cls:'t-use'}, '이동':{cls:'t-move'},
+    '조사':{cls:'t-investigate'}, '퀘스트 완료':{cls:'t-etc'}
+  };
+  function primaryType(t){ return String(t||'').split(/[,·]/)[0].trim() || '기타'; }
+  function typeCls(t){ return (TYPE_MAP[primaryType(t)]||{cls:'t-etc'}).cls; }
+
+  function safeImg(src, alt, cls){
+    var d = 'https://placehold.co/120x120/FFF9F0/9A8574?text=%20';
+    return '<img src="'+(src||d)+'" alt="'+(alt||'')+'" class="'+(cls||'thumb')+'" onerror="this.onerror=null;this.src=\''+d+'\';">';
+  }
+  function fmt(n){ return Number(n||0).toLocaleString(); }
+
+  var $detail = document.getElementById('detail');
+
+  if (!listItem && !detail){
+    $detail.innerHTML = '<div class="notready"><div class="big font-display" style="font-family:Jua,sans-serif;font-size:18px;margin-bottom:6px;">퀘스트를 찾을 수 없어요</div><div>주소의 id 값을 다시 확인해 주세요.</div></div>';
+    return;
+  }
+
+  var base = detail || listItem;
+  var tcls = typeCls(base.type);
+
+  function isPlayer(who){ return /^(나|플레이어|주인공|Player|영웅)$/i.test(String(who||'').trim()); }
+  function avatarFor(who){
+    if (!detail) return '';
+    if (detail.start && detail.start.npc && who===detail.start.npc.name) return detail.start.npc.img;
+    if (detail.finish && detail.finish.npc && who===detail.finish.npc.name) return detail.finish.npc.img;
+    return '';
+  }
+  function dialogueRow(d){
+    var left = !isPlayer(d.who);
+    var av = left ? avatarFor(d.who) : '';
+    return (
+      '<div class="brow '+(left?'':'right')+'">'+
+        (left && av ? '<img class="avatar" src="'+av+'" alt="'+(d.who||'')+'">' : '')+
+        '<div class="bubble '+(left?'left':'right')+'">'+
+          '<div class="name">'+(d.who||'')+'</div>'+
+          '<div style="white-space:pre-line;">'+(d.text||'')+'</div>'+
+        '</div>'+
+      '</div>'
+    );
+  }
+
+  function reqBox(r){
+    var isItem = r.kind==='item';
+    var isUse = r.kind==='use';
+    var title = (r.name||'')+(r.qty?' ×'+r.qty:'');
+    var href = r.id ? ((isItem||isUse) ? ('item-detail.html?id='+r.id) : ('https://linsuol13-bit.github.io/LO/monster-'+r.id+'.html')) : '';
+    var label = isUse ? '사용 아이템' : (isItem ? '필요 아이템' : '처치 대상');
+    var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+label+'</div><div class="val">'+title+'</div></div>';
+    return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+  }
+  function rewardBox(r){
+    if (typeof r.exp === 'number'){
+      return '<div class="ibox">'+safeImg(r.img,'EXP','thumb')+'<div><div class="lbl">경험치</div><div class="val">'+fmt(r.exp)+' exp</div></div></div>';
+    }
+    if (typeof r.fame === 'number'){
+      return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">인기도</div><div class="val">⭐ +'+r.fame+'</div></div></div>';
+    }
+    var title = (r.name||'')+((r.qty&&r.qty>0)?' ×'+r.qty:'')+(r.chance!=null?' · '+r.chance+'%':'');
+    var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">보상 아이템</div><div class="val">'+title+'</div></div>';
+    return r.itemId ? '<a class="ibox" href="item-detail.html?id='+r.itemId+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+  }
+  function tipBox(t){
+    var subtitle = t.kind==='monster' ? '몬스터 사냥' : (t.subtitle||'TIP');
+    var href = t.id ? (t.kind==='monster' ? ('https://linsuol13-bit.github.io/LO/monster-'+t.id+'.html') : ('item-detail.html?id='+t.id)) : '';
+    var inner = safeImg(t.img, t.name, 'thumb')+'<div><div class="lbl">'+subtitle+'</div><div class="val">'+(t.name||'')+'</div></div>';
+    return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+  }
+  function chainBox(item, label){
+    return '<a class="ibox" href="quest-detail.html?id='+item.id+'"><div><div class="lbl">'+label+'</div><div class="val">['+item.id+'] '+item.title+'</div></div></a>';
+  }
+
+  var html = '';
+  html += '<div class="detail-header ' + tcls + '">';
+  html += '<span class="type-tag" style="background:var(--pink-soft);color:var(--pink-ink);">' + (base.type||'-') + '</span>';
+  html += '<h1>' + (base.code?base.code+' · ':'') + base.title + '</h1>';
+  var jobsTxt = (base.jobs && base.jobs.length) ? base.jobs.join(', ') : '전체';
+  var REGION_ICONS = {
+    '메이플로드': 'https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800',
+    '암허스트': 'https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w800'
+  };
+  var regionIcon = REGION_ICONS[base.region];
+  var regionHtml = (regionIcon ? '<img src="'+regionIcon+'" alt="'+base.region+'" style="width:16px;height:16px;object-fit:contain;vertical-align:-3px;border-radius:4px;margin-right:3px;" onerror="this.style.display=\'none\';">' : '') + (base.region||'-');
+  html += '<div class="sub">' + regionHtml + ' · Lv.' + (base.minLevel||'-') + ' · 가능 직업: ' + jobsTxt + '</div>';
+  html += '</div>';
+
+  if (!detail){
+    // 목록 데이터만 있는 경우: 요약 정보 + 준비중 안내
+    html += '<div class="notready" style="margin-bottom:20px;">';
+    html += '<div class="big font-display" style="font-family:Jua,sans-serif;font-size:17px;margin-bottom:6px;">이 퀘스트의 상세 대사·조건 정보는 아직 준비 중이에요</div>';
+    html += '<div>대사, 시작/완료 NPC, 세부 요구 조건은 곧 추가될 예정이에요. 아래는 현재까지 확인 가능한 보상 정보예요.</div>';
+    html += '</div>';
+    if (listItem && listItem.rewards && listItem.rewards.length){
+      html += '<div class="section"><h2>완료 보상</h2><div class="ibox-grid">' + listItem.rewards.map(rewardBox).join('') + '</div></div>';
+    }
+    $detail.innerHTML = html;
+    return;
+  }
+
+  // ---- 선행 퀘스트 ----
+  if (detail.prereqs && detail.prereqs.length){
+    html += '<div class="section"><h2>선행 퀘스트</h2><div class="ibox-grid">' + detail.prereqs.map(function(p){ return chainBox(p, '선행 퀘스트'); }).join('') + '</div></div>';
+  }
+
+  // ---- 시작/완료 ----
+  html += '<div class="two-col" style="margin-bottom:22px;">';
+  html += '<div class="card"><h2 style="font-size:13px;font-weight:700;color:var(--ink-soft);margin:0 0 10px;">시작</h2>';
+  html += '<div class="ibox-grid">';
+  html += '<a class="ibox" href="npc-detail.html?id='+detail.start.npc.id+'">'+safeImg(detail.start.npc.img, detail.start.npc.name,'thumb')+'<div><div class="lbl">시작 NPC</div><div class="val">'+detail.start.npc.name+'</div></div></a>';
+  var placeIcon = REGION_ICONS[base.region] || '';
+  html += '<a class="ibox" href="map-detail.html?code='+detail.start.place.code+'">'+safeImg(placeIcon || detail.start.place.img, detail.start.place.name,'thumb')+'<div><div class="lbl">시작 장소</div><div class="val">'+detail.start.place.name+'</div></div></a>';
+  html += '</div></div>';
+  html += '<div class="card"><h2 style="font-size:13px;font-weight:700;color:var(--ink-soft);margin:0 0 10px;">완료</h2>';
+  html += '<div class="ibox-grid">';
+  html += '<a class="ibox" href="npc-detail.html?id='+detail.finish.npc.id+'">'+safeImg(detail.finish.npc.img, detail.finish.npc.name,'thumb')+'<div><div class="lbl">완료 NPC</div><div class="val">'+detail.finish.npc.name+'</div></div></a>';
+  html += '<a class="ibox" href="map-detail.html?code='+detail.finish.place.code+'">'+safeImg(placeIcon || detail.finish.place.img, detail.finish.place.name,'thumb')+'<div><div class="lbl">완료 장소</div><div class="val">'+detail.finish.place.name+'</div></div></a>';
+  html += '</div></div>';
+  html += '</div>';
+
+  // ---- 대사 ----
+  if (detail.dialogues && detail.dialogues.length){
+    html += '<div class="section"><h2>대사</h2><div class="card bubble-list">' + detail.dialogues.map(dialogueRow).join('') + '</div></div>';
+  }
+
+  // ---- 조건/설명 (내용이 있을 때만 표시) ----
+  var hasDesc = detail.descHtml && detail.descHtml.trim();
+  var hasReqs = detail.reqs && detail.reqs.length;
+  var hasTips = detail.tips && detail.tips.length;
+  if (hasDesc || hasReqs || hasTips){
+    html += '<div class="section"><h2>퀘스트 조건</h2>';
+    if (hasDesc){ html += '<div class="card desc-box" style="margin-bottom:10px;">' + detail.descHtml + '</div>'; }
+    if (hasReqs){ html += '<div class="ibox-grid">' + detail.reqs.map(reqBox).join('') + '</div>'; }
+    if (hasTips){ html += '<div style="margin-top:14px;"><h2 style="font-size:13px;font-weight:700;color:var(--ink-soft);margin:0 0 10px;">TIP</h2><div class="ibox-grid">' + detail.tips.map(tipBox).join('') + '</div></div>'; }
+    html += '</div>';
+  }
+
+  // ---- 완료 대사 ----
+  if (detail.completionDialogues && detail.completionDialogues.length){
+    html += '<div class="section"><h2>완료 대사</h2><div class="card bubble-list">' + detail.completionDialogues.map(dialogueRow).join('') + '</div></div>';
+  }
+
+  // ---- 보상 ----
+  if (detail.rewards && detail.rewards.length){
+    html += '<div class="section"><h2>완료 보상</h2><div class="ibox-grid">' + detail.rewards.map(rewardBox).join('') + '</div></div>';
+  }
+
+  // ---- 다음 퀘스트 ----
+  if (detail.nexts && detail.nexts.length){
+    html += '<div class="section"><h2>다음 퀘스트</h2><div class="ibox-grid">' + detail.nexts.map(function(n){ return chainBox(n, '다음 퀘스트'); }).join('') + '</div></div>';
+  }
+
+  $detail.innerHTML = html;
+})();
+</script>
+</body>
+</html>

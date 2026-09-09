@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>맵 상세 · 로나월드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* =========================================================
+   로나월드 — 디자인 토큰 (메이플 나무액자 퀘스트창 스타일)
+   ========================================================= */
+:root{
+  --bg: #FDECC0;
+  --paper: #FFF7E2;
+  --paper-soft: #FFF1CE;
+  --wood: #7A4A20;
+  --wood-dark: #4E2D10;
+  --wood-light: #C98A46;
+  --ink: #46280D;
+  --ink-soft: #8A6640;
+  --line: #E3C08A;
+
+  --leaf: #4C9A2A;
+  --leaf-soft: #E1F2D2;
+  --leaf-ink: #2C6614;
+
+  --berry: #E2405F;
+  --berry-soft: #FCE1E7;
+  --berry-ink: #A01D3C;
+
+  --sun: #F5A928;
+  --sun-soft: #FFEEC4;
+  --sun-ink: #8A5A06;
+
+  --sky: #3E9BD6;
+  --sky-soft: #DFF1FB;
+  --sky-ink: #1E5C86;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
+  --pop: 4px 4px 0 var(--wood-dark);
+  --pop-sm: 3px 3px 0 var(--wood-dark);
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 6%, rgba(255,255,255,.55), transparent 34%),
+    radial-gradient(circle at 92% 10%, rgba(255,255,255,.4), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(76,154,42,.10), transparent 45%);
+  color: var(--ink);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  line-height:1.55;
+}
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+button{ font:inherit; }
+
+.font-display{
+  font-family: "Jua", "Pretendard", sans-serif;
+  letter-spacing: -.01em;
+}
+
+.wrap{ max-width:1180px; margin:0 auto; padding:20px 18px 64px; }
+
+/* ---------- 헤더 ---------- */
+.site-header{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:16px; margin-bottom:18px; flex-wrap:wrap;
+}
+.site-title{
+  display:flex; align-items:center; gap:10px;
+}
+.site-title .mark{
+  width:44px; height:44px; flex:none;
+  filter: drop-shadow(2px 2px 0 rgba(78,45,16,.35));
+}
+.site-title h1{
+  font-size:28px; margin:0; font-weight:400;
+  color:var(--ink);
+  text-shadow: 2px 2px 0 var(--paper), 3px 3px 0 var(--wood-dark);
+}
+.site-title p{
+  margin:3px 0 0; font-size:13px; color:var(--ink-soft); font-weight:600;
+}
+.reset-btn{
+  border:2px solid var(--wood-dark); background:var(--paper);
+  color:var(--ink); padding:9px 14px; border-radius:999px;
+  cursor:pointer; font-size:13px; font-weight:700;
+  box-shadow: var(--pop-sm);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.reset-btn:hover{ background: var(--sun-soft); }
+.reset-btn:active{ transform: translate(3px,3px); box-shadow:none; }
+
+/* ---------- 탭 ---------- */
+.tabs{
+  display:flex; gap:8px; overflow-x:auto; padding:4px 4px 10px; margin-bottom:14px;
+}
+.tab{
+  flex:none;
+  display:flex; align-items:center; gap:6px;
+  border:2px solid var(--wood-dark); background:var(--paper);
+  color: var(--ink);
+  padding:9px 16px; border-radius:999px; cursor:pointer;
+  font-size:14px; font-weight:700; white-space:nowrap;
+  box-shadow: var(--pop-sm);
+  transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
+}
+.tab:active{ transform: translate(3px,3px); box-shadow:none; }
+.tab .n{
+  font-size:11px; font-weight:800; padding:1px 7px; border-radius:999px;
+  background: var(--bg); color: var(--ink); border:1.5px solid var(--wood-dark);
+}
+.tab.on{
+  background: var(--sun); border-color: var(--wood-dark); color:var(--ink);
+  transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--wood-dark);
+}
+.tab.on .n{ background: var(--paper); }
+
+/* ---------- 필터 보드 ---------- */
+.board{
+  background: var(--paper);
+  border:3px solid var(--wood-dark);
+  border-radius: var(--radius-lg);
+  padding:16px;
+  margin-bottom:20px;
+  box-shadow: var(--pop);
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px,1fr));
+  gap:14px;
+  position:relative;
+}
+.field label{
+  display:block; font-size:12px; color:var(--ink-soft); margin-bottom:6px; font-weight:700;
+}
+.field input[type="text"],
+.field input[type="number"],
+.field select{
+  width:100%; border:2px solid var(--line); background:#fff;
+  border-radius: var(--radius-sm); padding:9px 11px; font-size:14px; color:var(--ink);
+  font-weight:600;
+}
+.field input:focus, .field select:focus{
+  outline:none; border-color: var(--sun);
+}
+.level-range-row{ display:flex; align-items:center; gap:6px; }
+.lv-input{ min-width:0; flex:1 1 0; text-align:center; }
+.lv-sep{ color:var(--ink-soft); flex:none; font-size:13px; font-weight:700; }
+.chips{ display:flex; flex-wrap:wrap; gap:7px; grid-column: 1 / -1; }
+.chip{
+  border:2px solid var(--wood-dark); background:#fff; color:var(--ink);
+  padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:700; cursor:pointer;
+  display:flex; align-items:center; gap:5px;
+  box-shadow: 2px 2px 0 var(--wood-dark);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.chip:active{ transform: translate(2px,2px); box-shadow:none; }
+.chip.on{
+  background: var(--leaf); border-color:var(--wood-dark); color:#fff;
+  transform: translate(2px,2px); box-shadow:none;
+}
+.hint{ grid-column: 1/-1; font-size:12px; color:var(--ink-soft); font-weight:600; }
+
+/* ---------- 목록 그리드 ---------- */
+.grid{
+  display:grid; gap:16px;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+}
+@media (min-width:640px){ .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (min-width:980px){ .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); } }
+.hidden{ display:none !important; }
+
+/* ---------- 퀘스트 카드 (나무액자 퀘스트창) ---------- */
+.qcard{
+  position:relative;
+  background: var(--paper);
+  border:3px solid var(--wood-dark);
+  border-radius: var(--radius-lg);
+  padding:16px 15px 13px;
+  box-shadow: var(--pop);
+  display:block;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.qcard::before, .qcard::after{
+  content:''; position:absolute; width:7px; height:7px; border-radius:50%;
+  background: var(--wood-light); border:1.5px solid var(--wood-dark); top:8px;
+}
+.qcard::before{ left:8px; }
+.qcard::after{ right:8px; }
+.qcard:hover{ transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--wood-dark); }
+.qcard .ribbon{
+  position:absolute; top:-12px; left:16px; right:16px;
+  display:flex; flex-wrap:wrap; gap:6px;
+}
+.ribbon-pill{
+  font-size:11px; font-weight:800; padding:4px 10px 3px;
+  border:2px solid var(--wood-dark);
+  border-radius:999px; display:flex; align-items:center; gap:4px;
+  box-shadow: 2px 2px 0 var(--wood-dark);
+}
+.qcard .top{ display:flex; gap:10px; margin-top:10px; }
+.qcard .thumb{
+  width:54px; height:54px; object-fit:contain; background:#fff;
+  border:2px solid var(--wood-dark); border-radius:11px; padding:5px; flex:none;
+}
+.qcard .meta-title{ min-width:0; }
+.qcard .code{ font-size:11.5px; color:var(--ink-soft); font-weight:800; }
+.qcard .title{ font-size:15.5px; font-weight:800; margin-top:1px; line-height:1.3;
+  overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+.qcard .meta{ font-size:12px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
+.qcard .exp-row{ margin-top:10px; }
+.qcard .bar{ height:8px; border-radius:999px; background:#fff; overflow:hidden; border:1.5px solid var(--wood-dark); }
+.qcard .bar > div{ height:100%; background: linear-gradient(90deg, var(--leaf), var(--sun)); }
+.qcard .exp-text{ font-size:10.5px; color:var(--ink-soft); margin-top:4px; text-align:right; font-weight:700; }
+.qcard .card-body{ display:block; color:inherit; text-decoration:none; }
+
+.qcard .job-row{ font-size:11px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
+.qcard .reward-names{ font-size:11px; color:var(--ink-soft); margin-top:6px; line-height:1.4; font-weight:600; }
+.qcard .fame-chip{
+  display:inline-flex; align-items:center; gap:3px; margin-top:6px;
+  font-size:11px; font-weight:800; color:var(--sun-ink); background:var(--sun-soft);
+  border:1.5px solid var(--wood-dark);
+  padding:2px 8px; border-radius:999px;
+}
+
+.qcard .complete-zone{ margin-top:11px; padding-top:11px; border-top:2px dashed var(--line); }
+.complete-btn{
+  width:100%; border:2px solid var(--wood-dark); background:var(--leaf-soft); color:var(--leaf-ink);
+  font-weight:800; font-size:12.5px; padding:9px 10px; border-radius:var(--radius-sm);
+  cursor:pointer; box-shadow: 2px 2px 0 var(--wood-dark);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.complete-btn:hover{ background: var(--leaf); color:#fff; }
+.complete-btn:active{ transform: translate(2px,2px); box-shadow:none; }
+.done-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.done-badge{
+  font-size:12px; font-weight:800; color:#fff; background:var(--leaf);
+  border:2px solid var(--wood-dark);
+  padding:6px 10px; border-radius:999px; flex:1; text-align:center;
+}
+.undo-btn{
+  border:none; background:none; color:var(--ink-soft); font-size:11px; font-weight:700; cursor:pointer;
+  text-decoration:underline; flex:none;
+}
+.choice-box{ display:flex; flex-direction:column; gap:6px; }
+.choice-box .choice-label{ font-size:11.5px; color:var(--ink-soft); font-weight:700; }
+.choice-item{
+  display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; padding:6px 8px;
+  border:2px solid var(--line); border-radius: var(--radius-sm); cursor:pointer; background:#fff;
+}
+.choice-item input{ accent-color: var(--leaf); }
+.choice-confirm-btn{
+  border:2px solid var(--wood-dark); background: var(--leaf); color:#fff; font-weight:800; font-size:12.5px;
+  padding:8px 10px; border-radius: var(--radius-sm); cursor:pointer; margin-top:2px;
+  box-shadow: 2px 2px 0 var(--wood-dark);
+}
+.choice-confirm-btn:active{ transform: translate(2px,2px); box-shadow:none; }
+
+/* type color variants */
+.t-talk.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
+.t-hunt.ribbon-pill{ background:var(--berry-soft); color:var(--berry-ink); }
+.t-collect.ribbon-pill{ background:var(--sun-soft); color:var(--sun-ink); }
+.t-deliver.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
+.t-use.ribbon-pill{ background:var(--sun-soft); color:var(--sun-ink); }
+.t-move.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
+.t-investigate.ribbon-pill{ background:var(--leaf-soft); color:var(--leaf-ink); }
+.t-etc.ribbon-pill{ background:#EEE4D2; color:var(--ink-soft); }
+
+/* ---------- 빈 상태 ---------- */
+.empty{
+  grid-column: 1/-1;
+  text-align:center; padding:56px 20px; color:var(--ink-soft);
+  background: var(--paper-soft); border:3px dashed var(--wood-light);
+  border-radius: var(--radius-lg);
+}
+.empty .big{ font-family:"Jua",sans-serif; font-size:19px; color:var(--ink); margin-bottom:6px; }
+
+/* ---------- 상세 페이지 공통 ---------- */
+.back-link{
+  display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:800;
+  color: var(--ink); margin-bottom:16px;
+}
+.back-link:hover{ color: var(--berry-ink); }
+
+.detail-header{
+  background: var(--paper);
+  border:3px solid var(--wood-dark);
+  border-radius: var(--radius-lg);
+  padding:20px 22px;
+  margin-bottom:18px;
+  box-shadow: var(--pop);
+  position:relative;
+}
+.detail-header::before, .detail-header::after{
+  content:''; position:absolute; width:8px; height:8px; border-radius:50%;
+  background: var(--wood-light); border:1.5px solid var(--wood-dark); top:10px;
+}
+.detail-header::before{ left:10px; }
+.detail-header::after{ right:10px; }
+.detail-header .type-tag{
+  display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:800;
+  border:2px solid var(--wood-dark);
+  padding:4px 11px; border-radius:999px; margin-bottom:10px;
+}
+.detail-header h1{
+  font-family:"Jua",sans-serif; font-weight:400; font-size:25px; margin:0 0 6px;
+  text-shadow: 2px 2px 0 rgba(78,45,16,.15);
+}
+.detail-header .sub{ font-size:13px; color:var(--ink-soft); font-weight:700; }
+
+.card{
+  background: var(--paper); border:2.5px solid var(--wood-dark); border-radius: var(--radius-md);
+  padding:16px;
+}
+.section{ margin-bottom:22px; }
+.section > h2{
+  font-size:13px; font-weight:800; color:var(--ink-soft); margin:0 0 10px;
+  text-transform:none;
+}
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:640px){ .two-col{ grid-template-columns:1fr; } }
+
+.ibox{
+  display:flex; align-items:center; gap:10px; padding:9px 10px;
+  border:2px solid var(--line); border-radius: var(--radius-sm); background:#fff;
+  transition: background .15s;
+}
+.ibox:hover{ background: var(--paper-soft); border-color: var(--wood-light); }
+.ibox .thumb{ width:44px; height:44px; object-fit:contain; background:#fff; border:2px solid var(--line); border-radius:10px; padding:4px; flex:none; }
+.ibox .lbl{ font-size:11px; color:var(--ink-soft); font-weight:700; }
+.ibox .val{ font-size:13.5px; font-weight:800; }
+.ibox-grid{ display:grid; gap:9px; grid-template-columns: 1fr 1fr; }
+@media (max-width:520px){ .ibox-grid{ grid-template-columns:1fr; } }
+
+.req-check{
+  width:20px; height:20px; border-radius:6px; border:2px solid var(--wood-dark);
+  flex:none; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  color:transparent; font-size:13px; font-weight:900;
+}
+.req-check.done{ background: var(--leaf); border-color:var(--wood-dark); color:#fff; }
+
+.bubble-list{ display:flex; flex-direction:column; gap:10px; }
+.brow{ display:flex; align-items:flex-start; gap:8px; }
+.brow.right{ justify-content:flex-end; }
+.avatar{ width:38px; height:38px; border-radius:50%; border:2px solid var(--wood-dark); object-fit:cover; background:#fff; flex:none; }
+.bubble{
+  position:relative; max-width:78%; padding:10px 13px; border-radius:15px; line-height:1.5; font-size:13.5px;
+  border:2px solid var(--wood-dark);
+}
+.bubble .name{ font-weight:800; font-size:12px; margin-bottom:2px; }
+.bubble.left{ background:#fff; color:var(--ink); border-bottom-left-radius:4px; }
+.bubble.right{ background: var(--berry); color:#fff; border-bottom-right-radius:4px; border-color: var(--wood-dark); }
+.bubble.right .name{ color: rgba(255,255,255,.9); }
+
+.chain-link{ display:flex; align-items:center; gap:10px; }
+.chain-link .arrow{ color: var(--ink-soft); font-size:18px; flex:none; }
+
+.desc-box{ font-size:14px; line-height:1.7; color: var(--ink); font-weight:500; }
+.desc-box p{ margin:0; }
+
+.count-badge{
+  display:inline-flex; align-items:center; font-size:13px; font-weight:800; color:#fff;
+  background:var(--berry); border:2px solid var(--wood-dark);
+  padding:2px 10px; border-radius:999px; margin-left:6px; vertical-align:2px;
+}
+
+/* ---------- 서브 패널 (퀘스트/아이템/몬스터 상세를 페이지 이동 없이 보여줌) ---------- */
+.panel-overlay{
+  position:fixed; inset:0; background:rgba(70,40,13,.45);
+  display:flex; justify-content:flex-end; z-index:100;
+}
+.panel-overlay.hidden{ display:none; }
+.panel-box{
+  position:relative; width:min(640px, 100%); height:100%;
+  background: var(--bg); box-shadow: -6px 0 24px rgba(0,0,0,.25);
+  overflow-y:auto; padding:20px 20px 40px;
+  animation: panelSlideIn .18s ease-out;
+}
+@keyframes panelSlideIn{ from{ transform:translateX(24px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+@media (max-width:640px){ .panel-box{ width:100%; } }
+.panel-close{
+  position:sticky; top:0; float:right; margin-left:12px;
+  width:36px; height:36px; border-radius:50%; border:2px solid var(--wood-dark);
+  background:var(--paper); color:var(--ink); font-size:16px; font-weight:800; cursor:pointer;
+  box-shadow: var(--pop-sm); z-index:2;
+}
+.panel-back{
+  position:sticky; top:0; float:left;
+  border-radius:999px; border:2px solid var(--wood-dark);
+  background:var(--paper); color:var(--ink); font-size:13px; font-weight:800; cursor:pointer;
+  padding:8px 14px; box-shadow: var(--pop-sm); z-index:2;
+}
+.panel-back.hidden{ display:none; }
+.panel-content{ clear:both; }
+.panel-content .back-link{ display:none; }
+.panel-content nav.tabs{ display:none; }
+.panel-content .ibox-grid{ grid-template-columns: 1fr; }
+.chain-chip{
+  flex:none; padding:6px 12px; border-radius:14px; border:2px solid var(--wood-dark);
+  white-space:nowrap; background:#fff; color:var(--ink-soft);
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  max-width:120px;
+}
+.chain-chip .chain-code{ font-size:12px; font-weight:800; }
+.chain-chip .chain-title{
+  font-size:10px; font-weight:600; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.chain-chip.current{ background:var(--sun); color:var(--ink); }
+.notready{
+  padding:40px 20px; text-align:center; color:var(--ink-soft);
+  background: var(--paper-soft); border:3px dashed var(--wood-light); border-radius: var(--radius-lg);
+}
+
+</style>
+</head>
+<body>
+<div class="wrap" style="max-width:1400px;">
+  <a class="back-link" href="index.html?tab=maps">← 목록으로</a>
+  <nav class="tabs" style="margin-bottom:16px;">
+    <a class="tab" href="index.html?tab=quests">📜 퀘스트</a>
+    <a class="tab" href="index.html?tab=monsters">🐾 몬스터</a>
+    <a class="tab" href="index.html?tab=items">🎒 아이템</a>
+    <a class="tab" href="index.html?tab=npc">💬 NPC</a>
+    <a class="tab on" href="index.html?tab=maps">🗺️ 맵</a>
+  </nav>
+
+  <div id="detail"></div>
+</div>
+
+<script>
+window.QUESTS = [
+  {
+    "id": 1031,
+    "code": "히나 1-1",
+    "title": "히나와 세라",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=12ARM7TcWjf7yUgnZJfRezS8McvrqKR4h&sz=w400",
+    "rewards": [
+      {
+        "exp": 35,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1021,
+    "code": "로저 1-1",
+    "title": "로저와 사과",
+    "region": "메이플로드",
+    "type": "아이템 사용",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1HMmAggKjdJqanxfjsQTEtSYShTmnzu4w&sz=w400",
+    "rewards": [
+      {
+        "name": "빨간포션",
+        "qty": 3,
+        "img": "https://drive.google.com/thumbnail?id=1sYPOa2w-UU_fKO7SQ-7R-fhRUYNE0alC&sz=w200"
+      },
+      {
+        "name": "파란포션",
+        "qty": 3,
+        "img": "https://drive.google.com/thumbnail?id=1Sql3X7512_6rqbxNXLu8aYcph8qZ0k_G&sz=w200"
+      },
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1032,
+    "code": "다나 1-1",
+    "title": "다나의 동생 센",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+    "rewards": [
+      {
+        "exp": 49,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1033,
+    "code": "다나 1-2",
+    "title": "센이 먹고 싶은 것",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
+    "rewards": [
+      {
+        "exp": 49,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1034,
+    "code": "다나 1-3",
+    "title": "맛있는 버섯사탕",
+    "region": "메이플로드",
+    "type": "아이템 전달",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+    "rewards": [
+      {
+        "name": "버섯 사탕",
+        "qty": 2,
+        "img": "https://drive.google.com/thumbnail?id=1wDugpIjzCeRbqCkQOut5x2NHeKvKeXi0&sz=w200"
+      },
+      {
+        "exp": 140,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1035,
+    "code": "토드 1-1",
+    "title": "토드의 사냥법",
+    "region": "메이플로드",
+    "type": "아이템 수집, 몬스터 사냥",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+    "rewardChoice": true,
+    "rewards": [
+      {
+        "name": "초록색 가죽 모자",
+        "itemId": "1002053",
+        "img": "https://drive.google.com/thumbnail?id=1NQScHwGrZyV40FJHJp7fPcgL3hsZxwRJ&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "갈색 가죽 모자",
+        "itemId": "1002008",
+        "img": "https://drive.google.com/thumbnail?id=1cZJ62f76_Irj5T6_dH1yekCgYMswtQMg&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "빨간색 머리띠",
+        "itemId": "1002014",
+        "img": "https://drive.google.com/thumbnail?id=1QQPdHCzX6uPnoLaGosNBkJqFW62zb2Lo&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "노란색 머리띠",
+        "itemId": "1002068",
+        "img": "https://drive.google.com/thumbnail?id=1MPm-Y4HpxqbA6bnUHZWQYaThxiintl2_&sz=w200",
+        "chance": 20
+      },
+      {
+        "name": "파란색 머리띠",
+        "itemId": "1002069",
+        "img": "https://drive.google.com/thumbnail?id=1NJi-XBZYiuI18lKlXzFDkYEn_jcGt9Yt&sz=w200",
+        "chance": 20
+      },
+      {
+        "exp": 210,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1036,
+    "code": "로빈 1-1",
+    "title": "만물박사 로빈",
+    "region": "메이플로드",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
+    "rewards": [
+      {
+        "exp": 280,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1037,
+    "code": "쌤 1-1",
+    "title": "달팽이 사냥 돕기",
+    "region": "메이플로드",
+    "type": "몬스터 사냥",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+    "rewards": [
+      {
+        "exp": 420,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1009,
+    "code": "레인 1-1",
+    "title": "레인의 메이플 퀴즈 1",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 14,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1010,
+    "code": "레인 1-2",
+    "title": "레인의 메이플 퀴즈 2",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 28,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1011,
+    "code": "레인 1-3",
+    "title": "레인의 메이플 퀴즈 3",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 42,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1012,
+    "code": "레인 1-4",
+    "title": "레인의 메이플 퀴즈 4",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1013,
+    "code": "레인 1-5",
+    "title": "레인의 메이플 퀴즈 5",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1014,
+    "code": "레인 1-6",
+    "title": "레인의 메이플 퀴즈 6",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 70,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1015,
+    "code": "레인 1-7",
+    "title": "레인의 메이플 퀴즈 7",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "rewards": [
+      {
+        "exp": 140,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1008,
+    "code": "피오 1-1",
+    "title": "피오의 재활용품 수거",
+    "region": "암허스트",
+    "type": "아이템 수집",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+    "rewards": [
+      {
+        "exp": 700,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      },
+      {
+        "name": "메소",
+        "qty": 200,
+        "img": "https://drive.google.com/thumbnail?id=1DaKmV5jEHVr7yW2AzdZfYPzi89jgEBpI&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1020,
+    "code": "피오 1-2",
+    "title": "피오의 재활용품 활용",
+    "region": "암허스트",
+    "type": "대화",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+    "rewards": [
+      {
+        "name": "릴렉스 체어",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1I7dJVQle_9HYgo3rf45gfJTYuJQxYxBN&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1038,
+    "code": "쌤 1-2",
+    "title": "마리아의 편지",
+    "region": "암허스트",
+    "type": "아이템 전달",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1nvI50wbkATpkC9HOZsFL1yVCDwoRzTw-&sz=w400",
+    "rewards": [
+      {
+        "name": "빨간포션",
+        "qty": 5,
+        "img": "https://drive.google.com/thumbnail?id=1sYPOa2w-UU_fKO7SQ-7R-fhRUYNE0alC&sz=w200"
+      },
+      {
+        "name": "파란포션",
+        "qty": 5,
+        "img": "https://drive.google.com/thumbnail?id=1Sql3X7512_6rqbxNXLu8aYcph8qZ0k_G&sz=w200"
+      },
+      {
+        "exp": 280,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  },
+  {
+    "id": 1039,
+    "code": "유나 1-1",
+    "title": "유나 도와주기",
+    "region": "암허스트",
+    "type": "몬스터 처치",
+    "minLevel": 1,
+    "jobs": [
+      "초보자"
+    ],
+    "npcImg": "https://drive.google.com/thumbnail?id=1Sjbaerx_GCNUUbbOa0IDOS2LBRTanyJG&sz=w400",
+    "rewards": [
+      {
+        "exp": 700,
+        "img": "https://drive.google.com/thumbnail?id=1oYRFXTpT_OpVkSBvQEBUddgiIqM1hg0P&sz=w200"
+      }
+    ]
+  }
+];
+
+window.QUEST_DETAILS = {
+  "1008": {
+    "id": 1008,
+    "code": "피오 1-1",
+    "title": "피오의 재활용품 수거",
+    "start": {
+      "npc": {
+        "id": "10000"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "10000"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [
+      {
+        "kind": "item",
+        "id": "4031161",
+        "name": "오래된 나사",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1-G6tjdlGS5K0W3gUbuzg4yenRfV6MlAP&sz=w200"
+      },
+      {
+        "kind": "item",
+        "id": "4031162",
+        "name": "낡은 나무 판자",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1XDg-0xK9wEcrQaMNR3Wqh1tlCao5G-sZ&sz=w200"
+      }
+    ],
+    "tips": []
+  },
+  "1009": {
+    "id": 1009,
+    "code": "레인 1-1",
+    "title": "레인의 메이플 퀴즈 1",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1010": {
+    "id": 1010,
+    "code": "레인 1-2",
+    "title": "레인의 메이플 퀴즈 2",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1011": {
+    "id": 1011,
+    "code": "레인 1-3",
+    "title": "레인의 메이플 퀴즈 3",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1012": {
+    "id": 1012,
+    "code": "레인 1-4",
+    "title": "레인의 메이플 퀴즈 4",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1013": {
+    "id": 1013,
+    "code": "레인 1-5",
+    "title": "레인의 메이플 퀴즈 5",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1014": {
+    "id": 1014,
+    "code": "레인 1-6",
+    "title": "레인의 메이플 퀴즈 6",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1015": {
+    "id": 1015,
+    "code": "레인 1-7",
+    "title": "레인의 메이플 퀴즈 7",
+    "start": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12101"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1020": {
+    "id": 1020,
+    "code": "피오 1-2",
+    "title": "피오의 재활용품 활용",
+    "start": {
+      "npc": {
+        "id": "10000"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "10000"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "3010000",
+        "name": "릴렉스 체어",
+        "qty": 1
+      }
+    ],
+    "reqs": [],
+    "tips": []
+  },
+  "1021": {
+    "id": 1021,
+    "code": "로저 1-1",
+    "title": "로저와 사과",
+    "start": {
+      "npc": {
+        "id": "2000"
+      },
+      "place": {
+        "code": "20000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2000"
+      },
+      "place": {
+        "code": "20000"
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "2000000",
+        "name": "빨간포션",
+        "qty": 3
+      },
+      {
+        "itemId": "2000003",
+        "name": "파란포션",
+        "qty": 3
+      }
+    ],
+    "reqs": [
+      {
+        "kind": "use",
+        "id": "2010007",
+        "name": "로저의 사과",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1oDarPbWp6Nj8lFUeMMbPvpnKEdAbLtVI&sz=w200"
+      }
+    ],
+    "tips": []
+  },
+  "1031": {
+    "id": 1031,
+    "code": "히나 1-1",
+    "title": "히나와 세라",
+    "start": {
+      "npc": {
+        "id": "2101"
+      },
+      "place": {
+        "code": "10000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2100"
+      },
+      "place": {
+        "code": "10000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1032": {
+    "id": 1032,
+    "code": "다나 1-1",
+    "title": "다나의 동생 센",
+    "start": {
+      "npc": {
+        "id": "2102"
+      },
+      "place": {
+        "code": "30000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2001"
+      },
+      "place": {
+        "code": "30001"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1033": {
+    "id": 1033,
+    "code": "다나 1-2",
+    "title": "센이 먹고 싶은 것",
+    "start": {
+      "npc": {
+        "id": "2001"
+      },
+      "place": {
+        "code": "30001"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2102"
+      },
+      "place": {
+        "code": "30000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1034": {
+    "id": 1034,
+    "code": "다나 1-3",
+    "title": "맛있는 버섯사탕",
+    "start": {
+      "npc": {
+        "id": "2102"
+      },
+      "place": {
+        "code": "30000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2001"
+      },
+      "place": {
+        "code": "30001"
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "4031792",
+        "name": "버섯 사탕",
+        "qty": 2
+      }
+    ],
+    "reqs": [
+      {
+        "kind": "item",
+        "id": "4031792",
+        "name": "버섯 사탕",
+        "qty": 10,
+        "img": "https://drive.google.com/thumbnail?id=1wDugpIjzCeRbqCkQOut5x2NHeKvKeXi0&sz=w200"
+      }
+    ],
+    "tips": []
+  },
+  "1035": {
+    "id": 1035,
+    "code": "토드 1-1",
+    "title": "토드의 사냥법",
+    "start": {
+      "npc": {
+        "id": "2004"
+      },
+      "place": {
+        "code": "40000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2002"
+      },
+      "place": {
+        "code": "40000"
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "1002053",
+        "name": "초록색 가죽 모자"
+      },
+      {
+        "itemId": "1002008",
+        "name": "갈색 가죽 모자"
+      },
+      {
+        "itemId": "1002014",
+        "name": "빨간색 머리띠"
+      },
+      {
+        "itemId": "1002068",
+        "name": "노란색 머리띠"
+      },
+      {
+        "itemId": "1002069",
+        "name": "파란색 머리띠"
+      }
+    ],
+    "reqs": [
+      {
+        "kind": "item",
+        "id": "4000142",
+        "name": "주니어 스톤볼의 돌조각",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1l5w_4BGE773dosvRoYaNP1PfDIDtE8bt&sz=w200"
+      },
+      {
+        "kind": "monster",
+        "id": "9300018",
+        "name": "주니어 스톤볼",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1HDmfr1C8q2LfEF0Y5aJiwJPMvJfswAgU&sz=w200"
+      }
+    ],
+    "tips": []
+  },
+  "1036": {
+    "id": 1036,
+    "code": "로빈 1-1",
+    "title": "만물박사 로빈",
+    "start": {
+      "npc": {
+        "id": "2003"
+      },
+      "place": {
+        "code": "50000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2003"
+      },
+      "place": {
+        "code": "50000"
+      }
+    },
+    "rewards": [],
+    "reqs": [],
+    "tips": []
+  },
+  "1037": {
+    "id": 1037,
+    "code": "쌤 1-1",
+    "title": "달팽이 사냥 돕기",
+    "start": {
+      "npc": {
+        "id": "2005"
+      },
+      "place": {
+        "code": "50000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "2103"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [],
+    "reqs": [
+      {
+        "kind": "monster",
+        "id": "100000",
+        "name": "달팽이",
+        "qty": 10,
+        "img": "https://drive.google.com/thumbnail?id=1zR127JUMFS__fQtMZaN61jaTZzvwPz9E&sz=w200"
+      }
+    ],
+    "tips": []
+  },
+  "1038": {
+    "id": 1038,
+    "code": "쌤 1-2",
+    "title": "마리아의 편지",
+    "start": {
+      "npc": {
+        "id": "2103"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "12000"
+      },
+      "place": {
+        "code": "1000000"
+      }
+    },
+    "rewards": [
+      {
+        "itemId": "2000000",
+        "name": "빨간포션",
+        "qty": 5
+      },
+      {
+        "itemId": "2000003",
+        "name": "파란포션",
+        "qty": 5
+      }
+    ],
+    "reqs": [
+      {
+        "kind": "item",
+        "id": "4031000",
+        "name": "마리아의 편지",
+        "qty": 1,
+        "img": "https://drive.google.com/thumbnail?id=1PfkZuDooN5wqZqqhPU56e3eOE2uKFl8Y&sz=w200"
+      }
+    ],
+    "tips": []
+  },
+  "1039": {
+    "id": 1039,
+    "code": "유나 1-1",
+    "title": "유나 도와주기",
+    "start": {
+      "npc": {
+        "id": "20100"
+      },
+      "place": {
+        "code": "1010000"
+      }
+    },
+    "finish": {
+      "npc": {
+        "id": "20100"
+      },
+      "place": {
+        "code": "1010000"
+      }
+    },
+    "rewards": [],
+    "reqs": [
+      {
+        "kind": "monster",
+        "id": "100001",
+        "name": "파란 달팽이",
+        "qty": 10,
+        "img": "https://drive.google.com/thumbnail?id=1NHfy8hYrClJJWty8pOWa5L2ASCyYNOvw&sz=w200"
+      },
+      {
+        "kind": "monster",
+        "id": "120100",
+        "name": "스포아",
+        "qty": 10,
+        "img": "https://drive.google.com/thumbnail?id=1-TgapVeQYiORFWaHdybvTi-a-71ka5B8&sz=w200"
+      }
+    ],
+    "tips": []
+  }
+};
+
+window.NPCS = [
+  {
+    "id": "2101",
+    "name": "히나",
+    "img": "https://drive.google.com/thumbnail?id=12ARM7TcWjf7yUgnZJfRezS8McvrqKR4h&sz=w400",
+    "place": {
+      "name": "버섯동산",
+      "code": "10000",
+      "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 12,
+    "spotY": 48
+  },
+  {
+    "id": "2100",
+    "name": "세라",
+    "img": "https://drive.google.com/thumbnail?id=1TqUjYQ-5cbUBVNrfQ2UEJNpBkrexh3Ez&sz=w400",
+    "place": {
+      "name": "버섯동산",
+      "code": "10000",
+      "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 70,
+    "spotY": 22
+  },
+  {
+    "id": "2000",
+    "name": "로저",
+    "img": "https://drive.google.com/thumbnail?id=1HMmAggKjdJqanxfjsQTEtSYShTmnzu4w&sz=w400",
+    "place": {
+      "name": "달팽이동산",
+      "code": "20000",
+      "img": "https://drive.google.com/thumbnail?id=1jACaObJZvgb2uW7e6ZW1ymv7f-0VchNm&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 45,
+    "spotY": 30
+  },
+  {
+    "id": "2102",
+    "name": "다나",
+    "img": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
+    "place": {
+      "name": "달팽이꽃밭",
+      "code": "30000",
+      "img": "https://drive.google.com/thumbnail?id=1U5usCFqzg38Y9Z75nKS9FHl9N50197hd&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 13,
+    "spotY": 50
+  },
+  {
+    "id": "2001",
+    "name": "센",
+    "img": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
+    "place": {
+      "name": "버섯마을민가",
+      "code": "30001",
+      "img": "https://drive.google.com/thumbnail?id=1G-fTo4f9JKIC3qg-fuVyE-UC_7pL34CC&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 51,
+    "spotY": 70
+  },
+  {
+    "id": "2004",
+    "name": "토드",
+    "img": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
+    "place": {
+      "name": "작은숲속",
+      "code": "40000",
+      "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 9,
+    "spotY": 60
+  },
+  {
+    "id": "2002",
+    "name": "피터",
+    "img": "https://drive.google.com/thumbnail?id=1Q0N2HuHImV9ceq1DC3HBN2M_gpyHNDc6&sz=w400",
+    "place": {
+      "name": "작은숲속",
+      "code": "40000",
+      "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 81,
+    "spotY": 50
+  },
+  {
+    "id": "2003",
+    "name": "로빈",
+    "img": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
+    "place": {
+      "name": "위험한 숲속",
+      "code": "50000",
+      "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 20,
+    "spotY": 73
+  },
+  {
+    "id": "2005",
+    "name": "쌤",
+    "img": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
+    "place": {
+      "name": "위험한 숲속",
+      "code": "50000",
+      "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 80,
+    "spotY": 67
+  },
+  {
+    "id": "2103",
+    "name": "마리아",
+    "img": "https://drive.google.com/thumbnail?id=1nvI50wbkATpkC9HOZsFL1yVCDwoRzTw-&sz=w400",
+    "place": {
+      "name": "암허스트",
+      "code": "1000000",
+      "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 48,
+    "spotY": 70
+  },
+  {
+    "id": "12101",
+    "name": "레인",
+    "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
+    "place": {
+      "name": "암허스트",
+      "code": "1000000",
+      "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w1000"
+    },
+    "dialogues": [],
+    "spotX": 10.5,
+    "spotY": 82,
+    "flip": true
+  },
+  {
+    "id": "10000",
+    "name": "피오",
+    "img": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
+    "place": {
+      "name": "암허스트",
+      "code": "1000000",
+      "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600"
+    },
+    "dialogues": [],
+    "spotX": 26.5,
+    "spotY": 82.5
+  },
+  {
+    "id": "12000",
+    "name": "루카스",
+    "img": "https://drive.google.com/thumbnail?id=1fS17tGLu54Wr2EA7GenxcRolmx-48UiP&sz=w400",
+    "place": {
+      "name": "암허스트",
+      "code": "1000000",
+      "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500"
+    },
+    "dialogues": [],
+    "spotX": 60,
+    "spotY": 70
+  },
+  {
+    "id": "11000",
+    "name": "시드",
+    "img": "https://drive.google.com/thumbnail?id=1vk07FF7JC64Gsbl5k7MX6lDss3nLiWkl&sz=w400",
+    "place": {
+      "name": "암허스트 무기상점",
+      "code": "1000001",
+      "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w1000"
+    },
+    "dialogues": [],
+    "spotX": 20,
+    "spotY": 85,
+    "markerSize": 100,
+    "flip": true,
+    "sells": [
+      "1302000",
+      "1312004",
+      "1322005",
+      "1332005"
+    ],
+    "role": "무기"
+  },
+  {
+    "id": "11100",
+    "name": "루시",
+    "img": "https://drive.google.com/thumbnail?id=1NTe3MF0nj0F8HyDL7n4HjlkYtKMsG223&sz=w400",
+    "role": "잡화",
+    "place": {
+      "name": "암허스트 잡화상점",
+      "code": "1000003",
+      "img": "https://drive.google.com/thumbnail?id=1KScbgiJgCa_wDppg7wkedz8BoL7X26vB&sz=w1000"
+    },
+    "dialogues": [],
+    "sells": [
+      "2000000",
+      "2000001",
+      "2000002",
+      "2010000",
+      "2001533"
+    ],
+    "spotX": 20,
+    "spotY": 85,
+    "markerSize": 100,
+    "flip": true
+  },
+  {
+    "id": "20100",
+    "name": "유나",
+    "img": "https://drive.google.com/thumbnail?id=1Sjbaerx_GCNUUbbOa0IDOS2LBRTanyJG&sz=w400",
+    "place": {
+      "name": "모험가의 수련장 입구",
+      "code": "1010000",
+      "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000"
+    },
+    "dialogues": [],
+    "spotX": 50,
+    "spotY": 50
+  }
+];
+
+window.MAPS = [
+  {
+    "code": "10000",
+    "name": "버섯동산",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1000",
+    "portals": [
+      {
+        "toCode": "20000",
+        "toName": "달팽이동산",
+        "note": "이동",
+        "x": 80,
+        "y": 43
+      }
+    ]
+  },
+  {
+    "code": "20000",
+    "name": "달팽이동산",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1jACaObJZvgb2uW7e6ZW1ymv7f-0VchNm&sz=w1000",
+    "portals": [
+      {
+        "toCode": "30000",
+        "toName": "달팽이 꽃밭",
+        "note": "이동",
+        "x": 87,
+        "y": 43
+      }
+    ]
+  },
+  {
+    "code": "30000",
+    "name": "달팽이 꽃밭",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1U5usCFqzg38Y9Z75nKS9FHl9N50197hd&sz=w1000",
+    "portals": [
+      {
+        "toCode": "30001",
+        "toName": "버섯마을민가",
+        "note": "이동",
+        "x": 55.5,
+        "y": 34
+      },
+      {
+        "toCode": "40000",
+        "toName": "작은 숲속",
+        "note": "이동",
+        "x": 85,
+        "y": 35
+      }
+    ]
+  },
+  {
+    "code": "30001",
+    "name": "버섯마을민가",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1G-fTo4f9JKIC3qg-fuVyE-UC_7pL34CC&sz=w1000",
+    "portals": [
+      {
+        "toCode": "30000",
+        "toName": "달팽이 꽃밭",
+        "note": "이동",
+        "x": 39.5,
+        "y": 58
+      }
+    ]
+  },
+  {
+    "code": "40000",
+    "name": "작은 숲속",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1000",
+    "portals": [
+      {
+        "toCode": "50000",
+        "toName": "위험한 숲속",
+        "note": "이동",
+        "x": 85,
+        "y": 35
+      }
+    ]
+  },
+  {
+    "code": "50000",
+    "name": "위험한 숲속",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1000",
+    "portals": [
+      {
+        "toCode": "1000000",
+        "toName": "암허스트",
+        "note": "이동",
+        "x": 93,
+        "y": 54.5
+      }
+    ]
+  },
+  {
+    "code": "1000000",
+    "name": "암허스트",
+    "region": "암허스트",
+    "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600",
+    "portals": [
+      {
+        "toCode": "50000",
+        "toName": "위험한 숲속",
+        "note": "이동",
+        "x": 5,
+        "y": 67.5
+      },
+      {
+        "toCode": "1000001",
+        "toName": "암허스트 무기상점",
+        "note": "이동",
+        "x": 16.4,
+        "y": 23
+      },
+      {
+        "toCode": "1000003",
+        "toName": "암허스트 잡화상점",
+        "note": "이동",
+        "x": 52.3,
+        "y": 56
+      },
+      {
+        "toCode": "1010000",
+        "toName": "모험가의 수련장 입구",
+        "note": "이동",
+        "x": 91.3,
+        "y": 67
+      }
+    ]
+  },
+  {
+    "code": "1000001",
+    "name": "암허스트 무기상점",
+    "region": "암허스트",
+    "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w1000",
+    "portals": [
+      {
+        "toCode": "1000000",
+        "toName": "암허스트",
+        "note": "이동",
+        "x": 42,
+        "y": 74
+      }
+    ]
+  },
+  {
+    "code": "1000003",
+    "name": "암허스트 잡화상점",
+    "region": "암허스트",
+    "img": "https://drive.google.com/thumbnail?id=1KScbgiJgCa_wDppg7wkedz8BoL7X26vB&sz=w1000",
+    "portals": [
+      {
+        "toCode": "1000000",
+        "toName": "암허스트",
+        "note": "이동",
+        "x": 87,
+        "y": 70,
+        "size": 130
+      }
+    ]
+  },
+  {
+    "code": "1010000",
+    "name": "모험가의 수련장 입구",
+    "region": "암허스트",
+    "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000",
+    "portals": []
+  }
+];
+
+window.MONSTERS = [
+  {
+    "id": "9300018",
+    "name": "주니어 스톤볼",
+    "img": "https://drive.google.com/thumbnail?id=1HDmfr1C8q2LfEF0Y5aJiwJPMvJfswAgU&sz=w200",
+    "place": {
+      "name": "작은숲속",
+      "code": "40000",
+      "count": 3
+    },
+    "note": "튜토리얼",
+    "minLevel": 1,
+    "hp": 8,
+    "mp": 15,
+    "exp": 5,
+    "acc": 30,
+    "eva": 0,
+    "drops": [
+      {
+        "itemId": "4000142",
+        "name": "주니어 스톤볼의 돌조각"
+      }
+    ],
+    "pdd": 0,
+    "mdd": 0
+  },
+  {
+    "id": "100000",
+    "name": "달팽이",
+    "img": "https://drive.google.com/thumbnail?id=1zR127JUMFS__fQtMZaN61jaTZzvwPz9E&sz=w400",
+    "minLevel": 1,
+    "hp": 8,
+    "mp": 0,
+    "exp": 15,
+    "acc": 20,
+    "eva": 0,
+    "pdd": 0,
+    "mdd": 0,
+    "place": {
+      "name": "위험한 숲속",
+      "code": "50000",
+      "count": 17
+    },
+    "drops": [
+      {
+        "itemId": "4000019",
+        "name": "달팽이의 껍질"
+      },
+      {
+        "itemId": "4010000",
+        "name": "청동의 원석"
+      },
+      {
+        "itemId": "4020000",
+        "name": "가넷의 원석"
+      },
+      {
+        "itemId": "2000000",
+        "name": "빨간포션"
+      },
+      {
+        "itemId": "2010009",
+        "name": "초록 사과"
+      },
+      {
+        "itemId": "2040002",
+        "name": "투구 방어력 주문서 10%"
+      },
+      {
+        "itemId": "2041001",
+        "name": "망토 마법 방어력 주문서 60%"
+      },
+      {
+        "itemId": "2060000",
+        "name": "활전용 화살"
+      },
+      {
+        "itemId": "2061000",
+        "name": "석궁전용 화살"
+      },
+      {
+        "itemId": "1002067",
+        "name": "연두색 머리띠"
+      }
+    ],
+    "category": "동물형",
+    "desc": "메이플 아일랜드와 빅토리아 아일랜드 전역에서 만날 수 있는 작고 약한 몬스터다. 그 수가 많고 흔해서 '발에 차이는 것이 달팽이'라는 속담도 있다.\n달팽이는 막 여행을 시작한 초보자라도 쉽게 사냥할 수 있다. 달팽이에게 진 모험가는 아직까지 없었다고 하니 새로운 도전을 즐기는 모험가라면 달팽이에게 져보는 것도 의미있는 도전이 되지 않을까 한다.\n달팽이 세마리 스킬을 1레벨까지 익힌 모험가는 달팽이의 껍질을 공격용 무기로도 사용할 수 있다."
+  },
+  {
+    "id": "100001",
+    "name": "파란 달팽이",
+    "img": "https://drive.google.com/thumbnail?id=1NHfy8hYrClJJWty8pOWa5L2ASCyYNOvw&sz=w200",
+    "place": {
+      "name": "모험가의 수련장 입구",
+      "code": "1010000",
+      "count": 6
+    }
+  },
+  {
+    "id": "120100",
+    "name": "스포아",
+    "img": "https://drive.google.com/thumbnail?id=1-TgapVeQYiORFWaHdybvTi-a-71ka5B8&sz=w200",
+    "place": {
+      "name": "모험가의 수련장 입구",
+      "code": "1010000",
+      "count": 6
+    }
+  },
+  {
+    "id": "1210102",
+    "name": "주황버섯",
+    "img": "https://drive.google.com/thumbnail?id=1Hrsi9wVsQdiT4eUZOWCDw1nSJHqZgEQQ&sz=w400",
+    "place": {
+      "name": "모험가의 수련장 입구",
+      "code": "1010000",
+      "count": 2
+    },
+    "minLevel": 8,
+    "hp": 80,
+    "mp": 45,
+    "exp": 75,
+    "acc": 42,
+    "eva": 1,
+    "pdd": 0,
+    "mdd": 10,
+    "drops": [
+      {
+        "itemId": "4010000",
+        "name": "청동의 원석"
+      },
+      {
+        "itemId": "2000000",
+        "name": "빨간포션"
+      },
+      {
+        "itemId": "2060000",
+        "name": "활전용 화살"
+      },
+      {
+        "itemId": "2061000",
+        "name": "석궁전용 화살"
+      },
+      {
+        "name": "주황버섯의 갓"
+      },
+      {
+        "name": "다이아몬드의 원석"
+      },
+      {
+        "name": "버섯 오목알"
+      },
+      {
+        "name": "주황버섯의 뿔"
+      },
+      {
+        "name": "신발 점프력 주문서 10%"
+      },
+      {
+        "name": "불릿"
+      },
+      {
+        "name": "브론즈 코이프"
+      },
+      {
+        "name": "브라운 로키 슈트"
+      },
+      {
+        "name": "흰색 고무신"
+      },
+      {
+        "name": "브라운 하드래더 부츠"
+      },
+      {
+        "name": "빨간색 닌자 샌들"
+      },
+      {
+        "name": "아르"
+      },
+      {
+        "name": "양날 도끼"
+      },
+      {
+        "name": "창"
+      }
+    ]
+  }
+];
+
+</script>
+<script>
+(function(){
+  'use strict';
+  var QUEST_DETAILS = window.QUEST_DETAILS || {};
+  var NPCS = window.NPCS || [];
+  var MAPS = window.MAPS || [];
+  var MONSTERS = window.MONSTERS || [];
+
+  var params = new URLSearchParams(location.search);
+  var code = params.get('code');
+
+  var map = MAPS.find(function(m){ return String(m.code)===String(code); });
+
+  function safeImg(src, alt, cls){
+    var d = 'https://placehold.co/300x180/FFF9F0/9A8574?text=%20';
+    return '<img src="'+(src||d)+'" alt="'+(alt||'')+'" class="'+(cls||'thumb')+'" onerror="this.onerror=null;this.src=\''+d+'\';">';
+  }
+
+  var $detail = document.getElementById('detail');
+
+  // 맵 데이터가 아직 없어도, 이 코드로 등장하는 NPC/퀘스트는 보여준다 (이름은 코드로 대체 표시)
+  var mapName = map ? map.name : null;
+
+  var relatedNPCs = NPCS.filter(function(n){ return n.place && String(n.place.code)===String(code); });
+  var relatedMonsters = MONSTERS.filter(function(m){ return m.place && String(m.place.code)===String(code); });
+  // (이름 추정용으로만 계산 — 화면에는 "이 위치의 퀘스트"를 따로 보여주지 않음)
+  Object.keys(QUEST_DETAILS).forEach(function(qid){
+    var d = QUEST_DETAILS[qid];
+    var isStart = d.start && d.start.place && String(d.start.place.code)===String(code);
+    var isFinish = d.finish && d.finish.place && String(d.finish.place.code)===String(code);
+    if (!mapName){
+      if (isStart) mapName = d.start.place.name;
+      else if (isFinish) mapName = d.finish.place.name;
+    }
+  });
+
+  if (!map && !relatedNPCs.length && !relatedMonsters.length){
+    $detail.innerHTML = '<div class="notready"><div class="big font-display" style="font-family:Jua,sans-serif;font-size:18px;margin-bottom:6px;">맵을 찾을 수 없어요</div><div>주소의 코드 값을 다시 확인해 주세요.</div></div>';
+    return;
+  }
+
+  var html = '';
+  html += '<div class="detail-header">';
+  if (map && map.img){
+    var hasCoordPortals = (map.portals && map.portals.some(function(p){ return p.x!=null && p.y!=null; })) ||
+      relatedNPCs.some(function(n){ return n.spotX!=null && n.spotY!=null; });
+    if (hasCoordPortals){
+      html += '<div style="overflow-x:auto;border-radius:12px;border:2.5px solid var(--wood-dark);margin-bottom:14px;text-align:center;">';
+      html += '<div style="position:relative;display:inline-block;">';
+      html += '<img src="'+map.img+'" alt="'+(mapName||'')+'" style="display:block;max-width:none;height:auto;" onerror="this.onerror=null;this.style.display=\'none\';">';
+      map.portals.forEach(function(p){
+        if (p.x==null || p.y==null) return;
+        var href = p.toCode ? ('map-detail.html?code='+p.toCode) : '#';
+        html += '<a href="'+href+'" title="'+(p.note||'이동')+' → '+(p.toName||'')+'" style="position:absolute;left:'+p.x+'%;top:'+p.y+'%;transform:translate(-50%,-50%);display:block;">';
+        var pSize = p.size || 88;
+        html += '<img src="https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" alt="포탈" style="width:'+pSize+'px;height:'+pSize+'px;object-fit:contain;" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'↑\';this.parentElement.style.cssText+=\'width:30px;height:30px;border-radius:50%;background:var(--sun);border:2.5px solid var(--wood-dark);display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;font-size:15px;\';">';
+        html += '</a>';
+      });
+      relatedNPCs.forEach(function(n){
+        if (!n.spotX || !n.spotY) return;
+        html += '<a href="npc-detail.html?id='+n.id+'" title="'+n.name+'" style="position:absolute;left:'+n.spotX+'%;top:'+n.spotY+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;">';
+        var mSize = n.markerSize || 44;
+        html += '<img src="'+(n.img||'')+'" alt="'+n.name+'" style="width:'+mSize+'px;height:'+mSize+'px;object-fit:contain;'+(n.flip?'transform:scaleX(-1);':'')+'" onerror="this.style.display=\'none\';">';
+        html += '<span style="margin-top:2px;font-size:11px;font-weight:800;color:var(--ink);background:var(--paper);border:1.5px solid var(--wood-dark);border-radius:999px;padding:1px 7px;">'+n.name+'</span>';
+        html += '</a>';
+      });
+      html += '</div>';
+      html += '</div>';
+    } else {
+      html += '<div style="overflow-x:auto;border-radius:12px;border:2.5px solid var(--wood-dark);margin-bottom:14px;text-align:center;">';
+      html += '<img src="'+map.img+'" alt="'+(mapName||'')+'" style="display:inline-block;max-width:none;height:auto;" onerror="this.onerror=null;this.style.display=\'none\';">';
+      html += '</div>';
+    }
+  }
+  html += '<h1 style="margin-bottom:2px;">' + (mapName || '이름 미등록 (코드 '+code+')') + '</h1>';
+  html += '<div class="sub">' + (map && map.region ? map.region : '지역 정보 없음') + '</div>';
+  html += '</div>';
+
+  if (relatedNPCs.length){
+    html += '<div class="section"><h2>이 위치의 NPC</h2><div class="ibox-grid">' + relatedNPCs.map(function(n){
+      return '<a class="ibox" href="npc-detail.html?id='+n.id+'">'+safeImg(n.img, n.name, 'thumb')+'<div><div class="lbl">NPC</div><div class="val">'+n.name+'</div></div></a>';
+    }).join('') + '</div></div>';
+  }
+
+  if (relatedMonsters.length){
+    html += '<div class="section"><h2>이 위치의 몬스터</h2><div class="ibox-grid">' + relatedMonsters.map(function(m){
+      return '<a class="ibox" href="monster-detail.html?id='+m.id+'">'+safeImg(m.img, m.name, 'thumb')+'<div><div class="lbl">몬스터'+(m.minLevel?' · Lv.'+m.minLevel:'')+'</div><div class="val">'+m.name+(m.place&&m.place.count?' <span class="count-badge">'+m.place.count+'마리</span>':'')+'</div></div></a>';
+    }).join('') + '</div></div>';
+  }
+
+  if (map && map.portals && map.portals.length){
+    html += '<div class="section"><h2>포털</h2><div class="ibox-grid">' + map.portals.map(function(p){
+      var inner = (p.spotImg ? safeImg(p.spotImg, p.toName, 'thumb') : '') + '<div><div class="lbl">'+(p.note||'이동')+'</div><div class="val">'+(p.toName||('코드 '+p.toCode))+'</div></div>';
+      return p.toCode ? '<a class="ibox" href="map-detail.html?code='+p.toCode+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+    }).join('') + '</div></div>';
+  }
+
+  if (!relatedNPCs.length && !relatedMonsters.length && !(map && map.portals && map.portals.length)){
+    html += '<div class="notready">이 위치와 관련된 NPC·몬스터·포털 정보가 아직 없어요.</div>';
+  }
+
+  $detail.innerHTML = html;
+})();
+</script>
+</body>
+</html>
