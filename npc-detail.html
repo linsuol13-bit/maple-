@@ -395,6 +395,43 @@ button{ font:inherit; }
 .item-chip .txt .lbl{ font-size:10.5px; color:var(--ink-soft); font-weight:700; line-height:1.25; }
 .item-chip .txt .val{ font-size:13.5px; font-weight:800; line-height:1.3; white-space:nowrap; }
 
+.craft-card{
+  border:2px solid var(--line); border-radius:12px; background:#fff; padding:2px 12px; margin-bottom:8px;
+}
+.craft-card[open]{ padding-bottom:10px; }
+.craft-card-head{
+  display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
+  padding:8px 0; cursor:pointer; list-style:none;
+}
+.craft-card-head::-webkit-details-marker{ display:none; }
+.craft-card-head::after{ content:'▾'; font-size:11px; color:var(--ink-soft); margin-left:auto; transition:transform .15s; }
+.craft-card[open] .craft-card-head::after{ transform:rotate(180deg); }
+.craft-card-head .item-chip, .craft-mats .item-chip{
+  padding:4px 8px 4px 0; gap:6px; border:none; background:transparent; border-radius:0;
+}
+.craft-card-head .item-chip:hover, .craft-mats .item-chip:hover{ background:transparent; }
+.craft-card-head .item-chip .icon, .craft-mats .item-chip .icon{
+  border:none; background:transparent; border-radius:0; padding:0; object-fit:contain;
+}
+.craft-card-head .item-chip .icon{ width:30px; height:30px; }
+.craft-mats .item-chip .icon{ width:25px; height:25px; }
+.craft-card-head .item-chip .txt .val{ font-size:13px; }
+.craft-mats .item-chip .txt .val{ font-size:11.5px; }
+.craft-price{ font-size:12.5px; font-weight:800; color:var(--berry); white-space:nowrap; margin-right:6px; }
+.craft-mats{ display:flex; flex-wrap:wrap; gap:6px; padding-top:6px; border-top:1.5px dashed var(--line); }
+.craft-note{ margin-top:6px; font-size:11px; color:var(--ink-soft); font-weight:600; }
+.craft-or{ align-self:center; font-size:11px; font-weight:800; color:var(--ink-soft); }
+.craft-group-title{ font-size:14px; font-weight:800; margin:14px 0 8px; color:var(--ink-soft); }
+.craft-group-title:first-child{ margin-top:0; }
+.craft-tabs{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.craft-tab{
+  font-family:inherit; font-size:13px; font-weight:800; padding:7px 16px; border-radius:999px;
+  border:2px solid var(--line); background:#fff; color:var(--ink-soft); cursor:pointer;
+  transition:background .15s, border-color .15s, color .15s;
+}
+.craft-tab:hover{ border-color:var(--wood-light); }
+.craft-tab.active{ background:var(--wood-dark); border-color:var(--wood-dark); color:#fff; }
+
 
 .card{
   background: var(--paper); border:2.5px solid var(--wood-dark); border-radius: var(--radius-md);
@@ -711,7 +748,7 @@ window.QUESTS = [
     "id": 1009,
     "code": "레인 1-1",
     "title": "레인의 메이플 퀴즈 1",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -729,7 +766,7 @@ window.QUESTS = [
     "id": 1010,
     "code": "레인 1-2",
     "title": "레인의 메이플 퀴즈 2",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -747,7 +784,7 @@ window.QUESTS = [
     "id": 1011,
     "code": "레인 1-3",
     "title": "레인의 메이플 퀴즈 3",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -765,7 +802,7 @@ window.QUESTS = [
     "id": 1012,
     "code": "레인 1-4",
     "title": "레인의 메이플 퀴즈 4",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -783,7 +820,7 @@ window.QUESTS = [
     "id": 1013,
     "code": "레인 1-5",
     "title": "레인의 메이플 퀴즈 5",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -801,7 +838,7 @@ window.QUESTS = [
     "id": 1014,
     "code": "레인 1-6",
     "title": "레인의 메이플 퀴즈 6",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -819,7 +856,7 @@ window.QUESTS = [
     "id": 1015,
     "code": "레인 1-7",
     "title": "레인의 메이플 퀴즈 7",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -837,7 +874,7 @@ window.QUESTS = [
     "id": 1008,
     "code": "피오 1-1",
     "title": "피오의 재활용품 수거",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "아이템 수집",
     "minLevel": 1,
     "jobs": [
@@ -860,7 +897,7 @@ window.QUESTS = [
     "id": 1020,
     "code": "피오 1-2",
     "title": "피오의 재활용품 활용",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -879,7 +916,7 @@ window.QUESTS = [
     "id": 1038,
     "code": "쌤 1-2",
     "title": "마리아의 편지",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "아이템 전달",
     "minLevel": 1,
     "jobs": [
@@ -907,7 +944,7 @@ window.QUESTS = [
     "id": 1039,
     "code": "유나 1-1",
     "title": "유나 도와주기",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "몬스터 처치",
     "minLevel": 1,
     "jobs": [
@@ -1525,7 +1562,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 12,
     "spotY": 48
   },
   {
@@ -1538,7 +1574,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 70,
     "spotY": 22
   },
   {
@@ -1551,7 +1586,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1jACaObJZvgb2uW7e6ZW1ymv7f-0VchNm&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 45,
     "spotY": 30
   },
   {
@@ -1564,7 +1598,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1U5usCFqzg38Y9Z75nKS9FHl9N50197hd&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 13,
     "spotY": 50
   },
   {
@@ -1577,7 +1610,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1G-fTo4f9JKIC3qg-fuVyE-UC_7pL34CC&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 51,
     "spotY": 70
   },
   {
@@ -1590,7 +1622,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 9,
     "spotY": 60
   },
   {
@@ -1603,7 +1634,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 81,
     "spotY": 50
   },
   {
@@ -1616,7 +1646,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 20,
     "spotY": 73
   },
   {
@@ -1629,7 +1658,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1600"
     },
     "dialogues": [],
-    "spotX": 80,
     "spotY": 67
   },
   {
@@ -1639,10 +1667,9 @@ window.NPCS = [
     "place": {
       "name": "암허스트",
       "code": "1000000",
-      "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600"
+      "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w2000"
     },
     "dialogues": [],
-    "spotX": 48,
     "spotY": 70
   },
   {
@@ -1654,10 +1681,7 @@ window.NPCS = [
       "code": "1000000",
       "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w1000"
     },
-    "dialogues": [],
-    "spotX": 10.5,
-    "spotY": 82,
-    "flip": true
+    "dialogues": []
   },
   {
     "id": "10000",
@@ -1666,10 +1690,9 @@ window.NPCS = [
     "place": {
       "name": "암허스트",
       "code": "1000000",
-      "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600"
+      "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w2000"
     },
     "dialogues": [],
-    "spotX": 26.5,
     "spotY": 82.5
   },
   {
@@ -1682,7 +1705,6 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w500"
     },
     "dialogues": [],
-    "spotX": 60,
     "spotY": 70
   },
   {
@@ -1695,23 +1717,21 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w1000"
     },
     "dialogues": [],
-    "spotX": 20,
-    "spotY": 85,
-    "markerSize": 100,
-    "flip": true,
     "sells": [
       "1302000",
       "1312004",
       "1322005",
       "1332005"
     ],
-    "role": "무기"
+    "role": "무기상점",
+    "category": "상점"
   },
   {
     "id": "11100",
     "name": "루시",
     "img": "https://drive.google.com/thumbnail?id=1NTe3MF0nj0F8HyDL7n4HjlkYtKMsG223&sz=w400",
-    "role": "잡화",
+    "role": "잡화상점",
+    "category": "상점",
     "place": {
       "name": "암허스트 잡화상점",
       "code": "1000003",
@@ -1724,11 +1744,7 @@ window.NPCS = [
       "2000002",
       "2010000",
       "2001533"
-    ],
-    "spotX": 20,
-    "spotY": 85,
-    "markerSize": 100,
-    "flip": true
+    ]
   },
   {
     "id": "20100",
@@ -1740,12 +1756,805 @@ window.NPCS = [
       "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000"
     },
     "dialogues": [],
-    "spotX": 50,
     "spotY": 50
   }
+,
+  {
+    "id": "12100",
+    "name": "마이",
+    "img": "https://drive.google.com/thumbnail?id=1ArOBjqrpAR14QvpeQY1qIGWGAAjVPj55&sz=w400",
+    "place": {
+      "name": "모험가의 수련장 입구",
+      "code": "1010000",
+      "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "20001",
+    "name": "바리",
+    "img": "https://drive.google.com/thumbnail?id=1A9tFWc9PufHm5I9SsYHYLHo5XeBGfqwk&sz=w400",
+    "place": {
+      "name": "모험가의 수련장 입구",
+      "code": "1010000",
+      "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1012100",
+    "name": "헬레나",
+    "role": "궁수 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1CTiSqv-MD3ePKn9TZOkp4mdZcOIR0JHa&sz=w400",
+    "place": {
+      "name": "선택의 갈림길",
+      "code": "1020000",
+      "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1090000",
+    "name": "카이린",
+    "role": "해적 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1JaWiOOWC62MXG_Zbp7CWR70hV2YYDuYc&sz=w400",
+    "place": {
+      "name": "선택의 갈림길",
+      "code": "1020000",
+      "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1032001",
+    "name": "하인즈",
+    "role": "마법사 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1QjLeV65OYuGCo4CwMX0BNUwrL6FEwWDs&sz=w400",
+    "place": {
+      "name": "선택의 갈림길",
+      "code": "1020000",
+      "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1022000",
+    "name": "주먹펴고 일어서",
+    "role": "전사 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=121S5oKEqxhNHTMoW6y3pqmaqVTxit38b&sz=w400",
+    "place": {
+      "name": "선택의 갈림길",
+      "code": "1020000",
+      "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1052001",
+    "name": "다크로드",
+    "role": "도적 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1V6RRLa2P0iXTEIslyHu6YhSus8UoDX1B&sz=w400",
+    "place": {
+      "name": "선택의 갈림길",
+      "code": "1020000",
+      "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000"
+    },
+    "dialogues": []
+  }
+,
+  {
+    "id": "20002",
+    "name": "빅스",
+    "img": "https://drive.google.com/thumbnail?id=1VgJAczbfQ6xZou1pDiDk4TQsU6PnmYuH&sz=w400",
+    "place": {
+      "name": "사우스페리",
+      "code": "2000000",
+      "img": "https://drive.google.com/thumbnail?id=1L6Rs-UFwIlvHf6wS4oBnd9nZsi5rf1t9&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "2007",
+    "name": "메이플 운영자",
+    "img": "https://drive.google.com/thumbnail?id=1YX482kp_HpcLQucDxnB7x8jgswpFIY2u&sz=w400",
+    "place": {
+      "name": "사우스페리",
+      "code": "2000000",
+      "img": "https://drive.google.com/thumbnail?id=1L6Rs-UFwIlvHf6wS4oBnd9nZsi5rf1t9&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "22000",
+    "name": "샹크스",
+    "img": "https://drive.google.com/thumbnail?id=1ZgsyADuKgEryosUpR504sa78ysiTNMdL&sz=w400",
+    "place": {
+      "name": "사우스페리",
+      "code": "2000000",
+      "img": "https://drive.google.com/thumbnail?id=1L6Rs-UFwIlvHf6wS4oBnd9nZsi5rf1t9&sz=w2000"
+    },
+    "dialogues": []
+  }
+,
+  {
+    "id": "21000",
+    "name": "판",
+    "role": "방어구상점",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1hGHjTJLF2txRFkvCvY9tEZZeKh0ew9gr&sz=w400",
+    "place": {
+      "name": "사우스페리 방어구상점",
+      "code": "2000001",
+      "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w1000"
+    },
+    "dialogues": [],
+    "sells": ["1072001", "1072005"]
+  }
+,
+  {
+    "id": "1200004",
+    "name": "푸로",
+    "img": "https://drive.google.com/thumbnail?id=1UL94V0twsFeodUFxel0OdqcxHBrnEnFz&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002001",
+    "name": "테오",
+    "img": "https://drive.google.com/thumbnail?id=1R1VtZVpoiUoW40wS9UnXYcYvL_1Q30t6&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002000",
+    "name": "필",
+    "img": "https://drive.google.com/thumbnail?id=1_edtS71IwVI1xvSpmPGh0_F7-ozzmmSK&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002100",
+    "name": "제인",
+    "img": "https://drive.google.com/thumbnail?id=1MgvLqqjitSeAb_0O6YS5F1abUpAMesfN&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000009",
+    "name": "바이킨",
+    "img": "https://drive.google.com/thumbnail?id=1gwxD4qFRsq4Yv72nBNBWSkVJfJfZBqcw&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "2084001",
+    "name": "골드리치",
+    "img": "https://drive.google.com/thumbnail?id=1H0tKcxxnTIF5Vkv1C2rM7JMJnmDcJ4fj&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002006",
+    "name": "체프",
+    "img": "https://drive.google.com/thumbnail?id=18OsieJwLFJP1vC85nau-846vh7y7ozAQ&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "2006",
+    "name": "티앤크",
+    "img": "https://drive.google.com/thumbnail?id=1Im4MaruTSZvZ-NySCXNwqIzE37g8ygl0&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002103",
+    "name": "리더 알",
+    "img": "https://drive.google.com/thumbnail?id=148PqBS5AWNVDHdkpQgFVFjX3udxdVxH-&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000041",
+    "name": "기부함",
+    "img": "https://drive.google.com/thumbnail?id=18-_C1SdVISB6ipPXB2cAlcR7lCLRegY9&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000066",
+    "name": "달리어",
+    "role": "명예의 신관",
+    "img": "https://drive.google.com/thumbnail?id=1rjc6eIS3_SGKX4H62Avwirteh5fK2sjm&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002004",
+    "name": "리스항구 모범택시",
+    "img": "https://drive.google.com/thumbnail?id=1awKJDFTk1Wck9BbmN-LpVza33L-w8fKo&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": [],
+    "fees": [
+      { "label": "개미굴 광장", "price": "10,000메소" }
+    ]
+  },
+  {
+    "id": "9000017",
+    "name": "코코",
+    "role": "초콜릿 재료 상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1gy7Iz9NRmj8L1DcDI40-GtGovkohd_Ed&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스", "code": "100000000", "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894" }
+    ],
+    "dialogues": [],
+    "sells": ["4031111", "4031112", "4031113", "4031114", "4031125"]
+  },
+  {
+    "id": "2041017",
+    "name": "쿠커스",
+    "img": "https://drive.google.com/thumbnail?id=1YYelH5c_xTeXm-gFKMb9CUgEF6lZWprY&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스", "code": "100000000", "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "20000",
+    "name": "존",
+    "img": "https://drive.google.com/thumbnail?id=1OIjNNTJGknndN1AqYQwwRAirbqzXX-Xr&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1204033",
+    "name": "존의 상자",
+    "img": "https://drive.google.com/thumbnail?id=1DoBl35WAXomBH6xYyfKyFkLWiI1aJ_Bp&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002003",
+    "name": "몽롱 할배",
+    "img": "https://drive.google.com/thumbnail?id=15KODuAccCyiBUzaKGy6Yn7TRZkEdmdB2&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000031",
+    "name": "카산드라",
+    "img": "https://drive.google.com/thumbnail?id=1tKCGRlbLIeHhT8WecMKFU4a98VEmTuoU&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스", "code": "100000000", "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "1002101",
+    "name": "쿤",
+    "img": "https://drive.google.com/thumbnail?id=1l5bx6j-Tl7ReRHu3NxFJ7vAxEb41IbU5&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000021",
+    "name": "가가",
+    "img": "https://drive.google.com/thumbnail?id=1n_USPqbuF3EdeMgeJAByzXcLWc13Lla8&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스", "code": "100000000", "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "1002007",
+    "name": "리스항구 중형택시",
+    "img": "https://drive.google.com/thumbnail?id=1JFv2xM-j6GlgG0c_CDtA7D2U3xa4SIV2&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": [],
+    "fees": [
+      { "label": "노틸러스 선착장", "price": "1,200메소" },
+      { "label": "페리온", "price": "1,000메소" },
+      { "label": "헤네시스", "price": "1,000메소" },
+      { "label": "커닝시티", "price": "1,000메소" },
+      { "label": "엘리니아", "price": "1,200메소" }
+    ]
+  },
+  {
+    "id": "1002005",
+    "name": "김서방",
+    "img": "https://drive.google.com/thumbnail?id=1OUuEKrOqWyVrxiovqJT56vvJKSnnmY_Y&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9010009",
+    "name": "듀이",
+    "img": "https://drive.google.com/thumbnail?id=1bFVryIvvEfMrP-c4e8WM8RmWgfMXN-ST&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스", "code": "100000000", "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "9010000",
+    "name": "메이플 운영자",
+    "img": "https://drive.google.com/thumbnail?id=1YX482kp_HpcLQucDxnB7x8jgswpFIY2u&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스", "code": "100000000", "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "9000001",
+    "name": "쟝",
+    "img": "https://drive.google.com/thumbnail?id=1d-7MBaPrIe9pX-IDSbfeRokOq54NrsjU&sz=w400",
+    "place": {
+      "name": "리스항구",
+      "code": "104000000",
+      "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
+    },
+    "dialogues": []
+  }
+,
+  {
+    "id": "1001000",
+    "name": "실버",
+    "role": "무기 상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=14grM3cvDwt0WaZUAx7tRzG_zgqAsp_87&sz=w400",
+    "place": {
+      "name": "리스항구 무기상점",
+      "code": "104000003",
+      "img": "https://drive.google.com/thumbnail?id=1isCtCEdT-K2lI_bpaoxnuFe7GkopFpAb&sz=w840"
+    },
+    "dialogues": [],
+    "sells": ["1302000", "1312004", "1322005", "1302007", "1312000"]
+  },
+  {
+    "id": "1001001",
+    "name": "나타샤",
+    "role": "방어구 상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=10vdc6jvT5ozmELDjTN07GQsARzLgr73Y&sz=w400",
+    "place": {
+      "name": "리스항구 방어구상점",
+      "code": "104000001",
+      "img": "https://drive.google.com/thumbnail?id=10rZZrtMW_9mrZAao_GYFPlccUfuz8vat&sz=w840"
+    },
+    "dialogues": [],
+    "sells": ["1002008", "1002014", "1002066", "1002067", "1002068", "1002069", "1002132", "1002133", "1002134", "1002019", "1002001", "1040013", "1040014", "1041004", "1041012", "1060007", "1060004", "1062000", "1062001", "1072001", "1072037", "1072038", "1072005", "1072008", "1072048", "1072049", "1072017", "1072062", "1072063", "1092003", "3010001"]
+  },
+  {
+    "id": "1002104",
+    "name": "트루",
+    "role": "정보상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1Ip9V47qfc-7IctcRfbgBkh3C_G3oCnwc&sz=w400",
+    "place": {
+      "name": "리스항구 정보상점",
+      "code": "104000004",
+      "img": "https://drive.google.com/thumbnail?id=1sHkwOLlmX4JfcHWJRFT9KHodVO1qfK8v&sz=w837"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1001100",
+    "name": "미나",
+    "role": "잡화상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1KFb1eihp2eZyb8UAKvZrZCkP3EwnxWAW&sz=w400",
+    "place": {
+      "name": "리스항구 잡화상점",
+      "code": "104000002",
+      "img": "https://drive.google.com/thumbnail?id=1RACv3Miz_SN6A8-GofIjOjdxP7sy_dIS&sz=w840"
+    },
+    "dialogues": [],
+    "sells": ["2000007", "2000008", "2000009", "2000010", "2000006", "2001515", "2001516", "2002002", "2002004", "2002005", "2010000", "2001533", "2010001", "2010003", "2010004", "2020028", "2030000", "2030001", "2060000", "2061000", "2070000", "2330000"]
+  },
+    {
+      "id": "1012000",
+      "name": "헤네시스 중형택시",
+      "img": "https://drive.google.com/thumbnail?id=178qIWUOB6GxAFkljKX_3oVUYsYoO8SEj&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": [],
+      "fees": [
+        { "label": "리스항구", "price": "800메소" },
+        { "label": "페리온", "price": "1,000메소" },
+        { "label": "엘리니아", "price": "1,000메소" },
+        { "label": "커닝시티", "price": "1,200메소" },
+        { "label": "노틸러스 선착장", "price": "800메소" }
+      ]
+    },
+    {
+      "id": "1010100",
+      "name": "리나",
+      "img": "https://drive.google.com/thumbnail?id=1BKzWhPgBsOzcKnrp1cguCxIRGenY-Dd1&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9010008",
+      "name": "페티트",
+      "role": "메이플메법샵",
+      "img": "https://drive.google.com/thumbnail?id=1ItTGVcFvKSw8EaOk11K6xJ1M55LpBqrZ&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9010002",
+      "name": "로아",
+      "role": "핸드폰메이플",
+      "img": "https://drive.google.com/thumbnail?id=1dawecWdJnsvywVkdat-mEJllCl4I5DhD&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9010018",
+      "name": "크리샤",
+      "img": "https://drive.google.com/thumbnail?id=1BtiA98UUPxf62mlFL7s31ShQTxh3ZiB4&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1012109",
+      "name": "제이",
+      "img": "https://drive.google.com/thumbnail?id=1rxYC-Pj7hHcngRJwBKTZwZqnNw44W9b6&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9000018",
+      "name": "마틸다",
+      "role": "PC방",
+      "img": "https://drive.google.com/thumbnail?id=1HUWWiZgpLXcLwgx8KfcTAhCmROXUsXYr&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "90000069",
+      "name": "벼루",
+      "role": "특별상인",
+      "img": "https://drive.google.com/thumbnail?id=1tik4hM0lK4w9y0TlRZBJejfkiowmKaHZ&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1012003",
+      "name": "장로 스탄",
+      "img": "https://drive.google.com/thumbnail?id=1IAYCzVnc1y8eM9kTdwBdKFSg_yKomiXx&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1012111",
+      "name": "브루스",
+      "img": "https://drive.google.com/thumbnail?id=19GuDYjGHwGrBtfcZhUkZ13XgLWHkjlLz&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1012106",
+      "name": "밍밍부인",
+      "img": "https://drive.google.com/thumbnail?id=1LZrvx0Ehg8iOMjYyzwmVnn5fXp0P-ywi&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9050009",
+      "name": "에뜨랑의 안내판",
+      "img": "https://drive.google.com/thumbnail?id=1Yo3PZxABrBlg3WLdf2IYOgoKNSiDltc-&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9050000",
+      "name": "소환수 피그미",
+      "img": "https://drive.google.com/thumbnail?id=1P93MshFta4n8lVMIuIPqOR7vmJOaRpVH&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9001102",
+      "name": "아기 월묘",
+      "img": "https://drive.google.com/thumbnail?id=1AY4Tb-o_to2qnclmMg1rSBas9wvz-36v&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1103001",
+      "name": "로카",
+      "img": "https://drive.google.com/thumbnail?id=1LqLLt0GRAbLOWp-WrriQu8w6gv4-WrNg&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "9010022",
+      "name": "차원의 거울",
+      "role": "만능포탈",
+      "img": "https://drive.google.com/thumbnail?id=1DECr5YridWAAl_sFezr4f4LePFkgAEqF&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1012108",
+      "name": "카밀라",
+      "img": "https://drive.google.com/thumbnail?id=1GA1QvBV9jGpi4dmb4T43_rlOgwzSDkd8&sz=w400",
+      "place": {
+        "name": "헤네시스",
+        "code": "100000000",
+        "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894"
+      },
+      "dialogues": []
+    },
+    {
+      "id": "1012002",
+      "name": "비셔스",
+      "role": "아이템 제작자",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=18YSeQC6cI0Qrm7Lwa1Vbl5x0twxPCUvs&sz=w400",
+      "dialogues": [], /* TODO: 헤네시스시장 맵 등록되면 place 추가 필요 */
+    "crafts": {
+      "무기": [
+        { "name": "워보우", "itemId": "1452002", "materials": [{ "name": "가공된 나무", "itemId": "4003001", "qty": 5 }, { "name": "파란 달팽이의 껍질", "itemId": "4000000", "qty": 30 }], "price": 800 },
+        { "name": "합금 활", "itemId": "1452003", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 1 }, { "name": "나사", "itemId": "4003000", "qty": 3 }], "price": 2000 },
+        { "name": "사냥꾼의 활", "itemId": "1452001", "materials": [{ "name": "가공된 나무", "itemId": "4003001", "qty": 30 }, { "name": "빨간 달팽이의 껍질", "itemId": "4000016", "qty": 50 }], "price": 3000 },
+        { "name": "배틀 보우", "itemId": "1452000", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 2 }, { "name": "토파즈", "itemId": "4021006", "qty": 2 }, { "name": "나사", "itemId": "4003000", "qty": 8 }], "price": 5000 },
+        { "name": "라이덴", "itemId": "1452005", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 5 }, { "name": "금", "itemId": "4011006", "qty": 5 }, { "name": "에메랄드", "itemId": "4021003", "qty": 3 }, { "name": "토파즈", "itemId": "4021006", "qty": 3 }, { "name": "나사", "itemId": "4003000", "qty": 30 }], "price": 30000 },
+        { "name": "레드 바이퍼", "itemId": "1452006", "materials": [{ "name": "은", "itemId": "4011004", "qty": 7 }, { "name": "가넷", "itemId": "4021000", "qty": 6 }, { "name": "오팔", "itemId": "4021004", "qty": 3 }, { "name": "나사", "itemId": "4003000", "qty": 35 }], "price": 40000 },
+        { "name": "석궁", "itemId": "1462001", "materials": [{ "name": "가공된 나무", "itemId": "4003001", "qty": 7 }, { "name": "나사", "itemId": "4003000", "qty": 2 }], "price": 1000 },
+        { "name": "전투석궁", "itemId": "1462002", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 1 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 20 }, { "name": "나사", "itemId": "4003000", "qty": 5 }], "price": 2000 },
+        { "name": "발란쉐", "itemId": "1462003", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 1 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 50 }, { "name": "나사", "itemId": "4003000", "qty": 8 }], "price": 3000 },
+        { "name": "산양석궁", "itemId": "1462000", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 2 }, { "name": "토파즈", "itemId": "4021006", "qty": 1 }, { "name": "아쿠아마린", "itemId": "4021002", "qty": 1 }, { "name": "나사", "itemId": "4003000", "qty": 10 }], "price": 10000 },
+        { "name": "이글크로", "itemId": "1462004", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 5 }, { "name": "오리할콘", "itemId": "4011005", "qty": 5 }, { "name": "토파즈", "itemId": "4021006", "qty": 3 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 50 }, { "name": "나사", "itemId": "4003000", "qty": 15 }], "price": 30000 },
+        { "name": "헤클러", "itemId": "1462005", "materials": [{ "name": "흑수정", "itemId": "4021008", "qty": 1 }, { "name": "강철", "itemId": "4011001", "qty": 8 }, { "name": "금", "itemId": "4011006", "qty": 4 }, { "name": "토파즈", "itemId": "4021006", "qty": 2 }, { "name": "나사", "itemId": "4003000", "qty": 30 }], "price": 50000 },
+        { "name": "실버 크로우", "itemId": "1462006", "materials": [{ "name": "흑수정", "itemId": "4021008", "qty": 2 }, { "name": "은", "itemId": "4011004", "qty": 6 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 30 }, { "name": "나사", "itemId": "4003000", "qty": 30 }], "price": 80000 },
+        { "name": "로우어", "itemId": "1462007", "materials": [{ "name": "흑수정", "itemId": "4021008", "qty": 2 }, { "name": "금", "itemId": "4011006", "qty": 5 }, { "name": "토파즈", "itemId": "4021006", "qty": 3 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 40 }, { "name": "나사", "itemId": "4003000", "qty": 40 }], "price": 200000 },
+        { "name": "발터 2000", "itemId": "1452007", "materials": [{ "name": "흑수정", "itemId": "4021008", "qty": 1 }, { "name": "강철", "itemId": "4011001", "qty": 10 }, { "name": "금", "itemId": "4011006", "qty": 3 }, { "name": "나사", "itemId": "4003000", "qty": 40 }, { "name": "드레이크의 머리뼈", "itemId": "4000014", "qty": 50 }], "price": 80000 }
+      ],
+      "방어구": [
+        { "name": "아르", "itemId": "1082012", "materials": [{ "name": "동물의 가죽", "itemId": "4000021", "qty": 15 }, { "name": "파란버섯의 갓", "itemId": "4000009", "qty": 20 }], "price": 5000 },
+        { "name": "블루 디로스", "itemId": "1082013", "materials": [{ "name": "동물의 가죽", "itemId": "4000021", "qty": 20 }, { "name": "파란버섯의 갓", "itemId": "4000009", "qty": 20 }, { "name": "강철", "itemId": "4011001", "qty": 2 }], "price": 10000 },
+        { "name": "블루 사바타", "itemId": "1082016", "materials": [{ "name": "동물의 가죽", "itemId": "4000021", "qty": 40 }, { "name": "파란버섯의 갓", "itemId": "4000009", "qty": 50 }, { "name": "금", "itemId": "4011006", "qty": 2 }], "price": 15000 },
+        { "name": "브라운 마커", "itemId": "1082048", "materials": [{ "name": "동물의 가죽", "itemId": "4000021", "qty": 50 }, { "name": "금", "itemId": "4011006", "qty": 2 }, { "name": "자수정", "itemId": "4021001", "qty": 1 }], "price": 20000 },
+        { "name": "브론즈 스케일러", "itemId": "1082068", "materials": [{ "name": "청동", "itemId": "4011000", "qty": 1 }, { "name": "강철", "itemId": "4011001", "qty": 3 }, { "name": "동물의 가죽", "itemId": "4000021", "qty": 60 }, { "name": "나사", "itemId": "4003000", "qty": 15 }], "price": 30000 },
+        { "name": "아쿠아 브레이스", "itemId": "1082071", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 3 }, { "name": "가넷", "itemId": "4021000", "qty": 1 }, { "name": "아쿠아마린", "itemId": "4021002", "qty": 3 }, { "name": "동물의 가죽", "itemId": "4000021", "qty": 80 }, { "name": "나사", "itemId": "4003000", "qty": 25 }], "price": 40000 },
+        { "name": "블루 윌로우", "itemId": "1082084", "materials": [{ "name": "은", "itemId": "4011004", "qty": 3 }, { "name": "금", "itemId": "4011006", "qty": 1 }, { "name": "아쿠아마린", "itemId": "4021002", "qty": 2 }, { "name": "용의 가죽", "itemId": "4000030", "qty": 40 }, { "name": "나사", "itemId": "4003000", "qty": 35 }], "price": 50000 },
+        { "name": "오커가너", "itemId": "1082089", "materials": [{ "name": "금", "itemId": "4011006", "qty": 2 }, { "name": "달의 돌", "itemId": "4011007", "qty": 1 }, { "name": "토파즈", "itemId": "4021006", "qty": 8 }, { "name": "용의 가죽", "itemId": "4000030", "qty": 50 }, { "name": "나사", "itemId": "4003000", "qty": 50 }], "price": 70000 }
+      ],
+      "합성": [
+        { "name": "그린 디로스", "itemId": "1082015", "materials": [{ "name": "블루 디로스", "itemId": "1082013", "qty": 1 }, { "name": "에메랄드", "itemId": "4021003", "qty": 2 }], "price": 7000 },
+        { "name": "레드 디로스", "itemId": "1082014", "materials": [{ "name": "블루 디로스", "itemId": "1082013", "qty": 1 }, { "name": "가넷", "itemId": "4021000", "qty": 1 }], "price": 7000 },
+        { "name": "레드 사바타", "itemId": "1082017", "materials": [{ "name": "블루 사바타", "itemId": "1082016", "qty": 1 }, { "name": "가넷", "itemId": "4021000", "qty": 3 }], "price": 10000 },
+        { "name": "다크사바타", "itemId": "1082018", "materials": [{ "name": "블루 사바타", "qty": 1 }, { "name": "흑수정", "itemId": "4021008", "qty": 1 }], "price": 12000 },
+        { "name": "그린마커", "itemId": "1082049", "materials": [{ "name": "브라운 마커", "qty": 1 }, { "name": "에메랄드", "itemId": "4021003", "qty": 3 }], "price": 15000 },
+        { "name": "블랙마커", "itemId": "1082050", "materials": [{ "name": "브라운 마커", "qty": 1 }, { "name": "흑수정", "itemId": "4021008", "qty": 1 }], "price": 20000 },
+        { "name": "미스릴 스케일러", "itemId": "1082069", "materials": [{ "name": "브론즈 스케일러", "qty": 1 }, { "name": "미스릴", "itemId": "4011002", "qty": 4 }], "price": 22000 },
+        { "name": "골드 스케일러", "itemId": "1082070", "materials": [{ "name": "브론즈 스케일러", "qty": 1 }, { "name": "금", "itemId": "4011006", "qty": 2 }], "price": 25000 },
+        { "name": "골드 브레이스", "itemId": "1082072", "materials": [{ "name": "아쿠아 브레이스", "qty": 1 }, { "name": "금", "itemId": "4011006", "qty": 4 }], "price": 30000 },
+        { "name": "다크 브레이스", "itemId": "1082073", "materials": [{ "name": "아쿠아 브레이스", "qty": 1 }, { "name": "흑수정", "itemId": "4021008", "qty": 2 }], "price": 40000 },
+        { "name": "레드 윌로우", "itemId": "1082085", "materials": [{ "name": "블루 윌로우", "qty": 1 }, { "name": "청동", "itemId": "4011000", "qty": 1 }, { "name": "가넷", "itemId": "4021000", "qty": 5 }], "price": 55000 },
+        { "name": "다크 윌로우", "itemId": "1082083", "materials": [{ "name": "블루 윌로우", "qty": 1 }, { "name": "금", "itemId": "4011006", "qty": 2 }, { "name": "흑수정", "itemId": "4021008", "qty": 2 }], "price": 60000 },
+        { "name": "세피아 가너", "itemId": "1082090", "materials": [{ "name": "오커가너", "qty": 1 }, { "name": "가넷", "itemId": "4021000", "qty": 5 }, { "name": "다이아몬드", "itemId": "4021007", "qty": 1 }], "price": 70000 },
+        { "name": "다크 가너", "itemId": "1082091", "materials": [{ "name": "오커가너", "qty": 1 }, { "name": "다이아몬드", "itemId": "4021007", "qty": 2 }, { "name": "흑수정", "itemId": "4021008", "qty": 2 }], "price": 80000 }
+      ],
+      "화살": [
+        { "name": "활전용 화살", "itemId": "2060000", "materials": [{ "name": "가공된 나무", "itemId": "4003001", "qty": 1 }, { "name": "뻣뻣한 깃털", "itemId": "4003004", "qty": 1 }], "yield": 1000 },
+        { "name": "석궁전용 화살", "itemId": "2061000", "materials": [{ "name": "가공된 나무", "itemId": "4003001", "qty": 1 }, { "name": "뻣뻣한 깃털", "itemId": "4003004", "qty": 1 }], "yield": 1000 },
+        { "name": "활전용 청동화살", "itemId": "2060001", "materials": [{ "name": "청동", "itemId": "4011000", "qty": 1 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 3 }, { "name": "뻣뻣한 깃털", "itemId": "4003004", "qty": 10 }], "yield": 900 },
+        { "name": "석궁전용 청동화살", "itemId": "2061001", "materials": [{ "name": "청동", "itemId": "4011000", "qty": 1 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 3 }, { "name": "뻣뻣한 깃털", "itemId": "4003004", "qty": 10 }], "yield": 900 },
+        { "name": "활전용 강철화살", "itemId": "2060002", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 1 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 5 }, { "name": "부드러운 깃털", "itemId": "4003005", "qty": 15 }], "yield": 800 },
+        { "name": "석궁전용 강철화살", "itemId": "2061002", "materials": [{ "name": "강철", "itemId": "4011001", "qty": 1 }, { "name": "가공된 나무", "itemId": "4003001", "qty": 5 }, { "name": "부드러운 깃털", "itemId": "4003005", "qty": 15 }], "yield": 800 }
+      ],
+      "재료": [
+        { "name": "가공된 나무", "itemId": "4003001", "materials": [{ "name": "나뭇가지", "itemId": "4000003", "qty": 10 }], "altMaterials": [{ "name": "장작", "itemId": "4000018", "qty": 5 }] },
+        { "name": "나사", "itemId": "4003000", "materials": [{ "name": "청동", "itemId": "4011000", "qty": 1 }, { "name": "강철", "itemId": "4011001", "qty": 1 }], "yield": 15 }
+      ]
+    },
+    },
+    {
+      "id": "2080007",
+      "name": "오심마",
+      "role": "노점상",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=11jy4h2FduZcTpV6_ChGWXxXGGydw0igl&sz=w400",
+      "dialogues": [] /* TODO: 헤네시스시장 맵 등록되면 place 추가 필요 */
+    },
+    {
+      "id": "1012004",
+      "name": "큐트",
+      "role": "펫먹이 상인",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=1j0tzZMCGAudMnP77KiKf2i3GoG_eCKkI&sz=w400",
+      "dialogues": [], /* TODO: 헤네시스시장 맵 등록되면 place 추가 필요 */
+      "sells": ["212000099", "2260000", "4160000", "4160001", "4160002", "4160019", "4160015", "4160012", "4160014", "4160020", "4160010", "4160009", "4160008", "4160007", "4160006", "4160005", "4160004", "4160003"]
+    }
 ];
 
 window.ITEMS = [
+  {
+    "id": "2330000",
+    "name": "불릿",
+    "img": "https://drive.google.com/thumbnail?id=15e2AZ1UaCOELE15cdqdm7GmDBgR_RkT2&sz=w200",
+    "buyPrice": 600
+  },
   {
     "id": "2010007",
     "name": "로저의 사과",
@@ -1916,6 +2725,198 @@ window.ITEMS = [
     "name": "달걀",
     "img": "https://drive.google.com/thumbnail?id=1Jtlf4EIYbR0vM5XzogMihmh7ceoi828q&sz=w200",
     "buyPrice": 50
+  },
+  {
+    "id": "212000099",
+    "name": "펫의 먹이",
+    "img": "https://drive.google.com/thumbnail?id=1fHDHHTu40zSzp2m8U-fjVEUURBRtXrPI&sz=w200",
+    "buyPrice": 30
+  },
+  {
+    "id": "2260000",
+    "name": "피로회복제",
+    "img": "https://drive.google.com/thumbnail?id=18MadIjbfHYdktWHo5AKn6aCevNJUdFZU&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160000",
+    "name": "펫 안내서 : 강아지 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160001",
+    "name": "펫 안내서 : 고양이 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160002",
+    "name": "펫 안내서 : 토끼 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160019",
+    "name": "펫 안내서 : 손오공 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160015",
+    "name": "펫 안내서 : 주니어 발록 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160012",
+    "name": "펫 안내서 : 미니예티 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160014",
+    "name": "펫 안내서 : 펭귄 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160020",
+    "name": "펫 안내서 : 칠면조 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160010",
+    "name": "펫 안내서 : 원숭이 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160009",
+    "name": "펫 안내서 : 루돌프 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160008",
+    "name": "펫 안내서 : 백호 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160007",
+    "name": "펫 안내서 : 디노 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160006",
+    "name": "펫 안내서 : 팬더 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160005",
+    "name": "펫 안내서 : 돼지 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160004",
+    "name": "펫 안내서 : 허스키 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "4160003",
+    "name": "펫 안내서 : 카고 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "buyPrice": 1000
+  },
+  {
+    "id": "1082013",
+    "name": "블루 디로스",
+    "img": "https://drive.google.com/thumbnail?id=1ZkxU-pdqy4_1tS5twYnyqkvPOf_cJ3TT&sz=w200",
+    "path": ["장비", "방어구", "장갑"],
+    "job": "궁수",
+    "reqLevel": 20,
+    "reqDex": 60,
+    "sellPrice": 10000
+  },
+  {
+    "id": "1082015",
+    "name": "그린 디로스",
+    "img": "https://drive.google.com/thumbnail?id=1PN4Ue8QVbZAFxTQGvn-imdPfpKULxKc-&sz=w200",
+    "path": ["장비", "방어구", "장갑"],
+    "job": "궁수",
+    "reqLevel": 20,
+    "reqDex": 60,
+    "dex": 2,
+    "pdd": 8,
+    "sellPrice": 14000
+  },
+  {
+    "id": "1082014",
+    "name": "레드 디로스",
+    "img": "https://drive.google.com/thumbnail?id=1R9OJ93nNK8_aVJQ66jRgXY7230bHpZDK&sz=w200",
+    "path": ["장비", "방어구", "장갑"],
+    "job": "궁수",
+    "reqLevel": 20,
+    "reqDex": 60,
+    "dex": 1,
+    "pdd": 7,
+    "sellPrice": 12000
+  },
+  {
+    "id": "1082017",
+    "name": "레드 사바타",
+    "img": "https://drive.google.com/thumbnail?id=1BnA1yt-ipwpS8wHhgqV1JlrY5rFU4Tqi&sz=w200",
+    "path": ["장비", "방어구", "장갑"],
+    "job": "궁수",
+    "reqLevel": 25,
+    "reqDex": 75,
+    "dex": 1,
+    "pdd": 9,
+    "sellPrice": 17000
+  },
+  {
+    "id": "2060001",
+    "name": "활전용 청동화살",
+    "img": "https://drive.google.com/thumbnail?id=1R4YNgikdH5t3Ddq4aGRryf7zbxIPPjMY&sz=w200",
+    "path": ["소비", "발사체"],
+    "buyPrice": 10,
+    "sellPrice": 5,
+    "attack": 1,
+    "desc": "청동화살이 들어있는 화살통이다. 반드시 활과 함께 사용해야 한다."
+  },
+  {
+    "id": "2061001",
+    "name": "석궁전용 청동화살",
+    "img": "https://drive.google.com/thumbnail?id=15258eZKmNN54bx1Jy9MjlsjfZsCADOE7&sz=w200",
+    "path": ["소비", "발사체"],
+    "buyPrice": 10,
+    "sellPrice": 5,
+    "attack": 1,
+    "desc": "청동화살이 들어있는 화살통이다. 반드시 석궁과 함께 사용해야 한다."
+  },
+  {
+    "id": "2060002",
+    "name": "활전용 강철화살",
+    "img": "https://drive.google.com/thumbnail?id=1GA0EfyhYSBAiH7IbpxWWmbKaxMKLF9Vb&sz=w200",
+    "path": ["소비", "발사체"],
+    "attack": 2,
+    "sellPrice": 10,
+    "desc": "강철화살이 들어있는 화살통이다. 반드시 활과 함께 사용해야 한다."
+  },
+  {
+    "id": "2061002",
+    "name": "석궁전용 강철화살",
+    "img": "https://drive.google.com/thumbnail?id=1pI8Ay9CMkmx80sob9PkVNWwY-7_Vc_Zv&sz=w200",
+    "path": ["소비", "발사체"],
+    "attack": 2,
+    "sellPrice": 10,
+    "desc": "강철화살이 들어있는 화살통이다. 반드시 석궁과 함께 사용해야 한다."
   }
 ];
 
@@ -1928,11 +2929,56 @@ window.ITEMS = [
   var NPCS = window.NPCS || [];
   var ITEMS = window.ITEMS || [];
 
-  // 지역별 아이콘 (NPC 위치 카드에 표시)
+  // NPC 위치에는 실제 맵 이미지가 아닌 마을·지역 아이콘만 표시
   var REGION_ICONS = {
-    "메이플로드": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w100",
-    "암허스트": "https://drive.google.com/thumbnail?id=1-MzGEHdV1YX9ZM2LvNznH4XsHCv4he56&sz=w100"
+    "메이플로드": "https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w400",
+    "암허스트": "https://drive.google.com/thumbnail?id=1-MzGEHdV1YX9ZM2LvNznH4XsHCv4he56&sz=w400",
+    "빅토리아 아일랜드": "https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400",
+    "헤네시스": "https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400",
+    "엘리니아": "https://drive.google.com/thumbnail?id=11eysMAYVH4D0qt9Qz_14o-311YN52EVe&sz=w400",
+    "커닝시티": "https://drive.google.com/thumbnail?id=1Z9t4AbnhDHlv-ZbAvUDhzsrGyn65AcMc&sz=w400",
+    "페리온": "https://drive.google.com/thumbnail?id=1qJDR5g4TOiMfzm-fVKnPzgzxOo7-R0CJ&sz=w400",
+    "버섯의성": "https://drive.google.com/thumbnail?id=1wMvaZVLaK45xu0KBWLcQOzcJowDxWfMK&sz=w400",
+    "커닝스퀘어": "https://drive.google.com/thumbnail?id=1-WTiV08Xb71vq71Wjqo7SlUDSneDDhze&sz=w400",
+    "노틸러스": "https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400",
+    "오르비스": "https://drive.google.com/thumbnail?id=1WQU-Z0vjTusdGLkJ87Z6ylE-h-gPdKL8&sz=w400",
+    "지구방위본부": "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400",
+    "루디브리엄": "https://drive.google.com/thumbnail?id=1Pp55px2ogqw3OfzX4cPQkg4H2gz2_6R0&sz=w400",
+    "아쿠아리움": "https://drive.google.com/thumbnail?id=1II5Vs5o4JFaO7IEtjcmR2phTaIlWfwEY&sz=w400",
+    "리프레": "https://drive.google.com/thumbnail?id=1k8lHn6IWCSV2qlg38ROCT0Le97Mx3hCs&sz=w400",
+    "아리안트": "https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400",
+    "마가티아": "https://drive.google.com/thumbnail?id=1HWQMOQBRg7oEWpaIvlfMMafDGKAfl2_h&sz=w400",
+    "슬리피우드": "https://drive.google.com/thumbnail?id=1sb0CgKFeCjYM2k9Of9AnTdRyNeIPlOsQ&sz=w400",
+    "리엔": "https://drive.google.com/thumbnail?id=1-Vur3U1Jw-nQaOLTLIHEOuPkcR5E4EWY&sz=w400",
+    "백초마을": "https://drive.google.com/thumbnail?id=1S-t4n1TtxnjjhGBvES8Vxil-ReF9zrem&sz=w400",
+    "아랫마을": "https://drive.google.com/thumbnail?id=1U5VBqop7cUN5eKJ8P18d6illAZW_H1fZ&sz=w400",
+    "엘나스": "https://drive.google.com/thumbnail?id=1V7hGToqGOnRPcoVjQ_Z9yIaomTifrATF&sz=w400",
+    "에레브": "https://drive.google.com/thumbnail?id=1V7hGToqGOnRPcoVjQ_Z9yIaomTifrATF&sz=w400",
+    "파괴된 헤네시스": "https://drive.google.com/thumbnail?id=1qHLkpBvi9ZGQON8SPGZjhfvcXPWcpcQC&sz=w400",
+    "폐광": "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400",
+    "플로리나비치": "https://drive.google.com/thumbnail?id=1_awfHf-lXFRxjgcIEQlu2VXNPZeWYf6Y&sz=w400",
+    "블랙로드": "https://drive.google.com/thumbnail?id=1LntTAE7pF0YXTz2yIE_zkGNjGuJGLO3S&sz=w400",
+    "무릉": "https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400"
   };
+  var HENESIS_ICON_MAPS = {
+    "헤네시스":1, "헤네시스 서쪽숲":1, "헤네시스 서쪽언덕":1,
+    "헤네시스 사냥터 1":1, "헤네시스 사냥터 2":1, "헤네시스 사냥터 3":1,
+    "비어있는집":1, "버섯공원 1":1, "버섯공원 2":1, "남의집":1, "버섯동산":1, "버섯공원쉼터":1
+  };
+  var ICON_AREA_ORDER = ["파괴된 헤네시스","커닝스퀘어","버섯의성","지구방위본부","플로리나비치","백초마을","아랫마을","슬리피우드","루디브리엄","아쿠아리움","노틸러스","엘리니아","커닝시티","페리온","오르비스","리프레","아리안트","마가티아","리엔","엘나스","에레브","폐광","블랙로드","무릉","헤네시스"];
+  function locationIconFor(place){
+    var name = String(place && place.name || '');
+    var area = HENESIS_ICON_MAPS[name] ? '헤네시스' : '';
+    if (!area && name.indexOf('버섯의 ')>-1) area = '버섯의성';
+    if (!area){
+      for (var i=0; i<ICON_AREA_ORDER.length; i++){
+        if (name.indexOf(ICON_AREA_ORDER[i])>-1){ area = ICON_AREA_ORDER[i]; break; }
+      }
+    }
+    if (!area && place && place.region && REGION_ICONS[place.region]) area = place.region;
+    if (!area) area = String(place && place.code || '').length < 9 ? '메이플로드' : '빅토리아 아일랜드';
+    return REGION_ICONS[area] || REGION_ICONS['빅토리아 아일랜드'];
+  }
 
   var params = new URLSearchParams(location.search);
   var id = params.get('id');
@@ -2003,6 +3049,30 @@ window.ITEMS = [
     return html;
   }
 
+  function craftPlainChip(name, label){
+    return '<div class="item-chip" style="cursor:default;">'+safeImg(null, name, 'icon')+'<div class="txt">'+(label?'<div class="lbl">'+label+'</div>':'')+'<div class="val">'+name+'</div></div></div>';
+  }
+  function craftEntryHtml(c){
+    var resultItem = c.itemId ? ITEMS.find(function(i){ return String(i.id)===String(c.itemId); }) : null;
+    var head = resultItem ? itemChipHtml(resultItem, null) : craftPlainChip(c.name, null);
+    var matsHtml = (c.materials||[]).map(function(mt){
+      var mi = mt.itemId ? ITEMS.find(function(i){ return String(i.id)===String(mt.itemId); }) : null;
+      return mi ? itemChipHtml(mi, mt.qty+'개') : craftPlainChip(mt.name, mt.qty+'개');
+    }).join('');
+    if (c.altMaterials && c.altMaterials.length){
+      matsHtml += '<span class="craft-or">또는</span>' + c.altMaterials.map(function(mt){
+        var mi = mt.itemId ? ITEMS.find(function(i){ return String(i.id)===String(mt.itemId); }) : null;
+        return mi ? itemChipHtml(mi, mt.qty+'개') : craftPlainChip(mt.name, mt.qty+'개');
+      }).join('');
+    }
+    var badgeTxt = (c.price!=null) ? c.price.toLocaleString()+'메소' : (c.yield!=null ? c.yield.toLocaleString()+'개 제작' : '');
+    return '<details class="craft-card">'+
+      '<summary class="craft-card-head">'+head+(badgeTxt?'<span class="craft-price">'+badgeTxt+'</span>':'')+'</summary>'+
+      '<div class="craft-mats item-chip-list">'+matsHtml+'</div>'+
+      (c.note?'<div class="craft-note">'+c.note+'</div>':'')+
+    '</details>';
+  }
+
   function itemTileHtml(it, label){
     if (!it) return '';
     var html = '<a class="item-tile" href="item-detail.html?id='+it.id+'">';
@@ -2040,14 +3110,10 @@ window.ITEMS = [
   if (places.length){
     html += '<div class="item-tile-grid">';
     places.forEach(function(p){
-      var icon = REGION_ICONS[p.region] || p.img || 'https://placehold.co/80x80/FFF9F0/9A8574?text=%20';
+      var icon = locationIconFor(p);
       html += '<a class="item-tile" href="map-detail.html?code='+(p.code||'')+'">';
       html += '<img class="thumb" src="'+icon+'" alt="'+(p.region||p.name)+'" onerror="this.onerror=null;this.src=\'https://placehold.co/80x80/FFF9F0/9A8574?text=%20\';">';
       html += '<div class="val">'+p.name+'</div>';
-      if (p.region) html += '<div class="lbl">'+p.region+'</div>';
-      if (p.img){
-        html += '<div class="map-preview"><img src="'+p.img+'" alt="'+p.name+'" onerror="this.parentElement.style.display=\'none\';"></div>';
-      }
       html += '</a>';
     });
     html += '</div>';
@@ -2077,6 +3143,13 @@ window.ITEMS = [
     html += '<div class="section"><h2>클릭 시 대사</h2><div class="card bubble-list">' + rows + '</div></div>';
   }
 
+  // ---- 이용요금 ----
+  if (npc.fees && npc.fees.length){
+    html += '<div class="section"><h2>이용요금</h2><div class="ibox-grid">' + npc.fees.map(function(f){
+      return '<div class="ibox"><div><div class="lbl">'+(f.label||'')+'</div><div class="val">'+(f.price||'')+'</div></div></div>';
+    }).join('') + '</div></div>';
+  }
+
   // ---- 판매 상품 ----
   if (npc.sells && npc.sells.length){
     html += '<div class="section"><h2>판매 상품</h2><div class="item-tile-grid">' + npc.sells.map(function(itemId){
@@ -2085,6 +3158,19 @@ window.ITEMS = [
       var priceTxt = (it.buyPrice!=null ? it.buyPrice.toLocaleString()+'메소' : '가격 미정');
       return itemTileHtml(it, priceTxt);
     }).join('') + '</div></div>';
+  }
+
+  // ---- 제작 목록 ----
+  if (npc.crafts && Object.keys(npc.crafts).some(function(k){ return npc.crafts[k] && npc.crafts[k].length; })){
+    var craftCats = Object.keys(npc.crafts).filter(function(k){ return npc.crafts[k] && npc.crafts[k].length; });
+    html += '<div class="section"><h2>제작 목록</h2>';
+    html += '<div class="craft-tabs">' + craftCats.map(function(cat, i){
+      return '<button type="button" class="craft-tab'+(i===0?' active':'')+'" data-craft-tab="'+cat+'">'+cat+'</button>';
+    }).join('') + '</div>';
+    html += craftCats.map(function(cat, i){
+      return '<div class="craft-cat-panel" data-craft-panel="'+cat+'"'+(i!==0?' style="display:none;"':'')+'>' + npc.crafts[cat].map(craftEntryHtml).join('') + '</div>';
+    }).join('');
+    html += '</div>';
   }
 
   // ---- 관련 퀘스트 (퀘스트 상세 데이터에서 이 NPC를 찾아 자동 매칭) ----
@@ -2106,6 +3192,18 @@ window.ITEMS = [
   }
 
   $detail.innerHTML = html;
+
+  $detail.addEventListener('click', function(e){
+    var tabBtn = e.target.closest('.craft-tab');
+    if (!tabBtn) return;
+    var wrap = tabBtn.closest('.section');
+    if (!wrap) return;
+    var cat = tabBtn.getAttribute('data-craft-tab');
+    Array.prototype.forEach.call(wrap.querySelectorAll('.craft-tab'), function(b){ b.classList.toggle('active', b===tabBtn); });
+    Array.prototype.forEach.call(wrap.querySelectorAll('.craft-cat-panel'), function(p){
+      p.style.display = (p.getAttribute('data-craft-panel')===cat) ? '' : 'none';
+    });
+  });
 
   // 아이템/장소 타일 호버 시, 화면 오른쪽 경계에 걸리면 툴팁을 왼쪽으로 뒤집어서 잘리지 않게 함
   Array.prototype.forEach.call($detail.querySelectorAll('.item-tile'), function(el){

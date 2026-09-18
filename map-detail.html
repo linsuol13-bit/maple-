@@ -371,6 +371,12 @@ button{ font:inherit; }
   padding:2px 10px; border-radius:999px; margin-left:6px; vertical-align:2px;
 }
 
+.boss-badge{
+  display:inline-flex; align-items:center; font-size:11.5px; font-weight:900; color:#FFE9B0;
+  background:linear-gradient(135deg,#7A1414,#3A0D0D); border:2px solid var(--wood-dark);
+  padding:2px 9px; border-radius:999px; margin-left:6px; vertical-align:2px; letter-spacing:.5px;
+}
+
 /* ---------- 서브 패널 (퀘스트/아이템/몬스터 상세를 페이지 이동 없이 보여줌) ---------- */
 .panel-overlay{
   position:fixed; inset:0; background:rgba(70,40,13,.45);
@@ -384,6 +390,7 @@ button{ font:inherit; }
   animation: panelSlideIn .18s ease-out;
 }
 @keyframes panelSlideIn{ from{ transform:translateX(24px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+@keyframes warpPulse{ 0%{ transform:translate(-50%,-50%) scale(.4); opacity:1; } 100%{ transform:translate(-50%,-50%) scale(1.6); opacity:0; } }
 @media (max-width:640px){ .panel-box{ width:100%; } }
 .panel-close{
   position:sticky; top:0; float:right; margin-left:12px;
@@ -401,7 +408,7 @@ button{ font:inherit; }
 .panel-content{ clear:both; }
 .panel-content .back-link{ display:none; }
 .panel-content nav.tabs{ display:none; }
-.panel-content .ibox-grid{ grid-template-columns: 1fr; }
+.panel-content .ibox-grid{ grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 .chain-chip{
   flex:none; padding:6px 12px; border-radius:14px; border:2px solid var(--wood-dark);
   white-space:nowrap; background:#fff; color:var(--ink-soft);
@@ -630,7 +637,7 @@ window.QUESTS = [
     "id": 1009,
     "code": "레인 1-1",
     "title": "레인의 메이플 퀴즈 1",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -648,7 +655,7 @@ window.QUESTS = [
     "id": 1010,
     "code": "레인 1-2",
     "title": "레인의 메이플 퀴즈 2",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -666,7 +673,7 @@ window.QUESTS = [
     "id": 1011,
     "code": "레인 1-3",
     "title": "레인의 메이플 퀴즈 3",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -684,7 +691,7 @@ window.QUESTS = [
     "id": 1012,
     "code": "레인 1-4",
     "title": "레인의 메이플 퀴즈 4",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -702,7 +709,7 @@ window.QUESTS = [
     "id": 1013,
     "code": "레인 1-5",
     "title": "레인의 메이플 퀴즈 5",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -720,7 +727,7 @@ window.QUESTS = [
     "id": 1014,
     "code": "레인 1-6",
     "title": "레인의 메이플 퀴즈 6",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -738,7 +745,7 @@ window.QUESTS = [
     "id": 1015,
     "code": "레인 1-7",
     "title": "레인의 메이플 퀴즈 7",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -756,7 +763,7 @@ window.QUESTS = [
     "id": 1008,
     "code": "피오 1-1",
     "title": "피오의 재활용품 수거",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "아이템 수집",
     "minLevel": 1,
     "jobs": [
@@ -779,7 +786,7 @@ window.QUESTS = [
     "id": 1020,
     "code": "피오 1-2",
     "title": "피오의 재활용품 활용",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -798,7 +805,7 @@ window.QUESTS = [
     "id": 1038,
     "code": "쌤 1-2",
     "title": "마리아의 편지",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "아이템 전달",
     "minLevel": 1,
     "jobs": [
@@ -826,7 +833,7 @@ window.QUESTS = [
     "id": 1039,
     "code": "유나 1-1",
     "title": "유나 도와주기",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "몬스터 처치",
     "minLevel": 1,
     "jobs": [
@@ -1438,8 +1445,6 @@ window.NPCS = [
     "id": "2101",
     "name": "히나",
     "img": "https://drive.google.com/thumbnail?id=12ARM7TcWjf7yUgnZJfRezS8McvrqKR4h&sz=w400",
-    "spotX": 12,
-    "spotY": 48,
     "place": {
       "code": "10000"
     }
@@ -1448,8 +1453,6 @@ window.NPCS = [
     "id": "2100",
     "name": "세라",
     "img": "https://drive.google.com/thumbnail?id=1TqUjYQ-5cbUBVNrfQ2UEJNpBkrexh3Ez&sz=w400",
-    "spotX": 70,
-    "spotY": 22,
     "place": {
       "code": "10000"
     }
@@ -1458,8 +1461,6 @@ window.NPCS = [
     "id": "2000",
     "name": "로저",
     "img": "https://drive.google.com/thumbnail?id=1HMmAggKjdJqanxfjsQTEtSYShTmnzu4w&sz=w400",
-    "spotX": 45,
-    "spotY": 30,
     "place": {
       "code": "20000"
     }
@@ -1468,8 +1469,6 @@ window.NPCS = [
     "id": "2102",
     "name": "다나",
     "img": "https://drive.google.com/thumbnail?id=12_kVZJwktz5OCdUEY05ybg784qmoeBJL&sz=w400",
-    "spotX": 13,
-    "spotY": 50,
     "place": {
       "code": "30000"
     }
@@ -1478,8 +1477,6 @@ window.NPCS = [
     "id": "2001",
     "name": "센",
     "img": "https://drive.google.com/thumbnail?id=1ZwqswaL9gb-bGVYEC9ubpCo25qxCio0s&sz=w400",
-    "spotX": 51,
-    "spotY": 70,
     "place": {
       "code": "30001"
     }
@@ -1488,8 +1485,6 @@ window.NPCS = [
     "id": "2004",
     "name": "토드",
     "img": "https://drive.google.com/thumbnail?id=1Hvmrv9mC7yoFygub4H1gx3nLfXo-Qz3r&sz=w400",
-    "spotX": 9,
-    "spotY": 60,
     "place": {
       "code": "40000"
     }
@@ -1498,8 +1493,6 @@ window.NPCS = [
     "id": "2002",
     "name": "피터",
     "img": "https://drive.google.com/thumbnail?id=1Q0N2HuHImV9ceq1DC3HBN2M_gpyHNDc6&sz=w400",
-    "spotX": 81,
-    "spotY": 50,
     "place": {
       "code": "40000"
     }
@@ -1508,8 +1501,6 @@ window.NPCS = [
     "id": "2003",
     "name": "로빈",
     "img": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
-    "spotX": 20,
-    "spotY": 73,
     "place": {
       "code": "50000"
     }
@@ -1518,8 +1509,6 @@ window.NPCS = [
     "id": "2005",
     "name": "쌤",
     "img": "https://drive.google.com/thumbnail?id=1o64oHjikNkBJvfirmWSgS7P9IbYL9vaW&sz=w400",
-    "spotX": 80,
-    "spotY": 67,
     "place": {
       "code": "50000"
     }
@@ -1528,8 +1517,6 @@ window.NPCS = [
     "id": "2103",
     "name": "마리아",
     "img": "https://drive.google.com/thumbnail?id=1nvI50wbkATpkC9HOZsFL1yVCDwoRzTw-&sz=w400",
-    "spotX": 48,
-    "spotY": 70,
     "place": {
       "code": "1000000"
     }
@@ -1538,9 +1525,6 @@ window.NPCS = [
     "id": "12101",
     "name": "레인",
     "img": "https://drive.google.com/thumbnail?id=1XGLhX8dkYZiE2YBYrMqS0KC_ABH_wHCI&sz=w400",
-    "spotX": 10.5,
-    "spotY": 82,
-    "flip": true,
     "place": {
       "code": "1000000"
     }
@@ -1549,8 +1533,6 @@ window.NPCS = [
     "id": "10000",
     "name": "피오",
     "img": "https://drive.google.com/thumbnail?id=17WtmDS_bY_CopZqLJIfWSOtzYafYnvNx&sz=w400",
-    "spotX": 26.5,
-    "spotY": 82.5,
     "place": {
       "code": "1000000"
     }
@@ -1559,8 +1541,6 @@ window.NPCS = [
     "id": "12000",
     "name": "루카스",
     "img": "https://drive.google.com/thumbnail?id=1fS17tGLu54Wr2EA7GenxcRolmx-48UiP&sz=w400",
-    "spotX": 60,
-    "spotY": 70,
     "place": {
       "code": "1000000"
     }
@@ -1568,11 +1548,9 @@ window.NPCS = [
   {
     "id": "11000",
     "name": "시드",
+    "role": "무기상점",
+    "category": "상점",
     "img": "https://drive.google.com/thumbnail?id=1vk07FF7JC64Gsbl5k7MX6lDss3nLiWkl&sz=w400",
-    "spotX": 20,
-    "spotY": 85,
-    "markerSize": 100,
-    "flip": true,
     "place": {
       "code": "1000001"
     }
@@ -1580,11 +1558,9 @@ window.NPCS = [
   {
     "id": "11100",
     "name": "루시",
+    "role": "잡화상점",
+    "category": "상점",
     "img": "https://drive.google.com/thumbnail?id=1NTe3MF0nj0F8HyDL7n4HjlkYtKMsG223&sz=w400",
-    "spotX": 20,
-    "spotY": 85,
-    "markerSize": 100,
-    "flip": true,
     "place": {
       "code": "1000003"
     }
@@ -1593,11 +1569,579 @@ window.NPCS = [
     "id": "20100",
     "name": "유나",
     "img": "https://drive.google.com/thumbnail?id=1Sjbaerx_GCNUUbbOa0IDOS2LBRTanyJG&sz=w400",
-    "spotX": 50,
-    "spotY": 50,
     "place": {
       "code": "1010000"
     }
+  },
+  {
+    "id": "12100",
+    "name": "마이",
+    "img": "https://drive.google.com/thumbnail?id=1ArOBjqrpAR14QvpeQY1qIGWGAAjVPj55&sz=w400",
+    "place": {
+      "code": "1010000"
+    }
+  },
+  {
+    "id": "20001",
+    "name": "바리",
+    "img": "https://drive.google.com/thumbnail?id=1A9tFWc9PufHm5I9SsYHYLHo5XeBGfqwk&sz=w400",
+    "place": {
+      "code": "1010000"
+    }
+  }
+,
+  {
+    "id": "1012100",
+    "name": "헬레나",
+    "role": "궁수 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1CTiSqv-MD3ePKn9TZOkp4mdZcOIR0JHa&sz=w400",
+    "place": {
+      "code": "1020000"
+    }
+  },
+  {
+    "id": "1090000",
+    "name": "카이린",
+    "role": "해적 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1JaWiOOWC62MXG_Zbp7CWR70hV2YYDuYc&sz=w400",
+    "place": {
+      "code": "1020000"
+    }
+  },
+  {
+    "id": "1032001",
+    "name": "하인즈",
+    "role": "마법사 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1QjLeV65OYuGCo4CwMX0BNUwrL6FEwWDs&sz=w400",
+    "place": {
+      "code": "1020000"
+    }
+  },
+  {
+    "id": "1022000",
+    "name": "주먹펴고 일어서",
+    "role": "전사 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=121S5oKEqxhNHTMoW6y3pqmaqVTxit38b&sz=w400",
+    "place": {
+      "code": "1020000"
+    }
+  },
+  {
+    "id": "1052001",
+    "name": "다크로드",
+    "role": "도적 전직관",
+    "category": "전직관",
+    "img": "https://drive.google.com/thumbnail?id=1V6RRLa2P0iXTEIslyHu6YhSus8UoDX1B&sz=w400",
+    "place": {
+      "code": "1020000"
+    }
+  }
+,
+  {
+    "id": "20002",
+    "name": "빅스",
+    "img": "https://drive.google.com/thumbnail?id=1VgJAczbfQ6xZou1pDiDk4TQsU6PnmYuH&sz=w400",
+    "place": {
+      "code": "2000000"
+    }
+  },
+  {
+    "id": "2007",
+    "name": "메이플 운영자",
+    "img": "https://drive.google.com/thumbnail?id=1YX482kp_HpcLQucDxnB7x8jgswpFIY2u&sz=w400",
+    "place": {
+      "code": "2000000"
+    }
+  },
+  {
+    "id": "22000",
+    "name": "샹크스",
+    "img": "https://drive.google.com/thumbnail?id=1ZgsyADuKgEryosUpR504sa78ysiTNMdL&sz=w400",
+    "place": {
+      "code": "2000000"
+    }
+  }
+,
+  {
+    "id": "21000",
+    "name": "판",
+    "role": "방어구상점",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1hGHjTJLF2txRFkvCvY9tEZZeKh0ew9gr&sz=w400",
+    "sells": ["1040002", "1040006", "1040010", "1041002", "1041006", "1041010", "1041011", "1060002", "1060006", "1061002", "1061008", "1072001", "1072005"],
+    "place": {
+      "code": "2000001"
+    }
+  }
+,
+  {
+    "id": "1200004",
+    "name": "푸로",
+    "img": "https://drive.google.com/thumbnail?id=1UL94V0twsFeodUFxel0OdqcxHBrnEnFz&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002001",
+    "name": "테오",
+    "img": "https://drive.google.com/thumbnail?id=1R1VtZVpoiUoW40wS9UnXYcYvL_1Q30t6&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002000",
+    "name": "필",
+    "img": "https://drive.google.com/thumbnail?id=1_edtS71IwVI1xvSpmPGh0_F7-ozzmmSK&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002100",
+    "name": "제인",
+    "img": "https://drive.google.com/thumbnail?id=1MgvLqqjitSeAb_0O6YS5F1abUpAMesfN&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000009",
+    "name": "바이킨",
+    "img": "https://drive.google.com/thumbnail?id=1gwxD4qFRsq4Yv72nBNBWSkVJfJfZBqcw&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "2084001",
+    "name": "골드리치",
+    "img": "https://drive.google.com/thumbnail?id=1H0tKcxxnTIF5Vkv1C2rM7JMJnmDcJ4fj&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002006",
+    "name": "체프",
+    "img": "https://drive.google.com/thumbnail?id=18OsieJwLFJP1vC85nau-846vh7y7ozAQ&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "2006",
+    "name": "티앤크",
+    "img": "https://drive.google.com/thumbnail?id=1Im4MaruTSZvZ-NySCXNwqIzE37g8ygl0&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002103",
+    "name": "리더 알",
+    "img": "https://drive.google.com/thumbnail?id=148PqBS5AWNVDHdkpQgFVFjX3udxdVxH-&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000041",
+    "name": "기부함",
+    "img": "https://drive.google.com/thumbnail?id=18-_C1SdVISB6ipPXB2cAlcR7lCLRegY9&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000066",
+    "name": "달리어",
+    "role": "명예의 신관",
+    "img": "https://drive.google.com/thumbnail?id=1rjc6eIS3_SGKX4H62Avwirteh5fK2sjm&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002004",
+    "name": "리스항구 모범택시",
+    "img": "https://drive.google.com/thumbnail?id=1awKJDFTk1Wck9BbmN-LpVza33L-w8fKo&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": [],
+    "fees": [
+      { "label": "개미굴 광장", "price": "10,000메소" }
+    ]
+  },
+  {
+    "id": "9000017",
+    "name": "코코",
+    "role": "초콜릿 재료 상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1gy7Iz9NRmj8L1DcDI40-GtGovkohd_Ed&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "places": [
+      { "code": "104000000" },
+      { "code": "100000000" }
+    ],
+    "dialogues": [],
+    "sells": ["4031111", "4031112", "4031113", "4031114", "4031125"]
+  },
+  {
+    "id": "2041017",
+    "name": "쿠커스",
+    "img": "https://drive.google.com/thumbnail?id=1YYelH5c_xTeXm-gFKMb9CUgEF6lZWprY&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "places": [
+      { "code": "104000000" },
+      { "code": "100000000" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "20000",
+    "name": "존",
+    "img": "https://drive.google.com/thumbnail?id=1OIjNNTJGknndN1AqYQwwRAirbqzXX-Xr&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1204033",
+    "name": "존의 상자",
+    "img": "https://drive.google.com/thumbnail?id=1DoBl35WAXomBH6xYyfKyFkLWiI1aJ_Bp&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1002003",
+    "name": "몽롱 할배",
+    "img": "https://drive.google.com/thumbnail?id=15KODuAccCyiBUzaKGy6Yn7TRZkEdmdB2&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000031",
+    "name": "카산드라",
+    "img": "https://drive.google.com/thumbnail?id=1tKCGRlbLIeHhT8WecMKFU4a98VEmTuoU&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "places": [
+      { "code": "104000000" },
+      { "code": "100000000" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "1002101",
+    "name": "쿤",
+    "img": "https://drive.google.com/thumbnail?id=1l5bx6j-Tl7ReRHu3NxFJ7vAxEb41IbU5&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9000021",
+    "name": "가가",
+    "img": "https://drive.google.com/thumbnail?id=1n_USPqbuF3EdeMgeJAByzXcLWc13Lla8&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "places": [
+      { "code": "104000000" },
+      { "code": "100000000" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "1002007",
+    "name": "리스항구 중형택시",
+    "img": "https://drive.google.com/thumbnail?id=1JFv2xM-j6GlgG0c_CDtA7D2U3xa4SIV2&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": [],
+    "fees": [
+      { "label": "노틸러스 선착장", "price": "1,200메소" },
+      { "label": "페리온", "price": "1,000메소" },
+      { "label": "헤네시스", "price": "1,000메소" },
+      { "label": "커닝시티", "price": "1,000메소" },
+      { "label": "엘리니아", "price": "1,200메소" }
+    ]
+  },
+  {
+    "id": "1002005",
+    "name": "김서방",
+    "img": "https://drive.google.com/thumbnail?id=1OUuEKrOqWyVrxiovqJT56vvJKSnnmY_Y&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "9010009",
+    "name": "듀이",
+    "img": "https://drive.google.com/thumbnail?id=1bFVryIvvEfMrP-c4e8WM8RmWgfMXN-ST&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "places": [
+      { "code": "104000000" },
+      { "code": "100000000" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "9010000",
+    "name": "메이플 운영자",
+    "img": "https://drive.google.com/thumbnail?id=1YX482kp_HpcLQucDxnB7x8jgswpFIY2u&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "places": [
+      { "code": "104000000" },
+      { "code": "100000000" }
+    ],
+    "dialogues": []
+  },
+  {
+    "id": "9000001",
+    "name": "쟝",
+    "img": "https://drive.google.com/thumbnail?id=1d-7MBaPrIe9pX-IDSbfeRokOq54NrsjU&sz=w400",
+    "place": {
+      "code": "104000000"
+    },
+    "dialogues": []
+  }
+,
+  {
+    "id": "1001000",
+    "name": "실버",
+    "role": "무기 상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=14grM3cvDwt0WaZUAx7tRzG_zgqAsp_87&sz=w400",
+    "place": {
+      "code": "104000003"
+    },
+    "dialogues": [],
+    "sells": ["1302000", "1312004", "1322005", "1302007", "1312000", "1332007"]
+  },
+  {
+    "id": "1001001",
+    "name": "나타샤",
+    "role": "방어구 상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=10vdc6jvT5ozmELDjTN07GQsARzLgr73Y&sz=w400",
+    "place": {
+      "code": "104000001"
+    },
+    "dialogues": [],
+    "sells": ["1002008", "1002014", "1002066", "1002067", "1002068", "1002069", "1002132", "1002133", "1002134", "1002019", "1002001", "1040013", "1040014", "1041004", "1041012", "1060007", "1060004", "1062000", "1062001", "1072001", "1072037", "1072038", "1072005", "1072008", "1072048", "1072049", "1072017", "1072062", "1072063", "1092003", "3010001"]
+  },
+  {
+    "id": "1002104",
+    "name": "트루",
+    "role": "정보상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1Ip9V47qfc-7IctcRfbgBkh3C_G3oCnwc&sz=w400",
+    "place": {
+      "code": "104000004"
+    },
+    "dialogues": []
+  },
+  {
+    "id": "1001100",
+    "name": "미나",
+    "role": "잡화상인",
+    "category": "상점",
+    "img": "https://drive.google.com/thumbnail?id=1KFb1eihp2eZyb8UAKvZrZCkP3EwnxWAW&sz=w400",
+    "place": {
+      "code": "104000002"
+    },
+    "dialogues": [],
+    "sells": ["2000007", "2000008", "2000009", "2000010", "2000006", "2001515", "2001516", "2002002", "2002004", "2002005", "2010000", "2001533", "2010001", "2010003", "2010004", "2020028", "2030000", "2030001", "2060000", "2061000", "2070000", "2330000"]
+  },
+  {
+    "id": "1012000",
+    "name": "헤네시스 중형택시",
+    "img": "https://drive.google.com/thumbnail?id=178qIWUOB6GxAFkljKX_3oVUYsYoO8SEj&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1010100",
+    "name": "리나",
+    "img": "https://drive.google.com/thumbnail?id=1BKzWhPgBsOzcKnrp1cguCxIRGenY-Dd1&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9010008",
+    "name": "페티트",
+    "img": "https://drive.google.com/thumbnail?id=1ItTGVcFvKSw8EaOk11K6xJ1M55LpBqrZ&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9010002",
+    "name": "로아",
+    "img": "https://drive.google.com/thumbnail?id=1dawecWdJnsvywVkdat-mEJllCl4I5DhD&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9010018",
+    "name": "크리샤",
+    "img": "https://drive.google.com/thumbnail?id=1BtiA98UUPxf62mlFL7s31ShQTxh3ZiB4&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1012109",
+    "name": "제이",
+    "img": "https://drive.google.com/thumbnail?id=1rxYC-Pj7hHcngRJwBKTZwZqnNw44W9b6&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9000018",
+    "name": "마틸다",
+    "img": "https://drive.google.com/thumbnail?id=1HUWWiZgpLXcLwgx8KfcTAhCmROXUsXYr&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "90000069",
+    "name": "벼루",
+    "img": "https://drive.google.com/thumbnail?id=1tik4hM0lK4w9y0TlRZBJejfkiowmKaHZ&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1012003",
+    "name": "장로 스탄",
+    "img": "https://drive.google.com/thumbnail?id=1IAYCzVnc1y8eM9kTdwBdKFSg_yKomiXx&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1012111",
+    "name": "브루스",
+    "img": "https://drive.google.com/thumbnail?id=19GuDYjGHwGrBtfcZhUkZ13XgLWHkjlLz&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1012106",
+    "name": "밍밍부인",
+    "img": "https://drive.google.com/thumbnail?id=1LZrvx0Ehg8iOMjYyzwmVnn5fXp0P-ywi&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9050009",
+    "name": "에뜨랑의 안내판",
+    "img": "https://drive.google.com/thumbnail?id=1Yo3PZxABrBlg3WLdf2IYOgoKNSiDltc-&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9050000",
+    "name": "소환수 피그미",
+    "img": "https://drive.google.com/thumbnail?id=1P93MshFta4n8lVMIuIPqOR7vmJOaRpVH&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9001102",
+    "name": "아기 월묘",
+    "img": "https://drive.google.com/thumbnail?id=1AY4Tb-o_to2qnclmMg1rSBas9wvz-36v&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1103001",
+    "name": "로카",
+    "img": "https://drive.google.com/thumbnail?id=1LqLLt0GRAbLOWp-WrriQu8w6gv4-WrNg&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "9010022",
+    "name": "차원의 거울",
+    "img": "https://drive.google.com/thumbnail?id=1DECr5YridWAAl_sFezr4f4LePFkgAEqF&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1012108",
+    "name": "카밀라",
+    "img": "https://drive.google.com/thumbnail?id=1GA1QvBV9jGpi4dmb4T43_rlOgwzSDkd8&sz=w400",
+    "place": {
+      "code": "100000000"
+    }
+  },
+  {
+    "id": "1012002",
+    "name": "비셔스",
+    "img": "https://drive.google.com/thumbnail?id=18YSeQC6cI0Qrm7Lwa1Vbl5x0twxPCUvs&sz=w400",
+    "place": { "name": "헤네시스시장", "code": "100000100" }
+  },
+  {
+    "id": "2080007",
+    "name": "오심마",
+    "img": "https://drive.google.com/thumbnail?id=11jy4h2FduZcTpV6_ChGWXxXGGydw0igl&sz=w400",
+    "place": { "name": "헤네시스시장", "code": "100000100" }
+  },
+  {
+    "id": "1012004",
+    "name": "큐트",
+    "img": "https://drive.google.com/thumbnail?id=1j0tzZMCGAudMnP77KiKf2i3GoG_eCKkI&sz=w400",
+    "place": { "name": "헤네시스시장", "code": "100000100" }
   }
 ];
 
@@ -1606,14 +2150,17 @@ window.MAPS = [
     "code": "10000",
     "name": "버섯동산",
     "region": "메이플로드",
-    "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1000",
+    "img": "https://drive.google.com/thumbnail?id=1PsIWrvZMRZjGeL0FLRI5FBcRgNZtRYWS&sz=w1495",
+    "imgWidth": 1495,
+    "imgHeight": 715,
     "portals": [
       {
         "toCode": "20000",
         "toName": "달팽이동산",
         "note": "이동",
-        "x": 80,
-        "y": 43
+        "x": 1344,
+        "y": 365,
+        "unit": "px"
       }
     ]
   },
@@ -1621,14 +2168,17 @@ window.MAPS = [
     "code": "20000",
     "name": "달팽이동산",
     "region": "메이플로드",
-    "img": "https://drive.google.com/thumbnail?id=1jACaObJZvgb2uW7e6ZW1ymv7f-0VchNm&sz=w1000",
+    "img": "https://drive.google.com/thumbnail?id=1jACaObJZvgb2uW7e6ZW1ymv7f-0VchNm&sz=w1155",
+    "imgWidth": 1155,
+    "imgHeight": 591,
     "portals": [
       {
         "toCode": "30000",
         "toName": "달팽이 꽃밭",
         "note": "이동",
-        "x": 87,
-        "y": 43
+        "x": 1018,
+        "y": 306,
+        "unit": "px"
       }
     ]
   },
@@ -1636,21 +2186,25 @@ window.MAPS = [
     "code": "30000",
     "name": "달팽이 꽃밭",
     "region": "메이플로드",
-    "img": "https://drive.google.com/thumbnail?id=1U5usCFqzg38Y9Z75nKS9FHl9N50197hd&sz=w1000",
+    "img": "https://drive.google.com/thumbnail?id=1U5usCFqzg38Y9Z75nKS9FHl9N50197hd&sz=w1494",
+    "imgWidth": 1494,
+    "imgHeight": 631,
     "portals": [
       {
         "toCode": "30001",
         "toName": "버섯마을민가",
         "note": "이동",
-        "x": 55.5,
-        "y": 34
+        "x": 828,
+        "y": 283,
+        "unit": "px"
       },
       {
         "toCode": "40000",
         "toName": "작은 숲속",
         "note": "이동",
-        "x": 85,
-        "y": 35
+        "x": 1295,
+        "y": 289,
+        "unit": "px"
       }
     ]
   },
@@ -1658,14 +2212,17 @@ window.MAPS = [
     "code": "30001",
     "name": "버섯마을민가",
     "region": "메이플로드",
-    "img": "https://drive.google.com/thumbnail?id=1G-fTo4f9JKIC3qg-fuVyE-UC_7pL34CC&sz=w1000",
+    "img": "https://drive.google.com/thumbnail?id=1G-fTo4f9JKIC3qg-fuVyE-UC_7pL34CC&sz=w1408",
+    "imgWidth": 1408,
+    "imgHeight": 766,
     "portals": [
       {
         "toCode": "30000",
         "toName": "달팽이 꽃밭",
         "note": "이동",
-        "x": 39.5,
-        "y": 58
+        "x": 587,
+        "y": 511,
+        "unit": "px"
       }
     ]
   },
@@ -1673,14 +2230,17 @@ window.MAPS = [
     "code": "40000",
     "name": "작은 숲속",
     "region": "메이플로드",
-    "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1000",
+    "img": "https://drive.google.com/thumbnail?id=10G1oQVG141kETDNdhkb2TbfVTEn106Fn&sz=w1440",
+    "imgWidth": 1440,
+    "imgHeight": 642,
     "portals": [
       {
         "toCode": "50000",
         "toName": "위험한 숲속",
         "note": "이동",
-        "x": 85,
-        "y": 35
+        "x": 1227,
+        "y": 290,
+        "unit": "px"
       }
     ]
   },
@@ -1688,80 +2248,96 @@ window.MAPS = [
     "code": "50000",
     "name": "위험한 숲속",
     "region": "메이플로드",
-    "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1000",
+    "img": "https://drive.google.com/thumbnail?id=1VB5Pljjr33v7vaD_RMhJDoMIvkNzhGyC&sz=w1815",
+    "imgWidth": 1815,
+    "imgHeight": 937,
     "portals": [
       {
         "toCode": "1000000",
         "toName": "암허스트",
         "note": "이동",
-        "x": 93,
-        "y": 54.5
+        "x": 1679,
+        "y": 587,
+        "unit": "px"
       }
     ]
   },
   {
     "code": "1000000",
     "name": "암허스트",
-    "region": "암허스트",
-    "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w3600",
+    "imgWidth": 3600,
+    "imgHeight": 992,
     "portals": [
       {
         "toCode": "50000",
         "toName": "위험한 숲속",
         "note": "이동",
-        "x": 5,
-        "y": 67.5
+        "x": 103,
+        "y": 767,
+        "unit": "px"
       },
       {
         "toCode": "1000001",
         "toName": "암허스트 무기상점",
         "note": "이동",
-        "x": 16.4,
-        "y": 23
+        "x": 755,
+        "y": 320,
+        "unit": "px"
       },
       {
         "toCode": "1000003",
         "toName": "암허스트 잡화상점",
         "note": "이동",
-        "x": 52.3,
-        "y": 56
+        "x": 1878,
+        "y": 648,
+        "unit": "px"
       },
       {
         "toCode": "1010000",
         "toName": "모험가의 수련장 입구",
         "note": "이동",
-        "x": 91.3,
-        "y": 67
+        "x": 3292,
+        "y": 766,
+        "unit": "px"
       }
     ]
   },
   {
     "code": "1000001",
     "name": "암허스트 무기상점",
-    "region": "암허스트",
-    "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w1000",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w800",
+    "imgWidth": 800,
+    "imgHeight": 600,
     "portals": [
       {
         "toCode": "1000000",
         "toName": "암허스트",
         "note": "이동",
-        "x": 42,
-        "y": 74
+        "x": 335,
+        "y": 484,
+        "unit": "px",
+        "size": 160
       }
     ]
   },
   {
     "code": "1000003",
     "name": "암허스트 잡화상점",
-    "region": "암허스트",
-    "img": "https://drive.google.com/thumbnail?id=1KScbgiJgCa_wDppg7wkedz8BoL7X26vB&sz=w1000",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1KScbgiJgCa_wDppg7wkedz8BoL7X26vB&sz=w800",
+    "imgWidth": 800,
+    "imgHeight": 600,
     "portals": [
       {
         "toCode": "1000000",
         "toName": "암허스트",
         "note": "이동",
-        "x": 87,
-        "y": 70,
+        "x": 683,
+        "y": 486,
+        "unit": "px",
         "size": 130
       }
     ]
@@ -1769,8 +2345,520 @@ window.MAPS = [
   {
     "code": "1010000",
     "name": "모험가의 수련장 입구",
-    "region": "암허스트",
-    "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1357",
+    "imgWidth": 1357,
+    "imgHeight": 897,
+    "portals": [
+      {
+        "toCode": "1000000",
+        "toName": "암허스트",
+        "note": "이동",
+        "x": 77,
+        "y": 666,
+        "unit": "px"
+      },
+      {
+        "toCode": "1020000",
+        "toName": "선택의 갈림길",
+        "note": "이동",
+        "x": 1213,
+        "y": 668,
+        "unit": "px"
+      }
+    ]
+  }
+,
+  {
+    "code": "1020000",
+    "name": "선택의 갈림길",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1361",
+    "imgWidth": 1361,
+    "imgHeight": 880,
+    "portals": [
+{
+        "toCode": "1000000",
+        "toName": "암허스트",
+        "note": "이동",
+        "x": 109,
+        "y": 640,
+        "unit": "px"
+      },
+{
+        "toCode": "2000000",
+        "toName": "사우스페리",
+        "note": "이동",
+        "x": 1209,
+        "y": 641,
+        "unit": "px"
+      }
+    ]
+  }
+,
+  {
+    "code": "2000000",
+    "name": "사우스페리",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1L6Rs-UFwIlvHf6wS4oBnd9nZsi5rf1t9&sz=w3974",
+    "imgWidth": 3974,
+    "imgHeight": 1889,
+    "portals": [
+{
+        "toCode": "1020000",
+        "toName": "선택의 갈림길",
+        "note": "이동",
+        "x": 47,
+        "y": 1679,
+        "unit": "px"
+      },
+{
+        "toCode": "2000001",
+        "toName": "사우스페리 방어구상점",
+        "note": "이동",
+        "x": 1025,
+        "y": 1679,
+        "unit": "px"
+      }
+    ]
+  }
+,
+  {
+    "code": "2000001",
+    "name": "사우스페리 방어구상점",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w800",
+    "imgWidth": 800,
+    "imgHeight": 644,
+    "portals": [
+{
+        "toCode": "2000000",
+        "toName": "사우스페리",
+        "note": "이동",
+        "x": 336,
+        "y": 530,
+        "unit": "px"
+      }
+    ]
+  }
+,
+  {
+    "code": "104000000",
+    "name": "리스항구",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w6291",
+    "imgWidth": 6291,
+    "imgHeight": 1852,
+    "portals": [
+{
+        "toCode": "104000003",
+        "toName": "리스항구 무기상점",
+        "note": "이동",
+        "x": 3861,
+        "y": 680,
+        "unit": "px"
+      },
+{
+        "toCode": "104000001",
+        "toName": "리스항구 방어구상점",
+        "note": "이동",
+        "x": 4649,
+        "y": 678,
+        "unit": "px"
+      },
+{
+        "toCode": "104000004",
+        "toName": "리스항구 정보상점",
+        "note": "이동",
+        "x": 5037,
+        "y": 678,
+        "unit": "px"
+      },
+{
+        "toCode": "104000002",
+        "toName": "리스항구 잡화상점",
+        "note": "이동",
+        "x": 5102,
+        "y": 1338,
+        "unit": "px"
+      },
+{
+        "toCode": "104000100",
+        "toName": "리스항구 외곽",
+        "note": "이동",
+        "x": 6106,
+        "y": 1491,
+        "unit": "px"
+      },
+{
+        "toCode": "104000000",
+        "toName": "히든포탈 2 (리스항구)",
+        "note": "히든 이동",
+        "x": 3246,
+        "y": 765,
+        "unit": "px",
+        "destX": 5971,
+        "destY": 1394,
+        "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"
+      },
+{
+        "toCode": "104000000",
+        "toName": "히든포탈 1 (리스항구)",
+        "note": "히든 이동",
+        "x": 5971,
+        "y": 1394,
+        "unit": "px",
+        "destX": 3246,
+        "destY": 765,
+        "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"
+      },
+{
+        "toCode": "104000000",
+        "toName": "히든포탈 4 (리스항구)",
+        "note": "히든 이동",
+        "x": 5451,
+        "y": 672,
+        "unit": "px",
+        "destX": 6030,
+        "destY": 582,
+        "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"
+      },
+{
+        "toCode": "104000000",
+        "toName": "히든포탈 3 (리스항구)",
+        "note": "히든 이동",
+        "x": 6030,
+        "y": 582,
+        "unit": "px",
+        "destX": 5451,
+        "destY": 672,
+        "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"
+      },
+{
+        "toCode": "104000000",
+        "toName": "이동포탈 6 (리스항구)",
+        "note": "히든 이동",
+        "x": 3741,
+        "y": 1322,
+        "unit": "px",
+        "destX": 257,
+        "destY": 1094,
+        "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"
+      },
+{
+        "toCode": "104000000",
+        "toName": "이동포탈 5 (리스항구)",
+        "note": "히든 이동",
+        "x": 257,
+        "y": 1094,
+        "unit": "px",
+        "destX": 3741,
+        "destY": 1322,
+        "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"
+      }
+    ]
+  }
+,
+  {
+    "code": "104000003",
+    "name": "리스항구 무기상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1isCtCEdT-K2lI_bpaoxnuFe7GkopFpAb&sz=w840",
+    "imgWidth": 840,
+    "imgHeight": 644,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 353, "y": 526, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000001",
+    "name": "리스항구 방어구상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=10rZZrtMW_9mrZAao_GYFPlccUfuz8vat&sz=w840",
+    "imgWidth": 840,
+    "imgHeight": 644,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 353, "y": 526, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000004",
+    "name": "리스항구 정보상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1sHkwOLlmX4JfcHWJRFT9KHodVO1qfK8v&sz=w837",
+    "imgWidth": 837,
+    "imgHeight": 594,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 141, "y": 478, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000002",
+    "name": "리스항구 잡화상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1RACv3Miz_SN6A8-GofIjOjdxP7sy_dIS&sz=w840",
+    "imgWidth": 840,
+    "imgHeight": 600,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 109, "y": 486, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000100",
+    "name": "리스항구 외곽",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1inQPXng2zuUxDAXBaO6Yc_V3VhELhD8s&sz=w1000",
+    "imgWidth": 1000,
+    "imgHeight": 318,
+    "iconScale": 1.0,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 73, "y": 114, "unit": "px" },
+      { "toCode": "104000200", "toName": "해안가 풀숲 1", "note": "이동", "x": 943, "y": 143, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000200",
+    "name": "해안가 풀숲 1",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1tlvjOK7GSW6YZd_4RJwVrT42YphHGONa&sz=w2830",
+    "imgWidth": 2830,
+    "imgHeight": 2047,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000100", "toName": "리스항구 외곽", "note": "이동", "x": 203, "y": 1637, "unit": "px" },
+      { "toCode": "104000300", "toName": "해안가 풀숲 2", "note": "이동", "x": 2628, "y": 1754, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000300",
+    "name": "해안가 풀숲 2",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1Ctcn084bnFidVmdnguEsWi7QyU4feHQO&sz=w2010",
+    "imgWidth": 2010,
+    "imgHeight": 1972,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000200", "toName": "해안가 풀숲 1", "note": "이동", "x": 209, "y": 1566, "unit": "px" },
+      { "toCode": "104000400", "toName": "해안가 풀숲 3", "note": "이동", "x": 1806, "y": 1565, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000400",
+    "name": "해안가 풀숲 3",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1GHL-_5svhJAFow5gXL40n8rstl6eZDZV&sz=w1651",
+    "imgWidth": 1651,
+    "imgHeight": 1417,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000300", "toName": "해안가 풀숲 2", "note": "이동", "x": 155, "y": 1192, "unit": "px" },
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 1487, "y": 1011, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104010000",
+    "name": "세갈래길",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=19MwiP5qZ8-5Dw3aGnCLDNaeA_tgTvXpp&sz=w6000",
+    "imgWidth": 5157,
+    "imgHeight": 2554,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000400", "toName": "해안가 풀숲 3", "note": "이동", "x": 257, "y": 2207, "unit": "px" },
+      { "toCode": "104020000", "toName": "헤네시스 서쪽숲", "note": "이동", "x": 4904, "y": 2209, "unit": "px" },
+      { "toCode": null, "toName": "커닝시티중간숲 1", "note": "이동", "x": 218, "y": 462, "unit": "px" },
+      { "toCode": "104010002", "toName": "해안가사냥터", "note": "히든 이동", "x": 2411, "y": 2269, "unit": "px" },
+      { "toCode": "104010001", "toName": "돼지의 해안가", "note": "히든 이동", "x": 1763, "y": 1667, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104010002",
+    "name": "해안가사냥터",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1KNpn3FOAK7yW10sIFPVD5nftnLLNWIEw&sz=w3881",
+    "imgWidth": 3881,
+    "imgHeight": 1410,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 3644, "y": 336, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104020000",
+    "name": "헤네시스 서쪽숲",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1kbuTmDzIS325O3olY8U_ROMQX1awUoYe&sz=w4260",
+    "imgWidth": 4260,
+    "imgHeight": 1741,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 247, "y": 1275, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104030000", "toName": "헤네시스 서쪽언덕", "note": "이동", "x": 3994, "y": 1265, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 1", "note": "히든 이동", "x": 1166, "y": 1154, "unit": "px", "destX": 1223, "destY": 849, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 2", "note": "히든 이동", "x": 2038, "y": 1144, "unit": "px", "destX": 2253, "destY": 839, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 3", "note": "히든 이동", "x": 2612, "y": 1442, "unit": "px", "destX": 1508, "destY": 547, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 4", "note": "히든 이동", "x": 1508, "y": 547, "unit": "px", "destX": 2612, "destY": 1442, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 5", "note": "히든 이동", "x": 2817, "y": 839, "unit": "px", "destX": 2327, "destY": 540, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 6", "note": "히든 이동", "x": 2327, "y": 540, "unit": "px", "destX": 2817, "destY": 839, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 7", "note": "히든 이동", "x": 3001, "y": 1446, "unit": "px", "destX": 3414, "destY": 64, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 8", "note": "히든 이동", "x": 3414, "y": 64, "unit": "px", "destX": 3001, "destY": 1446, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" }
+    ]
+  },
+  {
+    "code": "104010001",
+    "name": "돼지의 해안가",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1Cgvo__xyc9leByk3u5bBSVcl8JA-nWhv&sz=w3431",
+    "imgWidth": 3431,
+    "imgHeight": 1208,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 721, "y": 188, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104030000",
+    "name": "헤네시스 서쪽언덕",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1G-7zEbbLwnS-5BjDPeArDjs6L7EYnTRF&sz=w3527",
+    "imgWidth": 3527,
+    "imgHeight": 1927,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 212, "y": 1516, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104040000", "toName": "헤네시스사냥터 1", "note": "이동", "x": 3367, "y": 1130, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104030001", "toName": "버섯동산", "note": "히든 이동", "x": 2378, "y": 200, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104030001",
+    "name": "버섯동산",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=11lHpt3r8CfUcuCnWcxDzWAE9xDdpIqGC&sz=w2531",
+    "imgWidth": 2531,
+    "imgHeight": 899,
+    "portals": [
+      { "toCode": "104030000", "toName": "헤네시스 서쪽언덕", "note": "히든 이동", "x": 2164, "y": 611, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104040000",
+    "name": "헤네시스 사냥터 1",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1_4FlQPJrW7D9vKFSZ5vxtFac4sYtha6z&sz=w2261",
+    "imgWidth": 2261,
+    "imgHeight": 1634,
+    "portals": [
+      { "toCode": "104030000", "toName": "헤네시스 서쪽언덕", "note": "이동", "x": 198, "y": 1340, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104040001", "toName": "헤네시스 사냥터 2", "note": "이동", "x": 1456, "y": 107, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000000", "toName": "헤네시스", "note": "이동", "x": 2098, "y": 1350, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104040001",
+    "name": "헤네시스 사냥터 2",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1he9Jq4LbSvCShKJOk0jQou1EKZSrLJkS&sz=w1812",
+    "imgWidth": 1812,
+    "imgHeight": 1771,
+    "portals": [
+      { "toCode": "104040000", "toName": "헤네시스 사냥터 1", "note": "이동", "x": 1651, "y": 1609, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104040002", "toName": "헤네시스 사냥터 3", "note": "이동", "x": 1180, "y": 114, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104040002",
+    "name": "헤네시스 사냥터 3",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=137ZmHhXUR3J8HkmG8EvREJ8lC4_Wha2V&sz=w1812",
+    "imgWidth": 1812,
+    "imgHeight": 1486,
+    "portals": [
+      { "toCode": "104040001", "toName": "헤네시스 사냥터 2", "note": "이동", "x": 1656, "y": 1260, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "100000000",
+    "name": "헤네시스",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894",
+    "imgWidth": 6894,
+    "imgHeight": 1331,
+    "portals": [
+      { "toCode": "104040000", "toName": "헤네시스 사냥터 1", "note": "이동", "x": 99, "y": 751, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 공원", "note": "이동", "x": 4408, "y": 602, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 시장", "note": "이동", "x": 3594, "y": 811, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 민가", "note": "이동", "x": 5698, "y": 926, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 동쪽언덕", "note": "이동", "x": 6443, "y": 933, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "던전으로 가는 길", "note": "이동", "x": 6614, "y": 301, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000002", "toName": "비어있는집", "note": "이동", "x": 898, "y": 383, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 1", "note": "히든 이동", "x": 208, "y": 744, "unit": "px", "destX": 6373, "destY": 933, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 2", "note": "히든 이동", "x": 6373, "y": 933, "unit": "px", "destX": 208, "destY": 744, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 3", "note": "히든 이동", "x": 1881, "y": 577, "unit": "px", "destX": 5733, "destY": 580, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 4", "note": "히든 이동", "x": 5733, "y": 580, "unit": "px", "destX": 1881, "destY": 577, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" }
+    ]
+  },
+  {
+    "code": "100000002",
+    "name": "비어있는집",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1_UGxzQ0h4qwU5uIDyztygrg5vdDFkQaC&sz=w1973",
+    "imgWidth": 1973,
+    "imgHeight": 1087,
+    "portals": [
+      { "toCode": "100000000", "toName": "헤네시스", "note": "이동", "x": 1310, "y": 369, "unit": "px" },
+      { "toCode": "100000003", "toName": "버섯공원 1", "note": "이동", "x": 440, "y": 410, "unit": "px" },
+      { "toCode": "106020000", "toName": "버섯의 숲 길목", "note": "이동", "x": 234, "y": 920, "unit": "px", "hideMarker": true }
+    ]
+  },
+  {
+    "code": "100000003",
+    "name": "버섯공원 1",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1gXaxuLqPeWQv_ng0UKBnw6t9XplH794s&sz=w3971",
+    "imgWidth": 3971,
+    "imgHeight": 673,
+    "portals": [
+      { "toCode": "100000002", "toName": "비어있는집", "note": "이동", "x": 203, "y": 326, "unit": "px" },
+      { "toCode": "100000004", "toName": "버섯공원 2", "note": "이동", "x": 3761, "y": 146, "unit": "px" },
+      { "toCode": "100000006", "toName": "버섯공원쉼터", "note": "이동", "x": 1451, "y": 446, "unit": "px" },
+      { "toCode": "100000006", "toName": "버섯공원쉼터", "note": "이동", "x": 2499, "y": 453, "unit": "px" }
+    ]
+  },
+  {
+    "code": "100000004",
+    "name": "버섯공원 2",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1j08VeCopZ6eqDWSxj4olbQqbXyjlKA0b&sz=w1631",
+    "imgWidth": 1631,
+    "imgHeight": 1785,
+    "portals": [
+      { "toCode": "100000003", "toName": "버섯공원 1", "note": "이동", "x": 314, "y": 1558, "unit": "px" },
+      { "toCode": "100000005", "toName": "남의집", "note": "이동", "x": 1210, "y": 239, "unit": "px" }
+    ]
+  },
+  {
+    "code": "100000005",
+    "name": "남의집",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1CXyEixUm72FgplxYmKD6mLUXrZA_kkxA&sz=w1001",
+    "imgWidth": 1001,
+    "imgHeight": 973,
+    "portals": [
+      { "toCode": "100000004", "toName": "버섯공원 2", "note": "이동", "x": 417, "y": 140, "unit": "px" }
+    ]
+  },
+  {
+    "code": "100000006",
+    "name": "버섯공원쉼터",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1RPD9_VWr2Ag7i1kgd8qk1Wy9KzN5kbXg&sz=w821",
+    "imgWidth": 821,
+    "imgHeight": 997,
+    "portals": [
+      { "toCode": "100000003", "toName": "버섯공원 1", "note": "이동", "x": 384, "y": 57, "unit": "px" }
+    ]
+  },
+  {
+    "code": "106020000",
+    "name": "버섯의 숲 길목",
+    "region": "빅토리아 아일랜드",
     "portals": []
   }
 ];
@@ -1794,7 +2882,12 @@ window.MONSTERS = [
     "place": {
       "code": "50000",
       "count": 17
-    }
+    },
+    "places": [
+      { "code": "50000", "count": 17 },
+      { "code": "104000100", "count": 10 },
+      { "code": "104000200", "count": 8 }
+    ]
   },
   {
     "id": "100001",
@@ -1803,7 +2896,77 @@ window.MONSTERS = [
     "place": {
       "code": "1010000",
       "count": 6
-    }
+    },
+    "places": [
+      { "code": "1010000", "count": 6 },
+      { "code": "104000100", "count": 17 },
+      { "code": "104000200", "count": 16 },
+      { "code": "104000300", "count": 16 },
+      { "code": "104000400", "count": 12 },
+      { "code": "104040000", "count": 8 }
+    ]
+  },
+  {
+    "id": "1210100",
+    "name": "돼지",
+    "img": "https://drive.google.com/thumbnail?id=1GfN9UsePA2iSDdZeyza-OOOmbllTwnCq&sz=w200",
+    "minLevel": 7,
+    "place": {
+      "code": "104010000",
+      "count": 23
+    },
+    "places": [
+      { "code": "104010000", "count": 23 },
+      { "code": "104010002", "count": 8 },
+      { "code": "104020000", "count": 20 },
+      { "code": "104030000", "count": 18 },
+      { "code": "104040000", "count": 9 },
+      { "code": "104040001", "count": 8 }
+    ]
+  },
+  {
+    "id": "1210101",
+    "name": "리본돼지",
+    "img": "https://drive.google.com/thumbnail?id=1YfrKM7I6aboEAzWP5ev54QYaujTBP992&sz=w200",
+    "place": {
+      "code": "104010002",
+      "count": 10
+    },
+    "places": [
+      { "code": "104010002", "count": 10 },
+      { "code": "104040001", "count": 12 },
+      { "code": "104040002", "count": 13 }
+    ]
+  },
+  {
+    "id": "130101",
+    "name": "빨간 달팽이",
+    "img": "https://drive.google.com/thumbnail?id=1WHu2hKcRsUP-N2zwszAkUwPeungkKd7e&sz=w200",
+    "minLevel": 4,
+    "place": {
+      "code": "104000200",
+      "count": 13
+    },
+    "places": [
+      { "code": "104000200", "count": 13 },
+      { "code": "104000300", "count": 15 },
+      { "code": "104000400", "count": 9 },
+      { "code": "104010000", "count": 12 },
+      { "code": "104030000", "count": 9 },
+      { "code": "104040000", "count": 12 }
+    ]
+  },
+  {
+    "id": "700004",
+    "name": "마노",
+    "isBoss": true,
+    "place": {
+      "code": "104000400",
+      "count": 1
+    },
+    "places": [
+      { "code": "104000400", "count": 1 }
+    ]
   },
   {
     "id": "120100",
@@ -1812,7 +2975,12 @@ window.MONSTERS = [
     "place": {
       "code": "1010000",
       "count": 6
-    }
+    },
+    "places": [
+      { "code": "1010000", "count": 6 },
+      { "code": "104030001", "count": 12 },
+      { "code": "104040000", "count": 10 }
+    ]
   },
   {
     "id": "1210102",
@@ -1822,9 +2990,143 @@ window.MONSTERS = [
     "place": {
       "code": "1010000",
       "count": 2
-    }
+    },
+    "places": [
+      { "code": "1010000", "count": 2 },
+      { "code": "104010000", "count": 2 },
+      { "code": "104020000", "count": 13 },
+      { "code": "104030001", "count": 18 },
+      { "code": "104040001", "count": 9 },
+      { "code": "104040002", "count": 11 },
+      { "code": "100000002", "count": 12 }
+    ]
+  },
+  {
+    "id": "210100",
+    "name": "슬라임",
+    "img": "https://drive.google.com/thumbnail?id=1IDgj_s1wtvJfVZho9SG_mAr_d5yFS-Vy&sz=w200",
+    "minLevel": 6,
+    "place": {
+      "code": "104020000",
+      "count": 17
+    },
+    "places": [
+      { "code": "104020000", "count": 17 },
+      { "code": "104030000", "count": 19 }
+    ]
+  },
+  {
+    "id": "1110100",
+    "name": "초록버섯",
+    "img": "https://drive.google.com/thumbnail?id=1dz7T6h_DRAZLwz_eL5tXWjRCMyRcVWcR&sz=w200",
+    "minLevel": 15,
+    "place": {
+      "code": "104030001",
+      "count": 4
+    },
+    "places": [
+      { "code": "104030001", "count": 4 },
+      { "code": "104040001", "count": 7 },
+      { "code": "104040002", "count": 11 },
+      { "code": "100000002", "count": 5 },
+      { "code": "100000003", "count": 9 }
+    ]
+  },
+  {
+    "id": "2220100",
+    "name": "파란버섯",
+    "img": "https://drive.google.com/thumbnail?id=1gkqJsWG8vFvGFmwmnoOW6FC4SXsjSIya&sz=w200",
+    "minLevel": 20,
+    "place": {
+      "code": "100000003",
+      "count": 9
+    },
+    "places": [
+      { "code": "100000003", "count": 9 },
+      { "code": "100000004", "count": 11 }
+    ]
+  },
+  {
+    "id": "2110200",
+    "name": "뿔버섯",
+    "img": "https://drive.google.com/thumbnail?id=172QNMG6AFYj0C0UY5o4nldA0f-mPiJwo&sz=w200",
+    "minLevel": 22,
+    "place": {
+      "code": "100000004",
+      "count": 13
+    },
+    "places": [
+      { "code": "100000004", "count": 13 },
+      { "code": "100000005", "count": 13 }
+    ]
+  },
+  {
+    "id": "3000001",
+    "name": "페어리",
+    "img": "https://drive.google.com/thumbnail?id=1cN2Iyg78dwitGEWV6B2z-EhznAIneIRW&sz=w200",
+    "minLevel": 30,
+    "place": {
+      "code": "100000005",
+      "count": 2
+    },
+    "places": [
+      { "code": "100000005", "count": 2 }
+    ]
+  },
+  {
+    "id": "6130101",
+    "name": "머쉬맘",
+    "img": "https://drive.google.com/thumbnail?id=1xTCc_3iuO9mOUG5fGjv22o9eZ_snLTzd&sz=w400",
+    "minLevel": 60,
+    "isBoss": true,
+    "place": {
+      "code": "100000005",
+      "count": 1
+    },
+    "places": [
+      { "code": "100000005", "count": 1 }
+    ]
   }
 ];
+
+// 헤네시스시장
+(function(){
+  var marketImg = "https://drive.google.com/thumbnail?id=1hgEntp0jPJEMObXYyk2KjMWjPOy4CTRk&sz=w5809";
+  var hene = window.MAPS.find(function(m){ return String(m.code)==="100000000"; });
+  if (hene && hene.portals) hene.portals.forEach(function(p){ if (p.toName==="헤네시스 시장") { p.toName="헤네시스시장"; p.toCode="100000100"; } });
+  if (!window.MAPS.some(function(m){ return String(m.code)==="100000100"; })) window.MAPS.push({
+    code:"100000100",name:"헤네시스시장",region:"빅토리아 아일랜드",img:marketImg,imgWidth:5809,imgHeight:880,
+    portals:[
+      {toCode:"100000000",toName:"헤네시스",note:"이동",x:290,y:597,unit:"px"},
+      {toCode:null,toName:"헤네시스무기상점",note:"이동",x:2479,y:659,unit:"px"},
+      {toCode:null,toName:"헤네시스잡화상점",note:"이동",x:3503,y:328,unit:"px"},
+      {toCode:null,toName:"헤네시스피부관리실",note:"이동",x:4251,y:538,unit:"px"},
+      {toCode:null,toName:"헤네시스성형외과",note:"이동",x:4787,y:266,unit:"px"},
+      {toCode:null,toName:"헤네시스헤어샵",note:"이동",x:4775,y:542,unit:"px"},
+      {toCode:null,toName:"헤네시스공원",note:"이동",x:5464,y:538,unit:"px"},
+      {toCode:"100000100",toName:"이동포탈 1",note:"히든 이동",x:387,y:602,unit:"px",destX:5359,destY:542,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"},
+      {toCode:"100000100",toName:"이동포탈 2",note:"히든 이동",x:5359,y:542,unit:"px",destX:387,destY:602,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"},
+      {toCode:"100000100",toName:"이동포탈 3",note:"히든 이동",x:1937,y:659,unit:"px",destX:3954,destY:542,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"},
+      {toCode:"100000100",toName:"이동포탈 4",note:"히든 이동",x:3954,y:542,unit:"px",destX:1937,destY:659,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"}
+    ]
+  });
+  var place = {name:"헤네시스시장",code:"100000100",img:marketImg};
+  [
+    {id:"1012002",name:"비셔스",role:"아이템 제작자",img:"https://drive.google.com/thumbnail?id=18YSeQC6cI0Qrm7Lwa1Vbl5x0twxPCUvs&sz=w400",place:place,dialogues:[]},
+    {id:"2080007",name:"오심마",role:"노점상",img:"https://drive.google.com/thumbnail?id=11jy4h2FduZcTpV6_ChGWXxXGGydw0igl&sz=w400",place:place,dialogues:[]},
+    {id:"1012004",name:"큐트",role:"펫먹이 상인",img:"https://drive.google.com/thumbnail?id=1j0tzZMCGAudMnP77KiKf2i3GoG_eCKkI&sz=w400",place:place,dialogues:[],sells:["212000099","2260000","4160000","4160001","4160002","4160019","4160015","4160012","4160014","4160020","4160010","4160009","4160008","4160007","4160006","4160005","4160004","4160003"]}
+  ].forEach(function(n){ if (!window.NPCS.some(function(old){ return String(old.id)===String(n.id); })) window.NPCS.push(n); });
+})();
+
+// 추가 몬스터: 레츠, 모래거인
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"3210208",name:"레츠",img:"https://drive.google.com/thumbnail?id=1FRMcrfnY6ygA08joVndoM082iSPqDkfN&sz=w400",minLevel:36,category:"무형",hp:1400,exp:390,acc:100,eva:18,pdd:90,mdd:85,desc:"등에 태엽장치가 달려있는 장난감 얼룩 쥐 몬스터이다. 라츠와 이름이 매우 유사하지만 레츠는 헬리오스탑에만 서식하며, 먹성이 좋아서 가리지 않고 쉴 새 없이 아무거나 먹어치운다. 아랫마을 식량 부족의 주범이다.",drops:drops([["4000168","해바라기씨"],["4004003","행운의 크리스탈 원석"],["4007002","마법의 가루(파랑)"],["4007004","마법의 가루(노랑)"],["4010002","미스릴의 원석"],["4031279","정부미"],["4130006","두손도끼 제작의 촉진제"],["4130008","창 제작의 촉진제"],["4130020","하의 제작의 촉진제"],["4131009","스태프 제조법"],["2000002","하얀포션"],["2000003","파란포션"],["2002005","명사수의 물약"],["2044501","활 공격력 주문서 60%"],["2060000","활전용 화살"],["2061000","석궁전용 화살"],["1002048","블루 그레이트 헬멧"],["1002173","그린 가이즈"],["1032008","캣츠 아이"],["1041052","블루 아모리아 로브 (여)"],["1041065","레드 레골리스 (여)"],["1051008","블루 후르츠 (여)"],["1052110","블루 브레이스룩"],["1061048","블루 아모리아 치마 (여)"],["1061060","레드 레골리스 바지 (여)"],["1072117","다크 문슈즈"],["1072127","청 진월장화"],["1082072","골드 브레이스"],["1082076","골드 클리브"],["1082195","브라운 바르비"],["1382018","페탈 스태프"]])},
+    {id:"4230600",name:"모래거인",img:"https://drive.google.com/thumbnail?id=1eNyqfdJUBG77HmuSMrv6e7tLQISypxVV&sz=w400",minLevel:40,category:"정령형",note:"불속성 공격에 약함, 얼음속성 공격에 약함",hp:1800,mp:100,exp:475,acc:150,eva:17,pdd:160,mdd:160,desc:"사막에서만 사는 요정의 일종이다. 모래로 이루어진 거대한 몸을 가지고 있다. 오아시스인 척 사람을 끌어들여 놀래키는 것이 특기이지만, 간혹 오랫동안 한 자리에 가만히 있던 모래거인이 오아시스로 변하는 일도 있으므로 함부로 없애지 말라는 말이 있다.",drops:drops([["4000332","금모래 가루"],["4004003","행운의 크리스탈 원석"],["4006001","소환의 돌"],["4007004","마법의 가루(노랑)"],["4007006","마법의 가루(빨강)"],["4010007","리튬의 원석"],["4020001","자수정의 원석"],["4130000","장갑 제작의 촉진제"],["4130016","너클 제작의 촉진제"],["4130019","상의 제작의 촉진제"],["4130022","방패 제작의 촉진제"],["2000002","하얀포션"],["2000003","파란포션"],["2040823","장갑 체력 주문서 100%"],["2044401","폴암 공격력 주문서 60%"],["2044412","폴암 명중률 주문서 60%"],["2044802","너클 공격력 주문서 10%"],["2060000","활전용 화살"],["2061000","석궁전용 화살"],["2070003","금비 표창"],["1002210","황 흑일모자"],["1041082","브라운 피에르타 (여)"],["1061081","브라운 피에르타 치마 (여)"],["1072002","스틸 티거"],["1082055","블루 노엘"],["1102000","초록색 모험가의 망토"],["1372012","크리스탈 완드"],["1432003","나카마키"],["1452007","발터2000"],["1492006","루나 슈터"]])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
 
 </script>
 <script>
@@ -1837,8 +3139,12 @@ window.MONSTERS = [
 
   var params = new URLSearchParams(location.search);
   var code = params.get('code');
+  var requestedName = params.get('name');
 
-  var map = MAPS.find(function(m){ return String(m.code)===String(code); });
+  var map = code
+    ? MAPS.find(function(m){ return String(m.code)===String(code); })
+    : MAPS.find(function(m){ return requestedName && String(m.name)===String(requestedName); });
+  if (map && !code) code = map.code;
 
   function safeImg(src, alt, cls){
     var d = 'https://placehold.co/300x180/FFF9F0/9A8574?text=%20';
@@ -1850,8 +3156,24 @@ window.MONSTERS = [
   // 맵 데이터가 아직 없어도, 이 코드로 등장하는 NPC/퀘스트는 보여준다 (이름은 코드로 대체 표시)
   var mapName = map ? map.name : null;
 
-  var relatedNPCs = NPCS.filter(function(n){ return n.place && String(n.place.code)===String(code); });
-  var relatedMonsters = MONSTERS.filter(function(m){ return m.place && String(m.place.code)===String(code); });
+  var relatedNPCs = NPCS.filter(function(n){
+    if (n.place && String(n.place.code)===String(code)) return true;
+    if (Array.isArray(n.places) && n.places.some(function(pl){ return String(pl.code)===String(code); })) return true;
+    return false;
+  });
+  function monsterPlaceAt(mo, mapCode){
+    if (mo.place && String(mo.place.code)===String(mapCode)) return mo.place;
+    if (Array.isArray(mo.places)){
+      var found = mo.places.find(function(pl){ return String(pl.code)===String(mapCode); });
+      if (found) return found;
+    }
+    return null;
+  }
+  var relatedMonsters = MONSTERS.filter(function(m){
+    if (m.place && String(m.place.code)===String(code)) return true;
+    if (Array.isArray(m.places) && m.places.some(function(pl){ return String(pl.code)===String(code); })) return true;
+    return false;
+  });
   // (이름 추정용으로만 계산 — 화면에는 "이 위치의 퀘스트"를 따로 보여주지 않음)
   Object.keys(QUEST_DETAILS).forEach(function(qid){
     var d = QUEST_DETAILS[qid];
@@ -1871,38 +3193,52 @@ window.MONSTERS = [
   var html = '';
   html += '<div class="detail-header">';
   if (map && map.img){
-    var hasCoordPortals = (map.portals && map.portals.some(function(p){ return p.x!=null && p.y!=null; })) ||
-      relatedNPCs.some(function(n){ return n.spotX!=null && n.spotY!=null; });
+    var mapImgStyleExtra = map.imgWidth ? ('width:'+map.imgWidth+'px;max-width:none;') : 'width:100%;max-width:100%;';
+    var hasCoordPortals = (map.portals && map.portals.some(function(p){ return p.x!=null && p.y!=null; }));
     if (hasCoordPortals){
-      html += '<div style="overflow-x:auto;border-radius:12px;border:2.5px solid var(--wood-dark);margin-bottom:14px;text-align:center;">';
-      html += '<div style="position:relative;display:inline-block;">';
-      html += '<img src="'+map.img+'" alt="'+(mapName||'')+'" style="display:block;max-width:none;height:auto;" onerror="this.onerror=null;this.style.display=\'none\';">';
+      var zoomId = 'mz'+Math.random().toString(36).slice(2,9);
+      var fitScale = 1;
+      var zElStyle = 'position:relative;display:inline-block;';
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
+      html += '<button type="button" data-zoom-out="'+zoomId+'" style="border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:800;font-size:13px;cursor:pointer;">－</button>';
+      html += '<span id="'+zoomId+'-label" style="font-size:13px;font-weight:800;color:var(--ink-soft);min-width:44px;text-align:center;">'+Math.round(fitScale*100)+'%</span>';
+      html += '<button type="button" data-zoom-in="'+zoomId+'" style="border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:800;font-size:13px;cursor:pointer;">＋</button>';
+      html += '<button type="button" data-zoom-reset="'+zoomId+'" style="border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:800;font-size:13px;cursor:pointer;">초기화</button>';
+      html += '</div>';
+      html += '<div style="overflow:auto;max-height:75vh;border-radius:12px;border:2.5px solid var(--wood-dark);margin-bottom:14px;">';
+      html += '<div id="'+zoomId+'" data-scale="'+fitScale+'" data-native-width="'+(map.imgWidth||'')+'" style="'+zElStyle+'">';
+      html += '<img class="map-bg-img" src="'+map.img+'" alt="'+(mapName||'')+'" style="display:block;'+mapImgStyleExtra+'height:auto;" onerror="this.onerror=null;this.style.display=\'none\';">';
       map.portals.forEach(function(p){
         if (p.x==null || p.y==null) return;
-        var href = p.toCode ? ('map-detail.html?code='+p.toCode) : '#';
-        html += '<a href="'+href+'" title="'+(p.note||'이동')+' → '+(p.toName||'')+'" style="position:absolute;left:'+p.x+'%;top:'+p.y+'%;transform:translate(-50%,-50%);display:block;">';
-        var pSize = p.size || 88;
-        html += '<img src="https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" alt="포탈" style="width:'+pSize+'px;height:'+pSize+'px;object-fit:contain;" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'↑\';this.parentElement.style.cssText+=\'width:30px;height:30px;border-radius:50%;background:var(--sun);border:2.5px solid var(--wood-dark);display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;font-size:15px;\';">';
-        html += '</a>';
-      });
-      relatedNPCs.forEach(function(n){
-        if (!n.spotX || !n.spotY) return;
-        html += '<a href="npc-detail.html?id='+n.id+'" title="'+n.name+'" style="position:absolute;left:'+n.spotX+'%;top:'+n.spotY+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;">';
-        var mSize = n.markerSize || 44;
-        html += '<img src="'+(n.img||'')+'" alt="'+n.name+'" style="width:'+mSize+'px;height:'+mSize+'px;object-fit:contain;'+(n.flip?'transform:scaleX(-1);':'')+'" onerror="this.style.display=\'none\';">';
-        html += '<span style="margin-top:2px;font-size:11px;font-weight:800;color:var(--ink);background:var(--paper);border:1.5px solid var(--wood-dark);border-radius:999px;padding:1px 7px;">'+n.name+'</span>';
-        html += '</a>';
+        var isSameMapWarp = p.toCode && String(p.toCode)===String(map.code) && p.destX!=null && p.destY!=null;
+        var href = (p.toCode && !isSameMapWarp)
+          ? ('map-detail.html?code='+p.toCode)
+          : (p.toName ? ('map-detail.html?name='+encodeURIComponent(p.toName)) : '#');
+        var ppxUnit = (p.unit === 'px' && map.imgWidth && map.imgHeight);
+        var pLeftPct = ppxUnit ? (p.x / map.imgWidth * 100) : p.x;
+        var pTopPct = ppxUnit ? (p.y / map.imgHeight * 100) : p.y;
+        if (p.hideMarker){
+          html += '<a href="'+href+'" aria-label="'+(p.toName||'이동')+'" title="'+(p.note||'이동')+' → '+(p.toName||'')+'" style="position:absolute;left:'+pLeftPct+'%;top:'+pTopPct+'%;transform:translate(-50%,-50%);display:block;width:64px;height:64px;background:transparent;border:none;padding:0;cursor:pointer;"></a>';
+          return;
+        }
+        var tag = isSameMapWarp ? 'button' : 'a';
+        var extraAttr = isSameMapWarp ? (' type="button" data-warp-dest-x="'+(p.destX/map.imgWidth*100)+'" data-warp-dest-y="'+(p.destY/map.imgHeight*100)+'"') : (' href="'+href+'"');
+        html += '<'+tag+extraAttr+' title="'+(p.note||'이동')+' → '+(p.toName||'')+'" style="position:absolute;left:'+pLeftPct+'%;top:'+pTopPct+'%;transform:translate(-50%,-100%);display:block;background:none;border:none;padding:0;cursor:pointer;">';
+        var pSize = (p.size || 80) * (map.iconScale || 2.0);
+        html += '<img src="'+(p.icon||'https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200')+'" alt="포탈" style="display:block;height:'+pSize+'px;width:auto;" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'↑\';this.parentElement.style.cssText+=\'width:30px;height:30px;border-radius:50%;background:var(--sun);border:2.5px solid var(--wood-dark);display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;font-size:15px;\';">';
+        html += '</'+tag+'>';
       });
       html += '</div>';
       html += '</div>';
     } else {
       html += '<div style="overflow-x:auto;border-radius:12px;border:2.5px solid var(--wood-dark);margin-bottom:14px;text-align:center;">';
-      html += '<img src="'+map.img+'" alt="'+(mapName||'')+'" style="display:inline-block;max-width:none;height:auto;" onerror="this.onerror=null;this.style.display=\'none\';">';
+      html += '<img src="'+map.img+'" alt="'+(mapName||'')+'" style="display:inline-block;'+mapImgStyleExtra+'height:auto;" onerror="this.onerror=null;this.style.display=\'none\';">';
       html += '</div>';
     }
   }
   html += '<h1 style="margin-bottom:2px;">' + (mapName || '이름 미등록 (코드 '+code+')') + '</h1>';
   html += '<div class="sub">' + (map && map.region ? map.region : '지역 정보 없음') + '</div>';
+  html += '<a href="index.html?worldmap='+code+'" style="display:inline-block;margin-top:8px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;font-size:12.5px;text-decoration:none;">🗺️ 월드맵에서 위치 보기</a>';
   html += '</div>';
 
   if (relatedNPCs.length){
@@ -1913,14 +3249,17 @@ window.MONSTERS = [
 
   if (relatedMonsters.length){
     html += '<div class="section"><h2>이 위치의 몬스터</h2><div class="ibox-grid">' + relatedMonsters.map(function(m){
-      return '<a class="ibox" href="monster-detail.html?id='+m.id+'">'+safeImg(m.img, m.name, 'thumb')+'<div><div class="lbl">몬스터'+(m.minLevel?' · Lv.'+m.minLevel:'')+'</div><div class="val">'+m.name+(m.place&&m.place.count?' <span class="count-badge">'+m.place.count+'마리</span>':'')+'</div></div></a>';
+      return '<a class="ibox" href="monster-detail.html?id='+m.id+'">'+safeImg(m.img, m.name, 'thumb')+'<div><div class="lbl">몬스터'+(m.minLevel?' · Lv.'+m.minLevel:'')+'</div><div class="val">'+m.name+(m.isBoss?' <span class="boss-badge">BOSS</span>':'')+((monsterPlaceAt(m, code)&&monsterPlaceAt(m, code).count)?' <span class="count-badge">'+monsterPlaceAt(m, code).count+'마리</span>':'')+'</div></div></a>';
     }).join('') + '</div></div>';
   }
 
   if (map && map.portals && map.portals.length){
     html += '<div class="section"><h2>포털</h2><div class="ibox-grid">' + map.portals.map(function(p){
       var inner = (p.spotImg ? safeImg(p.spotImg, p.toName, 'thumb') : '') + '<div><div class="lbl">'+(p.note||'이동')+'</div><div class="val">'+(p.toName||('코드 '+p.toCode))+'</div></div>';
-      return p.toCode ? '<a class="ibox" href="map-detail.html?code='+p.toCode+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+      var portalHref = p.toCode
+        ? 'map-detail.html?code='+p.toCode
+        : (p.toName ? 'map-detail.html?name='+encodeURIComponent(p.toName) : '');
+      return portalHref ? '<a class="ibox" href="'+portalHref+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
     }).join('') + '</div></div>';
   }
 
@@ -1929,6 +3268,55 @@ window.MONSTERS = [
   }
 
   $detail.innerHTML = html;
+
+  Array.prototype.forEach.call($detail.querySelectorAll('[data-native-width]'), function(zEl){
+    var nativeW = parseFloat(zEl.getAttribute('data-native-width'));
+    if (!nativeW) return;
+    var wrap = zEl.parentElement;
+    var avail = wrap ? wrap.clientWidth : 0;
+    if (!avail) return;
+    var fit = Math.min(1, avail / nativeW);
+    fit = Math.max(0.1, fit);
+    zEl.setAttribute('data-scale', fit);
+    zEl.setAttribute('data-fit-scale', fit);
+    zEl.style.zoom = fit;
+    var lbl = document.getElementById(zEl.id + '-label');
+    if (lbl) lbl.textContent = Math.round(fit * 100) + '%';
+  });
+
+  $detail.addEventListener('click', function(e){
+    var warpBtn = e.target.closest('[data-warp-dest-x]');
+    if (warpBtn){
+      var wZEl = warpBtn.closest('[data-scale]');
+      if (wZEl){
+        var destXPct = parseFloat(warpBtn.getAttribute('data-warp-dest-x'));
+        var destYPct = parseFloat(warpBtn.getAttribute('data-warp-dest-y'));
+        var mark = document.createElement('div');
+        mark.style.cssText = 'position:absolute;left:'+destXPct+'%;top:'+destYPct+'%;transform:translate(-50%,-50%);width:160px;height:160px;border-radius:50%;border:6px solid #ff2d2d;box-shadow:0 0 0 10px rgba(255,45,45,.4), 0 0 40px 10px rgba(255,45,45,.5);pointer-events:none;animation:warpPulse 1s ease-out 3;z-index:80;';
+        var markLabel = document.createElement('div');
+        markLabel.textContent = '여기로 이동!';
+        markLabel.style.cssText = 'position:absolute;left:'+destXPct+'%;top:'+destYPct+'%;transform:translate(-50%,calc(-50% - 100px));white-space:nowrap;background:#ff2d2d;color:#fff;font-weight:900;font-size:16px;padding:6px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.35);pointer-events:none;z-index:81;';
+        wZEl.appendChild(mark);
+        wZEl.appendChild(markLabel);
+        mark.scrollIntoView({ behavior:'smooth', block:'center', inline:'center' });
+        setTimeout(function(){ mark.remove(); markLabel.remove(); }, 3600);
+      }
+      return;
+    }
+    var zBtn = e.target.closest('[data-zoom-in],[data-zoom-out],[data-zoom-reset]');
+    if (!zBtn) return;
+    var zid = zBtn.getAttribute('data-zoom-in') || zBtn.getAttribute('data-zoom-out') || zBtn.getAttribute('data-zoom-reset');
+    var el = document.getElementById(zid);
+    var label = document.getElementById(zid+'-label');
+    if (!el) return;
+    var cur = parseFloat(el.getAttribute('data-scale') || '1');
+    if (zBtn.hasAttribute('data-zoom-in')) cur = Math.min(3, cur + 0.25);
+    else if (zBtn.hasAttribute('data-zoom-out')) cur = Math.max(0.25, cur - 0.25);
+    else cur = parseFloat(el.getAttribute('data-fit-scale') || '1');
+    el.setAttribute('data-scale', cur);
+    el.style.zoom = cur;
+    if (label) label.textContent = Math.round(cur*100)+'%';
+  });
 })();
 </script>
 </body>

@@ -434,6 +434,12 @@ button{ font:inherit; }
   padding:2px 10px; border-radius:999px; margin-left:6px; vertical-align:2px;
 }
 
+.boss-badge{
+  display:inline-flex; align-items:center; font-size:11.5px; font-weight:900; color:#FFE9B0;
+  background:linear-gradient(135deg,#7A1414,#3A0D0D); border:2px solid var(--wood-dark);
+  padding:2px 9px; border-radius:999px; margin-left:6px; vertical-align:2px; letter-spacing:.5px;
+}
+
 /* ---------- 서브 패널 (퀘스트/아이템/몬스터 상세를 페이지 이동 없이 보여줌) ---------- */
 .panel-overlay{
   position:fixed; inset:0; background:rgba(70,40,13,.45);
@@ -732,7 +738,7 @@ window.QUESTS = [
     "id": 1009,
     "code": "레인 1-1",
     "title": "레인의 메이플 퀴즈 1",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -750,7 +756,7 @@ window.QUESTS = [
     "id": 1010,
     "code": "레인 1-2",
     "title": "레인의 메이플 퀴즈 2",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -768,7 +774,7 @@ window.QUESTS = [
     "id": 1011,
     "code": "레인 1-3",
     "title": "레인의 메이플 퀴즈 3",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -786,7 +792,7 @@ window.QUESTS = [
     "id": 1012,
     "code": "레인 1-4",
     "title": "레인의 메이플 퀴즈 4",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -804,7 +810,7 @@ window.QUESTS = [
     "id": 1013,
     "code": "레인 1-5",
     "title": "레인의 메이플 퀴즈 5",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -822,7 +828,7 @@ window.QUESTS = [
     "id": 1014,
     "code": "레인 1-6",
     "title": "레인의 메이플 퀴즈 6",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -840,7 +846,7 @@ window.QUESTS = [
     "id": 1015,
     "code": "레인 1-7",
     "title": "레인의 메이플 퀴즈 7",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -858,7 +864,7 @@ window.QUESTS = [
     "id": 1008,
     "code": "피오 1-1",
     "title": "피오의 재활용품 수거",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "아이템 수집",
     "minLevel": 1,
     "jobs": [
@@ -881,7 +887,7 @@ window.QUESTS = [
     "id": 1020,
     "code": "피오 1-2",
     "title": "피오의 재활용품 활용",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "대화",
     "minLevel": 1,
     "jobs": [
@@ -900,7 +906,7 @@ window.QUESTS = [
     "id": 1038,
     "code": "쌤 1-2",
     "title": "마리아의 편지",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "아이템 전달",
     "minLevel": 1,
     "jobs": [
@@ -928,7 +934,7 @@ window.QUESTS = [
     "id": 1039,
     "code": "유나 1-1",
     "title": "유나 도와주기",
-    "region": "암허스트",
+    "region": "메이플로드",
     "type": "몬스터 처치",
     "minLevel": 1,
     "jobs": [
@@ -943,6 +949,16 @@ window.QUESTS = [
     ]
   }
 ];
+
+// 추가 몬스터: 레츠, 모래거인
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"3210208",name:"레츠",img:"https://drive.google.com/thumbnail?id=1FRMcrfnY6ygA08joVndoM082iSPqDkfN&sz=w400",minLevel:36,category:"무형",hp:1400,exp:390,acc:100,eva:18,pdd:90,mdd:85,desc:"등에 태엽장치가 달려있는 장난감 얼룩 쥐 몬스터이다. 라츠와 이름이 매우 유사하지만 레츠는 헬리오스탑에만 서식하며, 먹성이 좋아서 가리지 않고 쉴 새 없이 아무거나 먹어치운다. 아랫마을 식량 부족의 주범이다.",drops:drops([["4000168","해바라기씨"],["4004003","행운의 크리스탈 원석"],["4007002","마법의 가루(파랑)"],["4007004","마법의 가루(노랑)"],["4010002","미스릴의 원석"],["4031279","정부미"],["4130006","두손도끼 제작의 촉진제"],["4130008","창 제작의 촉진제"],["4130020","하의 제작의 촉진제"],["4131009","스태프 제조법"],["2000002","하얀포션"],["2000003","파란포션"],["2002005","명사수의 물약"],["2044501","활 공격력 주문서 60%"],["2060000","활전용 화살"],["2061000","석궁전용 화살"],["1002048","블루 그레이트 헬멧"],["1002173","그린 가이즈"],["1032008","캣츠 아이"],["1041052","블루 아모리아 로브 (여)"],["1041065","레드 레골리스 (여)"],["1051008","블루 후르츠 (여)"],["1052110","블루 브레이스룩"],["1061048","블루 아모리아 치마 (여)"],["1061060","레드 레골리스 바지 (여)"],["1072117","다크 문슈즈"],["1072127","청 진월장화"],["1082072","골드 브레이스"],["1082076","골드 클리브"],["1082195","브라운 바르비"],["1382018","페탈 스태프"]])},
+    {id:"4230600",name:"모래거인",img:"https://drive.google.com/thumbnail?id=1eNyqfdJUBG77HmuSMrv6e7tLQISypxVV&sz=w400",minLevel:40,category:"정령형",note:"불속성 공격에 약함, 얼음속성 공격에 약함",hp:1800,mp:100,exp:475,acc:150,eva:17,pdd:160,mdd:160,desc:"사막에서만 사는 요정의 일종이다. 모래로 이루어진 거대한 몸을 가지고 있다. 오아시스인 척 사람을 끌어들여 놀래키는 것이 특기이지만, 간혹 오랫동안 한 자리에 가만히 있던 모래거인이 오아시스로 변하는 일도 있으므로 함부로 없애지 말라는 말이 있다.",drops:drops([["4000332","금모래 가루"],["4004003","행운의 크리스탈 원석"],["4006001","소환의 돌"],["4007004","마법의 가루(노랑)"],["4007006","마법의 가루(빨강)"],["4010007","리튬의 원석"],["4020001","자수정의 원석"],["4130000","장갑 제작의 촉진제"],["4130016","너클 제작의 촉진제"],["4130019","상의 제작의 촉진제"],["4130022","방패 제작의 촉진제"],["2000002","하얀포션"],["2000003","파란포션"],["2040823","장갑 체력 주문서 100%"],["2044401","폴암 공격력 주문서 60%"],["2044412","폴암 명중률 주문서 60%"],["2044802","너클 공격력 주문서 10%"],["2060000","활전용 화살"],["2061000","석궁전용 화살"],["2070003","금비 표창"],["1002210","황 흑일모자"],["1041082","브라운 피에르타 (여)"],["1061081","브라운 피에르타 치마 (여)"],["1072002","스틸 티거"],["1082055","블루 노엘"],["1102000","초록색 모험가의 망토"],["1372012","크리스탈 완드"],["1432003","나카마키"],["1452007","발터2000"],["1492006","루나 슈터"]])}
+  ];
+  window.PENDING_MONSTERS = added;
+})();
 
 window.QUEST_DETAILS = {
   "1008": {
@@ -1998,6 +2014,7 @@ window.ITEMS = [
       "소비",
       "발사체"
     ],
+    "buyPrice": 600,
     "sellPrice": 250,
     "attack": 10,
     "desc": "강철로 만든 총알이다. 여러 개가 들어있으며 모두 사용했다면 다시 충전해야 한다."
@@ -11258,8 +11275,231 @@ window.ITEMS = [
     "pdd": 12,
     "buyPrice": 4000,
     "sellPrice": 2000
+  },
+  {
+    "id": "212000099",
+    "name": "펫의 먹이",
+    "img": "https://drive.google.com/thumbnail?id=1fHDHHTu40zSzp2m8U-fjVEUURBRtXrPI&sz=w200",
+    "desc": "작고 귀여운 펫들이 좋아하는 먹이이다. 포만감을 30 회복시켜 준다. 참고로 사람은 먹으면 안돼요~",
+    "buyPrice": 30,
+    "sellPrice": 15,
+    "path": [
+      "소비",
+      "펫먹이"
+    ]
+  },
+  {
+    "id": "2260000",
+    "name": "피로회복제",
+    "img": "https://drive.google.com/thumbnail?id=18MadIjbfHYdktWHo5AKn6aCevNJUdFZU&sz=w200",
+    "desc": "길들인 몬스터의 피로를 30 회복시킨다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "소비",
+      "펫먹이"
+    ]
+  },
+  {
+    "id": "4160000",
+    "name": "펫 안내서 : 강아지 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 강아지에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160001",
+    "name": "펫 안내서 : 고양이 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 고양이에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160002",
+    "name": "펫 안내서 : 토끼 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 토끼에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160019",
+    "name": "펫 안내서 : 손오공 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 손오공에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160015",
+    "name": "펫 안내서 : 주니어 발록 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 주니어 발록에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160012",
+    "name": "펫 안내서 : 미니예티 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 미니예티에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160014",
+    "name": "펫 안내서 : 펭귄 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 펭귄에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160020",
+    "name": "펫 안내서 : 칠면조 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 칠면조에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160010",
+    "name": "펫 안내서 : 원숭이 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 원숭이에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160009",
+    "name": "펫 안내서 : 루돌프 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 루돌프에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160008",
+    "name": "펫 안내서 : 백호 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 백호에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160007",
+    "name": "펫 안내서 : 디노 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 디노에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160006",
+    "name": "펫 안내서 : 팬더 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 팬더에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160005",
+    "name": "펫 안내서 : 돼지 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 돼지에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160004",
+    "name": "펫 안내서 : 허스키 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 허스키에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
+  },
+  {
+    "id": "4160003",
+    "name": "펫 안내서 : 카고 편",
+    "img": "https://drive.google.com/thumbnail?id=179iAp62cyd7b8Gkw9GYlnwH9wNIPMebR&sz=w200",
+    "desc": "펫인 카고에게 할 수 있는 명령어가 적혀있는 안내서다.\n아이템을 더블클릭하면 책을 펼칠 수 있다.",
+    "buyPrice": 1000,
+    "sellPrice": 500,
+    "path": [
+      "기타",
+      "책"
+    ]
   }
 ];
+
+[
+  {"id":"1082013","name":"블루 디로스","img":"https://drive.google.com/thumbnail?id=1ZkxU-pdqy4_1tS5twYnyqkvPOf_cJ3TT&sz=w200","path":["장비","방어구","장갑"],"job":"궁수","reqLevel":20,"reqDex":60,"sellPrice":10000},
+  {"id":"1082015","name":"그린 디로스","img":"https://drive.google.com/thumbnail?id=1PN4Ue8QVbZAFxTQGvn-imdPfpKULxKc-&sz=w200","path":["장비","방어구","장갑"],"job":"궁수","reqLevel":20,"reqDex":60,"dex":2,"pdd":8,"sellPrice":14000},
+  {"id":"1082014","name":"레드 디로스","img":"https://drive.google.com/thumbnail?id=1R9OJ93nNK8_aVJQ66jRgXY7230bHpZDK&sz=w200","path":["장비","방어구","장갑"],"job":"궁수","reqLevel":20,"reqDex":60,"dex":1,"pdd":7,"sellPrice":12000},
+  {"id":"1082017","name":"레드 사바타","img":"https://drive.google.com/thumbnail?id=1BnA1yt-ipwpS8wHhgqV1JlrY5rFU4Tqi&sz=w200","path":["장비","방어구","장갑"],"job":"궁수","reqLevel":25,"reqDex":75,"dex":1,"pdd":9,"sellPrice":17000}
+].forEach(function(it){ if (!window.ITEMS.some(function(old){ return String(old.id)===String(it.id); })) window.ITEMS.push(it); });
 
 window.MAPS = [
   {
@@ -11362,8 +11602,8 @@ window.MAPS = [
   {
     "code": "1000000",
     "name": "암허스트",
-    "region": "암허스트",
-    "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w1600",
+    "region": "메이플로드",
+    "img": "https://drive.google.com/thumbnail?id=1yy_OAz7PD9qRfltQdpX9Ze9XVnK57CyR&sz=w2000",
     "portals": [
       {
         "toCode": "50000",
@@ -11398,7 +11638,7 @@ window.MAPS = [
   {
     "code": "1000001",
     "name": "암허스트 무기상점",
-    "region": "암허스트",
+    "region": "메이플로드",
     "img": "https://drive.google.com/thumbnail?id=1bD9j_NTijUc1BGc7aCR-tf7ElvWfBMy1&sz=w1000",
     "portals": [
       {
@@ -11413,7 +11653,7 @@ window.MAPS = [
   {
     "code": "1000003",
     "name": "암허스트 잡화상점",
-    "region": "암허스트",
+    "region": "메이플로드",
     "img": "https://drive.google.com/thumbnail?id=1KScbgiJgCa_wDppg7wkedz8BoL7X26vB&sz=w1000",
     "portals": [
       {
@@ -11429,11 +11669,332 @@ window.MAPS = [
   {
     "code": "1010000",
     "name": "모험가의 수련장 입구",
-    "region": "암허스트",
+    "region": "메이플로드",
     "img": "https://drive.google.com/thumbnail?id=1vV-JVQYzaI1I4-N56HdTUDYduhPnRCaU&sz=w1000",
     "portals": []
   }
+,
+  {
+    "code": "104000003",
+    "name": "리스항구 무기상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1isCtCEdT-K2lI_bpaoxnuFe7GkopFpAb&sz=w840",
+    "imgWidth": 840,
+    "imgHeight": 644,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 353, "y": 526, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000001",
+    "name": "리스항구 방어구상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=10rZZrtMW_9mrZAao_GYFPlccUfuz8vat&sz=w840",
+    "imgWidth": 840,
+    "imgHeight": 644,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 353, "y": 526, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000004",
+    "name": "리스항구 정보상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1sHkwOLlmX4JfcHWJRFT9KHodVO1qfK8v&sz=w837",
+    "imgWidth": 837,
+    "imgHeight": 594,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 141, "y": 478, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000002",
+    "name": "리스항구 잡화상점",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1RACv3Miz_SN6A8-GofIjOjdxP7sy_dIS&sz=w840",
+    "imgWidth": 840,
+    "imgHeight": 600,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 109, "y": 486, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000100",
+    "name": "리스항구 외곽",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1inQPXng2zuUxDAXBaO6Yc_V3VhELhD8s&sz=w1000",
+    "imgWidth": 1000,
+    "imgHeight": 318,
+    "iconScale": 1.0,
+    "portals": [
+      { "toCode": "104000000", "toName": "리스항구", "note": "이동", "x": 73, "y": 114, "unit": "px" },
+      { "toCode": "104000200", "toName": "해안가 풀숲 1", "note": "이동", "x": 943, "y": 143, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000200",
+    "name": "해안가 풀숲 1",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1tlvjOK7GSW6YZd_4RJwVrT42YphHGONa&sz=w2830",
+    "imgWidth": 2830,
+    "imgHeight": 2047,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000100", "toName": "리스항구 외곽", "note": "이동", "x": 203, "y": 1637, "unit": "px" },
+      { "toCode": "104000300", "toName": "해안가 풀숲 2", "note": "이동", "x": 2628, "y": 1754, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000300",
+    "name": "해안가 풀숲 2",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1Ctcn084bnFidVmdnguEsWi7QyU4feHQO&sz=w2010",
+    "imgWidth": 2010,
+    "imgHeight": 1972,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000200", "toName": "해안가 풀숲 1", "note": "이동", "x": 209, "y": 1566, "unit": "px" },
+      { "toCode": "104000400", "toName": "해안가 풀숲 3", "note": "이동", "x": 1806, "y": 1565, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104000400",
+    "name": "해안가 풀숲 3",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1GHL-_5svhJAFow5gXL40n8rstl6eZDZV&sz=w1651",
+    "imgWidth": 1651,
+    "imgHeight": 1417,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000300", "toName": "해안가 풀숲 2", "note": "이동", "x": 155, "y": 1192, "unit": "px" },
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 1487, "y": 1011, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104010000",
+    "name": "세갈래길",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=19MwiP5qZ8-5Dw3aGnCLDNaeA_tgTvXpp&sz=w6000",
+    "imgWidth": 5157,
+    "imgHeight": 2554,
+    "iconScale": 2.0,
+    "portals": [
+      { "toCode": "104000400", "toName": "해안가 풀숲 3", "note": "이동", "x": 257, "y": 2207, "unit": "px" },
+      { "toCode": "104020000", "toName": "헤네시스 서쪽숲", "note": "이동", "x": 4904, "y": 2209, "unit": "px" },
+      { "toCode": null, "toName": "커닝시티중간숲 1", "note": "이동", "x": 218, "y": 462, "unit": "px" },
+      { "toCode": "104010002", "toName": "해안가사냥터", "note": "히든 이동", "x": 2411, "y": 2269, "unit": "px" },
+      { "toCode": "104010001", "toName": "돼지의 해안가", "note": "히든 이동", "x": 1763, "y": 1667, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104010002",
+    "name": "해안가사냥터",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1KNpn3FOAK7yW10sIFPVD5nftnLLNWIEw&sz=w3881",
+    "imgWidth": 3881,
+    "imgHeight": 1410,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 3644, "y": 336, "unit": "px" }
+    ]
+  },
+  {
+    "code": "104020000",
+    "name": "헤네시스 서쪽숲",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1kbuTmDzIS325O3olY8U_ROMQX1awUoYe&sz=w4260",
+    "imgWidth": 4260,
+    "imgHeight": 1741,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 247, "y": 1275, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104030000", "toName": "헤네시스 서쪽언덕", "note": "이동", "x": 3994, "y": 1265, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 1", "note": "히든 이동", "x": 1166, "y": 1154, "unit": "px", "destX": 1223, "destY": 849, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 2", "note": "히든 이동", "x": 2038, "y": 1144, "unit": "px", "destX": 2253, "destY": 839, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 3", "note": "히든 이동", "x": 2612, "y": 1442, "unit": "px", "destX": 1508, "destY": 547, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 4", "note": "히든 이동", "x": 1508, "y": 547, "unit": "px", "destX": 2612, "destY": 1442, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 5", "note": "히든 이동", "x": 2817, "y": 839, "unit": "px", "destX": 2327, "destY": 540, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 6", "note": "히든 이동", "x": 2327, "y": 540, "unit": "px", "destX": 2817, "destY": 839, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 7", "note": "히든 이동", "x": 3001, "y": 1446, "unit": "px", "destX": 3414, "destY": 64, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "104020000", "toName": "이동 8", "note": "히든 이동", "x": 3414, "y": 64, "unit": "px", "destX": 3001, "destY": 1446, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" }
+    ]
+  },
+  {
+    "code": "104010001",
+    "name": "돼지의 해안가",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1Cgvo__xyc9leByk3u5bBSVcl8JA-nWhv&sz=w3431",
+    "imgWidth": 3431,
+    "imgHeight": 1208,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 721, "y": 188, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104030000",
+    "name": "헤네시스 서쪽언덕",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1G-7zEbbLwnS-5BjDPeArDjs6L7EYnTRF&sz=w3527",
+    "imgWidth": 3527,
+    "imgHeight": 1927,
+    "portals": [
+      { "toCode": "104010000", "toName": "세갈래길", "note": "이동", "x": 212, "y": 1516, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104040000", "toName": "헤네시스사냥터 1", "note": "이동", "x": 3367, "y": 1130, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104030001", "toName": "버섯동산", "note": "히든 이동", "x": 2378, "y": 200, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104030001",
+    "name": "버섯동산",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=11lHpt3r8CfUcuCnWcxDzWAE9xDdpIqGC&sz=w2531",
+    "imgWidth": 2531,
+    "imgHeight": 899,
+    "portals": [
+      { "toCode": "104030000", "toName": "헤네시스 서쪽언덕", "note": "히든 이동", "x": 2164, "y": 611, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104040000",
+    "name": "헤네시스 사냥터 1",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1_4FlQPJrW7D9vKFSZ5vxtFac4sYtha6z&sz=w2261",
+    "imgWidth": 2261,
+    "imgHeight": 1634,
+    "portals": [
+      { "toCode": "104030000", "toName": "헤네시스 서쪽언덕", "note": "이동", "x": 198, "y": 1340, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104040001", "toName": "헤네시스 사냥터 2", "note": "이동", "x": 1456, "y": 107, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000000", "toName": "헤네시스", "note": "이동", "x": 2098, "y": 1350, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104040001",
+    "name": "헤네시스 사냥터 2",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1he9Jq4LbSvCShKJOk0jQou1EKZSrLJkS&sz=w1812",
+    "imgWidth": 1812,
+    "imgHeight": 1771,
+    "portals": [
+      { "toCode": "104040000", "toName": "헤네시스 사냥터 1", "note": "이동", "x": 1651, "y": 1609, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "104040002", "toName": "헤네시스 사냥터 3", "note": "이동", "x": 1180, "y": 114, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "104040002",
+    "name": "헤네시스 사냥터 3",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=137ZmHhXUR3J8HkmG8EvREJ8lC4_Wha2V&sz=w1812",
+    "imgWidth": 1812,
+    "imgHeight": 1486,
+    "portals": [
+      { "toCode": "104040001", "toName": "헤네시스 사냥터 2", "note": "이동", "x": 1656, "y": 1260, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" }
+    ]
+  },
+  {
+    "code": "100000000",
+    "name": "헤네시스",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=12m0CEgmB_70T-V9JYI7WA29Ww68VbaJ0&sz=w6894",
+    "imgWidth": 6894,
+    "imgHeight": 1331,
+    "portals": [
+      { "toCode": "104040000", "toName": "헤네시스 사냥터 1", "note": "이동", "x": 99, "y": 751, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 공원", "note": "이동", "x": 4408, "y": 602, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000100", "toName": "헤네시스시장", "note": "이동", "x": 3594, "y": 811, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 민가", "note": "이동", "x": 5698, "y": 926, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "헤네시스 동쪽언덕", "note": "이동", "x": 6443, "y": 933, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": null, "toName": "던전으로 가는 길", "note": "이동", "x": 6614, "y": 301, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000002", "toName": "비어있는집", "note": "이동", "x": 898, "y": 383, "unit": "px", "icon": "https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 1", "note": "히든 이동", "x": 208, "y": 744, "unit": "px", "destX": 6373, "destY": 933, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 2", "note": "히든 이동", "x": 6373, "y": 933, "unit": "px", "destX": 208, "destY": 744, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 3", "note": "히든 이동", "x": 1881, "y": 577, "unit": "px", "destX": 5733, "destY": 580, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" },
+      { "toCode": "100000000", "toName": "이동포탈 4", "note": "히든 이동", "x": 5733, "y": 580, "unit": "px", "destX": 1881, "destY": 577, "icon": "https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200" }
+    ]
+  },
+  {
+    "code": "100000002",
+    "name": "비어있는집",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1_UGxzQ0h4qwU5uIDyztygrg5vdDFkQaC&sz=w1973",
+    "imgWidth": 1973,
+    "imgHeight": 1087,
+    "portals": [
+      { "toCode": "100000000", "toName": "헤네시스", "note": "이동", "x": 1310, "y": 369, "unit": "px" },
+      { "toCode": "100000003", "toName": "버섯공원 1", "note": "이동", "x": 440, "y": 410, "unit": "px" },
+      { "toCode": "106020000", "toName": "버섯의 숲 길목", "note": "이동", "x": 234, "y": 920, "unit": "px", "hideMarker": true }
+    ]
+  },
+  {
+    "code": "100000003",
+    "name": "버섯공원 1",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1gXaxuLqPeWQv_ng0UKBnw6t9XplH794s&sz=w3971",
+    "imgWidth": 3971,
+    "imgHeight": 673,
+    "portals": [
+      { "toCode": "100000002", "toName": "비어있는집", "note": "이동", "x": 203, "y": 326, "unit": "px" },
+      { "toCode": "100000004", "toName": "버섯공원 2", "note": "이동", "x": 3761, "y": 146, "unit": "px" },
+      { "toCode": "100000006", "toName": "버섯공원쉼터", "note": "이동", "x": 1451, "y": 446, "unit": "px" },
+      { "toCode": "100000006", "toName": "버섯공원쉼터", "note": "이동", "x": 2499, "y": 453, "unit": "px" }
+    ]
+  },
+  {
+    "code": "100000004",
+    "name": "버섯공원 2",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1j08VeCopZ6eqDWSxj4olbQqbXyjlKA0b&sz=w1631",
+    "imgWidth": 1631,
+    "imgHeight": 1785,
+    "portals": [
+      { "toCode": "100000003", "toName": "버섯공원 1", "note": "이동", "x": 314, "y": 1558, "unit": "px" },
+      { "toCode": "100000005", "toName": "남의집", "note": "이동", "x": 1210, "y": 239, "unit": "px" }
+    ]
+  },
+  {
+    "code": "100000005",
+    "name": "남의집",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1CXyEixUm72FgplxYmKD6mLUXrZA_kkxA&sz=w1001",
+    "imgWidth": 1001,
+    "imgHeight": 973,
+    "portals": [
+      { "toCode": "100000004", "toName": "버섯공원 2", "note": "이동", "x": 417, "y": 140, "unit": "px" }
+    ]
+  },
+  {
+    "code": "100000006",
+    "name": "버섯공원쉼터",
+    "region": "빅토리아 아일랜드",
+    "img": "https://drive.google.com/thumbnail?id=1RPD9_VWr2Ag7i1kgd8qk1Wy9KzN5kbXg&sz=w821",
+    "imgWidth": 821,
+    "imgHeight": 997,
+    "portals": [
+      { "toCode": "100000003", "toName": "버섯공원 1", "note": "이동", "x": 384, "y": 57, "unit": "px" }
+    ]
+  },
+  {
+    "code": "106020000",
+    "name": "버섯의 숲 길목",
+    "region": "빅토리아 아일랜드",
+    "portals": []
+  }
 ];
+
+if (!window.MAPS.some(function(m){ return String(m.code)==="100000100"; })) window.MAPS.push({
+  code:"100000100",name:"헤네시스시장",region:"빅토리아 아일랜드",
+  img:"https://drive.google.com/thumbnail?id=1hgEntp0jPJEMObXYyk2KjMWjPOy4CTRk&sz=w5809",imgWidth:5809,imgHeight:880,
+  portals:[
+    {toCode:"100000000",toName:"헤네시스",note:"이동",x:290,y:597,unit:"px"},
+    {toCode:null,toName:"헤네시스무기상점",note:"이동",x:2479,y:659,unit:"px"},
+    {toCode:null,toName:"헤네시스잡화상점",note:"이동",x:3503,y:328,unit:"px"},
+    {toCode:null,toName:"헤네시스피부관리실",note:"이동",x:4251,y:538,unit:"px"},
+    {toCode:null,toName:"헤네시스성형외과",note:"이동",x:4787,y:266,unit:"px"},
+    {toCode:null,toName:"헤네시스헤어샵",note:"이동",x:4775,y:542,unit:"px"},
+    {toCode:null,toName:"헤네시스공원",note:"이동",x:5464,y:538,unit:"px"},
+    {toCode:"100000100",toName:"이동포탈 1",note:"히든 이동",x:387,y:602,unit:"px",destX:5359,destY:542,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"},
+    {toCode:"100000100",toName:"이동포탈 2",note:"히든 이동",x:5359,y:542,unit:"px",destX:387,destY:602,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"},
+    {toCode:"100000100",toName:"이동포탈 3",note:"히든 이동",x:1937,y:659,unit:"px",destX:3954,destY:542,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"},
+    {toCode:"100000100",toName:"이동포탈 4",note:"히든 이동",x:3954,y:542,unit:"px",destX:1937,destY:659,icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"}
+  ]
+});
 
 window.MONSTERS = [
   {
@@ -11478,6 +12039,11 @@ window.MONSTERS = [
       "code": "50000",
       "count": 17
     },
+    "places": [
+      { "name": "위험한 숲속", "code": "50000", "count": 17 },
+      { "name": "리스항구 외곽", "code": "104000100", "count": 10 },
+      { "name": "해안가 풀숲 1", "code": "104000200", "count": 8 }
+    ],
     "drops": [
       {
         "itemId": "4000019",
@@ -11532,6 +12098,14 @@ window.MONSTERS = [
       "code": "1010000",
       "count": 6
     },
+    "places": [
+      { "name": "모험가의 수련장 입구", "code": "1010000", "count": 6 },
+      { "name": "리스항구 외곽", "code": "104000100", "count": 17 },
+      { "name": "해안가 풀숲 1", "code": "104000200", "count": 16 },
+      { "name": "해안가 풀숲 2", "code": "104000300", "count": 16 },
+      { "name": "해안가 풀숲 3", "code": "104000400", "count": 12 },
+      { "name": "헤네시스 사냥터 1", "code": "104040000", "count": 8 }
+    ],
     "minLevel": 2,
     "hp": 15,
     "mp": 15,
@@ -11608,6 +12182,11 @@ window.MONSTERS = [
       "code": "1010000",
       "count": 6
     },
+    "places": [
+      { "name": "모험가의 수련장 입구", "code": "1010000", "count": 6 },
+      { "name": "버섯동산", "code": "104030001", "count": 12 },
+      { "name": "헤네시스 사냥터 1", "code": "104040000", "count": 10 }
+    ],
     "minLevel": 2,
     "hp": 20,
     "mp": 15,
@@ -11680,6 +12259,15 @@ window.MONSTERS = [
       "code": "1010000",
       "count": 2
     },
+    "places": [
+      { "name": "모험가의 수련장 입구", "code": "1010000", "count": 2 },
+      { "name": "세갈래길", "code": "104010000", "count": 2 },
+      { "name": "헤네시스 서쪽숲", "code": "104020000", "count": 13 },
+      { "name": "버섯동산", "code": "104030001", "count": 18 },
+      { "name": "헤네시스 사냥터 2", "code": "104040001", "count": 9 },
+      { "name": "헤네시스 사냥터 3", "code": "104040002", "count": 11 },
+      { "name": "비어있는집", "code": "100000002", "count": 12 }
+    ],
     "minLevel": 8,
     "hp": 80,
     "mp": 45,
@@ -11835,11 +12423,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1061014",
@@ -11874,6 +12462,19 @@ window.MONSTERS = [
     "category": "동물형",
     "desc": "모험가들과의 전투를 통해 레벨이 높아진 일부 파란 달팽이들이 깨달음을 얻어 빨간 달팽이로 변했다는 소문이 있지만 확인되지 않은 소문으로 진상은 알 수 없다.\n메이플 아일랜드와 빅토리아 아일랜드 전역에서 볼 수 있다. 달팽이치고는 믿을 수 없는 공격력과 속도를 가지고 있어 초보자라면 상대하는데 애를 먹을 수도 있다. 달팽이 세마리 스킬을 3레벨까지 익힌 모험가라면 빨간 달팽이의 껍질을 던져 공격용 무기로 사용할 수 있다.",
     "minLevel": 4,
+    "place": {
+      "name": "해안가 풀숲 1",
+      "code": "104000200",
+      "count": 13
+    },
+    "places": [
+      { "name": "해안가 풀숲 1", "code": "104000200", "count": 13 },
+      { "name": "해안가 풀숲 2", "code": "104000300", "count": 15 },
+      { "name": "해안가 풀숲 3", "code": "104000400", "count": 9 },
+      { "name": "세갈래길", "code": "104010000", "count": 12 },
+      { "name": "헤네시스 서쪽언덕", "code": "104030000", "count": 9 },
+      { "name": "헤네시스 사냥터 1", "code": "104040000", "count": 12 }
+    ],
     "hp": 40,
     "mp": 30,
     "exp": 40,
@@ -11916,11 +12517,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1032003",
@@ -11957,6 +12558,19 @@ window.MONSTERS = [
     ]
   },
   {
+    "id": "700004",
+    "name": "마노",
+    "isBoss": true,
+    "place": {
+      "name": "해안가 풀숲 3",
+      "code": "104000400",
+      "count": 1
+    },
+    "places": [
+      { "name": "해안가 풀숲 3", "code": "104000400", "count": 1 }
+    ]
+  },
+  {
     "id": "210100",
     "name": "슬라임",
     "img": "https://drive.google.com/thumbnail?id=1IDgj_s1wtvJfVZho9SG_mAr_d5yFS-Vy&sz=w200",
@@ -11964,6 +12578,15 @@ window.MONSTERS = [
     "note": "전기속성 공격에 약함",
     "desc": "물컹물컹한 액체로 이루어져, 몸의 탄력을 이용하여 점프하는 몬스터이다. 빅토리아 아일랜드 전역에서 발견할 수 있다. 통통 튀어다니는 모습이 귀여워 모험가들에게 인기가 높은데, 그 때문에 슬라임의 모습을 본딴 모자나 귀고리 등의 장식품까지도 판매되고 있다고 한다. 사냥하면 물컹물컹한 액체를 얻을 수 있는데, 이 액체는 상큼한 사과향을 풍겨 요리 재료로도 쓰이는 것 같다. 가끔 머리에 달고 있는 방울을 모험가들에게 내놓기도 한다.",
     "minLevel": 6,
+    "place": {
+      "name": "헤네시스 서쪽숲",
+      "code": "104020000",
+      "count": 17
+    },
+    "places": [
+      { "name": "헤네시스 서쪽숲", "code": "104020000", "count": 17 },
+      { "name": "헤네시스 서쪽언덕", "code": "104030000", "count": 19 }
+    ],
     "hp": 50,
     "mp": 35,
     "exp": 50,
@@ -12022,11 +12645,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002019",
@@ -12072,6 +12695,19 @@ window.MONSTERS = [
     "img": "https://drive.google.com/thumbnail?id=1GfN9UsePA2iSDdZeyza-OOOmbllTwnCq&sz=w200",
     "category": "동물형",
     "desc": "빠른 속도로 돌아다니며 육중한 몸으로 공격하는 몬스터이다. 재빨리 달아나지 않으면 쫓아다니며 공격을 가한다. 사냥하면 간혹 얻을 수 있는 돼지의 머리는 메이플 월드의 많은 사람들이 좋아하는 별미라고 한다.",
+    "place": {
+      "name": "세갈래길",
+      "code": "104010000",
+      "count": 23
+    },
+    "places": [
+      { "name": "세갈래길", "code": "104010000", "count": 23 },
+      { "name": "해안가사냥터", "code": "104010002", "count": 8 },
+      { "name": "헤네시스 서쪽숲", "code": "104020000", "count": 20 },
+      { "name": "헤네시스 서쪽언덕", "code": "104030000", "count": 18 },
+      { "name": "헤네시스 사냥터 1", "code": "104040000", "count": 9 },
+      { "name": "헤네시스 사냥터 2", "code": "104040001", "count": 8 }
+    ],
     "minLevel": 7,
     "hp": 75,
     "mp": 40,
@@ -12135,11 +12771,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002008",
@@ -12245,11 +12881,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002039",
@@ -12307,6 +12943,16 @@ window.MONSTERS = [
     "img": "https://drive.google.com/thumbnail?id=1YfrKM7I6aboEAzWP5ev54QYaujTBP992&sz=w200",
     "category": "동물형",
     "desc": "돼지들의 세계에도 서열은 있다. 강한 힘을 가진 돼지는 그 강함의 증거로 붉은 리본을 달고 다니며 돼지 세계에서 귀족 대접을 받는다. 믿을 수 없다고? 사냥해 보라. 돼지에 비해 리본돼지가 훨씬 강하다.",
+    "place": {
+      "name": "해안가사냥터",
+      "code": "104010002",
+      "count": 10
+    },
+    "places": [
+      { "name": "해안가사냥터", "code": "104010002", "count": 10 },
+      { "name": "헤네시스 사냥터 2", "code": "104040001", "count": 12 },
+      { "name": "헤네시스 사냥터 3", "code": "104040002", "count": 13 }
+    ],
     "hp": 120,
     "mp": 45,
     "exp": 100,
@@ -12349,11 +12995,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1032003",
@@ -12456,11 +13102,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1032001",
@@ -12504,6 +13150,18 @@ window.MONSTERS = [
     "note": "독속성 공격이 통하지 않음",
     "desc": "탁한 녹색의 갓을 지닌 버섯 몬스터이다. 작은 독버섯들의 변화된 형태의 버섯으로 독에 대한 면역력을 가지고 있다. 공사장이나 던전 입구 근처에서 쉽게 볼 수 있지다. 아무리 배가 고파도 독버섯일 가능성이 높으니 먹지는 말도록 하자.",
     "minLevel": 15,
+    "place": {
+      "name": "버섯동산",
+      "code": "104030001",
+      "count": 4
+    },
+    "places": [
+      { "name": "버섯동산", "code": "104030001", "count": 4 },
+      { "name": "헤네시스 사냥터 2", "code": "104040001", "count": 7 },
+      { "name": "헤네시스 사냥터 3", "code": "104040002", "count": 11 },
+      { "name": "비어있는집", "code": "100000002", "count": 5 },
+      { "name": "버섯공원 1", "code": "100000003", "count": 9 }
+    ],
     "hp": 250,
     "mp": 25,
     "exp": 130,
@@ -12562,11 +13220,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002010",
@@ -12719,11 +13377,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "2330000",
@@ -12836,11 +13494,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "2330000",
@@ -12950,11 +13608,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002010",
@@ -13547,11 +14205,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1032003",
@@ -13652,11 +14310,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002118",
@@ -13781,11 +14439,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002107",
@@ -13910,11 +14568,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002107",
@@ -13976,6 +14634,15 @@ window.MONSTERS = [
     "img": "https://drive.google.com/thumbnail?id=1gkqJsWG8vFvGFmwmnoOW6FC4SXsjSIya&sz=w200",
     "category": "식물형",
     "desc": "푸른빛의 갓을 지닌 버섯 몬스터이다. 버섯 몬스터 중에서도 유난히 뚱뚱해 보이는 외형을 가지고 있다. 흔하디 흔한 버섯 몬스터 중에 드물게 만나기 힘든 편에 속한다. 하지만 헤네시스 주변을 잘 찾아보면 파란버섯들이 가득 살고 있는 파란버섯의 숲에 갈 수 있기도 하다. 가끔씩 금을 내놓기도 하여 모험자들을 풍요롭게 만들어 준다.",
+    "place": {
+      "name": "버섯공원 1",
+      "code": "100000003",
+      "count": 9
+    },
+    "places": [
+      { "name": "버섯공원 1", "code": "100000003", "count": 9 },
+      { "name": "버섯공원 2", "code": "100000004", "count": 11 }
+    ],
     "minLevel": 20,
     "hp": 350,
     "mp": 30,
@@ -14031,11 +14698,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002127",
@@ -14184,11 +14851,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002119",
@@ -14294,11 +14961,11 @@ window.MONSTERS = [
       },
       {
         "itemId": "2060000",
-        "name": "활전용화살"
+        "name": "활전용 화살"
       },
       {
         "itemId": "2061000",
-        "name": "석궁전용화살"
+        "name": "석궁전용 화살"
       },
       {
         "itemId": "1002119",
@@ -14546,6 +15213,15 @@ window.MONSTERS = [
   "name": "뿔버섯",
   "img": "https://drive.google.com/thumbnail?id=172QNMG6AFYj0C0UY5o4nldA0f-mPiJwo&sz=w200",
   "category": "식물형",
+  "place": {
+    "name": "버섯공원 2",
+    "code": "100000004",
+    "count": 13
+  },
+  "places": [
+    { "name": "버섯공원 2", "code": "100000004", "count": 13 },
+    { "name": "남의집", "code": "100000005", "count": 13 }
+  ],
   "minLevel": 22,
   "hp": 300,
   "mp": 35,
@@ -17582,6 +18258,14 @@ window.MONSTERS = [
   "img": "https://drive.google.com/thumbnail?id=1cN2Iyg78dwitGEWV6B2z-EhznAIneIRW&sz=w200",
   "note": "모든 속성 공격 반감",
   "category": "정령형",
+  "place": {
+    "name": "남의집",
+    "code": "100000005",
+    "count": 2
+  },
+  "places": [
+    { "name": "남의집", "code": "100000005", "count": 2 }
+  ],
   "minLevel": 30,
   "hp": 800,
   "mp": 175,
@@ -28827,7 +29511,64 @@ window.MONSTERS = [
     "category": "불사형",
     "desc": "마법의 힘을 가진 루팡이 자신의 몸에 악령을 빙의시켰다. 악령의 힘을 빌어 일반 루팡과 비교도 되지 않을 정도로 큰 덩치와 무시무시한 힘을 얻게 된 루팡은, 그 힘을 이용해 엘리니아 숲의 어둠을 키워나가고 있다. 한 때 하인즈가 실수로 뿌려 놓았던 어둠의 마법의 씨앗 역시 이미 흡수해 버렸다고 한다..."
   },
+  {
+    "id": "6130101",
+    "name": "머쉬맘",
+    "img": "https://drive.google.com/thumbnail?id=1xTCc_3iuO9mOUG5fGjv22o9eZ_snLTzd&sz=w400",
+    "category": "식물형",
+    "isBoss": true,
+    "minLevel": 60,
+    "place": {
+      "name": "남의집",
+      "code": "100000005",
+      "count": 1
+    },
+    "places": [
+      { "name": "남의집", "code": "100000005", "count": 1 }
+    ],
+    "hp": 20000,
+    "mp": 200,
+    "exp": 6000,
+    "acc": 150,
+    "eva": 27,
+    "pdd": 320,
+    "mdd": 320,
+    "desc": "매우 거대한 버섯 몬스터. 모든 버섯 몬스터들의 어머니와 같은 존재로 빅토리아 아일랜드의 수많은 버섯들은 모두 이 버섯의 포자에서 시작되었다고 한다. 눈을 번뜩이며 육중한 몸으로 높이 점프하여 주변의 땅을 뒤 흔드는 전체 공격을 하는 위험한 몬스터이지만, 빅토리아 아일랜드의 생태계에 결정적인 영향을 미치고 있으므로 보호해야 한다고 주장하는 학자도 간혹 있다고 한다. 헤네시스 근처 숨겨진 장소에서 작은 버섯들과 함께 가끔 목격되고 있다.",
+    "drops": [
+      { "itemId": "4000040", "name": "머쉬맘의 포자" },
+      { "itemId": "2040001", "name": "투구 방어력 주문서 60%" },
+      { "itemId": "2040004", "name": "투구 체력 주문서 60%" },
+      { "itemId": "2040024", "name": "투구 지력 주문서 100%" },
+      { "itemId": "2040301", "name": "귀 장식 지력 주문서 60%" },
+      { "itemId": "2040401", "name": "상의 방어력 주문서 60%" },
+      { "itemId": "2040427", "name": "상의 행운 주문서 10%" },
+      { "itemId": "2040501", "name": "전신 갑옷 민첩성 주문서 60%" },
+      { "itemId": "2040504", "name": "전신 갑옷 방어력 주문서 60%" },
+      { "itemId": "2040601", "name": "하의 방어력 주문서 60%" },
+      { "itemId": "2040618", "name": "하의 점프 주문서 60%" },
+      { "itemId": "2040619", "name": "하의 점프 주문서 10%" },
+      { "itemId": "2040718", "name": "신발 민첩성 주문서 60%" },
+      { "itemId": "2040704", "name": "신발 점프력 주문서 60%" },
+      { "itemId": "2040707", "name": "신발 이동속도 주문서 60%" },
+      { "itemId": "2040801", "name": "장갑 민첩성 주문서 60%" },
+      { "itemId": "2040804", "name": "장갑 공격력 주문서 60%" },
+      { "itemId": "2040901", "name": "방패 방어력 주문서 60%" },
+      { "itemId": "2041001", "name": "망토 마법 방어력 주문서 60%" },
+      { "itemId": "2041004", "name": "망토 물리 방어력 주문서 60%" },
+      { "itemId": "2043212", "name": "한손둔기 명중률 주문서 60%" },
+      { "itemId": "2070006", "name": "일비 표창" },
+      { "itemId": "2331000", "name": "블레이즈 캡슐" },
+      { "itemId": "1032019", "name": "크리스탈 플라워링" },
+      { "itemId": "1092012", "name": "스틸 타워 실드" },
+      { "itemId": "1322026", "name": "파노 튜브" },
+      { "itemId": "1382006", "name": "쏜즈" }
+    ]
+  }
 ];
+
+(window.PENDING_MONSTERS||[]).forEach(function(mon){
+  if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon);
+});
 
 </script>
 <script>
@@ -28946,7 +29687,7 @@ window.MONSTERS = [
   html += '<div style="display:flex;align-items:center;gap:14px;">';
   html += safeImg(monImg, monName, 'thumb').replace('class="thumb"', 'class="thumb" style="width:64px;height:64px;"');
   html += '<div>';
-  html += '<h1 style="margin-bottom:2px;">' + (monName || '이름 미등록 (id '+id+')') + (mon && mon.note ? ' <span style="font-size:13px;font-weight:600;color:var(--ink-soft);">('+mon.note+')</span>' : '') + '</h1>';
+  html += '<h1 style="margin-bottom:2px;">' + (monName || '이름 미등록 (id '+id+')') + (mon && mon.isBoss ? ' <span class="boss-badge">BOSS</span>' : '') + (mon && mon.note ? ' <span style="font-size:13px;font-weight:600;color:var(--ink-soft);">('+mon.note+')</span>' : '') + '</h1>';
   html += '<div class="sub">' + (mon && mon.minLevel ? 'Lv.'+mon.minLevel : '레벨 정보 없음') + (mon && mon.category ? ' · '+mon.category : '') + '</div>';
   html += '</div>';
   html += '</div>';
@@ -28973,18 +29714,59 @@ window.MONSTERS = [
   }
 
   var REGION_ICONS = {
-    '메이플로드': 'https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800',
-    '암허스트': 'https://drive.google.com/thumbnail?id=1-MzGEHdV1YX9ZM2LvNznH4XsHCv4he56&sz=w800'
+    '메이플로드':'https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w400',
+    '암허스트':'https://drive.google.com/thumbnail?id=1-MzGEHdV1YX9ZM2LvNznH4XsHCv4he56&sz=w400',
+    '빅토리아 아일랜드':'https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400',
+    '헤네시스':'https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400',
+    '엘리니아':'https://drive.google.com/thumbnail?id=11eysMAYVH4D0qt9Qz_14o-311YN52EVe&sz=w400',
+    '커닝시티':'https://drive.google.com/thumbnail?id=1Z9t4AbnhDHlv-ZbAvUDhzsrGyn65AcMc&sz=w400',
+    '페리온':'https://drive.google.com/thumbnail?id=1qJDR5g4TOiMfzm-fVKnPzgzxOo7-R0CJ&sz=w400',
+    '버섯의성':'https://drive.google.com/thumbnail?id=1wMvaZVLaK45xu0KBWLcQOzcJowDxWfMK&sz=w400',
+    '커닝스퀘어':'https://drive.google.com/thumbnail?id=1-WTiV08Xb71vq71Wjqo7SlUDSneDDhze&sz=w400',
+    '노틸러스':'https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400',
+    '오르비스':'https://drive.google.com/thumbnail?id=1WQU-Z0vjTusdGLkJ87Z6ylE-h-gPdKL8&sz=w400',
+    '지구방위본부':'https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400',
+    '루디브리엄':'https://drive.google.com/thumbnail?id=1Pp55px2ogqw3OfzX4cPQkg4H2gz2_6R0&sz=w400',
+    '아쿠아리움':'https://drive.google.com/thumbnail?id=1II5Vs5o4JFaO7IEtjcmR2phTaIlWfwEY&sz=w400',
+    '리프레':'https://drive.google.com/thumbnail?id=1k8lHn6IWCSV2qlg38ROCT0Le97Mx3hCs&sz=w400',
+    '아리안트':'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '마가티아':'https://drive.google.com/thumbnail?id=1HWQMOQBRg7oEWpaIvlfMMafDGKAfl2_h&sz=w400',
+    '슬리피우드':'https://drive.google.com/thumbnail?id=1sb0CgKFeCjYM2k9Of9AnTdRyNeIPlOsQ&sz=w400',
+    '리엔':'https://drive.google.com/thumbnail?id=1-Vur3U1Jw-nQaOLTLIHEOuPkcR5E4EWY&sz=w400',
+    '백초마을':'https://drive.google.com/thumbnail?id=1S-t4n1TtxnjjhGBvES8Vxil-ReF9zrem&sz=w400',
+    '아랫마을':'https://drive.google.com/thumbnail?id=1U5VBqop7cUN5eKJ8P18d6illAZW_H1fZ&sz=w400',
+    '엘나스':'https://drive.google.com/thumbnail?id=1V7hGToqGOnRPcoVjQ_Z9yIaomTifrATF&sz=w400',
+    '에레브':'https://drive.google.com/thumbnail?id=1V7hGToqGOnRPcoVjQ_Z9yIaomTifrATF&sz=w400',
+    '파괴된 헤네시스':'https://drive.google.com/thumbnail?id=1qHLkpBvi9ZGQON8SPGZjhfvcXPWcpcQC&sz=w400',
+    '폐광':'https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400',
+    '플로리나비치':'https://drive.google.com/thumbnail?id=1_awfHf-lXFRxjgcIEQlu2VXNPZeWYf6Y&sz=w400',
+    '블랙로드':'https://drive.google.com/thumbnail?id=1LntTAE7pF0YXTz2yIE_zkGNjGuJGLO3S&sz=w400',
+    '무릉':'https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400'
   };
-
-  if (mon && mon.place && mon.place.code){
-    var mapEntry = MAPS.find(function(mm){ return String(mm.code)===String(mon.place.code); });
-    var placeName = mon.place.name || (mapEntry ? mapEntry.name : ('코드 '+mon.place.code));
-    var placeRegionIcon = mapEntry && REGION_ICONS[mapEntry.region] ? REGION_ICONS[mapEntry.region] : '';
-    html += '<div class="section"><h2>서식 위치</h2><div class="ibox-grid">';
-    html += '<a class="ibox" href="map-detail.html?code='+mon.place.code+'">'+(placeRegionIcon?safeImg(placeRegionIcon, mapEntry.region, 'thumb'):'')+'<div><div class="lbl">맵</div><div class="val">'+placeName+'</div></div></a>';
-    html += '</div></div>';
+  var HENESIS_ICON_MAPS = {'헤네시스':1,'헤네시스시장':1,'헤네시스 서쪽숲':1,'헤네시스 서쪽언덕':1,'헤네시스 사냥터 1':1,'헤네시스 사냥터 2':1,'헤네시스 사냥터 3':1,'비어있는집':1,'버섯공원 1':1,'버섯공원 2':1,'남의집':1,'버섯동산':1,'버섯공원쉼터':1};
+  var ICON_AREA_ORDER = ['파괴된 헤네시스','커닝스퀘어','버섯의성','지구방위본부','플로리나비치','백초마을','아랫마을','슬리피우드','루디브리엄','아쿠아리움','노틸러스','엘리니아','커닝시티','페리온','오르비스','리프레','아리안트','마가티아','리엔','엘나스','에레브','폐광','블랙로드','무릉','헤네시스'];
+  function locationIconFor(place, mapEntry){
+    var name = String(place && place.name || (mapEntry && mapEntry.name) || '');
+    var area = HENESIS_ICON_MAPS[name] ? '헤네시스' : '';
+    if (!area && name.indexOf('버섯의 ')>-1) area = '버섯의성';
+    if (!area){ for (var i=0;i<ICON_AREA_ORDER.length;i++){ if (name.indexOf(ICON_AREA_ORDER[i])>-1){ area=ICON_AREA_ORDER[i]; break; } } }
+    if (!area && place && place.region && REGION_ICONS[place.region]) area = place.region;
+    if (!area && mapEntry && mapEntry.region && REGION_ICONS[mapEntry.region]) area = mapEntry.region;
+    if (!area) area = String(place && place.code || '').length < 9 ? '메이플로드' : '빅토리아 아일랜드';
+    return REGION_ICONS[area] || REGION_ICONS['빅토리아 아일랜드'];
   }
+
+  if (mon && (Array.isArray(mon.places) ? mon.places.length : (mon.place && mon.place.code))){
+    var placeList = Array.isArray(mon.places) && mon.places.length ? mon.places : [mon.place];
+    html += '<div class="section"><h2>서식 위치</h2><div class="item-tile-grid">';
+    html += placeList.map(function(pl){
+      var mapEntry = MAPS.find(function(mm){ return String(mm.code)===String(pl.code); });
+      var placeName = pl.name || (mapEntry ? mapEntry.name : ('코드 '+pl.code));
+      var placeRegionIcon = locationIconFor(pl, mapEntry);
+      return '<a class="item-tile" href="map-detail.html?code='+pl.code+'">'+safeImg(placeRegionIcon, placeName, 'thumb')+'<div class="val">'+placeName+'</div>'+(pl.count?'<div class="lbl">'+pl.count+'마리</div>':'')+'</a>';
+    }).join('');
+    html += '</div></div>';
+    }
 
   if (mon && mon.drops && mon.drops.length){
     html += '<div class="section"><h2>드롭 아이템</h2><div class="item-tile-grid">' + mon.drops.map(function(d){
