@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- canonical NPC detail page -->
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
@@ -12,47 +13,44 @@
    로나월드 — 디자인 토큰 (메이플 나무액자 퀘스트창 스타일)
    ========================================================= */
 :root{
-  --bg: #FDECC0;
-  --paper: #FFF7E2;
-  --paper-soft: #FFF1CE;
-  --wood: #7A4A20;
-  --wood-dark: #4E2D10;
-  --wood-light: #C98A46;
-  --ink: #46280D;
-  --ink-soft: #8A6640;
-  --line: #E3C08A;
+  --bg: #F5F3EF;
+  --paper: #FFFFFF;
+  --paper-soft: #F8F6F2;
+  --wood: #D9D2C4;
+  --wood-dark: #E4DFD3;
+  --wood-light: #EFEAE0;
+  --ink: #332C22;
+  --ink-soft: #8C8172;
+  --line: #EAE4D8;
 
   --leaf: #4C9A2A;
-  --leaf-soft: #E1F2D2;
+  --leaf-soft: #E7F3DC;
   --leaf-ink: #2C6614;
 
   --berry: #E2405F;
-  --berry-soft: #FCE1E7;
+  --berry-soft: #FCE7EB;
   --berry-ink: #A01D3C;
 
-  --sun: #F5A928;
-  --sun-soft: #FFEEC4;
+  --sun: #F0A93A;
+  --sun-soft: #FBEFD6;
   --sun-ink: #8A5A06;
 
   --sky: #3E9BD6;
-  --sky-soft: #DFF1FB;
+  --sky-soft: #E5F2FA;
   --sky-ink: #1E5C86;
 
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 9px;
-  --pop: 4px 4px 0 var(--wood-dark);
-  --pop-sm: 3px 3px 0 var(--wood-dark);
+  --pop: 0 10px 24px rgba(51,44,34,.09);
+  --pop-sm: 0 4px 12px rgba(51,44,34,.07);
+  --pop-md: 0 14px 34px rgba(51,44,34,.14);
 }
 
 *{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; }
 body{
   background: var(--bg);
-  background-image:
-    radial-gradient(circle at 8% 6%, rgba(255,255,255,.55), transparent 34%),
-    radial-gradient(circle at 92% 10%, rgba(255,255,255,.4), transparent 30%),
-    radial-gradient(circle at 50% 100%, rgba(76,154,42,.10), transparent 45%);
   color: var(--ink);
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   line-height:1.55;
@@ -78,55 +76,70 @@ button{ font:inherit; }
 }
 .site-title .mark{
   width:44px; height:44px; flex:none;
-  filter: drop-shadow(2px 2px 0 rgba(78,45,16,.35));
+  filter: drop-shadow(0 3px 6px rgba(51,44,34,.18));
 }
 .site-title h1{
   font-size:28px; margin:0; font-weight:400;
   color:var(--ink);
-  text-shadow: 2px 2px 0 var(--paper), 3px 3px 0 var(--wood-dark);
 }
 .site-title p{
   margin:3px 0 0; font-size:13px; color:var(--ink-soft); font-weight:600;
 }
 .reset-btn{
-  border:2px solid var(--wood-dark); background:var(--paper);
+  border:1.5px solid var(--line); background:var(--paper);
   color:var(--ink); padding:9px 14px; border-radius:999px;
   cursor:pointer; font-size:13px; font-weight:700;
   box-shadow: var(--pop-sm);
-  transition: transform .1s ease, box-shadow .1s ease;
+  transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
 }
 .reset-btn:hover{ background: var(--sun-soft); }
-.reset-btn:active{ transform: translate(3px,3px); box-shadow:none; }
+.reset-btn:active{ transform: scale(.97); }
 
 /* ---------- 탭 ---------- */
 .tabs{
-  display:flex; gap:8px; overflow-x:auto; padding:4px 4px 10px; margin-bottom:14px;
+  display:flex; flex-wrap:wrap; gap:8px; padding:4px 4px 10px; margin-bottom:14px;
 }
 .tab{
+  position:relative;
   flex:none;
   display:flex; align-items:center; gap:6px;
-  border:2px solid var(--wood-dark); background:var(--paper);
+  border:1.5px solid var(--line); background:var(--paper);
   color: var(--ink);
   padding:9px 16px; border-radius:999px; cursor:pointer;
   font-size:14px; font-weight:700; white-space:nowrap;
   box-shadow: var(--pop-sm);
   transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
 }
-.tab:active{ transform: translate(3px,3px); box-shadow:none; }
+.tab:hover{ background: var(--paper-soft); }
 .tab .n{
   font-size:11px; font-weight:800; padding:1px 7px; border-radius:999px;
-  background: var(--bg); color: var(--ink); border:1.5px solid var(--wood-dark);
+  background: var(--bg); color: var(--ink); border:1.5px solid var(--line);
 }
 .tab.on{
-  background: var(--sun); border-color: var(--wood-dark); color:var(--ink);
-  transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--wood-dark);
+  background: var(--sun); border-color: var(--sun); color:var(--ink);
 }
 .tab.on .n{ background: var(--paper); }
+.tab-dropdown{
+  display:none; position:absolute; top:100%; left:0; z-index:30;
+  padding-top:8px; cursor:default;
+}
+.tab-dropdown-panel{
+  background:#fff; border:1.5px solid var(--line); border-radius: var(--radius-md);
+  box-shadow: var(--pop-md); padding:8px; min-width:180px;
+  display:flex; flex-direction:column; gap:2px;
+}
+.tab:hover .tab-dropdown, .tab:focus-within .tab-dropdown{ display:block; }
+.tab-dropdown-item{
+  padding:8px 10px; border-radius:8px; font-size:13px; font-weight:700;
+  color:var(--ink); white-space:nowrap; text-align:left; cursor:pointer;
+}
+.tab-dropdown-item:hover{ background: var(--paper-soft); }
+.tab-dropdown-item.on{ background: var(--sun-soft); color:var(--sun-ink); }
 
 /* ---------- 필터 보드 ---------- */
 .board{
   background: var(--paper);
-  border:3px solid var(--wood-dark);
+  border:1.5px solid var(--line);
   border-radius: var(--radius-lg);
   padding:16px;
   margin-bottom:20px;
@@ -149,21 +162,26 @@ button{ font:inherit; }
 .field input:focus, .field select:focus{
   outline:none; border-color: var(--sun);
 }
+.field-toggle{ display:flex; align-items:center; gap:8px; }
+.field-toggle label{ margin-bottom:0; cursor:pointer; }
+.field-toggle input[type="checkbox"]{ width:20px; height:20px; accent-color: var(--sun); cursor:pointer; }
 .level-range-row{ display:flex; align-items:center; gap:6px; }
 .lv-input{ min-width:0; flex:1 1 0; text-align:center; }
 .lv-sep{ color:var(--ink-soft); flex:none; font-size:13px; font-weight:700; }
 .chips{ display:flex; flex-wrap:wrap; gap:7px; grid-column: 1 / -1; }
+.filter-block{ grid-column: 1 / -1; display:flex; flex-direction:column; gap:12px; }
+.filter-row{ display:flex; flex-direction:column; gap:6px; }
+.filter-row-label{ font-size:12px; font-weight:800; color:var(--ink-soft); }
+.tabs-row{ border-bottom:2px solid var(--line); padding-bottom:8px; }
 .chip{
-  border:2px solid var(--wood-dark); background:#fff; color:var(--ink);
+  border:1.5px solid var(--line); background:#fff; color:var(--ink);
   padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:700; cursor:pointer;
   display:flex; align-items:center; gap:5px;
-  box-shadow: 2px 2px 0 var(--wood-dark);
-  transition: transform .1s ease, box-shadow .1s ease;
+  transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
 }
-.chip:active{ transform: translate(2px,2px); box-shadow:none; }
+.chip:hover{ background: var(--paper-soft); }
 .chip.on{
-  background: var(--leaf); border-color:var(--wood-dark); color:#fff;
-  transform: translate(2px,2px); box-shadow:none;
+  background: var(--leaf); border-color:var(--leaf); color:#fff;
 }
 .hint{ grid-column: 1/-1; font-size:12px; color:var(--ink-soft); font-weight:600; }
 
@@ -176,38 +194,55 @@ button{ font:inherit; }
 @media (min-width:980px){ .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); } }
 .hidden{ display:none !important; }
 
-/* ---------- 퀘스트 카드 (나무액자 퀘스트창) ---------- */
+/* ---------- 카드 ---------- */
 .qcard{
   position:relative;
   background: var(--paper);
-  border:3px solid var(--wood-dark);
+  border:1.5px solid var(--line);
   border-radius: var(--radius-lg);
   padding:16px 15px 13px;
-  box-shadow: var(--pop);
+  box-shadow: var(--pop-sm);
   display:block;
-  transition: transform .12s ease, box-shadow .12s ease;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
-.qcard::before, .qcard::after{
-  content:''; position:absolute; width:7px; height:7px; border-radius:50%;
-  background: var(--wood-light); border:1.5px solid var(--wood-dark); top:8px;
+.qcard:hover{ transform: translateY(-3px); box-shadow: var(--pop); }
+.qcard.owned{ background: var(--sun-soft); border-color: var(--sun); }
+.fav-star{
+  position:absolute; top:8px; right:8px; z-index:5;
+  width:26px; height:26px;
+  background: #fff; border:1.5px solid var(--line); border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; line-height:1; cursor:pointer;
+  color: var(--ink-soft);
+  box-shadow: var(--pop-sm);
+  transition: transform .12s ease;
 }
-.qcard::before{ left:8px; }
-.qcard::after{ right:8px; }
-.qcard:hover{ transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--wood-dark); }
+.qcard.owned .fav-star{ background: var(--sun); color: var(--sun-ink); border-color: var(--sun); }
+.fav-star:hover{ transform: scale(1.1); }
+.own-star-inline{
+  background:none; border:none; font-size:22px; line-height:1; cursor:pointer;
+  color:var(--sun-ink); vertical-align:middle; padding:0 0 0 4px;
+}
+.own-star-inline:hover{ transform:scale(1.15); display:inline-block; }
+.fav-star-inline{
+  background:none; border:none; font-size:22px; line-height:1; cursor:pointer;
+  color:var(--sun-ink); vertical-align:middle; padding:0 0 0 4px;
+}
+.fav-star-inline:hover{ transform:scale(1.15); display:inline-block; }
 .qcard .ribbon{
   position:absolute; top:-12px; left:16px; right:16px;
   display:flex; flex-wrap:wrap; gap:6px;
 }
 .ribbon-pill{
   font-size:11px; font-weight:800; padding:4px 10px 3px;
-  border:2px solid var(--wood-dark);
+  border:1.5px solid var(--line);
   border-radius:999px; display:flex; align-items:center; gap:4px;
-  box-shadow: 2px 2px 0 var(--wood-dark);
+  box-shadow: var(--pop-sm);
 }
 .qcard .top{ display:flex; gap:10px; margin-top:10px; }
 .qcard .thumb{
   width:54px; height:54px; object-fit:contain; background:#fff;
-  border:2px solid var(--wood-dark); border-radius:11px; padding:5px; flex:none;
+  border:1.5px solid var(--line); border-radius:11px; padding:5px; flex:none;
 }
 .qcard .meta-title{ min-width:0; }
 .qcard .code{ font-size:11.5px; color:var(--ink-soft); font-weight:800; }
@@ -216,7 +251,7 @@ button{ font:inherit; }
 }
 .qcard .meta{ font-size:12px; color:var(--ink-soft); margin-top:6px; font-weight:600; }
 .qcard .exp-row{ margin-top:10px; }
-.qcard .bar{ height:8px; border-radius:999px; background:#fff; overflow:hidden; border:1.5px solid var(--wood-dark); }
+.qcard .bar{ height:8px; border-radius:999px; background:#fff; overflow:hidden; border:1.5px solid var(--line); }
 .qcard .bar > div{ height:100%; background: linear-gradient(90deg, var(--leaf), var(--sun)); }
 .qcard .exp-text{ font-size:10.5px; color:var(--ink-soft); margin-top:4px; text-align:right; font-weight:700; }
 .qcard .card-body{ display:block; color:inherit; text-decoration:none; }
@@ -226,23 +261,36 @@ button{ font:inherit; }
 .qcard .fame-chip{
   display:inline-flex; align-items:center; gap:3px; margin-top:6px;
   font-size:11px; font-weight:800; color:var(--sun-ink); background:var(--sun-soft);
-  border:1.5px solid var(--wood-dark);
+  border:1.5px solid var(--sun);
   padding:2px 8px; border-radius:999px;
 }
 
 .qcard .complete-zone{ margin-top:11px; padding-top:11px; border-top:2px dashed var(--line); }
 .complete-btn{
-  width:100%; border:2px solid var(--wood-dark); background:var(--leaf-soft); color:var(--leaf-ink);
+  width:100%; border:1.5px solid var(--line); background:var(--leaf-soft); color:var(--leaf-ink);
   font-weight:800; font-size:12.5px; padding:9px 10px; border-radius:var(--radius-sm);
-  cursor:pointer; box-shadow: 2px 2px 0 var(--wood-dark);
-  transition: transform .1s ease, box-shadow .1s ease;
+  cursor:pointer; box-shadow: var(--pop-sm);
+  transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
 }
 .complete-btn:hover{ background: var(--leaf); color:#fff; }
-.complete-btn:active{ transform: translate(2px,2px); box-shadow:none; }
+.complete-btn:active{ transform: scale(.98); }
+.next-quest-btn{
+  display:inline-block; background: var(--sun); color:var(--ink); font-weight:800; font-size:14px;
+  padding:12px 22px; border-radius:999px; box-shadow: var(--pop-sm);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.next-quest-btn:hover{ transform: translateY(-2px); box-shadow: var(--pop); }
+.chain-nav-btn{
+  display:inline-block; font-size:12px; font-weight:800; padding:6px 12px;
+  border-radius:999px; border:1.5px solid var(--line); background:#fff; color:var(--ink);
+  white-space:nowrap;
+}
+.chain-nav-btn:hover{ background: var(--paper-soft); }
+.chain-nav-btn.disabled{ color: var(--ink-soft); opacity:.5; cursor:default; }
 .done-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .done-badge{
   font-size:12px; font-weight:800; color:#fff; background:var(--leaf);
-  border:2px solid var(--wood-dark);
+  border:1.5px solid var(--line);
   padding:6px 10px; border-radius:999px; flex:1; text-align:center;
 }
 .undo-btn{
@@ -257,11 +305,11 @@ button{ font:inherit; }
 }
 .choice-item input{ accent-color: var(--leaf); }
 .choice-confirm-btn{
-  border:2px solid var(--wood-dark); background: var(--leaf); color:#fff; font-weight:800; font-size:12.5px;
+  border:1.5px solid var(--line); background: var(--leaf); color:#fff; font-weight:800; font-size:12.5px;
   padding:8px 10px; border-radius: var(--radius-sm); cursor:pointer; margin-top:2px;
-  box-shadow: 2px 2px 0 var(--wood-dark);
+  box-shadow: var(--pop-sm);
 }
-.choice-confirm-btn:active{ transform: translate(2px,2px); box-shadow:none; }
+.choice-confirm-btn:active{ transform: scale(.98); }
 
 /* type color variants */
 .t-talk.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
@@ -291,22 +339,16 @@ button{ font:inherit; }
 
 .detail-header{
   background: var(--paper);
-  border:3px solid var(--wood-dark);
+  border:1.5px solid var(--line);
   border-radius: var(--radius-lg);
   padding:20px 22px;
   margin-bottom:18px;
   box-shadow: var(--pop);
   position:relative;
 }
-.detail-header::before, .detail-header::after{
-  content:''; position:absolute; width:8px; height:8px; border-radius:50%;
-  background: var(--wood-light); border:1.5px solid var(--wood-dark); top:10px;
-}
-.detail-header::before{ left:10px; }
-.detail-header::after{ right:10px; }
 .detail-header .type-tag{
   display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:800;
-  border:2px solid var(--wood-dark);
+  border:1.5px solid var(--line);
   padding:4px 11px; border-radius:999px; margin-bottom:10px;
 }
 .detail-header h1{
@@ -334,7 +376,7 @@ button{ font:inherit; }
   position:absolute; left:0; top:calc(100% + 8px);
   transform:translateY(-4px) scale(.97); transform-origin: top left;
   width:260px; max-width:min(70vw,320px); background:#fff; padding:5px;
-  border-radius:12px; border:3px solid var(--wood-dark); box-shadow:0 12px 26px rgba(0,0,0,.28);
+  border-radius:12px; border:1.5px solid var(--line); box-shadow:0 12px 26px rgba(51,44,34,.22);
   opacity:0; visibility:hidden; pointer-events:none;
   transition:opacity .15s ease, transform .15s ease; z-index:60;
 }
@@ -346,7 +388,7 @@ button{ font:inherit; }
   position:absolute; left:0; top:calc(100% + 8px);
   transform:translateY(-4px) scale(.97); transform-origin: top left;
   width:220px; background:#fff; padding:10px 12px; text-align:left; color:var(--ink);
-  border-radius:12px; border:2.5px solid var(--wood-dark); box-shadow:0 12px 26px rgba(0,0,0,.28);
+  border-radius:12px; border:1.5px solid var(--line); box-shadow:0 12px 26px rgba(51,44,34,.22);
   opacity:0; visibility:hidden; pointer-events:none;
   transition:opacity .15s ease, transform .15s ease; z-index:70;
 }
@@ -430,14 +472,19 @@ button{ font:inherit; }
   transition:background .15s, border-color .15s, color .15s;
 }
 .craft-tab:hover{ border-color:var(--wood-light); }
-.craft-tab.active{ background:var(--wood-dark); border-color:var(--wood-dark); color:#fff; }
+.craft-tab.active{ background:var(--sun); border-color:var(--sun); color:var(--ink); }
 
 
 .card{
-  background: var(--paper); border:2.5px solid var(--wood-dark); border-radius: var(--radius-md);
+  background: var(--paper); border:1.5px solid var(--line); border-radius: var(--radius-md);
   padding:16px;
 }
 .section{ margin-bottom:22px; }
+.changelog-entry{ margin-bottom:18px; padding-bottom:16px; border-bottom:1.5px dashed var(--line); }
+.changelog-entry:last-child{ border-bottom:none; }
+.changelog-date{ font-size:13px; font-weight:800; color:var(--sun-ink); margin-bottom:6px; }
+.changelog-list{ margin:0; padding-left:20px; }
+.changelog-list li{ font-size:13.5px; color:var(--ink); margin-bottom:4px; line-height:1.5; }
 .section > h2{
   font-size:13px; font-weight:800; color:var(--ink-soft); margin:0 0 10px;
   text-transform:none;
@@ -457,24 +504,37 @@ button{ font:inherit; }
 .ibox-grid{ display:grid; gap:9px; grid-template-columns: 1fr 1fr; }
 @media (max-width:520px){ .ibox-grid{ grid-template-columns:1fr; } }
 
+/* ---------- 몬스터 기본 정보(스탯) 한눈에 보기 ---------- */
+.mon-stat-grid{ display:grid; gap:8px; }
+.mon-stat-grid + .mon-stat-grid{ margin-top:8px; }
+.mon-stat-grid-3{ grid-template-columns: repeat(3, 1fr); }
+.mon-stat-grid-4{ grid-template-columns: repeat(4, 1fr); }
+@media (max-width:420px){ .mon-stat-grid-4{ grid-template-columns: repeat(3, 1fr); } }
+.mon-stat-box{
+  background:#fff; border:2px solid var(--line); border-radius:10px;
+  padding:8px 4px; text-align:center;
+}
+.mon-stat-box .lbl{ font-size:10.5px; color:var(--ink-soft); font-weight:700; }
+.mon-stat-box .val{ font-size:14px; font-weight:800; margin-top:2px; }
+
 .req-check{
-  width:20px; height:20px; border-radius:6px; border:2px solid var(--wood-dark);
+  width:20px; height:20px; border-radius:6px; border:1.5px solid var(--line);
   flex:none; display:flex; align-items:center; justify-content:center; cursor:pointer;
   color:transparent; font-size:13px; font-weight:900;
 }
-.req-check.done{ background: var(--leaf); border-color:var(--wood-dark); color:#fff; }
+.req-check.done{ background: var(--leaf); border-color:var(--leaf); color:#fff; }
 
 .bubble-list{ display:flex; flex-direction:column; gap:10px; }
 .brow{ display:flex; align-items:flex-start; gap:8px; }
 .brow.right{ justify-content:flex-end; }
-.avatar{ width:38px; height:38px; border-radius:50%; border:2px solid var(--wood-dark); object-fit:cover; background:#fff; flex:none; }
+.avatar{ width:38px; height:38px; border-radius:50%; border:1.5px solid var(--line); object-fit:cover; background:#fff; flex:none; }
 .bubble{
   position:relative; max-width:78%; padding:10px 13px; border-radius:15px; line-height:1.5; font-size:13.5px;
-  border:2px solid var(--wood-dark);
+  border:1.5px solid var(--line);
 }
 .bubble .name{ font-weight:800; font-size:12px; margin-bottom:2px; }
 .bubble.left{ background:#fff; color:var(--ink); border-bottom-left-radius:4px; }
-.bubble.right{ background: var(--berry); color:#fff; border-bottom-right-radius:4px; border-color: var(--wood-dark); }
+.bubble.right{ background: var(--berry); color:#fff; border-bottom-right-radius:4px; border-color: var(--berry); }
 .bubble.right .name{ color: rgba(255,255,255,.9); }
 
 .chain-link{ display:flex; align-items:center; gap:10px; }
@@ -485,8 +545,14 @@ button{ font:inherit; }
 
 .count-badge{
   display:inline-flex; align-items:center; font-size:13px; font-weight:800; color:#fff;
-  background:var(--berry); border:2px solid var(--wood-dark);
+  background:var(--berry); border:1.5px solid var(--line);
   padding:2px 10px; border-radius:999px; margin-left:6px; vertical-align:2px;
+}
+
+.boss-badge{
+  display:inline-flex; align-items:center; font-size:11.5px; font-weight:900; color:#FFE9B0;
+  background:linear-gradient(135deg,#7A1414,#3A0D0D); border:1.5px solid var(--line);
+  padding:2px 9px; border-radius:999px; margin-left:6px; vertical-align:2px; letter-spacing:.5px;
 }
 
 /* ---------- 서브 패널 (퀘스트/아이템/몬스터 상세를 페이지 이동 없이 보여줌) ---------- */
@@ -501,27 +567,36 @@ button{ font:inherit; }
   overflow-y:auto; padding:20px 20px 40px;
   animation: panelSlideIn .18s ease-out;
 }
+.panel-box.wide{ width:min(1100px, 100%); }
 @keyframes panelSlideIn{ from{ transform:translateX(24px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+@keyframes warpPulse{ 0%{ transform:translate(-50%,-50%) scale(.4); opacity:1; } 100%{ transform:translate(-50%,-50%) scale(1.6); opacity:0; } }
 @media (max-width:640px){ .panel-box{ width:100%; } }
 .panel-close{
   position:sticky; top:0; float:right; margin-left:12px;
-  width:36px; height:36px; border-radius:50%; border:2px solid var(--wood-dark);
+  width:36px; height:36px; border-radius:50%; border:1.5px solid var(--line);
   background:var(--paper); color:var(--ink); font-size:16px; font-weight:800; cursor:pointer;
   box-shadow: var(--pop-sm); z-index:2;
 }
 .panel-back{
   position:sticky; top:0; float:left;
-  border-radius:999px; border:2px solid var(--wood-dark);
+  border-radius:999px; border:1.5px solid var(--line);
   background:var(--paper); color:var(--ink); font-size:13px; font-weight:800; cursor:pointer;
   padding:8px 14px; box-shadow: var(--pop-sm); z-index:2;
 }
 .panel-back.hidden{ display:none; }
+.panel-share{
+  position:sticky; top:0; float:right; margin-right:8px;
+  border-radius:999px; border:1.5px solid var(--line);
+  background:var(--paper); color:var(--ink); font-size:12.5px; font-weight:800; cursor:pointer;
+  padding:8px 12px; box-shadow: var(--pop-sm); z-index:2; white-space:nowrap;
+}
+.panel-share.copied{ background:var(--sun-soft); color:var(--sun-ink); }
 .panel-content{ clear:both; }
 .panel-content .back-link{ display:none; }
 .panel-content nav.tabs{ display:none; }
-.panel-content .ibox-grid{ grid-template-columns: 1fr; }
+.panel-content .ibox-grid{ grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 .chain-chip{
-  flex:none; padding:6px 12px; border-radius:14px; border:2px solid var(--wood-dark);
+  flex:none; padding:6px 12px; border-radius:14px; border:1.5px solid var(--line);
   white-space:nowrap; background:#fff; color:var(--ink-soft);
   display:flex; flex-direction:column; align-items:center; gap:1px;
   max-width:120px;
@@ -531,11 +606,97 @@ button{ font:inherit; }
   font-size:10px; font-weight:600; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .chain-chip.current{ background:var(--sun); color:var(--ink); }
+.chip-sep{ align-self:center; color:var(--ink-soft); font-weight:800; margin:0 2px; }
+
+/* ---------- 장비 정보 카드 ---------- */
+.equip-card{
+  background: linear-gradient(180deg, #2b3350, #1c2238);
+  border:1.5px solid var(--line); border-radius: var(--radius-lg);
+  overflow:hidden; box-shadow: var(--pop-sm); color:#fff;
+  max-width:420px; margin:0 auto;
+}
+.equip-navy{ padding:18px 20px 16px; text-align:center; }
+.equip-req{ display:grid; grid-template-columns:1fr 1fr; gap:5px 20px; font-size:13px; font-weight:700; color:#e8ebf5; text-align:center; margin-bottom:14px; }
+.equip-req > div{ white-space:nowrap; }
+.equip-jobs{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+.job-pill{
+  font-size:12.5px; font-weight:800; padding:2px 2px; border-radius:0;
+  border:none; background:none; color:#e08a8a;
+}
+.job-pill.on{ color:#fff; text-decoration:underline; text-underline-offset:3px; }
+.equip-divider{ border-top:1px solid rgba(255,255,255,.25); margin:0 20px; }
+.equip-stats{
+  display:flex; flex-direction:column; gap:6px;
+  font-size:13.5px; font-weight:700; color:#f0f1f6;
+  padding:14px 20px; text-align:center;
+}
+.equip-price{
+  display:flex; align-items:center; gap:6px; justify-content:center;
+  padding:10px 12px; font-weight:800; color:var(--sun); font-size:12px;
+  flex-wrap:nowrap; white-space:nowrap; overflow-x:auto;
+}
+.equip-price img.meso-icon{ width:14px; height:14px; object-fit:contain; vertical-align:-2px; margin-right:2px; flex:none; }
+.equip-price .price-note{ font-size:10px; font-weight:600; color:#c7cadd; }
+
+/* ---------- 통합 검색 ---------- */
+.global-search-wrap{ position:relative; margin-bottom:14px; }
+.global-search-input{
+  width:100%; box-sizing:border-box; font-family:inherit; font-size:15px; font-weight:700;
+  padding:14px 18px; border-radius:999px; border:1.5px solid var(--line);
+  background:#fff; color:var(--ink); box-shadow: var(--pop-sm);
+}
+.global-search-input::placeholder{ color:var(--ink-soft); font-weight:600; }
+.global-search-results{
+  position:absolute; left:0; right:0; top:calc(100% + 8px); z-index:40;
+  background:#fff; border:1.5px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--pop-md); max-height:420px; overflow-y:auto; padding:8px;
+}
+.global-search-results.hidden{ display:none; }
+.gs-group-label{ font-size:11px; font-weight:800; color:var(--ink-soft); padding:8px 10px 4px; }
+.gs-item{
+  display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:10px; cursor:pointer;
+  text-decoration:none; color:var(--ink);
+}
+.gs-item:hover, .gs-item.sel{ background:var(--paper-soft); }
+.gs-item img{ width:32px; height:32px; object-fit:contain; border-radius:8px; border:1.5px solid var(--wood-light); background:#fff; flex:none; }
+.gs-item .gs-name{ font-weight:800; font-size:13.5px; }
+.gs-item .gs-meta{ font-size:11px; color:var(--ink-soft); }
+.gs-empty{ padding:16px; text-align:center; color:var(--ink-soft); font-size:13px; }
+
+/* ---------- 최근 본 항목 ---------- */
+.recent-strip{ margin-bottom:14px; }
+.recent-strip.hidden{ display:none; }
+.recent-strip-label{ font-size:11px; font-weight:800; color:var(--ink-soft); margin-bottom:6px; }
+.recent-strip-list{ display:flex; gap:8px; overflow-x:auto; padding-bottom:2px; }
+.recent-chip{
+  flex:none; display:flex; align-items:center; gap:6px; padding:6px 10px 6px 6px;
+  border-radius:999px; border:1.5px solid var(--line); background:#fff; cursor:pointer;
+  max-width:160px;
+}
+.recent-chip img{ width:24px; height:24px; object-fit:contain; border-radius:50%; flex:none; }
+.recent-chip span{ font-size:12px; font-weight:700; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* ---------- 즐겨찾기 탭 ---------- */
+.fav-group{ margin-bottom:26px; }
+.fav-group-label{ font-size:15px; font-weight:900; font-family:'Jua',sans-serif; color:var(--ink); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.fav-group-label .n{ font-size:12px; font-weight:800; color:var(--ink-soft); background:var(--paper-soft); border-radius:999px; padding:2px 9px; }
+
 .notready{
   padding:40px 20px; text-align:center; color:var(--ink-soft);
-  background: var(--paper-soft); border:3px dashed var(--wood-light); border-radius: var(--radius-lg);
+  background: var(--paper-soft); border:2px dashed var(--line); border-radius: var(--radius-lg);
 }
-
+.pager{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin:18px 0 6px;
+}
+.pager .page-btn{
+  border:1.5px solid var(--line); background:var(--paper); color:var(--ink);
+  border-radius:999px; padding:8px 16px; font-weight:800; font-size:13px; cursor:pointer;
+  box-shadow: var(--pop-sm);
+}
+.pager .page-btn:disabled{ opacity:.4; cursor:default; box-shadow:none; }
+.pager .page-info{ font-size:13px; font-weight:700; color:var(--ink-soft); }
+.chip-sep{ align-self:center; color:var(--ink-soft); font-weight:800; margin:0 2px; }
 </style>
 </head>
 <body>
@@ -1792,6 +1953,10 @@ window.NPCS = [
       "code": "1020000",
       "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000"
     },
+    "places": [
+      { "name": "선택의 갈림길", "code": "1020000", "img": "https://drive.google.com/thumbnail?id=1MPLFOLP6Ix9iMY5LCrdD8o6vuf4OF_Vm&sz=w1000" },
+      { "name": "궁수 교육원", "code": "100000201", "img": "https://drive.google.com/thumbnail?id=13asRvE0rJAgM52RguisnSR9I4dM6N6MK&sz=w841" }
+    ],
     "dialogues": []
   },
   {
@@ -2004,6 +2169,10 @@ window.NPCS = [
       "code": "104000000",
       "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
     },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" }
+    ],
     "dialogues": []
   },
   {
@@ -2016,6 +2185,10 @@ window.NPCS = [
       "code": "104000000",
       "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000"
     },
+    "places": [
+      { "name": "리스항구", "code": "104000000", "img": "https://drive.google.com/thumbnail?id=1HZjLoii8r9p6BkcuD6Q-L5DqMVi7FwTn&sz=w2000" },
+      { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" }
+    ],
     "dialogues": []
   },
   {
@@ -2470,7 +2643,8 @@ window.NPCS = [
       "role": "아이템 제작자",
       "category": "상점",
       "img": "https://drive.google.com/thumbnail?id=18YSeQC6cI0Qrm7Lwa1Vbl5x0twxPCUvs&sz=w400",
-      "dialogues": [], /* TODO: 헤네시스시장 맵 등록되면 place 추가 필요 */
+      "place": { "name": "헤네시스시장", "code": "100000100", "img": "https://drive.google.com/thumbnail?id=1hgEntp0jPJEMObXYyk2KjMWjPOy4CTRk&sz=w5809" },
+      "dialogues": [],
     "crafts": {
       "무기": [
         { "name": "워보우", "itemId": "1452002", "materials": [{ "name": "가공된 나무", "itemId": "4003001", "qty": 5 }, { "name": "파란 달팽이의 껍질", "itemId": "4000000", "qty": 30 }], "price": 800 },
@@ -2535,7 +2709,8 @@ window.NPCS = [
       "role": "노점상",
       "category": "상점",
       "img": "https://drive.google.com/thumbnail?id=11jy4h2FduZcTpV6_ChGWXxXGGydw0igl&sz=w400",
-      "dialogues": [] /* TODO: 헤네시스시장 맵 등록되면 place 추가 필요 */
+      "place": { "name": "헤네시스시장", "code": "100000100", "img": "https://drive.google.com/thumbnail?id=1hgEntp0jPJEMObXYyk2KjMWjPOy4CTRk&sz=w5809" },
+      "dialogues": []
     },
     {
       "id": "1012004",
@@ -2543,8 +2718,106 @@ window.NPCS = [
       "role": "펫먹이 상인",
       "category": "상점",
       "img": "https://drive.google.com/thumbnail?id=1j0tzZMCGAudMnP77KiKf2i3GoG_eCKkI&sz=w400",
-      "dialogues": [], /* TODO: 헤네시스시장 맵 등록되면 place 추가 필요 */
+      "place": { "name": "헤네시스시장", "code": "100000100", "img": "https://drive.google.com/thumbnail?id=1hgEntp0jPJEMObXYyk2KjMWjPOy4CTRk&sz=w5809" },
+      "dialogues": [],
       "sells": ["212000099", "2260000", "4160000", "4160001", "4160002", "4160019", "4160015", "4160012", "4160014", "4160020", "4160010", "4160009", "4160008", "4160007", "4160006", "4160005", "4160004", "4160003"]
+    },
+    {
+      "id": "1012105",
+      "name": "나미녀",
+      "img": "https://drive.google.com/thumbnail?id=1HOQWt0NR_kG_fFTi__tGHCRMW6egkfHC&sz=w400",
+      "place": { "name": "헤네시스피부관리실", "code": "100000105", "img": "https://drive.google.com/thumbnail?id=1datbjkN_fWPay7lJBRDommPm49yvz6c_&sz=w841" },
+      "dialogues": []
+    },
+    {
+      "id": "1012103",
+      "name": "나탈리",
+      "role": "미용실 원장",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=1y6wSrsqKxFN55V0AcmWXQT0MWQ7bdYGw&sz=w400",
+      "place": { "name": "헤네시스헤어샵", "code": "100000104", "img": "https://drive.google.com/thumbnail?id=1SA2TjbVPAgl4z29QlaZysZR5wKNR5pJo&sz=w840" },
+      "dialogues": []
+    },
+    {
+      "id": "1012104",
+      "name": "브리트니",
+      "role": "미용실 보조",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=1UozwpM3LAVYf5m5I4xtjZNs2_Qx_Jcpp&sz=w400",
+      "place": { "name": "헤네시스헤어샵", "code": "100000104", "img": "https://drive.google.com/thumbnail?id=1SA2TjbVPAgl4z29QlaZysZR5wKNR5pJo&sz=w840" },
+      "dialogues": []
+    },
+    {
+      "id": "1012117",
+      "name": "빅 헤드워드",
+      "role": "프린스",
+      "img": "https://drive.google.com/thumbnail?id=16hBm0-jWSeBdjhqRgE8JjpQ0h-VFWQh3&sz=w400",
+      "place": { "name": "헤네시스헤어샵", "code": "100000104", "img": "https://drive.google.com/thumbnail?id=1SA2TjbVPAgl4z29QlaZysZR5wKNR5pJo&sz=w840" },
+      "dialogues": []
+    },
+    {
+      "id": "1052004",
+      "name": "덴마",
+      "role": "성형외과 원장",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=113DBZOnb2WTCmIg8wyRwyOhN3xAfoFkL&sz=w400",
+      "place": { "name": "헤네시스성형외과", "code": "100000103", "img": "https://drive.google.com/thumbnail?id=10XItHsBBzVfL2ggee6hFzDK1Om2OikN5&sz=w850" },
+      "dialogues": []
+    },
+    {
+      "id": "1052005",
+      "name": "돌팔이",
+      "role": "무면허 의사",
+      "img": "https://drive.google.com/thumbnail?id=1IaIJQf0g4USM7hFDl3Imv2kI-gFjGCN6&sz=w400",
+      "place": { "name": "헤네시스성형외과", "code": "100000103", "img": "https://drive.google.com/thumbnail?id=10XItHsBBzVfL2ggee6hFzDK1Om2OikN5&sz=w850" },
+      "dialogues": []
+    },
+    {
+      "id": "1012009",
+      "name": "이서방",
+      "role": "창고지기",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=1S0ZM-u6BtA81bmbLBJ4ips9x5g-bupPb&sz=w400",
+      "place": { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" },
+      "dialogues": []
+    },
+    {
+      "id": "1012112",
+      "name": "토리",
+      "img": "https://drive.google.com/thumbnail?id=1XJDZZU1LadXexMYvpoyZ7RNApcu5pnNa&sz=w400",
+      "place": { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" },
+      "dialogues": []
+    },
+    {
+      "id": "1012005",
+      "name": "클로이",
+      "role": "펫 마스터",
+      "category": "상점",
+      "img": "https://drive.google.com/thumbnail?id=1fj59IlM2Ne9dU28m7qFtihyuvaoNHj8m&sz=w400",
+      "place": { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" },
+      "dialogues": []
+    },
+    {
+      "id": "9010014",
+      "name": "아르미",
+      "img": "https://drive.google.com/thumbnail?id=1mP1Lxm7aBDs6_4pFghhMbncnIuvaziUp&sz=w400",
+      "place": { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" },
+      "dialogues": []
+    },
+    {
+      "id": "1012102",
+      "name": "피아",
+      "img": "https://drive.google.com/thumbnail?id=1-7uurIByEUAUq_oI66ofV1WslNR4LSYp&sz=w400",
+      "place": { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" },
+      "dialogues": []
+    },
+    {
+      "id": "9201023",
+      "name": "헤라",
+      "role": "웨딩빌리지 입장",
+      "img": "https://drive.google.com/thumbnail?id=11tU5TEbWQCq0X6JlL6zT43W1tBQaftlC&sz=w400",
+      "place": { "name": "헤네시스공원", "code": "100000200", "img": "https://drive.google.com/thumbnail?id=1nbx5nDS-DDgJdyFBJVOyBK4Q6mjW1Prg&sz=w4871" },
+      "dialogues": []
     }
 ];
 
@@ -2920,6 +3193,429 @@ window.ITEMS = [
   }
 ];
 
+// 칼·샘 판매품: 축약된 NPC 상세용 아이템 데이터 보완
+(function(){
+  var shopItems=[{"id":"1452002","name":"워 보우","img":"https://drive.google.com/thumbnail?id=1u4NkA3CpxQ_QFWM4VmI0ceLxaGc2zAwj&sz=w200","path":["장비","무기","활"],"job":"궁수","reqLevel":10,"speed":"보통(6)","attack":25,"buyPrice":3000,"sellPrice":1500},{"id":"1452003","name":"합금 활","img":"https://drive.google.com/thumbnail?id=1YGsldxQDW_tH1bOOOiUvWV45KtxFpPlE&sz=w200","path":["장비","무기","활"],"job":"궁수","reqLevel":15,"reqStr":20,"reqDex":40,"speed":"보통(6)","attack":30,"buyPrice":6000,"sellPrice":3000,"desc":"직접 타격 시 26%의 확률로 넉백"},{"id":"1452001","name":"사냥꾼의 활","img":"https://drive.google.com/thumbnail?id=1Rid4Q8dmuEQw8m1xrdKMtB0HiKXxA5uc&sz=w200","path":["장비","무기","활"],"job":"궁수","reqLevel":20,"reqStr":25,"reqDex":65,"dex":1,"attack":35,"speed":"보통(6)","buyPrice":10000,"sellPrice":5000,"desc":"직접 타격시 넉백 확률 : +32%"},{"id":"1452000","name":"배틀 보우","img":"https://drive.google.com/thumbnail?id=1elg7VI2CRTFtxq1vL-G3ds-Ex5bAKnHX&sz=w200","path":["장비","무기","활"],"job":"궁수","reqLevel":25,"reqStr":30,"reqDex":80,"speed":"빠름(5)","attack":40,"buyPrice":10000,"sellPrice":10000,"desc":"직접 타격 시 36% 확률로 넉백"},{"id":"1462001","name":"석궁","img":"https://drive.google.com/thumbnail?id=1oWPv6ZGzEwCOaSo3BN8GLN6cbcVUS3Xh&sz=w200","path":["장비","무기","석궁"],"job":"궁수","reqLevel":12,"speed":"보통(6)","attack":29,"buyPrice":4000,"sellPrice":2000},{"id":"1462002","name":"전투 석궁","img":"https://drive.google.com/thumbnail?id=1AmVy8LgFLlL9jv-0hIu0fgqElzusO6Mn&sz=w200","path":["장비","무기","석궁"],"job":"궁수","reqLevel":18,"reqStr":18,"reqDex":55,"speed":"보통(6)","attack":34,"buyPrice":8000,"sellPrice":4000,"desc":"직접 타격 시 28%의 확률로 넉백"},{"id":"1462003","name":"발란쉐","img":"https://drive.google.com/thumbnail?id=1R9wqisFD2PM6j_Gmk8JjknFzi_UzB4Ym&sz=w200","path":["장비","무기","석궁"],"job":"궁수","reqLevel":22,"reqStr":22,"reqDex":70,"speed":"보통(6)","str":1,"attack":39,"buyPrice":12000,"sellPrice":6000},{"id":"1462000","name":"산양 석궁","img":"https://drive.google.com/thumbnail?id=1lOzz1QV2_6-pasku7imoPlmAWhIMOsFO&sz=w200","path":["장비","무기","석궁"],"job":"궁수","reqLevel":28,"reqStr":28,"reqDex":80,"speed":"보통(6)","attack":44,"buyPrice":30000,"sellPrice":15000},{"id":"1302007","name":"카알 대검","img":"https://drive.google.com/thumbnail?id=1ZqT6WFtJI_vlCta1yY4Xbwj3JLwEHj4p&sz=w200","path":["장비","무기","한손검"],"job":"공용","reqLevel":10,"attack":27,"speed":"빠름(4)","buyPrice":3000,"sellPrice":1500},{"id":"1322007","name":"가죽 핸드백","img":"https://drive.google.com/thumbnail?id=1cXcW387EjUdF0K0RVCJuYJouE0Tzf385&sz=w200","path":["장비","무기","한손둔기"],"job":"공용","reqLevel":15,"attack":34,"speed":"빠름(5)","buyPrice":6000,"sellPrice":3000,"reqStr":20},{"id":"1322008","name":"007 가방","img":"https://drive.google.com/thumbnail?id=1KmoR921EB6muOT1oD98IrCZvCJxAsEoJ&sz=w200","path":["장비","무기","한손둔기"],"job":"공용","reqLevel":20,"reqStr":25,"speed":"빠름(5)","attack":39,"buyPrice":12000,"sellPrice":6000},{"id":"1422004","name":"몽키 스페너","img":"https://drive.google.com/thumbnail?id=1pFGqh1AEqLROTWFpV-w1ijOYCjJ_P5NP&sz=w200","path":["장비","무기","두손둔기"],"job":"전사,궁수,도적","reqLevel":25,"reqStr":25,"speed":"느림(7)","attack":47,"buyPrice":20000,"sellPrice":10000},{"id":"1442004","name":"지저분한 대걸레","img":"https://drive.google.com/thumbnail?id=1Jia28IwlPIay8XSqZSLuZxY23XpYqQQi&sz=w200","path":["장비","무기","폴암"],"job":"전사,궁수,도적","reqLevel":25,"reqStr":25,"speed":"느림(8)","attack":47,"buyPrice":24000,"sellPrice":12000},{"id":"1002008","name":"갈색 가죽 모자","img":"https://drive.google.com/thumbnail?id=1cZJ62f76_Irj5T6_dH1yekCgYMswtQMg&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":5,"pdd":5,"buyPrice":500,"sellPrice":250},{"id":"1002033","name":"군밤장수 모자","img":"https://drive.google.com/thumbnail?id=1CKT9iXt3MdZZ1NbfL4ofbseip87A5LpI&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":15,"pdd":8,"buyPrice":3000,"sellPrice":1500},{"id":"1002060","name":"검은색 야구 모자","img":"https://drive.google.com/thumbnail?id=1A2GKA3DYWYYcu4GPUrPPdgAQRYrbWdeo&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":20,"pdd":5,"buyPrice":3000,"sellPrice":1500},{"id":"1002061","name":"노란색 야구 모자","img":"https://drive.google.com/thumbnail?id=1QDGfIlTxCwH94B9A6XhM-NF1QJ07zHMI&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":20,"pdd":5,"buyPrice":3000,"sellPrice":1500},{"id":"1002062","name":"갈색 야구 모자","img":"https://drive.google.com/thumbnail?id=13vi8dcSWftJT1-tHnY9m2cOZV6GvM23b&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":20,"pdd":5,"buyPrice":3000,"sellPrice":1500},{"id":"1002063","name":"파란색 야구 모자","img":"https://drive.google.com/thumbnail?id=1vIfY8yWyhfQdL2BrTGZwdni73zleHCqU&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":20,"pdd":5,"buyPrice":3000,"sellPrice":1500},{"id":"1002012","name":"빨간색 야구 모자","img":"https://drive.google.com/thumbnail?id=1EBnq5SrpLUt-yZPliYFJPDHlDtAIJiYD&sz=w200","path":["장비","방어구","투구"],"job":"공용","reqLevel":20,"pdd":5,"buyPrice":3000,"sellPrice":1500},{"id":"1002112","name":"레드 페더햇","img":"https://drive.google.com/thumbnail?id=1eE-D0S2Xy57Lq1F5H1HApzs6G5av5tjO&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":15,"reqDex":45,"pdd":12,"buyPrice":4000,"sellPrice":2000},{"id":"1002113","name":"블루 페더햇","img":"https://drive.google.com/thumbnail?id=1ThDZ7ByzN0YCEITkk05AEktv7GlbSIu2&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":15,"reqDex":45,"pdd":12,"buyPrice":4000,"sellPrice":2000},{"id":"1002114","name":"그린 페더햇","img":"https://drive.google.com/thumbnail?id=1Aua34jVQx6rl6EZWjh6BRVTe7muyONUO&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":15,"reqDex":45,"pdd":12,"buyPrice":4000,"sellPrice":2000},{"id":"1002115","name":"블랙 페더햇","img":"https://drive.google.com/thumbnail?id=1LK9H_2QBnLmPkEj9_GxluL9wT56Zp4N7&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":15,"reqDex":45,"pdd":12,"buyPrice":4000,"sellPrice":2000},{"id":"1002116","name":"브라운 페더햇","img":"https://drive.google.com/thumbnail?id=1feeFXaMCvP0D0lBRQscJ8Ufd0GYX1_9Y&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":15,"reqDex":45,"pdd":12,"buyPrice":4000,"sellPrice":2000},{"id":"1002117","name":"레드 페더윙햇","img":"https://drive.google.com/thumbnail?id=1b9Di1LbHCbf4Fyy3xk19w20lS1E6Cjd3&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":20,"reqDex":60,"hp":5,"pdd":15,"buyPrice":12000,"sellPrice":6000},{"id":"1002118","name":"블루 페더윙햇","img":"https://drive.google.com/thumbnail?id=1wJcKR16tvhnUZNSB0C1b9xdn4XB2tm0U&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":20,"reqDex":60,"hp":5,"pdd":15,"buyPrice":12000,"sellPrice":6000},{"id":"1002119","name":"그린 페더윙햇","img":"https://drive.google.com/thumbnail?id=1cc-Bd_-3JJr4zGRYgdTGA-jOHRfPJCld&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":20,"reqDex":60,"hp":5,"pdd":15,"buyPrice":12000,"sellPrice":6000},{"id":"1002120","name":"블랙 페더윙햇","img":"https://drive.google.com/thumbnail?id=1QzlzVr9yUcEFRCrqtG1fAhoNaAaLBWZs&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":20,"reqDex":60,"hp":5,"pdd":15,"buyPrice":12000,"sellPrice":6000},{"id":"1002121","name":"브라운 페더윙햇","img":"https://drive.google.com/thumbnail?id=1aW5RIzZFpRCHoJ11tq7gBbbpoFBOVk0_&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":20,"reqDex":60,"mp":5,"pdd":15,"sellPrice":6000,"buyPrice":12000},{"id":"1002057","name":"초록색 고급 가죽 모자","img":"https://drive.google.com/thumbnail?id=1-U_na-WJLKf0satKMmANKnRsS2oheibn&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":10,"pdd":9,"eva":1,"buyPrice":800,"sellPrice":450},{"id":"1002010","name":"갈색 고급 가죽 모자","img":"https://drive.google.com/thumbnail?id=1F0irS99ydNBIpobM0GOvfs441f_ez3NM&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":10,"pdd":9,"eva":1,"buyPrice":800,"sellPrice":450},{"id":"1002156","name":"레드 헌트","img":"https://drive.google.com/thumbnail?id=1g7rrZYun2SDJhu-T9jssYwtpuBMQ5-Na&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"hp":5,"pdd":18,"buyPrice":20000,"sellPrice":10000},{"id":"1002157","name":"블루 헌트","img":"https://drive.google.com/thumbnail?id=1QlGnFr2dkie8wppc_15SGohdylKrS9nj&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"hp":5,"pdd":18,"buyPrice":20000,"sellPrice":10000},{"id":"1002158","name":"그린 헌트","img":"https://drive.google.com/thumbnail?id=11HxfwUqFWOeipzI6nk-ZdQB6iBBPkRUY&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"hp":5,"pdd":18,"buyPrice":20000,"sellPrice":10000},{"id":"1002159","name":"블랙 헌트","img":"https://drive.google.com/thumbnail?id=12psGd2LPi7SaYEAeloPq1wCJoUKofdKv&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":25,"mp":5,"pdd":18,"buyPrice":20000,"sellPrice":10000,"reqDex":90},{"id":"1002160","name":"브라운 헌트","img":"https://drive.google.com/thumbnail?id=1nbGcWU6VtDaz3ZV8MkHlxJfEYFYRy-UP&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"mp":5,"pdd":18,"buyPrice":20000,"sellPrice":10000},{"id":"1002161","name":"레드 네페르","img":"https://drive.google.com/thumbnail?id=14jg0IjRl40DnFVYjsNTFpNe9klSv5Q28&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":30,"reqStr":30,"reqDex":95,"hp":10,"pdd":21,"buyPrice":30000,"sellPrice":15000},{"id":"1002162","name":"블루 네페르","img":"https://drive.google.com/thumbnail?id=1UrmowILYW5ARMO6heMylwCMZ1vbrwjO5&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":30,"reqStr":30,"reqDex":95,"mp":10,"pdd":21,"buyPrice":30000,"sellPrice":15000},{"id":"1002163","name":"그린 네페르","img":"https://drive.google.com/thumbnail?id=1Xb7Uw8FSnLzAIts2XJnxOmEroisVGHXZ&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":30,"reqStr":30,"reqDex":95,"dex":1,"pdd":21,"buyPrice":30000,"sellPrice":15000},{"id":"1002164","name":"브라운 네페르","img":"https://drive.google.com/thumbnail?id=11jlBjuxXPSfiCKKu3VgViXEmhkTOpeCl&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":30,"reqStr":30,"reqDex":95,"str":1,"pdd":21,"buyPrice":30000,"sellPrice":15000},{"id":"1002165","name":"다크 네페르","img":"https://drive.google.com/thumbnail?id=1t8ZFQOPENww7Cf278D3-K4W91M9r5vcv&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":30,"reqStr":30,"reqDex":95,"dex":1,"pdd":21,"buyPrice":30000,"sellPrice":15000},{"id":"1032003","name":"자수정 귀고리","img":"https://drive.google.com/thumbnail?id=1K-m9R3b8NmJPISPD1xHsTecakr7NaNIp&sz=w200","path":["장비","악세사리","귀고리"],"job":"공용","reqLevel":15,"buyPrice":7000,"sellPrice":600},{"id":"1032001","name":"한쪽 은 귀고리","img":"https://drive.google.com/thumbnail?id=1P1538vNwNIByH4W1LfM2n1lQ4feIvhMF&sz=w200","path":["장비","악세사리","귀고리"],"job":"공용","reqLevel":15,"buyPrice":7000,"sellPrice":600},{"id":"1040008","name":"브라운 아발란체 (남)","img":"https://drive.google.com/thumbnail?id=1UisocsRAHpG-fC6Z-T8uxdsQmbHy6yed&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":10,"pdd":10,"buyPrice":3200,"sellPrice":1600},{"id":"1040071","name":"그린 아발란체 (남)","img":"https://drive.google.com/thumbnail?id=1sv256neihIuCaiuK69AX9ErW8Y13wYrK&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":10,"pdd":10,"buyPrice":3200,"sellPrice":1600},{"id":"1040007","name":"초록색 래더 후드웨어 (남)","img":"https://drive.google.com/thumbnail?id=1NfMUnApXlyzRAXgt6JvsdHgmSaT6o1wA&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":15,"reqDex":40,"dex":1,"pdd":14,"buyPrice":5500,"sellPrice":2750},{"id":"1040011","name":"은색 래더 후드웨어 (남)","img":"https://drive.google.com/thumbnail?id=1Wp8AiARIccj62OlVDLLtTD0PIAQyzhEC&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":15,"reqDex":40,"str":1,"pdd":14,"buyPrice":5500,"sellPrice":2750},{"id":"1040003","name":"갈색 하드래더 (남)","img":"https://drive.google.com/thumbnail?id=1MRU6hEjDLEvOvJ_VD60Z7IO5iMJFFz4U&sz=w200","path":["장비","방어구","투구"],"job":"궁수","reqLevel":20,"reqDex":65,"dex":1,"pdd":18,"buyPrice":9000,"sellPrice":4500},{"id":"1040022","name":"그린 이너스 체인메일 (남)","img":"https://drive.google.com/thumbnail?id=1Hu1xqIY8oMI8ANipMHjA8y-ZISRriWSD&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"dex":2,"pdd":22,"buyPrice":15000,"sellPrice":7500},{"id":"1040023","name":"블랙 이너스 체인메일 (남)","img":"https://drive.google.com/thumbnail?id=1qKGD_-9P2aRpPxIzctktAinhmOs4v1ak&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"str":2,"pdd":22,"buyPrice":15000,"sellPrice":7500,"reqStr":25,"reqDex":90},{"id":"1040024","name":"블루 이너스 체인메일 (남)","img":"https://drive.google.com/thumbnail?id=1_Wbv9RN1BCJJbcmIXWU5ITGy_ofRzEDo&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"mp":20,"pdd":22,"buyPrice":15000,"sellPrice":7500},{"id":"1040025","name":"레드 이너스 체인메일 (남)","img":"https://drive.google.com/thumbnail?id=1s1CFIsC-AuPbSF7VMAC4DpWW4sen_zvp&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"hp":20,"pdd":22,"buyPrice":15000,"sellPrice":7500},{"id":"1040067","name":"그린 헌터스 아머 (남)","img":"https://drive.google.com/thumbnail?id=1P99LE2_0qpdbk5D7whD0WaPKb1ig0raY&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"dex":2,"pdd":26,"buyPrice":50000},{"id":"1040068","name":"다크 헌터스 아머 (남)","img":"https://drive.google.com/thumbnail?id=1gZaCg81vdfmNVv24wftdUPy2auAaedYm&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"dex":2,"pdd":26,"buyPrice":50000,"sellPrice":25000},{"id":"1040069","name":"레드 헌터스 아머 (남)","img":"https://drive.google.com/thumbnail?id=1gARIp7u373QL_1r5URNi94Noki2s1yJ2&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"hp":20,"pdd":26,"buyPrice":50000,"sellPrice":25000},{"id":"1040070","name":"블루 헌터스 아머 (남)","img":"https://drive.google.com/thumbnail?id=1ouV3EKaHcG4p0aASsVpLPbhJOXfnyFfL&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"mp":20,"pdd":26,"buyPrice":50000,"sellPrice":25000},{"id":"1041007","name":"그린아벨린 (여)","img":"https://drive.google.com/thumbnail?id=18YHelpuXspCiuaZJPRfio9WB3Se0N0tg&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":10,"pdd":10,"buyPrice":3200,"sellPrice":1600},{"id":"1041061","name":"옐로우 아벨린 (여)","img":"https://drive.google.com/thumbnail?id=1dLb4Utl4oH_-yO5y7S2JiKvnVnONkkHS&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":10,"pdd":10,"buyPrice":3200,"sellPrice":1600},{"id":"1041008","name":"그린 아벨 래더아머 (여)","img":"https://drive.google.com/thumbnail?id=1STAL-TipthbWo1DuDIkZp6sBjEU2eEWV&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":15,"reqDex":40,"dex":1,"pdd":14,"buyPrice":5500,"sellPrice":2750},{"id":"1041062","name":"옐로우 아벨 래더아머 (여)","img":"https://drive.google.com/thumbnail?id=1KWWEUGUmvGPxHwudTWzb_Ycx4sGPJ-RH&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":15,"reqDex":40,"dex":1,"pdd":14,"buyPrice":5500,"sellPrice":2750},{"id":"1041063","name":"그레이 아벨 래더아머 (여)","img":"https://drive.google.com/thumbnail?id=1mZxVlJM1Xwa_ZxKAj5aQRgMRDmaS_gTU&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":15,"reqDex":40,"dex":1,"pdd":14,"buyPrice":5500,"sellPrice":2750},{"id":"1041013","name":"그린 쉬버메일 (여)","img":"https://drive.google.com/thumbnail?id=1K_a2671niIORiUy8mSOPjqkhaTHfPPCP&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":20,"reqDex":60,"dex":1,"pdd":18,"buyPrice":9000,"sellPrice":4500},{"id":"1041027","name":"레드 쉬버메일 (여)","img":"https://drive.google.com/thumbnail?id=1G2-XgveOv5ne7hLZjbGjG5rAJwOsg5eq&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":20,"reqDex":65,"hp":10,"pdd":18,"buyPrice":9000,"sellPrice":4500},{"id":"1041028","name":"퍼플 쉬버메일 (여)","img":"https://drive.google.com/thumbnail?id=1Q6qSWL7XSEpB8mX8fTZ6DJolHeJBpmd_&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":20,"reqDex":65,"mp":10,"pdd":18,"buyPrice":9000,"sellPrice":4500},{"id":"1041032","name":"그린 이너스 체인메일 (여)","img":"https://drive.google.com/thumbnail?id=1JycehuH9sH6aJz_JfACzbDIyZn-dvm__&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"dex":2,"pdd":22,"buyPrice":15000,"sellPrice":7500},{"id":"1041033","name":"레드 이너스 체인메일 (여)","img":"https://drive.google.com/thumbnail?id=1FjIAcX_Kz-AZ1r_jTnMhKweBYtTT1ODu&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"hp":20,"pdd":22,"buyPrice":15000,"sellPrice":7500,"reqStr":25,"reqDex":90},{"id":"1041034","name":"블루 이너스 체인메일 (여)","img":"https://drive.google.com/thumbnail?id=1dpCXAvBl5pGOJ0oT8hEUtdQ4Hv_yw4tS&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"mp":20,"pdd":22,"buyPrice":15000,"sellPrice":7500},{"id":"1041035","name":"옐로우 이너스 체인메일 (여)","img":"https://drive.google.com/thumbnail?id=15_AWnn06hiFOWh_O958bo_GX89Ghlng5&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"str":2,"pdd":22,"buyPrice":15000,"sellPrice":7500},{"id":"1041054","name":"그린 헌터미 아머 (여)","img":"https://drive.google.com/thumbnail?id=1LTKONmKCJZ9MTD-816CVoGxn-KkOtz24&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"dex":2,"pdd":26,"buyPrice":50000,"sellPrice":25000},{"id":"1041055","name":"블랙 헌터미 아머 (여)","img":"https://drive.google.com/thumbnail?id=1naLpXC-egNEhA0F5lptMXMoRDtZLqSsf&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"str":1,"dex":1,"pdd":26,"buyPrice":50000,"sellPrice":25000},{"id":"1041056","name":"레드 헌터미 아머 (여)","img":"https://drive.google.com/thumbnail?id=1Z5m_VGo0_5g-egcyiw41rQRL4IdYXQd0&sz=w200","path":["장비","방어구","상의"],"job":"궁수","reqLevel":30,"reqDex":100,"mp":20,"pdd":26,"buyPrice":50000,"sellPrice":25000},{"id":"1060005","name":"우드랜드 바지 (남)","img":"https://drive.google.com/thumbnail?id=1tWMwexhUhqcIDOP9gtFeG4lzNh3La1sh&sz=w200","path":["장비","방어구","하의"],"job":"공용","reqLevel":20,"pdd":19,"buyPrice":14000,"sellPrice":7000,"desc":"HP +5"},{"id":"1060056","name":"그린 헌터스 아머 바지 (남)","img":"https://drive.google.com/thumbnail?id=1gAlmYxTHkVu9P2xQL1x878EduJFK2lVP&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"dex":1,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1060057","name":"다크 헌터스 아머 바지 (남)","img":"https://drive.google.com/thumbnail?id=1bbPPRzWAXOdZnSB-DNBTVtkAKER11c5E&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"dex":1,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1060058","name":"레드 헌터스 아머 바지 (남)","img":"https://drive.google.com/thumbnail?id=1wUrBRXs3B7XC5ToJBzK46BnZU2t3Kq8X&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"hp":10,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1060059","name":"블루 헌터스 아머 바지 (남)","img":"https://drive.google.com/thumbnail?id=1W2-dWPZVBl9eKt-JuY6afUTwdG8xd5ve&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"mp":10,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1061009","name":"그린 아벨린 치마 (여)","img":"https://drive.google.com/thumbnail?id=1zAKN11MCjSISOo6kqrk_YbnFCGUUPl1m&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":10,"pdd":9,"buyPrice":3000,"sellPrice":1500},{"id":"1061057","name":"옐로우 아벨린 치마 (여)","img":"https://drive.google.com/thumbnail?id=1Cf_Cr_lG_zuddYZ_Z3OjJWP7y6ypXfPM&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":10,"pdd":9,"buyPrice":3000,"sellPrice":1500},{"id":"1061006","name":"그린 아벨 가죽치마","img":"https://drive.google.com/thumbnail?id=1PdbEY0DWskjZZCI9VQjvC1iqf0933qDz&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":15,"reqDex":40,"mp":5,"pdd":12,"buyPrice":5000,"sellPrice":3200},{"id":"1061058","name":"브라운 아벨 가죽치마","img":"https://drive.google.com/thumbnail?id=19aX7J_ShHHY_COHI-aPxnU6Tdbn2piEa&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":15,"reqDex":40,"mp":5,"pdd":12,"buyPrice":5000,"sellPrice":3200},{"id":"1061059","name":"그레이 아벨 가죽 치마","img":"https://drive.google.com/thumbnail?id=11JZgakCQ-x2Du-e-TVsPmMxyBhjZ6VHV&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":15,"reqDex":40,"mp":5,"pdd":12,"buyPrice":5000,"sellPrice":3200},{"id":"1061024","name":"그린 쉬버메일 치마 (여)","img":"https://drive.google.com/thumbnail?id=1wVf2WpSiALLuIHGE7zfoAJtE2juoO-9V&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":20,"reqDex":65,"hp":3,"mp":2,"pdd":15,"buyPrice":9000,"sellPrice":4500},{"id":"1061025","name":"레드 쉬버메일 치마 (여)","img":"https://drive.google.com/thumbnail?id=1I4NrGPqQrorkEiqmcB047uAJX8In50KX&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":20,"reqDex":65,"hp":5,"pdd":15,"buyPrice":9000,"sellPrice":4500},{"id":"1061026","name":"퍼플 쉬버메일 치마 (여)","img":"https://drive.google.com/thumbnail?id=1h5Mw3kfXJmUH7nkPMsOp3uux8sG0B2Vg&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":20,"reqDex":65,"mp":5,"pdd":15,"buyPrice":9000,"sellPrice":4500},{"id":"1061050","name":"그린 헌터미 아머 바지 (여)","img":"https://drive.google.com/thumbnail?id=19wm_eFvqZ9v-LQg6vZghwhYzGqq05NZJ&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"dex":1,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1061051","name":"블랙 헌터미 아머 바지 (여)","img":"https://drive.google.com/thumbnail?id=1hCryv4XyK6M8Xb3jNAQYS9Dv6_QCDcC7&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"mp":10,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1061052","name":"레드 헌터미 아머 바지 (여)","img":"https://drive.google.com/thumbnail?id=1axn7fp9MOrYfhUA8UYM4fQaxgg38NdqG&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":30,"reqDex":100,"hp":10,"pdd":21,"buyPrice":44000,"sellPrice":22000},{"id":"1062004","name":"아발란체 바지","img":"https://drive.google.com/thumbnail?id=1V7Ljnr8VlqTQHnNqB8UypPeB7N1QbVTq&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":10,"pdd":9,"buyPrice":3000,"sellPrice":1500},{"id":"1062002","name":"갈색 하드래더 바지","img":"https://drive.google.com/thumbnail?id=1gae21YEMe9pvIObm6G-nU0bMZsn3j2tw&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":20,"reqDex":65,"hp":5,"pdd":15,"buyPrice":9000,"sellPrice":4500},{"id":"1062006","name":"이너스 체인바지","img":"https://drive.google.com/thumbnail?id=1JVyq60H_K4qTivMmsgREigYE7TWovJZ9&sz=w200","path":["장비","방어구","하의"],"job":"궁수","reqLevel":25,"reqStr":25,"reqDex":90,"dex":1,"pdd":18,"buyPrice":13000,"sellPrice":6500},{"id":"1072059","name":"그린 하드래더 부츠","img":"https://drive.google.com/thumbnail?id=1qnEqIx1plPxptXljgP7_qWYyW7LNCu2j&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":10,"pdd":4,"buyPrice":1800,"sellPrice":900},{"id":"1072015","name":"브라운 하드래더 부츠","img":"https://drive.google.com/thumbnail?id=1XtyaLRkv7zOe3m85-oZCDfNevKpdk1r7&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":10,"pdd":4,"buyPrice":1800,"sellPrice":900},{"id":"1072060","name":"브라운 우드탑","img":"https://drive.google.com/thumbnail?id=1o5a0BboEdLqfnBmvE-_hbL1AHfTpPS4X&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":15,"pdd":7,"buyPrice":4500,"sellPrice":2250,"reqStr":15,"reqDex":35},{"id":"1072061","name":"블루 우드탑","img":"https://drive.google.com/thumbnail?id=1GCq0LFxTsuFBFD-uBaqkOf3aDHJPJ78O&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":15,"reqStr":15,"reqDex":35,"pdd":7,"buyPrice":4500,"sellPrice":2250},{"id":"1072016","name":"그린 우드탑","img":"https://drive.google.com/thumbnail?id=1foOIFT3c6siMvmaHjgjUgE9odDhyDdlI&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":15,"reqStr":15,"reqDex":35,"pdd":7,"buyPrice":4500,"sellPrice":2250},{"id":"1072025","name":"디어 헌터탑","img":"https://drive.google.com/thumbnail?id=1X0QHuk6OCvzRqDxi4sPiFvp7UcYobV3U&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":20,"reqStr":20,"reqDex":45,"pdd":10,"buyPrice":9000,"sellPrice":4500},{"id":"1072026","name":"래빗 헌터탑","img":"https://drive.google.com/thumbnail?id=1gKi3_oMjzMYJsUW-Mvbj7ysYFZhwvYbY&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":20,"reqStr":20,"reqDex":45,"pdd":10,"buyPrice":9000,"sellPrice":4500},{"id":"1072067","name":"베어 헌터탑","img":"https://drive.google.com/thumbnail?id=1FEis0CNhT3FkFzBCNtmpf1LstsUu7-mw&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":20,"reqStr":20,"reqDex":45,"pdd":10,"buyPrice":9000,"sellPrice":4500},{"id":"1072068","name":"라이언 헌터탑","img":"https://drive.google.com/thumbnail?id=1r6JVbfRUYAGyg4M5XeF_1s0wr0VS-SkN&sz=w200","path":["장비","방어구","신발"],"job":"궁수","reqLevel":20,"reqStr":20,"reqDex":45,"pdd":10,"buyPrice":9000,"sellPrice":4500},{"id":"1072012","name":"빨간색 가죽 구두","img":"https://drive.google.com/thumbnail?id=1wF_YRA_0zrRhzeI5w1akh6WTIOdJTVdY&sz=w200","path":["장비","방어구","신발"],"job":"공용","reqLevel":26,"pdd":13,"moveSpeed":3,"buyPrice":15000,"sellPrice":7500},{"id":"1072054","name":"주황색 가죽 구두","img":"https://drive.google.com/thumbnail?id=1m2w_wTeIhbIv5rRCZUAl2Tw0k-iffPO3&sz=w200","path":["장비","방어구","신발"],"job":"공용","reqLevel":26,"pdd":13,"moveSpeed":3,"buyPrice":15000,"sellPrice":7500},{"id":"1072055","name":"분홍색 가죽 구두","img":"https://drive.google.com/thumbnail?id=1v6Er11F3plMo3yoXXk1XH7eyn-DyzAcE&sz=w200","path":["장비","방어구","장갑"],"job":"공용","reqLevel":26,"pdd":13,"moveSpeed":3,"buyPrice":15000,"sellPrice":7500},{"id":"1072056","name":"파란색 가죽 구두","img":"https://drive.google.com/thumbnail?id=18cfQHhRNKyogzNij5GGOGw7ki7r12all&sz=w200","path":["장비","방어구","신발"],"job":"공용","reqLevel":26,"pdd":13,"moveSpeed":3,"buyPrice":15000,"sellPrice":7500},{"id":"1072018","name":"파란색 캔버스화","img":"https://drive.google.com/thumbnail?id=1sZj87mk-U2knc3Uk-yotDkY5jNiXHEnE&sz=w200","path":["장비","방어구","신발"],"job":"공용","reqLevel":31,"pdd":16,"buyPrice":30000,"sellPrice":15000},{"id":"1072064","name":"빨간색 캔버스화","img":"https://drive.google.com/thumbnail?id=15yAh29BsaVpB1Gtf9GW3QC1JtgAWa4kn&sz=w200","path":["장비","방어구","신발"],"job":"공용","reqLevel":31,"pdd":16,"buyPrice":30000,"sellPrice":15000}];
+  shopItems.forEach(function(it){ if (!window.ITEMS.some(function(old){ return old && String(old.id)===String(it.id); })) window.ITEMS.push(it); });
+})();
+
+// 헤네시스무기상점 · 칼 · 샘
+(function(){
+  function sales(spec){ return spec.split(',').map(function(row){ var p=row.split(':'); return {id:p[0],price:Number(p[1])}; }); }
+  var kal=sales("1452002:3000,1452003:6000,1452001:10000,1452000:10000,1462001:4000,1462002:8000,1462003:12000,1462000:30000,1302007:3000,1322007:6000,1322008:12000,1422004:20000,1442004:24000");
+  var sam=sales("1002008:500,1002033:3000,1002060:3000,1002061:3000,1002062:3000,1002063:3000,1002012:3000,1002112:4000,1002113:4000,1002114:4000,1002115:4000,1002116:4000,1002117:12000,1002118:12000,1002119:12000,1002120:12000,1002121:12000,1002057:800,1002010:800,1002156:20000,1002157:20000,1002158:20000,1002159:20000,1002160:20000,1002161:30000,1002162:30000,1002163:30000,1002164:30000,1002165:30000,1032003:7000,1032001:7000,1040008:3200,1040071:3200,1040007:5500,1040011:5500,1040003:9000,1040022:15000,1040023:15000,1040024:15000,1040025:15000,1040067:50000,1040068:50000,1040069:50000,1040070:50000,1041007:3200,1041061:3200,1041008:5500,1041062:5500,1041063:5500,1041013:9000,1041027:9000,1041028:9000,1041032:15000,1041033:15000,1041034:15000,1041035:15000,1041054:50000,1041055:50000,1041056:50000,1060005:14000,1060056:44000,1060057:44000,1060058:44000,1060059:44000,1061009:3000,1061057:3000,1061006:5000,1061058:5000,1061059:5000,1061024:9000,1061025:9000,1061026:9000,1061050:44000,1061051:44000,1061052:44000,1062004:3000,1062002:9000,1062006:13000,1072059:1800,1072015:1800,1072060:4500,1072061:4500,1072016:4500,1072025:9000,1072026:9000,1072067:9000,1072068:9000,1072012:15000,1072054:15000,1072055:15000,1072056:15000,1072018:30000,1072064:30000");
+  var shopImg="https://drive.google.com/thumbnail?id=1I0xxI93HMzGgWNi91TzWEuqZoifujhS3&sz=w841";
+  var heneIcon="https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400";
+  var place={name:"헤네시스무기상점",code:"100000101",region:"헤네시스",img:heneIcon};
+  if (window.MAPS){
+    var market=window.MAPS.find(function(m){ return String(m.code)==="100000100"; });
+    if (market && market.portals) market.portals.forEach(function(p){ if (p.toName==="헤네시스무기상점") p.toCode="100000101"; });
+    if (!window.MAPS.some(function(m){ return String(m.code)==="100000101"; })) window.MAPS.push({code:"100000101",name:"헤네시스무기상점",region:"빅토리아 아일랜드",img:shopImg,imgWidth:841,imgHeight:913,portals:[{toCode:"100000100",toName:"헤네시스시장",note:"이동",x:669,y:800,unit:"px"}]});
+  }
+  if (window.ITEMS) kal.concat(sam).forEach(function(s){ var it=window.ITEMS.find(function(i){ return i && String(i.id)===s.id; }); if (it) it.buyPrice=s.price; });
+  if (window.NPCS) [
+    {id:"1011000",name:"칼",role:"무기상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1m4_czgWNwAsmbxk0W5YUod-c2IvjACkX&sz=w400",place:place,dialogues:[],sells:kal.map(function(s){return s.id;})},
+    {id:"1011001",name:"샘",role:"방어구상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1skU4qITs68V90s2xoDkKuGBlpDJ8oUu-&sz=w400",place:place,dialogues:[],sells:sam.map(function(s){return s.id;})}
+  ].forEach(function(n){ var old=window.NPCS.find(function(x){ return String(x.id)===String(n.id); }); if (old) Object.keys(n).forEach(function(k){ old[k]=n[k]; }); else window.NPCS.push(n); });
+})();
+// 루나 판매품: 축약된 NPC 상세용 아이템 데이터 보완
+(function(){
+  var items=[
+    {id:"2000006",name:"마나 엘릭서",img:"https://drive.google.com/thumbnail?id=1I7X9ucRF2BvGdT4BWYbVl0GXcKHbK6As&sz=w200",path:["소비","포션"],buyPrice:620,sellPrice:310,desc:"MP를 약 300 회복시킨다."},
+    {id:"2001515",name:"민첩함의 물약",img:"https://drive.google.com/thumbnail?id=1m_mx3CUT2aKe8j89-q31pAM1v4DcPoGh&sz=w200",path:["소비","포션"],buyPrice:500,sellPrice:250,desc:"3분간 회피치가 100 증가한다."},
+    {id:"2001516",name:"속도향상의 물약",img:"https://drive.google.com/thumbnail?id=1nzj0G2WXPU0hXizua1jBoTTbxEd1_qY1&sz=w200",path:["소비","포션"],buyPrice:400,sellPrice:200,desc:"3분간 이동속도가 증가한다."},
+    {id:"2002002",name:"마법사의 물약",img:"https://drive.google.com/thumbnail?id=1c7ljkhI1TXOUQPT3zIWjwWJyDbB3mjXl&sz=w200",path:["소비","포션"],buyPrice:500,sellPrice:250,desc:"3분간 마력이 5 증가한다."},
+    {id:"2002004",name:"전사의 물약",img:"https://drive.google.com/thumbnail?id=18H7APCB-DR8oeGdZ2XJ6BZ0ztKs1jZPE&sz=w200",path:["소비","포션"],buyPrice:500,sellPrice:250,desc:"3분간 공격력이 5 증가한다."},
+    {id:"2002005",name:"명사수의 물약",img:"https://drive.google.com/thumbnail?id=1nlmKro50eZMOLGqT5nfpLH1EtZQPYcfq&sz=w200",path:["소비","포션"],buyPrice:500,sellPrice:250,desc:"5분간 명중치가 100 증가한다."},
+    {id:"2010001",name:"짐승의 고기",img:"https://drive.google.com/thumbnail?id=1e2g5BguZLilHxuOB6YdAEnBPYmgeLu7q&sz=w200",path:["소비","음식"],buyPrice:106,sellPrice:53,desc:"HP를 약 100 회복시킨다."},
+    {id:"2010003",name:"오렌지",img:"https://drive.google.com/thumbnail?id=1g3KEdHZcuIMrFA_gwpjMN80hk9fbf7zG&sz=w200",path:["소비","음식"],buyPrice:100,sellPrice:50,desc:"MP를 약 50 회복시킨다."},
+    {id:"2010004",name:"레몬",img:"https://drive.google.com/thumbnail?id=16CVTvvO8cgabC2XJYCsCFvVMzlem20Wc&sz=w200",path:["소비","음식"],buyPrice:310,sellPrice:155,desc:"MP를 약 150 회복시킨다."},
+    {id:"2020028",name:"초콜릿",img:"https://drive.google.com/thumbnail?id=1x2ZDw1O7pEH6L-_C2g7Kdd24uPow8W05&sz=w200",path:["소비","음식"],buyPrice:3000,sellPrice:1500,desc:"HP와 MP를 각각 1000씩 회복시켜 준다."},
+    {id:"2030000",name:"마을 귀환 주문서",img:"https://drive.google.com/thumbnail?id=1E4H1jPnndgy6CZPULIerN0hMKKHImiU2&sz=w200",path:["소비","이동"],buyPrice:400,sellPrice:200,desc:"현재 위치에서 가장 가까운 마을로 귀환할 수 있다."},
+    {id:"2050000",name:"해독제",img:"https://drive.google.com/thumbnail?id=1eLAKUQtv-M8DfC64hHyb8IFLk6s0Z_2x&sz=w200",path:["소비","상태이상"],buyPrice:200,sellPrice:100,desc:"중독 상태이상을 회복할 수 있다."},
+    {id:"2050001",name:"안약",img:"https://drive.google.com/thumbnail?id=1UHE-fJeI7nooDaKZRRNkpG51rWu2d07N&sz=w200",path:["소비","상태이상"],buyPrice:200,sellPrice:100,desc:"암흑 상태이상을 회복할 수 있다."},
+    {id:"2050002",name:"보약",img:"https://drive.google.com/thumbnail?id=1k6GGzPykS3eTJx_k-zDsDIBP9o3QrI7b&sz=w200",path:["소비","상태이상"],buyPrice:300,sellPrice:100,desc:"허약 상태이상을 회복할 수 있다."},
+    {id:"2120008",name:"맛좋은 사료",img:"https://drive.google.com/thumbnail?id=1_TePOIsidp7J3hbTqYIXWWVb4olCcGtg&sz=w200",path:["소비","펫먹이"],buyPrice:200,sellPrice:190,desc:"소환수 피그미가 좋아하는 음식이다."},
+    {id:"2070000",name:"수비 표창",img:"https://drive.google.com/thumbnail?id=1UaefgjkVFcVrpKsLorNQd8k2Qg6U5qcC&sz=w200",path:["소비","발사체"],buyPrice:500,sellPrice:250,attack:15,desc:"강철로 만든 표창이다."}
+  ];
+  items.forEach(function(it){ if (!window.ITEMS.some(function(old){ return old && String(old.id)===it.id; })) window.ITEMS.push(it); });
+})();
+
+// 헤네시스잡화상점 · 루나
+(function(){
+  function sales(spec){ return spec.split(',').map(function(row){ var p=row.split(':'); return {id:p[0],price:Number(p[1])}; }); }
+  var luna=sales("2000000:50,2000001:160,2000002:320,2000003:200,2000006:620,2001515:500,2001516:400,2002002:500,2002004:500,2002005:500,2010000:30,2001533:50,2010001:106,2010003:100,2010004:310,2020028:3000,2030000:400,2030004:500,2060000:1,2061000:1,2050000:200,2050001:200,2050002:300,2120008:200,2070000:500,2330000:600");
+  var shopImg="https://drive.google.com/thumbnail?id=1j4efqswhj2tEmh3eRXgYRYkGm0mKX3bU&sz=w840";
+  var heneIcon="https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400";
+  var place={name:"헤네시스잡화상점",code:"100000102",region:"헤네시스",img:heneIcon};
+  if (window.MAPS){
+    var market=window.MAPS.find(function(m){ return String(m.code)==="100000100"; });
+    if (market && market.portals) market.portals.forEach(function(p){ if (p.toName==="헤네시스잡화상점") p.toCode="100000102"; });
+    if (!window.MAPS.some(function(m){ return String(m.code)==="100000102"; })) window.MAPS.push({code:"100000102",name:"헤네시스잡화상점",region:"빅토리아 아일랜드",img:shopImg,imgWidth:840,imgHeight:600,portals:[{toCode:"100000100",toName:"헤네시스시장",note:"이동",x:720,y:490,unit:"px"}]});
+  }
+  if (window.ITEMS){
+    var ellinia={id:"2030002",name:"엘리니아 귀환 주문서",img:"https://maplestory.io/api/GMS/62/item/2030002/icon?resize=2",path:["소비","이동"],buyPrice:500,sellPrice:250,desc:"신비로운 숲 마을인 엘리니아로 귀환 할 수 있는 주문서이다. 한 번 사용하면 사라진다."};
+    var oldEllinia=window.ITEMS.find(function(i){ return i && String(i.id)==="2030002"; });
+    if (oldEllinia) Object.keys(ellinia).forEach(function(k){ oldEllinia[k]=ellinia[k]; }); else window.ITEMS.push(ellinia);
+    if (!window.ITEMS.some(function(i){ return i && String(i.id)==="2030004"; })) window.ITEMS.push({id:"2030004",name:"헤네시스 귀환 주문서",img:"https://drive.google.com/thumbnail?id=1fM6QERsWRiEBnkXYi0JQlQz0U6f71HDF&sz=w200",path:["소비","이동"],buyPrice:500,sellPrice:250,desc:"평화로운 초원 마을인 헤네시스로 귀환 할 수 있는 주문서이다. 한 번 사용하면 사라진다."});
+    luna.forEach(function(s){ var it=window.ITEMS.find(function(i){ return i && String(i.id)===s.id; }); if (it) it.buyPrice=s.price; });
+  }
+  if (window.NPCS){
+    var npc={id:"1011100",name:"루나",role:"잡화상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1DB5-8HJoE3rfDyh0KxcOeZRayPXDNsXs&sz=w400",place:place,dialogues:[],sells:luna.map(function(s){return s.id;})};
+    var old=window.NPCS.find(function(n){ return String(n.id)===npc.id; });
+    if (old) Object.keys(npc).forEach(function(k){ old[k]=npc[k]; }); else window.NPCS.push(npc);
+  }
+})();
+// 헤네시스게임공원 · 카이지
+(function(){
+  var recipes=[
+    {itemId:"4080000",name:"슬라임,버섯 오목세트",materials:[{itemId:"4030000",name:"슬라임 오목알",qty:1},{itemId:"4030001",name:"버섯 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080001",name:"슬라임, 옥토퍼스 오목세트",materials:[{itemId:"4030000",name:"슬라임 오목알",qty:1},{itemId:"4030010",name:"옥토퍼스 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080002",name:"슬라임, 돼지 오목세트",materials:[{itemId:"4030000",name:"슬라임 오목알",qty:1},{itemId:"4030011",name:"돼지 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080003",name:"옥토퍼스, 버섯 오목세트",materials:[{itemId:"4030010",name:"옥토퍼스 오목알",qty:1},{itemId:"4030001",name:"버섯 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080004",name:"돼지, 옥토퍼스 오목세트",materials:[{itemId:"4030011",name:"돼지 오목알",qty:1},{itemId:"4030010",name:"옥토퍼스 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080005",name:"돼지, 버섯 오목세트",materials:[{itemId:"4030011",name:"돼지 오목알",qty:1},{itemId:"4030001",name:"버섯 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080100",name:"같은그림찾기세트",materials:[{itemId:"4030012",name:"몬스터 카드",qty:15}]}
+  ];
+  var npc={id:"1012008",name:"카이지",role:"미니게임 마스터",category:"제작",img:"",place:{name:"헤네시스게임공원",code:"100000203",region:"헤네시스",img:"https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400"},dialogues:[],crafts:{"게임":recipes}};
+  var old=window.NPCS.find(function(n){return String(n.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 펫산책로 · 큐트 · 바르토스 · 프로드
+(function(){
+  var heneIcon="https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400",petPlace={name:"펫산책로",code:"100000202",region:"헤네시스",img:heneIcon};
+  var kaiji=window.NPCS.find(function(n){return String(n.id)==="1012008";});if(kaiji)kaiji.img="https://drive.google.com/thumbnail?id=1qukJKADXXfCSq4-eKGOSCTCsUAlqKMU_&sz=w400";
+  var cute=window.NPCS.find(function(n){return String(n.id)==="1012004";});if(cute){var marketPlace={name:"헤네시스시장",code:"100000100",region:"헤네시스",img:heneIcon};cute.place=marketPlace;cute.places=[marketPlace,petPlace];cute.role=cute.role||"펫먹이 상인";cute.category=cute.category||"상점";cute.dialogues=cute.dialogues||[];cute.sells=cute.sells||["212000099","2260000","4160000","4160001","4160002","4160019","4160015","4160012","4160014","4160020","4160010","4160009","4160008","4160007","4160006","4160005","4160004","4160003"];}
+  [{id:"1012006",name:"바르토스",role:"조련사",category:"기타",img:"https://drive.google.com/thumbnail?id=1mbOa2Ll6dCml7mZlLcPEEdnGH_iz3ibI&sz=w400",place:petPlace,dialogues:[]},{id:"1012007",name:"프로드",role:"조련사",category:"기타",img:"https://drive.google.com/thumbnail?id=1vF07AjDYxMKTZEzfrWb2ALKSR6MvTfkF&sz=w400",place:petPlace,dialogues:[]}].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 헤네시스민가 · 마야
+(function(){
+  var maya={id:"1012101",name:"마야",img:"https://drive.google.com/thumbnail?id=10xk8l6BwaS1NrflNjovHTj-A_EVC50PK&sz=w400",place:{name:"헤네시스민가",code:"100000001",region:"헤네시스",img:"https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400"},dialogues:[]};var old=window.NPCS.find(function(n){return String(n.id)===maya.id;});if(old)Object.keys(maya).forEach(function(k){old[k]=maya[k];});else window.NPCS.push(maya);
+})();
+// 헤네시스동쪽언덕 · 앤 · 왕연해
+(function(){
+  var place={name:"헤네시스동쪽언덕",code:"100010000",region:"헤네시스",img:"https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400"};
+  [{id:"1012110",name:"앤",img:"https://drive.google.com/thumbnail?id=1CG98ZouBwknHSxc-ELMKW-IgACYRdy-2&sz=w400",place:place,dialogues:[]},{id:"1012119",name:"왕연해",role:"궁수 수련장 입구",img:"https://drive.google.com/thumbnail?id=1izyqnFdToB-0slWrwqAOBskLa9oI6vMb&sz=w400",place:place,dialogues:[]}].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 울창한 전당 · 빛나는 비석
+(function(){
+  var place={name:"울창한 전당",code:"100030301",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var stone={id:"1013106",name:"빛나는 비석",img:"https://drive.google.com/thumbnail?id=1bzxO05f0cb2txIquHQMcsE9CfeoSdIEU&sz=w400",place:place,dialogues:[]};
+  if(window.NPCS){var oldNpc=window.NPCS.find(function(n){return String(n.id)===stone.id;});if(oldNpc)Object.keys(stone).forEach(function(k){oldNpc[k]=stone[k];});else window.NPCS.push(stone);}
+})();
+// 앞마당 · 불독 · 유타
+(function(){
+  var place={name:"앞마당",code:"100030102",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  [{id:"1013102",name:"불독",img:"https://drive.google.com/thumbnail?id=1fd0Du3ISjl1B_nHZY_84MRhG09dWaz6V&sz=w400",place:place,dialogues:[]},
+   {id:"1013101",name:"유타",img:"https://drive.google.com/thumbnail?id=1b-q2DvPuJw-Yx2JmS1MwZ4kKl3DkNeVT&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 거실 · 애나
+(function(){
+  var place={name:"거실",code:"100030101",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var anna={id:"1013100",name:"애나",img:"https://drive.google.com/thumbnail?id=16wrYVTRahL7-EgGKvqvtEJE3G-Y7RuD0&sz=w400",place:place,dialogues:[]};
+  var oldNpc=window.NPCS.find(function(n){return String(n.id)===anna.id;});if(oldNpc)Object.keys(anna).forEach(function(k){oldNpc[k]=anna[k];});else window.NPCS.push(anna);
+})();
+// 선착장 가는 길 · 왕연해
+(function(){
+  var place={name:"선착장 가는 길",code:"120010000",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var npc={id:"1095002",name:"왕연해",role:"해적 수련장 입구",img:"https://drive.google.com/thumbnail?id=17sZ9W0ba_fSIex26K0EUDjy5pArRytQI&sz=w400",place:place,dialogues:[]};
+  if(window.NPCS){var old=window.NPCS.find(function(n){return String(n.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);}
+})();
+// 노틸러스 선착장 · NPC
+(function(){
+  var place={name:"노틸러스 선착장",code:"120000000",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  // 새 NPC
+  [{id:"1094001",name:"아벨",img:"https://drive.google.com/thumbnail?id=1iDO5o8J5rhLiluwbPNQtDzB7_GDkFG9M&sz=w400",place:place,dialogues:[]},
+   {id:"1093000",name:"뿌빠",img:"https://drive.google.com/thumbnail?id=17DCCrlMKApQmZmTSHgN132VmvwTldrfT&sz=w400",place:place,dialogues:[]},
+   {id:"1092014",name:"노틸러스 중형택시",img:"https://drive.google.com/thumbnail?id=1v0afpAgrShHEEqc1v3lnFHAHqRvdfo1-&sz=w400",place:place,dialogues:[]},
+   {id:"1094000",name:"바트",img:"https://drive.google.com/thumbnail?id=1U_1DYiKjhmWJZPDftBccnMpb9Wt_lVZ5&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+  // 이미 등록된 NPC에 노틸러스 선착장 위치 추가: 쿠커스, 코코, 소환수 피그미, 에뜨랑의 안내판, 아기 월묘, 기부함, 달리어, 차원의 거울
+  ["2041017","9000017","9050000","9050009","9001102","9000041","9000066","9010022"].forEach(function(id){
+    var n=window.NPCS.find(function(x){return String(x.id)===id;});if(!n)return;
+    var list=Array.isArray(n.places)&&n.places.length?n.places.slice():(n.place?[n.place]:[]);
+    list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);
+    n.places=list;if(!n.place)n.place=list[0];
+  });
+})();
+// 노틸러스 중형택시 · 이용요금
+(function(){
+  var taxi=window.NPCS&&window.NPCS.find(function(n){return String(n.id)==="1092014";});
+  if(taxi)taxi.fees=[{label:"리스항구",price:"1,000메소"},{label:"페리온",price:"1,200메소"},{label:"엘리니아",price:"800메소"},{label:"커닝시티",price:"1,200메소"},{label:"헤네시스",price:"800메소"}];
+})();
+// 중앙 복도 · 모건 · 로도스 · 롤로네 · 카산드라 · 돈틀레스 · 바르톨 · 갤리 · 세릴
+(function(){
+  // NPC 상세용 아이템 데이터 보완 (판매·제작 목록)
+  [{"id":"1492000","name":"피스톨","img":"https://drive.google.com/thumbnail?id=1Z_nrIfb-6w_7efHiB0_1eyTsRKYVBkiP&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":10,"speed":"빠름(5)","attack":13,"sellPrice":1500},
+   {"id":"1492001","name":"델린져","img":"https://drive.google.com/thumbnail?id=15eI4ANdGqd74S01glbdrpGU9sRhYYV4S&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":15,"reqStr":15,"reqDex":25,"attack":18,"speed":"보통(6)","buyPrice":6000,"sellPrice":3000},
+   {"id":"1492002","name":"개런드 피스톨","img":"https://drive.google.com/thumbnail?id=1Z_nrIfb-6w_7efHiB0_1eyTsRKYVBkiP&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":20,"reqStr":20,"reqDex":35,"speed":"빠름(5)","attack":22,"buyPrice":10000,"sellPrice":5000},
+   {"id":"1492003","name":"골든훅","img":"https://drive.google.com/thumbnail?id=1VSKTy7oNWNdSH3WUysaZ_xkOvv3AjMv1&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":25,"reqStr":25,"reqDex":50,"attack":27,"speed":"보통(6)","buyPrice":22000,"sellPrice":11000},
+   {"id":"1492004","name":"콜드마인드","img":"https://drive.google.com/thumbnail?id=10Mm55Rx0VfqjImnslG7jhkRiUzhj7ECb&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":30,"reqStr":30,"reqDex":70,"speed":"빠름(5)","attack":31,"buyPrice":50000,"sellPrice":25000},
+   {"id":"1482000","name":"스틸 너클","img":"https://drive.google.com/thumbnail?id=1G_KBMgrKg5PmfTQlD0aHakrqTAKKZGU0&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":10,"attack":18,"speed":"빠름(5)","buyPrice":3000,"sellPrice":1500},
+   {"id":"1482001","name":"레더 암즈","img":"https://drive.google.com/thumbnail?id=1-86LdU_TZRH2FIEaGn1YhKFn2-yBmLE5&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":15,"reqStr":20,"reqDex":15,"speed":"보통(6)","attack":22,"buyPrice":6000,"sellPrice":3000},
+   {"id":"1482002","name":"더블테일 너클","img":"https://drive.google.com/thumbnail?id=1ajczhlp_fnZ4_s8PVijELspSmjxrr0VW&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":20,"reqStr":30,"reqDex":20,"attack":26,"speed":"빠름(5)","buyPrice":10000,"sellPrice":5000},
+   {"id":"1482003","name":"노만 그립","img":"https://drive.google.com/thumbnail?id=1rxqJn2JF09PqvqF6GZ2QDt3ufBI3RwQL&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":25,"reqStr":45,"reqDex":25,"attack":30,"speed":"보통(6)","buyPrice":20000,"sellPrice":10000},
+   {"id":"1482004","name":"프라임 핸즈","img":"https://drive.google.com/thumbnail?id=1ZB2BV0b5qV-McCh4ocdYsm4a4nCMYDrW&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":30,"reqStr":60,"reqDex":30,"speed":"빠름(5)","attack":34,"buyPrice":52000,"sellPrice":26000},
+   {"id":"1002610","name":"브라운 로키 반다나","img":"https://drive.google.com/thumbnail?id=1atyBv3KxTxImv-gclEiKzblBPSp5kUEJ&sz=w200","path":["장비","방어구","투구"],"job":"해적","reqLevel":10,"pdd":9,"buyPrice":900,"sellPrice":450},
+   {"id":"1002613","name":"브라운 래거 캡","img":"https://drive.google.com/thumbnail?id=1DIl6rpH3EOtWBAlGOAci5j89DbiCF-D6&sz=w200","path":["장비","방어구","투구"],"job":"해적","reqLevel":15,"reqStr":15,"reqDex":15,"pdd":12,"buyPrice":4000,"sellPrice":2000},
+   {"id":"1002616","name":"브라운 더블마린","img":"https://drive.google.com/thumbnail?id=18g5JD4pAzbwiOVfvZb3SOwcCb8Ut8x4A&sz=w200","path":["장비","방어구","투구"],"job":"해적","reqLevel":20,"reqStr":20,"reqDex":20,"hp":5,"pdd":15,"buyPrice":12000,"sellPrice":6000},
+   {"id":"1002619","name":"브라운 피츠 반다나","img":"https://drive.google.com/thumbnail?id=1jKvDzjcCdJpX7IVn3Jm0ggCOpfxpgTfB&sz=w200","path":["장비","방어구","투구"],"job":"해적","reqLevel":25,"hp":5,"pdd":18,"buyPrice":20000,"sellPrice":10000,"reqStr":25,"reqDex":25},
+   {"id":"1052095","name":"브라운 로키 슈트","img":"https://drive.google.com/thumbnail?id=1IR72pKRiZ4dfAvhiHB5lmrIjtiNlTuH3&sz=w200","path":["장비","방어구","한벌옷"],"job":"해적","reqLevel":10,"pdd":15,"buyPrice":4000,"sellPrice":2000},
+   {"id":"1052098","name":"브라운 코튼래거","img":"https://drive.google.com/thumbnail?id=1s13Hvla8iTmWLYsfMtpNo_ed2WA8NFcZ&sz=w200","path":["장비","방어구","한벌옷"],"job":"해적","reqLevel":15,"reqStr":15,"reqDex":15,"str":1,"mp":5,"pdd":20,"buyPrice":8000,"sellPrice":4000},
+   {"id":"1052101","name":"베이지 카리브어","img":"https://drive.google.com/thumbnail?id=1_95JusgOh_Olb9S9BA_cyTMIlgjOtcwi&sz=w200","path":["장비","방어구","한벌옷"],"job":"해적","reqLevel":20,"reqStr":20,"reqDex":20,"str":1,"mp":10,"pdd":25,"buyPrice":16000,"sellPrice":8000},
+   {"id":"1052104","name":"브라운 툴크갤리","img":"https://drive.google.com/thumbnail?id=1PC4RDkY-qX0jMFbum1P7rfPeUTlSlTTC&sz=w200","path":["장비","방어구","한벌옷"],"job":"해적","reqLevel":25,"str":1,"mp":20,"pdd":30,"buyPrice":30000,"sellPrice":15000,"reqStr":25,"reqDex":25},
+   {"id":"1052107","name":"브라운 폴라아드","img":"https://drive.google.com/thumbnail?id=1w4ZS8RPirBiHcjVLBcJrnb78N56uZB-T&sz=w200","path":["장비","방어구","한벌옷"],"job":"해적","reqLevel":30,"reqStr":30,"reqDex":30,"str":2,"mp":10,"buyPrice":60000,"sellPrice":30000,"pdd":35},
+   {"id":"1072285","name":"브라운 래거 슬리퍼","img":"https://drive.google.com/thumbnail?id=1gctGDLY1lgjQSuRX6MdZlpzT-dK-ocGV&sz=w200","path":["장비","방어구","신발"],"job":"해적","reqLevel":15,"reqStr":15,"reqDex":15,"pdd":7,"buyPrice":5000,"sellPrice":2500},
+   {"id":"1072288","name":"브라운 스키디 샌들","img":"https://drive.google.com/thumbnail?id=1ilryqXW5D6oSuWYcMdwvbqz3pFK6PMQ7&sz=w200","path":["장비","방어구","신발"],"job":"해적","reqLevel":20,"reqStr":20,"reqDex":20,"pdd":10,"buyPrice":8000,"sellPrice":4000},
+   {"id":"4000021","name":"동물의 가죽","img":"https://drive.google.com/thumbnail?id=1dVkxZ3qqlAnKtru6lWNab5GFs2zoHwiR&sz=w200","path":["기타","드랍템"],"extraTags":["퀘스트"],"sellPrice":100,"desc":"동물의 가죽을 잘라온 것이다."},
+   {"id":"4011001","name":"강철","img":"https://drive.google.com/thumbnail?id=1MdZe2mKSdrY-jcIaN5QXUmnK72gxVWNU&sz=w200","path":["기타","제작","광석"],"materials":[{"name":"강철의 원석","qty":10}],"sellPrice":500,"desc":"강한 가공 강철이다."},
+   {"id":"4011000","name":"청동","img":"https://drive.google.com/thumbnail?id=1MxQA2rncIXyzwI0yDW3S2DLtAUKtqMl8&sz=w200","path":["기타","제작","광석"],"materials":[{"name":"청동의 원석","qty":10}],"sellPrice":500,"desc":"가볍고 약한 가공 청동이다."},
+   {"id":"4003000","name":"나사","img":"https://drive.google.com/thumbnail?id=1hHfUw_GvoPRuOaoWgdjYYjo2wIhT-r36&sz=w200","path":["기타","제작","재료"],"sellPrice":50,"desc":"강철도 청동으로 만들어진 작은 나사이다.\n무기나 방어구를 만들때 재료로 쓰인다."},
+   {"id":"1482005","name":"실버 메이든","img":"https://drive.google.com/thumbnail?id=1HSpf29dynGK2lHf3c2krmplpNBDEKx-Z&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":35,"reqStr":75,"reqDex":35,"speed":"보통(6)","attack":38,"buyPrice":100000,"sellPrice":40000},
+   {"id":"1482006","name":"네오자드","img":"https://drive.google.com/thumbnail?id=1fBsIAuaKPpx1kIlvjqNAMPr2UOyJur0D&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":40,"reqStr":90,"reqDex":40,"speed":"보통(6)","attack":42,"buyPrice":150000,"sellPrice":60000},
+   {"id":"4021000","name":"가넷","img":"https://drive.google.com/thumbnail?id=1N_Ron00p5Rn0lGYaWXpTg5nP7NP2USpZ&sz=w200","path":["기타","제작","보석"],"materials":[{"name":"가넷의 원석","qty":10}],"sellPrice":1000,"desc":"붉은 빛을 띄는 보석이다."},
+   {"id":"1482007","name":"데빌클로","img":"https://drive.google.com/thumbnail?id=1q3MJpYBxZmP0Q02PuY6EFJ8U92PdQDuQ&sz=w200","path":["장비","무기","너클"],"job":"해적","reqLevel":50,"reqStr":120,"reqDex":50,"speed":"빠름(5)","attack":50,"sellPrice":130000},
+   {"id":"4000039","name":"아이언 호그의 철발굽","img":"https://drive.google.com/thumbnail?id=14M7xQmxP18mmIseNmonx9XJSa6mZlZZQ&sz=w200","path":["기타","드랍템"],"sellPrice":38,"desc":"아이언 호그의 다리를 감싸고 있던 강철로 된 발굽이다."},
+   {"id":"4000030","name":"용의 가죽","img":"https://drive.google.com/thumbnail?id=1kMXvKLT7acBkLIZ_G2NmJPq0rLOFVXZq&sz=w200","path":["기타","드랍템"],"sellPrice":200,"desc":"신비한 빛을 내는 단단한 용의 가죽이다."},
+   {"id":"4003001","name":"가공된 나무","img":"https://drive.google.com/thumbnail?id=1N73J0Q_hMQbeiLpxUwXAjJYzTTk2wlxg&sz=w200","path":["기타","제작","재료"],"sellPrice":20,"desc":"나뭇가지를 가공한 나무이다. 무기나 방어구를 만들때 재료로 쓰인다."},
+   {"id":"1492005","name":"슈팅 스타","img":"https://drive.google.com/thumbnail?id=1ucYpZFGOAAAOxz2hHVarTZWF2nhjKcw1&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":35,"reqStr":35,"reqDex":90,"attack":36,"speed":"보통(6)","buyPrice":100000,"sellPrice":40000},
+   {"id":"4011006","name":"금","img":"https://drive.google.com/thumbnail?id=1FRE0AqI3AMoN-wvILQv82mBt2PzlDhOw&sz=w200","path":["기타","제작","광석"],"materials":[{"name":"금의 원석","qty":10}],"sellPrice":1200,"desc":"매우 희귀한 가공 금이다."},
+   {"id":"1492006","name":"루나 슈터","img":"https://drive.google.com/thumbnail?id=1jf1itq4eNHwpdcfbyPBtNMNw87ibF10j&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":40,"reqStr":40,"reqDex":105,"attack":40,"speed":"빠름(5)","buyPrice":160000,"sellPrice":65000},
+   {"id":"4011004","name":"은","img":"https://drive.google.com/thumbnail?id=17qwT6RYvIHkrEDP6s2IpSIBepO-Nt1SP&sz=w200","path":["기타","제작","광석"],"materials":[{"name":"은의 원석","qty":10}],"sellPrice":1000,"desc":"광택이 있는 가공 은이다."},
+   {"id":"1492007","name":"라스펠트건","img":"https://drive.google.com/thumbnail?id=119P7ENGKhkwCuXCmeW6D8m2D91Taw4JJ&sz=w200","path":["장비","무기","건"],"job":"해적","reqLevel":50,"reqStr":50,"reqDex":140,"speed":"빠름(5)","attack":49,"sellPrice":140000},
+   {"id":"1082180","name":"그린 래거 하프글로브","img":"https://drive.google.com/thumbnail?id=1YlQNUoCbaWo8Iz6XKsYmF2SWt-CMCro_&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":15,"reqStr":15,"reqDex":15,"pdd":4,"sellPrice":5000},
+   {"id":"4021003","name":"에메랄드","img":"https://drive.google.com/thumbnail?id=1Y0yFoxsYWR8ca-KjpLrJj1cTrsq4o6Ux&sz=w200","path":["기타","제작","보석"],"materials":[{"name":"에메랄드의 원석","qty":10}],"sellPrice":1000,"desc":"초록빛을 띄는 보석이다."},
+   {"id":"1082183","name":"브라운 레더 아머글로브","img":"https://drive.google.com/thumbnail?id=1Kj0FRffFrue0akp6fHXW4M-3t4HicD6e&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":20,"reqStr":20,"reqDex":20,"pdd":6,"sellPrice":10000},
+   {"id":"1082186","name":"하드레더 글로브","img":"https://drive.google.com/thumbnail?id=1E040ywed0H1nwDHVa6VohRZs5JHuDQuB&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":25,"pdd":8,"sellPrice":15000,"reqStr":25,"reqDex":25},
+   {"id":"1082189","name":"옐로우 타르티스","img":"https://drive.google.com/thumbnail?id=1uuCPZyOTdrwlYBMhBBSyxsFwF5DwRTmP&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":30,"reqStr":30,"reqDex":30,"pdd":10,"sellPrice":25000},
+   {"id":"4021006","name":"토파즈","img":"https://drive.google.com/thumbnail?id=1E0L2_D2eRF8DBkYwsxMbGgAa3Dp07b-f&sz=w200","path":["기타","제작","보석"],"materials":[{"name":"토파즈의 원석","qty":10}],"sellPrice":1000,"desc":"노란빛을 띄는 보석이다."},
+   {"id":"1082192","name":"브라운 쥬얼드","img":"https://drive.google.com/thumbnail?id=1ytOkFVOhyczk_EVpdFEpd367WT9AGPUe&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":35,"reqStr":35,"reqDex":35,"pdd":12,"sellPrice":30000},
+   {"id":"1082195","name":"브라운 바르비","img":"https://drive.google.com/thumbnail?id=19IVI3KRrLZJG7DKqB2ukV2Rmbtcd-O91&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":40,"reqStr":40,"reqDex":40,"dex":1,"pdd":14,"sellPrice":40000},
+   {"id":"1082198","name":"브라운 로이스","img":"https://drive.google.com/thumbnail?id=1HTmlFLimXqrBXg46IOejvD97FozEkt1z&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":50,"reqStr":50,"reqDex":50,"str":1,"pdd":20,"sellPrice":85000},
+   {"id":"1082201","name":"블랙 슐트","img":"https://drive.google.com/thumbnail?id=17dx-GL5vN6LCDbs1ggpzY49QLxsJvklP&sz=w200","path":["장비","방어구","장갑"],"job":"해적","reqLevel":60,"reqStr":60,"reqDex":60,"str":1,"dex":1,"pdd":24,"sellPrice":110000},
+   {"id":"4011007","name":"달의 돌","img":"https://drive.google.com/thumbnail?id=1GbAGdvxYVqannKNMEt_C3_a0cyDZKbka&sz=w200","desc":"달의 신비로운 힘을 지니고 있는 반짝이는 광석이다.","path":["기타","제작","광석"],"materials":[{"name":"청동","qty":1},{"name":"강철","qty":1},{"name":"미스릴","qty":1},{"name":"아다만티움","qty":1},{"name":"은","qty":1},{"name":"오리할콘","qty":1},{"name":"금","qty":1}],"sellPrice":8000},
+   {"id":"4021008","name":"흑수정","img":"https://drive.google.com/thumbnail?id=1SCPZrUpJcCzZadLgwBaVaVPfPyq8Lu32&sz=w200","path":["기타","제작","보석"],"materials":[{"name":"흑수정의 원석","qty":10}],"sellPrice":5000,"desc":"어둠의 힘이 잠재되어 있는 매우 희귀한 수정이다."},
+   {"id":"4021007","name":"다이아몬드","img":"https://drive.google.com/thumbnail?id=1GC0ezkCFbaS84FVl3u6e2tD0w2NZq-Ck&sz=w200","path":["기타","제작","보석"],"materials":[{"name":"다이아몬드의 원석","qty":10}],"sellPrice":2500,"desc":"투명하고 무색인 보석이다."}].forEach(function(it){ if (!window.ITEMS.some(function(old){ return String(old.id)===String(it.id); })) window.ITEMS.push(it); });
+  // 상점 판매가 반영 (id:가격)
+  "1002610:900,1002613:4000,1002616:12000,1002619:20000,1052095:4000,1052098:8000,1052101:16000,1052104:30000,1052107:60000,1072285:5000,1072288:8000,1302007:3000,1322007:6000,1442004:24000,1482000:3000,1482001:6000,1482002:10000,1482003:20000,1482004:52000,1492000:3000,1492001:6000,1492002:10000,1492003:22000,1492004:50000,2000000:50,2000001:160,2000002:320,2000003:200,2000006:620,2001515:500,2001516:400,2001533:50,2002002:500,2002004:500,2002005:500,2010000:30,2010001:106,2010003:100,2010004:310,2020028:3000,2030000:400,2060000:1,2061000:1,2070000:500,2330000:600".split(',').forEach(function(row){var p=row.split(':');var it=window.ITEMS&&window.ITEMS.find(function(i){return i&&String(i.id)===p[0];});if(it)it.buyPrice=Number(p[1]);});
+  var place={name:"중앙 복도",code:"120000200",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  [
+    {id:"1091000",name:"모건",role:"무기상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1Pwr8skn3E70UFX_S5eCfimHp87jJbFb8&sz=w400",place:place,sells:["1492000","1492001","1492002","1492003","1492004","1482000","1482001","1482002","1482003","1482004","1302007","1322007","1442004"],dialogues:[]},
+    {id:"1091001",name:"로도스",role:"방어구 상인",category:"상점",img:"https://drive.google.com/thumbnail?id=11AuO1mEKyqorQuwtl__MdQJYTKbvwqD2&sz=w400",place:place,sells:["1002610","1002613","1002616","1002619","1052095","1052098","1052101","1052104","1052107","1072285","1072288"],dialogues:[]},
+    {id:"1092012",name:"롤로네",img:"https://drive.google.com/thumbnail?id=1fY3vkjQZkcmqIXT3pTRCKh3nrI7lJS8y&sz=w400",place:place,dialogues:[]},
+    {id:"1091004",name:"돈틀레스",role:"창고지기",category:"상점",img:"https://drive.google.com/thumbnail?id=1qdKUSMamTE10KAb6d3O6ilzSGSvaEljc&sz=w400",place:place,dialogues:[]},
+    {id:"1092011",name:"바르톨",img:"https://drive.google.com/thumbnail?id=1mvEOGmH3Spc3kz81gzVUG4TMikfoZ7o0&sz=w400",place:place,dialogues:[]},
+    {id:"1091002",name:"갤리",role:"잡화 상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1n5p6fr6uQ78TSmq80Y2SECZLQNmMtikG&sz=w400",place:place,sells:["2000000","2000001","2000002","2000003","2000006","2001515","2001516","2002002","2002004","2002005","2010000","2001533","2010001","2010003","2010004","2020028","2030000","2061000","2060000","2070000","2330000"],dialogues:[]},
+    {id:"1091003",name:"세릴",role:"아이템 제작자",category:"상점",img:"https://drive.google.com/thumbnail?id=1dK8prJm7z11lf9mS0RZVy5yjvQK1bfdX&sz=w400",place:place,crafts:{"너클":[{"name":"레더 암즈","itemId":"1482001","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":20}],"price":1000},{"name":"더블테일 너클","itemId":"1482002","materials":[{"name":"강철","itemId":"4011001","qty":1},{"name":"청동","itemId":"4011000","qty":1},{"name":"동물의 가죽","itemId":"4000021","qty":10},{"name":"나사","itemId":"4003000","qty":5}],"price":2000},{"name":"노만 그립","itemId":"1482003","materials":[{"name":"청동","itemId":"4011000","qty":2},{"name":"강철","itemId":"4011001","qty":1},{"name":"나사","itemId":"4003000","qty":10}],"price":5000},{"name":"프라임 핸즈","itemId":"1482004","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"강철","itemId":"4011001","qty":1},{"name":"동물의 가죽","itemId":"4000021","qty":30},{"name":"나사","itemId":"4003000","qty":10}],"price":15000},{"name":"실버 메이든","itemId":"1482005","materials":[{"name":"청동","itemId":"4011000","qty":2},{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":30},{"name":"나사","itemId":"4003000","qty":20}],"price":30000},{"name":"네오자드","itemId":"1482006","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"강철","itemId":"4011001","qty":1},{"name":"가넷","itemId":"4021000","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":50},{"name":"나사","itemId":"4003000","qty":20}],"price":50000},{"name":"데빌클로","itemId":"1482007","materials":[{"name":"아이언호그의 철발굽","itemId":"4000039","qty":150},{"name":"청동","itemId":"4011000","qty":1},{"name":"강철","itemId":"4011001","qty":2},{"name":"용의 가죽","itemId":"4000030","qty":20},{"name":"동물의 가죽","itemId":"4000021","qty":20},{"name":"나사","itemId":"4003000","qty":20}],"price":100000}],"건":[{"name":"델린져","itemId":"1492001","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"나사","itemId":"4003000","qty":5},{"name":"가공된 나무","itemId":"4003001","qty":1}],"price":1000},{"name":"개런드 피스톨","itemId":"1492002","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"나사","itemId":"4003000","qty":10},{"name":"가공된 나무","itemId":"4003001","qty":5},{"name":"동물의 가죽","itemId":"4000021","qty":10}],"price":2000},{"name":"골든훅","itemId":"1492003","materials":[{"name":"청동","itemId":"4011000","qty":2},{"name":"나사","itemId":"4003000","qty":10}],"price":5000},{"name":"콜드마인드","itemId":"1492004","materials":[{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":10},{"name":"나사","itemId":"4003000","qty":10}],"price":15000},{"name":"슈팅 스타","itemId":"1492005","materials":[{"name":"금","itemId":"4011006","qty":1},{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":5},{"name":"나사","itemId":"4003000","qty":10}],"price":30000},{"name":"루나 슈터","itemId":"1492006","materials":[{"name":"은","itemId":"4011004","qty":1},{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":10},{"name":"나사","itemId":"4003000","qty":20}],"price":50000},{"name":"라스펠트건","itemId":"1492007","materials":[{"name":"금","itemId":"4011006","qty":1},{"name":"은","itemId":"4011004","qty":2},{"name":"강철","itemId":"4011001","qty":4},{"name":"용의 가죽","itemId":"4000030","qty":30},{"name":"나사","itemId":"4003000","qty":30}],"price":100000}],"장갑":[{"name":"그린 래거 하프글로브","itemId":"1082180","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":15},{"name":"에메랄드","itemId":"4021003","qty":1}],"price":1000},{"name":"브라운 레더 아머글로브","itemId":"1082183","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":35}],"price":8000},{"name":"하드레더 글로브","itemId":"1082186","materials":[{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":20}],"price":15000},{"name":"옐로우 타르티스","itemId":"1082189","materials":[{"name":"토파즈","itemId":"4021006","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":50},{"name":"나사","itemId":"4003000","qty":10}],"price":25000},{"name":"브라운 쥬얼드","itemId":"1082192","materials":[{"name":"청동","itemId":"4011000","qty":3},{"name":"동물의 가죽","itemId":"4000021","qty":60},{"name":"나사","itemId":"4003000","qty":15}],"price":30000},{"name":"브라운 바르비","itemId":"1082195","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":80},{"name":"청동","itemId":"4011000","qty":3},{"name":"강철","itemId":"4011001","qty":3},{"name":"나사","itemId":"4003000","qty":25}],"price":40000},{"name":"브라운 로이스","itemId":"1082198","materials":[{"name":"청동","itemId":"4011000","qty":3},{"name":"동물의 가죽","itemId":"4000021","qty":20},{"name":"용의 가죽","itemId":"4000030","qty":40},{"name":"나사","itemId":"4003000","qty":30}],"price":50000},{"name":"블랙 슐트","itemId":"1082201","materials":[{"name":"달의 돌","itemId":"4011007","qty":1},{"name":"흑수정","itemId":"4021008","qty":1},{"name":"다이아몬드","itemId":"4021007","qty":1},{"name":"용의 가죽","itemId":"4000030","qty":50},{"name":"나사","itemId":"4003000","qty":50}],"price":70000}]},dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+  // 이미 등록된 카산드라에 위치 추가
+  var cass=window.NPCS.find(function(x){return String(x.id)==="9000031";});
+  if(cass){var list=Array.isArray(cass.places)&&cass.places.length?cass.places.slice():(cass.place?[cass.place]:[]);list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);cass.places=list;if(!cass.place)cass.place=list[0];}
+})();
+// 노틸러스 귀환 주문서 (갤리 판매)
+(function(){
+  var item={id:"2030019",name:"노틸러스 귀환 주문서",img:"https://drive.google.com/thumbnail?id=1hoIv1U4fShvg3XP37Qh7x30Tj0HSO3_M&sz=w200",path:["소비","이동"],buyPrice:500,sellPrice:250,desc:"해적 마을인 노틸러스로 귀환할 수 있는 주문서이다. 한 번 사용하면 사라진다."};
+  if(window.ITEMS){var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+    if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);}
+  var galli=window.NPCS&&window.NPCS.find(function(n){ return String(n.id)==="1091002"; });
+  if(galli){var s=(galli.sells||[]).filter(function(x){ return String(x)!=="2030019"; });var at=s.indexOf("2030000");s.splice(at>-1?at+1:s.length,0,"2030019");galli.sells=s;}
+})();
+// 중앙 복도 · 메이플 운영자 · 캘리코
+(function(){
+  var place={name:"중앙 복도",code:"120000200",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var npc={id:"1092004",name:"캘리코",img:"https://drive.google.com/thumbnail?id=13ZuD6_OKtdPReHyrUQ-Ha6p4S9yP319o&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+  // 이미 등록된 메이플 운영자(9010000)에 위치 추가
+  var gm=window.NPCS.find(function(x){return String(x.id)==="9010000";});
+  if(gm){var list=Array.isArray(gm.places)&&gm.places.length?gm.places.slice():(gm.place?[gm.place]:[]);list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);gm.places=list;if(!gm.place)gm.place=list[0];}
+})();
+// 회의실 · 블랙바크
+(function(){
+  var place={name:"회의실",code:"120000201",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var npc={id:"1092006",name:"블랙바크",img:"https://drive.google.com/thumbnail?id=1DTjxbj0y3nU7cvdmlAuuFM3kH16Tv4GH&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 상층복도 · 무라트 · 리드 · 잭
+(function(){
+  var place={name:"상층복도",code:"120000100",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  [
+    {id:"1092007",name:"무라트",img:"https://drive.google.com/thumbnail?id=11WhHG0kXPVN_maeQoWwd6yB2LnoUfGq_&sz=w400",place:place,dialogues:[]},
+    {id:"1092009",name:"리드",img:"https://drive.google.com/thumbnail?id=181alvlI-2wYvyfJeJQ-hfIUR7CdQsPTk&sz=w400",place:place,dialogues:[]},
+    {id:"1092010",name:"잭",img:"https://drive.google.com/thumbnail?id=1LSh4sYdNCe1vkRpAbsHJwPNvN5RzCqTb&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 훈련장 · 슈린츠
+(function(){
+  var place={name:"훈련장",code:"120000104",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var npc={id:"1092008",name:"슈린츠",img:"https://drive.google.com/thumbnail?id=12f0uDBM77V6TriL0m_SjdCXNG55rZCCg&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 식당 · 탕윤
+(function(){
+  var place={name:"식당",code:"120000103",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var npc={id:"1092000",name:"탕윤",img:"https://drive.google.com/thumbnail?id=1PxazUMnC9uJvOAag9Ishj0M4ghMLufcw&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 조나단의 방 · 조나단
+(function(){
+  var place={name:"조나단의 방",code:"120000102",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var npc={id:"1092019",name:"조나단",img:"https://drive.google.com/thumbnail?id=1smQV0a8NZNOLIvkczvOE53M_m1fFU1lY&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 항해실 · 카이린(기존 NPC 위치 추가)
+(function(){
+  var place={name:"항해실",code:"120000101",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  var kylin=window.NPCS.find(function(x){return String(x.id)==="1090000";});
+  if(kylin){var list=Array.isArray(kylin.places)&&kylin.places.length?kylin.places.slice():(kylin.place?[kylin.place]:[]);list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);kylin.places=list;if(!kylin.place)kylin.place=list[0];}
+})();
+// 하층복도 · 베인 · 보니 · 샤를
+(function(){
+  var place={name:"하층복도",code:"120000300",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  [
+    {id:"1092002",name:"베인",img:"https://drive.google.com/thumbnail?id=1_tJ_jW4edeQbJvZcJX3-YIBWr4YwxeZ8&sz=w400",place:place,dialogues:[]},
+    {id:"1092001",name:"보니",img:"https://drive.google.com/thumbnail?id=1mNOrX4rzF1lInH6mvOxvOa7dsRf7aLiH&sz=w400",place:place,dialogues:[]},
+    {id:"1092003",name:"샤를",img:"https://drive.google.com/thumbnail?id=1KaR0ON57r6nXHwu-LkZAztr-w5JU6geF&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 동력실 · 포쉐 · 빛나는 돌
+(function(){
+  var place={name:"동력실",code:"120000301",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  [
+    {id:"1092013",name:"포쉐",img:"https://drive.google.com/thumbnail?id=19w2tpByiroJ6O8rsW8IcZUvloBK0sJAM&sz=w400",place:place,dialogues:[]},
+    {id:"1092016",name:"빛나는 돌",img:"https://drive.google.com/thumbnail?id=1zXnZGEIpPF7lN4WpdSmX-bYpATh7g-Dm&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 사악한기운의숲 2 · 차원의문
+(function(){
+  var place={name:"사악한기운의숲 2",code:"100040106",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var npc={id:"1061009",name:"차원의문",img:"https://drive.google.com/thumbnail?id=1xRTLV5i3t5FIbiZQmaUMb9fXuF5jcYdv&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 저주받은 숲 · 리프
+(function(){
+  var place={name:"저주받은 숲",code:"910100000",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var npc={id:"1032107",name:"리프",img:"https://drive.google.com/thumbnail?id=1X0DO3pj6oijTUKiDMcd6esUkgyAVP1KG&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 엘리니아남쪽필드 · 에스텔 · 왕연해
+(function(){
+  var place={name:"엘리니아남쪽필드",code:"100050000",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  [
+    {id:"1032105",name:"에스텔",img:"https://drive.google.com/thumbnail?id=1URwMADcxWKbBjJzhNol4cwsu5w6HjlHb&sz=w400",place:place,dialogues:[]},
+    {id:"1032114",name:"왕연해",role:"마법사 수련장 입구",img:"https://drive.google.com/thumbnail?id=1XjCL4Oqbf3Bp2QqSfOEsTeMuZRfYRpOy&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 엘리니아 · 중형택시 · 요정 윙 · 헤르샤 · 박서방 · 요정 아르웬 · 요정 로웬 · 에뜨랑 · 모범택시 · 쉐인 · 베티
+(function(){
+  var place={name:"엘리니아",code:"101000000",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  [
+    {id:"1032000",name:"엘리니아 중형택시",img:"https://drive.google.com/thumbnail?id=1KpuMRmYKTzvomm9daG7p7uskcYI_M6mM&sz=w400",place:place,dialogues:[]},
+    {id:"1032106",name:"요정 윙",img:"https://drive.google.com/thumbnail?id=1onp24jSheAd9qXNB2SU2r1D7h_f2UI1L&sz=w400",place:place,dialogues:[]},
+    {id:"1103003",name:"헤르샤",img:"https://drive.google.com/thumbnail?id=1hLRlFMcVI4Ix-3TZdipDlVYsL7SsNyO-&sz=w400",place:place,dialogues:[]},
+    {id:"1032006",name:"박서방",role:"창고지기",img:"https://drive.google.com/thumbnail?id=1hkGOI1C-e3qoonpaQr58quh2XWSigX_K&sz=w400",place:place,dialogues:[]},
+    {id:"1032100",name:"요정 아르웬",img:"https://drive.google.com/thumbnail?id=1AGIyqLGX7q4mbtbdQdCt3U-Y4gNUXLBm&sz=w400",place:place,dialogues:[]},
+    {id:"1032101",name:"요정 로웬",img:"https://drive.google.com/thumbnail?id=16HZNKxSXe60F9mAAbUfozVgPuhVj0i5V&sz=w400",place:place,dialogues:[]},
+    {id:"1032002",name:"에뜨랑",role:"방어구·무기 제작",category:"제작",img:"https://drive.google.com/thumbnail?id=1L5veq_AhA_B9B_LRraZfb9LFCDW4wZRU&sz=w400",place:place,dialogues:[]},
+    {id:"1032005",name:"엘리니아 모범택시",img:"https://drive.google.com/thumbnail?id=1k0KzI_k1wiEF9S332sk0PzEJEb0rf9ue&sz=w400",place:place,dialogues:[]},
+    {id:"1032003",name:"쉐인",img:"https://drive.google.com/thumbnail?id=1K85vfTFILAAiRTMsrk0IkOmUowKkoZGt&sz=w400",place:place,dialogues:[]},
+    {id:"1032104",name:"베티",img:"https://drive.google.com/thumbnail?id=1UdIE7cKn_Xr__4NFOsHIwTDbqrsyvUhD&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+  var taxi1=window.NPCS.find(function(n){return String(n.id)==="1032000";});
+  if(taxi1)taxi1.fees=[{label:"리스항구",price:"1,200메소"},{label:"페리온",price:"1,000메소"},{label:"헤네시스",price:"1,000메소"},{label:"커닝시티",price:"1,200메소"}];
+  var taxi2=window.NPCS.find(function(n){return String(n.id)==="1032005";});
+  if(taxi2)taxi2.fees=[{label:"개미굴 광장",price:"10,000메소"}];
+  ["2041017","9000017","9050000","9050009","9010022","9000041","9000066","9000021","9010009","9000018","9201023"].forEach(function(id){
+    var n=window.NPCS.find(function(x){return String(x.id)===id;});if(!n)return;
+    var list=Array.isArray(n.places)&&n.places.length?n.places.slice():(n.place?[n.place]:[]);
+    list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);
+    n.places=list;if(!n.place)n.place=list[0];
+  });
+})();
+// 에뜨랑 · 제작 목록
+(function(){
+  var etrang=window.NPCS&&window.NPCS.find(function(n){return String(n.id)==="1032002";});
+  if(!etrang)return;
+  etrang.crafts={
+    "방어구 제작":[
+      {name:"레모나",itemId:"1082019",materials:[{name:"동물의 가죽",itemId:"4000021",qty:15}],price:7000},
+      {name:"블루 모리칸",itemId:"1082020",materials:[{name:"동물의 가죽",itemId:"4000021",qty:30},{name:"강철",itemId:"4011001",qty:1}],price:15000},
+      {name:"오션 메사나",itemId:"1082026",materials:[{name:"동물의 가죽",itemId:"4000021",qty:50},{name:"금",itemId:"4011006",qty:2}],price:20000},
+      {name:"레드 루티아",itemId:"1082051",materials:[{name:"동물의 가죽",itemId:"4000021",qty:60},{name:"토파즈",itemId:"4021006",qty:1},{name:"가넷",itemId:"4021000",qty:2}],price:25000},
+      {name:"레드 노엘",itemId:"1082054",materials:[{name:"동물의 가죽",itemId:"4000021",qty:70},{name:"금",itemId:"4011006",qty:1},{name:"강철",itemId:"4011001",qty:3},{name:"가넷",itemId:"4021000",qty:2}],price:30000},
+      {name:"레드 아르텐",itemId:"1082062",materials:[{name:"동물의 가죽",itemId:"4000021",qty:80},{name:"가넷",itemId:"4021000",qty:3},{name:"토파즈",itemId:"4021006",qty:3},{name:"나사",itemId:"4003000",qty:30}],price:40000},
+      {name:"레드 페넌스",itemId:"1082081",materials:[{name:"가넷",itemId:"4021000",qty:3},{name:"금",itemId:"4011006",qty:2},{name:"용의 가죽",itemId:"4000030",qty:35},{name:"나사",itemId:"4003000",qty:40}],price:50000},
+      {name:"스틸 마누트",itemId:"1082086",materials:[{name:"달의 돌",itemId:"4011007",qty:1},{name:"강철",itemId:"4011001",qty:8},{name:"다이아몬드",itemId:"4021007",qty:1},{name:"용의 가죽",itemId:"4000030",qty:50},{name:"나사",itemId:"4003000",qty:50}],price:70000}
+    ],
+    "방어구 합성":[
+      {name:"그린 모리칸",itemId:"1082021",materials:[{name:"블루 모리칸",itemId:"1082020",qty:1},{name:"강철",itemId:"4011001",qty:1}],price:20000},
+      {name:"퍼플 모리칸",itemId:"1082022",materials:[{name:"블루 모리칸",itemId:"1082020",qty:1},{name:"자수정",itemId:"4021001",qty:2}],price:25000},
+      {name:"블러드 메사나",itemId:"1082027",materials:[{name:"오션 메사나",itemId:"1082026",qty:1},{name:"가넷",itemId:"4021000",qty:3}],price:30000},
+      {name:"다크 메사나",itemId:"1082028",materials:[{name:"오션 메사나",itemId:"1082026",qty:1},{name:"흑수정",itemId:"4021008",qty:1}],price:40000},
+      {name:"블루 루티아",itemId:"1082052",materials:[{name:"레드 루티아",itemId:"1082051",qty:1},{name:"사파이어",itemId:"4021005",qty:3}],price:35000},
+      {name:"블랙 루티아",itemId:"1082053",materials:[{name:"레드 루티아",itemId:"1082051",qty:1},{name:"흑수정",itemId:"4021008",qty:1}],price:40000},
+      {name:"블루 노엘",itemId:"1082055",materials:[{name:"레드 노엘",itemId:"1082054",qty:1},{name:"사파이어",itemId:"4021005",qty:3}],price:40000},
+      {name:"다크 노엘",itemId:"1082056",materials:[{name:"레드 노엘",itemId:"1082054",qty:1},{name:"흑수정",itemId:"4021008",qty:1}],price:45000},
+      {name:"블루 아르텐",itemId:"1082063",materials:[{name:"레드 아르텐",itemId:"1082062",qty:1},{name:"아쿠아마린",itemId:"4021002",qty:4}],price:45000},
+      {name:"다크 아르텐",itemId:"1082064",materials:[{name:"레드 아르텐",itemId:"1082062",qty:1},{name:"흑수정",itemId:"4021008",qty:2}],price:50000},
+      {name:"블루 페넌스",itemId:"1082082",materials:[{name:"레드 페넌스",itemId:"1082081",qty:1},{name:"아쿠아마린",itemId:"4021002",qty:5}],price:55000},
+      {name:"다크 페넌스",itemId:"1082080",materials:[{name:"레드 페넌스",itemId:"1082081",qty:1},{name:"흑수정",itemId:"4021008",qty:3}],price:60000},
+      {name:"골드 마누트",itemId:"1082087",materials:[{name:"스틸 마누트",itemId:"1082086",qty:1},{name:"은",itemId:"4011004",qty:3},{name:"금",itemId:"4011006",qty:5}],price:70000},
+      {name:"다크 마누트",itemId:"1082088",materials:[{name:"스틸 마누트",itemId:"1082086",qty:1},{name:"흑수정",itemId:"4021008",qty:2},{name:"금",itemId:"4011006",qty:3}],price:80000},
+      {name:"손오공 강철 머리띠",itemId:"1002065",materials:[{name:"손오공 청동 머리띠",itemId:"1002064",qty:1},{name:"강철",itemId:"4011001",qty:3}],price:40000},
+      {name:"손오공 금 머리띠",itemId:"1002013",materials:[{name:"손오공 청동 머리띠",itemId:"1002064",qty:1},{name:"금",itemId:"4011006",qty:3}],price:50000}
+    ],
+    "무기 제작":[
+      {name:"페어리 완드",itemId:"1372000",materials:[{name:"토파즈",itemId:"4021006",qty:5},{name:"사파이어",itemId:"4021005",qty:5},{name:"다이아몬드",itemId:"4021007",qty:1},{name:"요정의 날개",itemId:"4003003",qty:1},{name:"나사",itemId:"4003000",qty:20}],price:120000},
+      {name:"위저드 완드",itemId:"1372001",materials:[{name:"토파즈",itemId:"4021006",qty:5},{name:"미스릴",itemId:"4011002",qty:3},{name:"강철",itemId:"4011001",qty:1},{name:"나사",itemId:"4003000",qty:15}],price:60000},
+      {name:"메탈 완드",itemId:"1372002",materials:[{name:"강철",itemId:"4011001",qty:1},{name:"파란버섯의 갓",itemId:"4000009",qty:30},{name:"나사",itemId:"4003000",qty:5}],price:5000},
+      {name:"미스릴 완드",itemId:"1372003",materials:[{name:"미스릴",itemId:"4011002",qty:3},{name:"아쿠아마린",itemId:"4021002",qty:1},{name:"나사",itemId:"4003000",qty:10}],price:30000},
+      {name:"아이스 완드",itemId:"1372004",materials:[{name:"미스릴",itemId:"4011002",qty:2},{name:"얼음 조각",itemId:"4003002",qty:1},{name:"나사",itemId:"4003000",qty:10}],price:12000},
+      {name:"우드 완드",itemId:"1372005",materials:[{name:"가공된 나무",itemId:"4003001",qty:5}],price:1000},
+      {name:"하드우드 완드",itemId:"1372006",materials:[{name:"가공된 나무",itemId:"4003001",qty:10},{name:"주황버섯의 갓",itemId:"4000001",qty:50}],price:3000},
+      {name:"크로미",itemId:"1372007",materials:[{name:"금",itemId:"4011006",qty:4},{name:"에메랄드",itemId:"4021003",qty:3},{name:"다이아몬드",itemId:"4021007",qty:2},{name:"아쿠아마린",itemId:"4021002",qty:1},{name:"얼음 조각",itemId:"4003002",qty:1},{name:"나사",itemId:"4003000",qty:30}],price:200000},
+      {name:"아크 스태프",itemId:"1382001",materials:[{name:"강철",itemId:"4011001",qty:8},{name:"토파즈",itemId:"4021006",qty:5},{name:"자수정",itemId:"4021001",qty:5},{name:"사파이어",itemId:"4021005",qty:5},{name:"나사",itemId:"4003000",qty:30},{name:"슬라임의 방울",itemId:"4000010",qty:50},{name:"요정의 날개",itemId:"4003003",qty:1}],price:180000},
+      {name:"위저드 스태프",itemId:"1382002",materials:[{name:"토파즈",itemId:"4021006",qty:2},{name:"자수정",itemId:"4021001",qty:1},{name:"강철",itemId:"4011001",qty:1},{name:"나사",itemId:"4003000",qty:15}],price:12000},
+      {name:"사파이어 스태프",itemId:"1382003",materials:[{name:"사파이어",itemId:"4021005",qty:1},{name:"강철",itemId:"4011001",qty:1},{name:"나사",itemId:"4003000",qty:5}],price:2000},
+      {name:"고목나무 스태프",itemId:"1382004",materials:[{name:"가공된 나무",itemId:"4003001",qty:50},{name:"강철",itemId:"4011001",qty:1},{name:"나사",itemId:"4003000",qty:10}],price:5000},
+      {name:"에메랄드 스태프",itemId:"1382005",materials:[{name:"에메랄드",itemId:"4021003",qty:1},{name:"강철",itemId:"4011001",qty:1},{name:"나사",itemId:"4003000",qty:5}],price:2000},
+      {name:"나무 스태프",itemId:"1382000",materials:[{name:"가공된 나무",itemId:"4003001",qty:5}],price:2000}
+    ]
+  };
+})();
+// 하늘나루(에레브행) · 키리루
+(function(){
+  var place={name:"하늘나루(에레브행)",code:"101000400",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var npc={id:"1100007",name:"키리루",role:"정거장 안내원",img:"https://drive.google.com/thumbnail?id=19fPWFmZw25fNg77AwGFmXi1PLviSqtlC&sz=w400",place:place,dialogues:[]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 엘리니아정거장 · 죠엘 · 체리
+(function(){
+  var place={name:"엘리니아정거장",code:"101000300",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  [
+    {id:"1032007",name:"죠엘",role:"정거장 안내원",img:"https://drive.google.com/thumbnail?id=1dj8Xhobgc1h8u0H6ANGJV8RqG3ws8XqJ&sz=w400",place:place,dialogues:[]},
+    {id:"1032008",name:"체리",role:"승무원",img:"https://drive.google.com/thumbnail?id=1k8xzEpLOYDU_NRSWYv1pzIURfCO15-5Q&sz=w400",place:place,dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 마법도서관 · 하인즈(기존 NPC 위치 추가)
+(function(){
+  var place={name:"마법도서관",code:"101000003",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var heinz=window.NPCS.find(function(x){return String(x.id)==="1032001";});
+  if(heinz){var list=Array.isArray(heinz.places)&&heinz.places.length?heinz.places.slice():(heinz.place?[heinz.place]:[]);list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);heinz.places=list;if(!heinz.place)heinz.place=list[0];}
+})();
+// 엘리니아잡화상점 · 요정 렌
+(function(){
+  var place={name:"엘리니아잡화상점",code:"101000002",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  var npc={id:"1031100",name:"요정 렌",role:"잡화상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1JdyfcpGCxmmA887J5A_DKdKIxX4JIjqq&sz=w400",place:place,dialogues:[],sells:["2000000","2000001","2000002","2000003","2000006","2001515","2001516","2002002","2002004","2002005","2010000","2001533","2010001","2010003","2010004","2030000","2060000","2061000","2050000","2050001","2050002","2050003","2120008","2070000","2330000","2030002"]};
+  var old=window.NPCS.find(function(x){return String(x.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+})();
+// 엘리니아무기상점 · 요정 플로라 · 요정 세라비
+(function(){
+  var place={name:"엘리니아무기상점",code:"101000001",region:"빅토리아 아일랜드",img:"https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400"};
+  [
+    {id:"1031000",name:"요정 플로라",role:"무기상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1prTSLJCabx0edvv-0jyY2Zois4cpvkIN&sz=w400",place:place,dialogues:[],sells:["1372005","1372006","1372004","1372003","1382000","1382003","1382005","1382004","1382002","1322002"]},
+    {id:"1031001",name:"요정 세라비",role:"방어구상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1SB8y9vNhmNzaNtZxME8Bw-WjpuYJIKWF&sz=w400",place:place,dialogues:[],sells:["1002017","1002102","1002103","1002104","1002105","1002106","1002016","1040004","1040017","1040019","1040020","1041015","1041016","1041017","1041018","1041025","1041026","1041029","1041030","1041031","1041041","1041042","1041043","1050008","1050009","1050010","1050001","1050023","1050024","1050025","1050003","1050026","1050027","1050028","1051004","1051005","1051003","1060012","1060013","1060014","1060015","1061010","1061011","1061012","1061013","1061021","1061022","1061027","1061028","1061034","1061035","1061036","1072006","1072044","1072045","1072023","1072024"]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
 </script>
 <script>
 (function(){
@@ -2963,7 +3659,7 @@ window.ITEMS = [
   var HENESIS_ICON_MAPS = {
     "헤네시스":1, "헤네시스 서쪽숲":1, "헤네시스 서쪽언덕":1,
     "헤네시스 사냥터 1":1, "헤네시스 사냥터 2":1, "헤네시스 사냥터 3":1,
-    "비어있는집":1, "버섯공원 1":1, "버섯공원 2":1, "남의집":1, "버섯동산":1, "버섯공원쉼터":1
+    "비어있는집":1, "버섯공원 1":1, "버섯공원 2":1, "남의집":1, "버섯동산":1, "버섯공원쉼터":1, "헤네시스시장":1
   };
   var ICON_AREA_ORDER = ["파괴된 헤네시스","커닝스퀘어","버섯의성","지구방위본부","플로리나비치","백초마을","아랫마을","슬리피우드","루디브리엄","아쿠아리움","노틸러스","엘리니아","커닝시티","페리온","오르비스","리프레","아리안트","마가티아","리엔","엘나스","에레브","폐광","블랙로드","무릉","헤네시스"];
   function locationIconFor(place){
@@ -2984,6 +3680,20 @@ window.ITEMS = [
   var id = params.get('id');
 
   var npc = NPCS.find(function(n){ return String(n.id)===String(id); });
+
+  function npcTypeOf(n){
+    var s = (n.role || '') + ' ' + (n.category === '상점' ? '' : (n.category || '')) + ' ' + (n.name || '');
+    if (s.indexOf('택시') > -1) return '택시';
+    if (s.indexOf('전직') > -1) return '전직관';
+    if (s.indexOf('펫먹이') > -1 || s.indexOf('펫 먹이') > -1) return '펫먹이상인';
+    if (s.indexOf('창고') > -1) return '창고지기';
+    if (s.indexOf('제작') > -1) return '제작자';
+    if (s.indexOf('주문서') > -1) return '주문서상인';
+    if (s.indexOf('방어구') > -1) return '방어구상인';
+    if (s.indexOf('무기') > -1) return '무기상인';
+    if (s.indexOf('잡화') > -1) return '잡화상인';
+    return null;
+  }
 
   function safeImg(src, alt, cls){
     var d = 'https://placehold.co/160x160/FFF9F0/9A8574?text=%20';
@@ -3100,6 +3810,8 @@ window.ITEMS = [
   html += '<div style="display:flex;align-items:center;gap:14px;">';
   html += '<img src="'+(npc.img||'https://placehold.co/160x160/FFF9F0/9A8574?text=%20')+'" alt="'+npc.name+'" class="thumb" style="width:64px;height:64px;" onerror="this.onerror=null;this.src=\'https://placehold.co/160x160/FFF9F0/9A8574?text=%20\';">';
   html += '<div>';
+  var npcType = npcTypeOf(npc);
+  if (npcType || npc.role) html += '<div class="type-tag">'+(npcType || npc.role)+'</div>';
   html += '<h1 style="margin-bottom:2px;">' + npc.name + '</h1>';
   html += '</div>';
   html += '</div>';
@@ -3124,7 +3836,7 @@ window.ITEMS = [
 
   // ---- 정확한 위치 (스크린샷) ----
   if (npc.spotImg){
-    html += '<div class="section"><h2>정확한 위치</h2><img src="'+npc.spotImg+'" alt="'+npc.name+' 위치" style="width:100%;height:auto;display:block;border-radius:12px;border:2.5px solid var(--wood-dark);" onerror="this.style.display=\'none\';"></div>';
+    html += '<div class="section"><h2>정확한 위치</h2><img src="'+npc.spotImg+'" alt="'+npc.name+' 위치" style="width:100%;height:auto;display:block;border-radius:12px;border:1.5px solid var(--line);" onerror="this.style.display=\'none\';"></div>';
   }
 
   // ---- 대사 ----

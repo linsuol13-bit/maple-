@@ -356,6 +356,30 @@ button{ font:inherit; }
 }
 .detail-header .sub{ font-size:13px; color:var(--ink-soft); font-weight:700; }
 
+.item-chip-list{ display:flex; flex-wrap:wrap; gap:9px; }
+.item-chip{
+  display:inline-flex; align-items:center; gap:9px; padding:6px 16px 6px 6px;
+  flex:none; position:relative; border:2px solid var(--line); border-radius:999px;
+  background:#fff; text-decoration:none; color:inherit;
+}
+.item-chip .icon{ width:46px; height:46px; object-fit:contain; flex:none; border-radius:10px; border:2px solid var(--line); background:#fff; padding:3px; }
+.item-chip .txt .lbl{ font-size:10.5px; color:var(--ink-soft); font-weight:700; line-height:1.25; }
+.item-chip .txt .val{ font-size:13.5px; font-weight:800; line-height:1.3; white-space:nowrap; }
+.craft-card{ border:2px solid var(--line); border-radius:12px; background:#fff; padding:2px 12px; margin-bottom:8px; }
+.craft-card[open]{ padding-bottom:10px; }
+.craft-card-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; padding:8px 0; cursor:pointer; list-style:none; }
+.craft-card-head::-webkit-details-marker{ display:none; }
+.craft-card-head::after{ content:'▾'; font-size:11px; color:var(--ink-soft); margin-left:auto; transition:transform .15s; }
+.craft-card[open] .craft-card-head::after{ transform:rotate(180deg); }
+.craft-card-head .item-chip, .craft-mats .item-chip{ padding:4px 8px 4px 0; gap:6px; border:none; background:transparent; border-radius:0; }
+.craft-card-head .item-chip .icon, .craft-mats .item-chip .icon{ border:none; background:transparent; border-radius:0; padding:0; object-fit:contain; }
+.craft-card-head .item-chip .icon{ width:30px; height:30px; }
+.craft-mats .item-chip .icon{ width:25px; height:25px; }
+.craft-card-head .item-chip .txt .val{ font-size:13px; }
+.craft-mats .item-chip .txt .val{ font-size:11.5px; }
+.craft-price{ font-size:12.5px; font-weight:800; color:var(--berry); white-space:nowrap; margin-right:6px; }
+.craft-mats{ display:flex; flex-wrap:wrap; gap:6px; padding-top:6px; border-top:1.5px dashed var(--line); }
+
 .card{
   background: var(--paper); border:1.5px solid var(--line); border-radius: var(--radius-md);
   padding:16px;
@@ -23344,6 +23368,451 @@ window.ITEMS = [
     "pdd": 28,
     "sellPrice": 50000
   },
+{
+  "id": "2044804",
+  "name": "너클 공격력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "너클"
+  ],
+  "attack": 5,
+  "sellPrice": 1,
+  "desc": "너클에 공격력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040519",
+  "name": "전신 갑옷 지력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "한벌옷"
+  ],
+  "mdd": 3,
+  "sellPrice": 1,
+  "desc": "전신 갑옷에 지력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2041037",
+  "name": "망토 지력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "망토"
+  ],
+  "sellPrice": 1,
+  "desc": "망토에 INT 향상 옵션 추가.\n성공율 30%, INT+3\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040509",
+  "name": "전신 갑옷 민첩성 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "한벌옷"
+  ],
+  "acc": 3,
+  "sellPrice": 1,
+  "desc": "전신 갑옷에 민첩성 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040907",
+  "name": "방패 행운 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "방패"
+  ],
+  "sellPrice": 1,
+  "desc": "방패에 LUK 향상 옵션 추가.\n성공율 30%, LUK+3\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040407",
+  "name": "상의 힘 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "상의"
+  ],
+  "sellPrice": 1,
+  "desc": "상의에 힘 향상 옵션 추가.\n성공율 30%, STR+3\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040811",
+  "name": "장갑 공격력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "장갑"
+  ],
+  "attack": 3,
+  "sellPrice": 1,
+  "desc": "장갑에 공격력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "20408110",
+  "name": "뱃지 행운 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "뱃지"
+  ],
+  "sellPrice": 1,
+  "desc": "뱃지에 행운 향상 옵션 추가.\n성공확율 30%, LUK+2\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2044005",
+  "name": "두손검 공격력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "두손검"
+  ],
+  "attack": 5,
+  "sellPrice": 1,
+  "desc": "두손검에 공격력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2044305",
+  "name": "창 공격력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "창"
+  ],
+  "attack": 5,
+  "sellPrice": 1,
+  "desc": "창에 공격력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040715",
+  "name": "신발 점프력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "신발"
+  ],
+  "moveSpeed": 1,
+  "sellPrice": 1,
+  "desc": "신발에 점프력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040809",
+  "name": "장갑 민첩성 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "장갑"
+  ],
+  "acc": 5,
+  "sellPrice": 1,
+  "desc": "장갑에 민첩성 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2041039",
+  "name": "망토 민첩성 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "망토"
+  ],
+  "sellPrice": 1,
+  "desc": "망토에 DEX 향상 옵션 추가.\n성공율 30%, DEX+3\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040305",
+  "name": "귀 장식 지력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "악세사리",
+    "귀 장식"
+  ],
+  "attack": 5,
+  "sellPrice": 1,
+  "desc": "귀 장식에 지력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040327",
+  "name": "귀 장식 체력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "악세사리",
+    "귀 장식"
+  ],
+  "sellPrice": 1,
+  "desc": "귀 장식에 체력 향상 옵션 추가.\n성공율 30%, MaxHP+30\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040322",
+  "name": "귀 장식 행운 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "악세사리",
+    "귀 장식"
+  ],
+  "sellPrice": 1,
+  "desc": "귀 장식에 행운 향상 옵션 추가.\n성공율 30%, LUK+3\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2044904",
+  "name": "건 공격력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "건"
+  ],
+  "acc": 3,
+  "sellPrice": 1,
+  "desc": "건 공격력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2040909",
+  "name": "방패 체력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "방패"
+  ],
+  "sellPrice": 1,
+  "desc": "방패에 체력 향상 옵션 추가.\n성공율 30%, MaxHP+30\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2043705",
+  "name": "완드 마력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "완드"
+  ],
+  "attack": 5,
+  "sellPrice": 1,
+  "desc": "완드에 마력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2043805",
+  "name": "스태프 마력 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "스태프"
+  ],
+  "attack": 5,
+  "sellPrice": 1,
+  "desc": "스태프에 마력 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2044313",
+  "name": "창 명중률 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "무기",
+    "창"
+  ],
+  "acc": 5,
+  "sellPrice": 1,
+  "desc": "창에 명중률 향상 옵션 추가.\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "2041041",
+  "name": "망토 행운 주문서 30%",
+  "img": "https://drive.google.com/thumbnail?id=18Y965ZZlBZQ97PaN7GTGhelwuAJzOVHg&sz=w200",
+  "path": [
+    "소비",
+    "주문서",
+    "방어구",
+    "망토"
+  ],
+  "sellPrice": 1,
+  "desc": "망토에 LUK 향상 옵션 추가.\n성공율 30%, LUK+3\n실패하면 50% 확률로 아이템이 파괴된다."
+},
+{
+  "id": "4080000",
+  "name": "슬라임,버섯 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1JL_Cs3ZonfEBJmd5kF8DJ5N2MZFbjnzX&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "desc": "오목을 둘 수 있는 세트다. 슬라임과 버섯 모양의 오목알을 사용한다.\n판매기 1"
+},
+{
+  "id": "4080001",
+  "name": "슬라임, 옥토퍼스 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1g045KnkNG0QNo-FnJHB2YRiHA_5jolWd&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트다. 슬라임과 옥토퍼스 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080002",
+  "name": "슬라임, 돼지 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1bRRR9DvkTeQsN27lFTfnEfZmCSMKhTMB&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 슬라임과 돼지 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080003",
+  "name": "옥토퍼스, 버섯 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1ygI722-nofDopZsrOw1Z0Wvz0XQOJYXo&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 옥토퍼스와 버섯 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080004",
+  "name": "돼지, 옥토퍼스 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1qiFmjglinUZyewqiDw8kEeN9bgl2SMeR&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 돼지와 옥토퍼스 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080005",
+  "name": "돼지, 버섯 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1P-uZmejV-scYRy29HkKCm8cIxIEH1vWK&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 돼지와 버섯 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080100",
+  "name": "같은그림찾기세트"
+},
+{
+  "id": "4080006",
+  "name": "블록퍼스, 핑크 테니 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=13lRN0spCIv4tqbGb6K3wO9uHBMRWsOqv&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 블록퍼스와 핑크 테니 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080007",
+  "name": "블록퍼스, 트릭스터 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1BlfpmVPMi-cRYDVDx7T1cm7sSXeAweIq&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 블록퍼스와 트릭스터 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080008",
+  "name": "핑크 테니, 트릭스터 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1IalA2i615ngVE3VRAg9OT2A-LVMww1GA&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 핑크테니와 트릭스터 모양의 오목알을 사용한다."
+},
+{
+  "id": "408011",
+  "name": "팬더 테니, 트릭스터 오목세트",
+  "img": "https://drive.google.com/thumbnail?id=1ItadUJBc3SVfB_iZCB_NFRe7th7y5Ktx&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 둘 수 있는 세트이다. 팬더 테니와 트릭스터 모양의 오목알을 사용한다."
+},
+{
+  "id": "4080100",
+  "name": "같은그림찾기세트",
+  "img": "https://drive.google.com/thumbnail?id=1Iw8wzYHiv3WGBgj0lZHi3oZ5RJ504suU&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "같은그림찾기를 할 수 있는 세트이다."
+},
+{
+  "id": "4030015",
+  "name": "팬더 테니 오목알",
+  "img": "https://drive.google.com/thumbnail?id=1ce6y5iB0QaIVEH6h-dw7URDVLROEVJMS&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 두는데 필요한 팬더 테니 모양의 오목알이다."
+},
+{
+  "id": "4030013",
+  "name": "블록퍼스 오목알",
+  "img": "https://drive.google.com/thumbnail?id=1RZKU1JJQdqOs3UP15i0Z_3_gM_P9IdHD&sz=w200",
+  "path": [
+    "기타",
+    "게임"
+  ],
+  "sellPrice": 1,
+  "desc": "오목을 두는데 필요한 블록퍼스 모양의 오목알이다."
+},
   {
     "id": "1072131",
     "name": "퍼플 고니슈즈",
@@ -31968,6 +32437,40 @@ window.ITEMS = [
   "reqLuk": 23,
   "pdd": 6,
   "sellPrice": 10000
+},
+{
+  "id": "1082021",
+  "name": "그린 모리칸",
+  "img": "https://drive.google.com/thumbnail?id=1DE7t75JNrKsY9twuTN1QIgOl29Sp5QJ9&sz=w200",
+  "path": [
+    "장비",
+    "방어구",
+    "장갑"
+  ],
+  "job": "마법사",
+  "reqLevel": 20,
+  "reqInt": 62,
+  "reqLuk": 23,
+  "int": 1,
+  "pdd": 7,
+  "sellPrice": 12000
+},
+{
+  "id": "1082027",
+  "name": "블러드 메사나",
+  "img": "https://drive.google.com/thumbnail?id=11iko7faDmQPs-4tgUGCRilvigUcKOSc4&sz=w200",
+  "path": [
+    "장비",
+    "방어구",
+    "장갑"
+  ],
+  "job": "마법사",
+  "reqLevel": 25,
+  "reqInt": 78,
+  "reqLuk": 28,
+  "int": 1,
+  "pdd": 9,
+  "sellPrice": 17000
 },
 {
   "id": "4032321",
@@ -41427,7 +41930,7 @@ window.ITEMS = [
     "pdd": 39,
     "eva": 1,
     "sellPrice": 70000
-  },,
+  },
   {
     "id": "212000099",
     "name": "펫의 먹이",
@@ -41930,6 +42433,66 @@ window.NPCS = [
     "id": "1012004",
     "name": "큐트",
     "img": "https://drive.google.com/thumbnail?id=1j0tzZMCGAudMnP77KiKf2i3GoG_eCKkI&sz=w400"
+  },
+  {
+    "id": "1012105",
+    "name": "나미녀",
+    "img": "https://drive.google.com/thumbnail?id=1HOQWt0NR_kG_fFTi__tGHCRMW6egkfHC&sz=w400"
+  },
+  {
+    "id": "1012103",
+    "name": "나탈리",
+    "img": "https://drive.google.com/thumbnail?id=1y6wSrsqKxFN55V0AcmWXQT0MWQ7bdYGw&sz=w400"
+  },
+  {
+    "id": "1012104",
+    "name": "브리트니",
+    "img": "https://drive.google.com/thumbnail?id=1UozwpM3LAVYf5m5I4xtjZNs2_Qx_Jcpp&sz=w400"
+  },
+  {
+    "id": "1012117",
+    "name": "빅 헤드워드",
+    "img": "https://drive.google.com/thumbnail?id=16hBm0-jWSeBdjhqRgE8JjpQ0h-VFWQh3&sz=w400"
+  },
+  {
+    "id": "1052004",
+    "name": "덴마",
+    "img": "https://drive.google.com/thumbnail?id=113DBZOnb2WTCmIg8wyRwyOhN3xAfoFkL&sz=w400"
+  },
+  {
+    "id": "1052005",
+    "name": "돌팔이",
+    "img": "https://drive.google.com/thumbnail?id=1IaIJQf0g4USM7hFDl3Imv2kI-gFjGCN6&sz=w400"
+  },
+  {
+    "id": "1012009",
+    "name": "이서방",
+    "img": "https://drive.google.com/thumbnail?id=1S0ZM-u6BtA81bmbLBJ4ips9x5g-bupPb&sz=w400"
+  },
+  {
+    "id": "1012112",
+    "name": "토리",
+    "img": "https://drive.google.com/thumbnail?id=1XJDZZU1LadXexMYvpoyZ7RNApcu5pnNa&sz=w400"
+  },
+  {
+    "id": "1012005",
+    "name": "클로이",
+    "img": "https://drive.google.com/thumbnail?id=1fj59IlM2Ne9dU28m7qFtihyuvaoNHj8m&sz=w400"
+  },
+  {
+    "id": "9010014",
+    "name": "아르미",
+    "img": "https://drive.google.com/thumbnail?id=1mP1Lxm7aBDs6_4pFghhMbncnIuvaziUp&sz=w400"
+  },
+  {
+    "id": "1012102",
+    "name": "피아",
+    "img": "https://drive.google.com/thumbnail?id=1-7uurIByEUAUq_oI66ofV1WslNR4LSYp&sz=w400"
+  },
+  {
+    "id": "9201023",
+    "name": "헤라",
+    "img": "https://drive.google.com/thumbnail?id=11tU5TEbWQCq0X6JlL6zT43W1tBQaftlC&sz=w400"
   }
 ];
 
@@ -44547,6 +45110,389 @@ window.MONSTERS = [
   Object.keys(groups).forEach(function(type){ groups[type].split(',').forEach(function(itemId){ window.CRAFT_MAKERS.push({itemId:itemId,type:type,recipe:weaponRecipes[itemId]||null,npc:npc}); }); });
 })();
 
+// 헤네시스무기상점 · 칼 · 샘
+(function(){
+  function sales(spec){ return spec.split(',').map(function(row){ var p=row.split(':'); return {id:p[0],price:Number(p[1])}; }); }
+  var kal=sales("1452002:3000,1452003:6000,1452001:10000,1452000:10000,1462001:4000,1462002:8000,1462003:12000,1462000:30000,1302007:3000,1322007:6000,1322008:12000,1422004:20000,1442004:24000");
+  var sam=sales("1002008:500,1002033:3000,1002060:3000,1002061:3000,1002062:3000,1002063:3000,1002012:3000,1002112:4000,1002113:4000,1002114:4000,1002115:4000,1002116:4000,1002117:12000,1002118:12000,1002119:12000,1002120:12000,1002121:12000,1002057:800,1002010:800,1002156:20000,1002157:20000,1002158:20000,1002159:20000,1002160:20000,1002161:30000,1002162:30000,1002163:30000,1002164:30000,1002165:30000,1032003:7000,1032001:7000,1040008:3200,1040071:3200,1040007:5500,1040011:5500,1040003:9000,1040022:15000,1040023:15000,1040024:15000,1040025:15000,1040067:50000,1040068:50000,1040069:50000,1040070:50000,1041007:3200,1041061:3200,1041008:5500,1041062:5500,1041063:5500,1041013:9000,1041027:9000,1041028:9000,1041032:15000,1041033:15000,1041034:15000,1041035:15000,1041054:50000,1041055:50000,1041056:50000,1060005:14000,1060056:44000,1060057:44000,1060058:44000,1060059:44000,1061009:3000,1061057:3000,1061006:5000,1061058:5000,1061059:5000,1061024:9000,1061025:9000,1061026:9000,1061050:44000,1061051:44000,1061052:44000,1062004:3000,1062002:9000,1062006:13000,1072059:1800,1072015:1800,1072060:4500,1072061:4500,1072016:4500,1072025:9000,1072026:9000,1072067:9000,1072068:9000,1072012:15000,1072054:15000,1072055:15000,1072056:15000,1072018:30000,1072064:30000");
+  var shopImg="https://drive.google.com/thumbnail?id=1I0xxI93HMzGgWNi91TzWEuqZoifujhS3&sz=w841";
+  var heneIcon="https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400";
+  var place={name:"헤네시스무기상점",code:"100000101",region:"헤네시스",img:heneIcon};
+  if (window.MAPS){
+    var market=window.MAPS.find(function(m){ return String(m.code)==="100000100"; });
+    if (market && market.portals) market.portals.forEach(function(p){ if (p.toName==="헤네시스무기상점") p.toCode="100000101"; });
+    if (!window.MAPS.some(function(m){ return String(m.code)==="100000101"; })) window.MAPS.push({code:"100000101",name:"헤네시스무기상점",region:"빅토리아 아일랜드",img:shopImg,imgWidth:841,imgHeight:913,portals:[{toCode:"100000100",toName:"헤네시스시장",note:"이동",x:669,y:800,unit:"px"}]});
+  }
+  if (window.ITEMS) kal.concat(sam).forEach(function(s){ var it=window.ITEMS.find(function(i){ return i && String(i.id)===s.id; }); if (it) it.buyPrice=s.price; });
+  if (window.NPCS) [
+    {id:"1011000",name:"칼",role:"무기상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1m4_czgWNwAsmbxk0W5YUod-c2IvjACkX&sz=w400",place:place,dialogues:[],sells:kal.map(function(s){return s.id;})},
+    {id:"1011001",name:"샘",role:"방어구상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1skU4qITs68V90s2xoDkKuGBlpDJ8oUu-&sz=w400",place:place,dialogues:[],sells:sam.map(function(s){return s.id;})}
+  ].forEach(function(n){ var old=window.NPCS.find(function(x){ return String(x.id)===String(n.id); }); if (old) Object.keys(n).forEach(function(k){ old[k]=n[k]; }); else window.NPCS.push(n); });
+})();
+// 헤네시스잡화상점 · 루나
+(function(){
+  function sales(spec){ return spec.split(',').map(function(row){ var p=row.split(':'); return {id:p[0],price:Number(p[1])}; }); }
+  var luna=sales("2000000:50,2000001:160,2000002:320,2000003:200,2000006:620,2001515:500,2001516:400,2002002:500,2002004:500,2002005:500,2010000:30,2001533:50,2010001:106,2010003:100,2010004:310,2020028:3000,2030000:400,2030004:500,2060000:1,2061000:1,2050000:200,2050001:200,2050002:300,2120008:200,2070000:500,2330000:600");
+  var shopImg="https://drive.google.com/thumbnail?id=1j4efqswhj2tEmh3eRXgYRYkGm0mKX3bU&sz=w840";
+  var heneIcon="https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400";
+  var place={name:"헤네시스잡화상점",code:"100000102",region:"헤네시스",img:heneIcon};
+  if (window.MAPS){
+    var market=window.MAPS.find(function(m){ return String(m.code)==="100000100"; });
+    if (market && market.portals) market.portals.forEach(function(p){ if (p.toName==="헤네시스잡화상점") p.toCode="100000102"; });
+    if (!window.MAPS.some(function(m){ return String(m.code)==="100000102"; })) window.MAPS.push({code:"100000102",name:"헤네시스잡화상점",region:"빅토리아 아일랜드",img:shopImg,imgWidth:840,imgHeight:600,portals:[{toCode:"100000100",toName:"헤네시스시장",note:"이동",x:720,y:490,unit:"px"}]});
+  }
+  if (window.ITEMS){
+    var ellinia={id:"2030002",name:"엘리니아 귀환 주문서",img:"https://maplestory.io/api/GMS/62/item/2030002/icon?resize=2",path:["소비","이동"],buyPrice:500,sellPrice:250,desc:"신비로운 숲 마을인 엘리니아로 귀환 할 수 있는 주문서이다. 한 번 사용하면 사라진다."};
+    var oldEllinia=window.ITEMS.find(function(i){ return i && String(i.id)==="2030002"; });
+    if (oldEllinia) Object.keys(ellinia).forEach(function(k){ oldEllinia[k]=ellinia[k]; }); else window.ITEMS.push(ellinia);
+    if (!window.ITEMS.some(function(i){ return i && String(i.id)==="2030004"; })) window.ITEMS.push({id:"2030004",name:"헤네시스 귀환 주문서",img:"https://drive.google.com/thumbnail?id=1fM6QERsWRiEBnkXYi0JQlQz0U6f71HDF&sz=w200",path:["소비","이동"],buyPrice:500,sellPrice:250,desc:"평화로운 초원 마을인 헤네시스로 귀환 할 수 있는 주문서이다. 한 번 사용하면 사라진다."});
+    luna.forEach(function(s){ var it=window.ITEMS.find(function(i){ return i && String(i.id)===s.id; }); if (it) it.buyPrice=s.price; });
+  }
+  if (window.NPCS){
+    var npc={id:"1011100",name:"루나",role:"잡화상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1DB5-8HJoE3rfDyh0KxcOeZRayPXDNsXs&sz=w400",place:place,dialogues:[],sells:luna.map(function(s){return s.id;})};
+    var old=window.NPCS.find(function(n){ return String(n.id)===npc.id; });
+    if (old) Object.keys(npc).forEach(function(k){ old[k]=npc[k]; }); else window.NPCS.push(npc);
+  }
+})();
+// 카이지 제작 결과물 역참조
+(function(){
+  var recipes=[
+    {itemId:"4080000",name:"슬라임,버섯 오목세트",materials:[{itemId:"4030000",name:"슬라임 오목알",qty:1},{itemId:"4030001",name:"버섯 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080001",name:"슬라임, 옥토퍼스 오목세트",materials:[{itemId:"4030000",name:"슬라임 오목알",qty:1},{itemId:"4030010",name:"옥토퍼스 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080002",name:"슬라임, 돼지 오목세트",materials:[{itemId:"4030000",name:"슬라임 오목알",qty:1},{itemId:"4030011",name:"돼지 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080003",name:"옥토퍼스, 버섯 오목세트",materials:[{itemId:"4030010",name:"옥토퍼스 오목알",qty:1},{itemId:"4030001",name:"버섯 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080004",name:"돼지, 옥토퍼스 오목세트",materials:[{itemId:"4030011",name:"돼지 오목알",qty:1},{itemId:"4030010",name:"옥토퍼스 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080005",name:"돼지, 버섯 오목세트",materials:[{itemId:"4030011",name:"돼지 오목알",qty:1},{itemId:"4030001",name:"버섯 오목알",qty:1},{itemId:"4030009",name:"바둑판",qty:1}]},
+    {itemId:"4080100",name:"같은그림찾기세트",materials:[{itemId:"4030012",name:"몬스터 카드",qty:15}]}
+  ];
+  var npc={id:"1012008",name:"카이지",role:"미니게임 마스터",category:"제작",img:"",place:{name:"헤네시스게임공원",code:"100000203",region:"헤네시스",img:"https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400"},dialogues:[],crafts:{"게임":recipes}};
+  var old=window.NPCS.find(function(n){return String(n.id)===npc.id;});if(old)Object.keys(npc).forEach(function(k){old[k]=npc[k];});else window.NPCS.push(npc);
+  window.CRAFT_MAKERS=(window.CRAFT_MAKERS||[]).filter(function(c){return !c.npc||String(c.npc.id)!==npc.id;});recipes.forEach(function(r){window.CRAFT_MAKERS.push({itemId:r.itemId,type:"게임",recipe:r,npc:{id:npc.id,name:npc.name,img:npc.img}});});
+})();
+// 펫산책로 NPC 위치 및 카이지 이미지
+(function(){
+  var heneIcon="https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400",petPlace={name:"펫산책로",code:"100000202",region:"헤네시스",img:heneIcon};
+  var kaiji=window.NPCS.find(function(n){return String(n.id)==="1012008";});if(kaiji)kaiji.img="https://drive.google.com/thumbnail?id=1qukJKADXXfCSq4-eKGOSCTCsUAlqKMU_&sz=w400";
+  if(window.CRAFT_MAKERS)window.CRAFT_MAKERS.forEach(function(c){if(c.npc&&String(c.npc.id)==="1012008")c.npc.img="https://drive.google.com/thumbnail?id=1qukJKADXXfCSq4-eKGOSCTCsUAlqKMU_&sz=w400";});
+  var cute=window.NPCS.find(function(n){return String(n.id)==="1012004";});if(cute){var marketPlace={name:"헤네시스시장",code:"100000100",region:"헤네시스",img:heneIcon};cute.place=marketPlace;cute.places=[marketPlace,petPlace];cute.role=cute.role||"펫먹이 상인";cute.category=cute.category||"상점";cute.dialogues=cute.dialogues||[];cute.sells=cute.sells||["212000099","2260000","4160000","4160001","4160002","4160019","4160015","4160012","4160014","4160020","4160010","4160009","4160008","4160007","4160006","4160005","4160004","4160003"];}
+  [{id:"1012006",name:"바르토스",role:"조련사",category:"기타",img:"https://drive.google.com/thumbnail?id=1mbOa2Ll6dCml7mZlLcPEEdnGH_iz3ibI&sz=w400",place:petPlace,dialogues:[]},{id:"1012007",name:"프로드",role:"조련사",category:"기타",img:"https://drive.google.com/thumbnail?id=1vF07AjDYxMKTZEzfrWb2ALKSR6MvTfkF&sz=w400",place:petPlace,dialogues:[]}].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+})();
+// 마야
+(function(){
+  var maya={id:"1012101",name:"마야",img:"https://drive.google.com/thumbnail?id=10xk8l6BwaS1NrflNjovHTj-A_EVC50PK&sz=w400",place:{name:"헤네시스민가",code:"100000001",region:"헤네시스",img:"https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400"},dialogues:[]};var old=window.NPCS.find(function(n){return String(n.id)===maya.id;});if(old)Object.keys(maya).forEach(function(k){old[k]=maya[k];});else window.NPCS.push(maya);
+})();
+// 도라지
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"5120501",name:"도라지",img:"https://drive.google.com/thumbnail?id=182wr9-LjyTOw7qCzwZq7lguE_p_k1RrS&sz=w400",minLevel:53,category:"식물형",hp:4200,mp:160,exp:800,acc:150,eva:16,pdd:170,mdd:210,desc:"인삼과 매우 닮은 식물. 인삼에 비해 훨씬 약효가 부족하다. 인삼밭에 침입하여 영양분을 몽땅 흡수해 버려 백초마을의 구영감을 애태우고 있다. 하지만 그들에게도 그럴만한 사정이 있으니, 도라지 왕자 우양이 데비존에게 잡혀간 이후로 살 길을 찾던 도라지들이 발견한 것이 구영감의 밭이었던 것이다. 우양이 풀려날 때까지 도라지들의 도둑질은 한동안 계속될 것 같다.",drops:drops([
+      ["4000293","도라지"],
+      ["4004003","행운의 크리스탈 원석"],
+      ["4006000","마법의 돌"],
+      ["4007003","마법의 가루(초록)"],
+      ["4007004","마법의 가루(노랑)"],
+      ["4010001","강철의 원석"],
+      ["4020005","사파이어의 원석"],
+      ["4130016","너클 제작의 촉진제"],
+      ["4130017","건 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000003","파란포션"],
+      ["2040423","상의 행운 주문서 100%"],
+      ["2041023","망토 행운 주문서 10%"],
+      ["2044310","창 명중률 주문서 100%"],
+      ["1032019","크리스탈 플라워링"],
+      ["1040102","브론즈 플라틴 (남)"],
+      ["1050052","청선백궁 (남)"],
+      ["1051037","블루 루이마리 (여)"],
+      ["1051041","적초로 (여)"],
+      ["1060090","브론즈 플라틴 바지 (남)"],
+      ["1482008","세라핌즈"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 늙은 도라지
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"5120502",name:"늙은 도라지",img:"https://drive.google.com/thumbnail?id=1BjhSyGkaKocNg2ZYuiu1-IP3qjcjm_iW&sz=w400",minLevel:54,category:"식물형",hp:4400,mp:160,exp:840,acc:150,eva:18,pdd:180,mdd:215,desc:"인삼과 매우 닮은 식물. 원래는 인삼에 비해 훨씬 약효가 부족하지만, 늙은 도라지는 간혹 인삼보다도 효험이 있다고 한다. 늙어 구부정한 허리와 흰 수염을 보면 감히 때리기 미안할 때도 있지만 어차피 도라지일 뿐이니 약재로 잘 쓰도록 하자.",drops:drops([
+      ["4000294","100년 묵은 도라지"],
+      ["4004004","어둠의 크리스탈 원석"],
+      ["4006000","마법의 돌"],
+      ["4007002","마법의 가루(파랑)"],
+      ["4007006","마법의 가루(빨강)"],
+      ["4020005","사파이어의 원석"],
+      ["4130000","장갑 제작의 촉진제"],
+      ["4130003","한손도끼 제작의 촉진제"],
+      ["4130005","두손검 제작의 촉진제"],
+      ["4130022","방패 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000003","파란포션"],
+      ["2040425","상의 행운 주문서 60%"],
+      ["2040927","방패 체력 주문서 60%"],
+      ["1002159","블랙 헌트"],
+      ["1040057","다크브라운 스틸러 (남)"],
+      ["1040087","블루 숄더메일 (남)"],
+      ["1040091","레드 오리엔타이칸 (남)"],
+      ["1040096","황일 (남)"],
+      ["1050052","청선백궁 (남)"],
+      ["1052116","그린 플레스티어"],
+      ["1060076","블루 숄더메일 바지 (남)"],
+      ["1060080","레드 오리엔타이칸 바지 (남)"],
+      ["1060085","황일 바지 (남)"],
+      ["1082004","베논"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 베논 (장갑)
+(function(){
+  var item={id:"1082004",name:"베논",img:"https://drive.google.com/thumbnail?id=143cCgD54bSgq-8QBp5J3Jy08X2UUJYcQ&sz=w200",path:["장비","방어구","장갑"],job:"전사",reqLevel:20,reqStr:60,pdd:7,sellPrice:10000};
+  var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+  if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);
+})();
+// 삼단지
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"4230506",name:"삼단지",img:"https://drive.google.com/thumbnail?id=1tmezfXouk5XpZNmWFFwTnQd5chY3Li0x&sz=w400",minLevel:48,category:"무형",hp:2800,mp:100,exp:615,acc:140,eva:20,pdd:165,mdd:170,desc:"오래 묵은 산삼이 들어있는 단지이다. 처음에는 단순히 산삼을 달이기 위해 만든 것이었지만, 달여지는 즐거움에 푹 빠져버린 산삼이 단지를 종용하여 마을을 탈출하기로 결심한 이후 몬스터화 되었다는 소문이 있지만 알 수 없다.",drops:drops([
+      ["4000292","산삼 달인물"],
+      ["4006001","소환의 돌"],
+      ["4007002","마법의 가루(파랑)"],
+      ["4007004","마법의 가루(노랑)"],
+      ["4010001","강철의 원석"],
+      ["4020000","가넷의 원석"],
+      ["4130000","장갑 제작의 촉진제"],
+      ["4130017","건 제작의 촉진제"],
+      ["4130019","상의 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000003","파란포션"],
+      ["2040622","하의 체력 주문서 10%"],
+      ["2044110","두손도끼 명중률 주문서 100%"],
+      ["2044312","창 명중률 주문서 60%"],
+      ["2049100","혼돈의 주문서 60%"],
+      ["1002083","검은색 두건"],
+      ["1002212","적마로"],
+      ["1032007","에메랄드 귀고리"],
+      ["1041080","적월 (여)"],
+      ["1041086","흑진월갑주 (여)"],
+      ["1041092","레드 트란도트 (여)"],
+      ["1061079","적월 바지 (여)"],
+      ["1061085","흑진월갑주 치마 (여)"],
+      ["1061091","레드 트란도트 치마 (여)"],
+      ["1102003","흰색 모험가의 망토"],
+      ["1302013","붉은 채찍"],
+      ["1492007","라스펠트건"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 검은색 두건 (투구)
+(function(){
+  var item={id:"1002083",name:"검은색 두건",img:"https://drive.google.com/thumbnail?id=1M4jENpS_675LtphQepCJ_XK3PTdV-C44&sz=w200",path:["장비","방어구","투구"],job:"공용",reqLevel:10,int:1,pdd:8,sellPrice:1500};
+  var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+  if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);
+})();
+// 단지
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"4230505",name:"단지",img:"https://drive.google.com/thumbnail?id=1-uuaqEYwW9KdBD4SfX4m4JZ_dhvrMEFR&sz=w400",minLevel:47,category:"무형",hp:2700,mp:100,exp:585,acc:130,eva:18,pdd:155,mdd:160,desc:"약재를 담기 위해 사용하던 단지 안에 정체를 알 수 없는 몬스터가 들어가면서 생겨난 기묘한 몬스터이다. 백초마을 옆 약초밭에서 자주 목격된다. 백초마을의 황선장이 이 몬스터를 퇴치하기 위해 백방으로 노력하고 있지만 쉽지 않은 듯 보인다.",drops:drops([
+      ["4000291","깨진 항아리 조각"],
+      ["4004002","민첩성의 크리스탈 원석"],
+      ["4006001","소환의 돌"],
+      ["4007001","마법의 가루(흰색)"],
+      ["4007004","마법의 가루(노랑)"],
+      ["4020000","가넷의 원석"],
+      ["4020006","토파즈의 원석"],
+      ["4130001","신발 제작의 촉진제"],
+      ["4130014","단검 제작의 촉진제"],
+      ["4130016","너클 제작의 촉진제"],
+      ["4130023","블레이드 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000003","파란포션"],
+      ["2040001","투구 방어력 주문서 60%"],
+      ["2044102","두손도끼 공격력 주문서 10%"],
+      ["2330002","마이티 불릿"],
+      ["1002215","플레임 골든서클릿"],
+      ["1040089","엄버 숄더메일 (남)"],
+      ["1050045","블루 칼라스 (남)"],
+      ["1052116","그린 플레스티어"],
+      ["1372007","크로미"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 게비알
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"6130204",name:"게비알",img:"https://drive.google.com/thumbnail?id=1MyAaqD0JLqPE25HQWweQ75-FeVoLpe_7&sz=w400",minLevel:64,category:"파충류형",hp:7800,mp:100,exp:1250,acc:140,eva:25,pdd:190,mdd:230,desc:"백초마을 옆 늪지대에만 서식하는 악어의 일종이다. 작은 동물을 좋아하여 머리 위에는 악어새를, 등 뒤에는 아기 도라지를 업고 다니곤 한다. 먼저 공격하지는 않지만 공격을 받으면 매우 화를 내며 철저하게 응징하려고 한다.",drops:drops([
+      ["4000021","동물의 가죽"],
+      ["4000295","게비알의 가죽"],
+      ["4003005","부드러운 깃털"],
+      ["4004000","힘의 크리스탈 원석"],
+      ["4007004","마법의 가루(노랑)"],
+      ["4007007","마법의 가루(검정)"],
+      ["4010006","금의 원석"],
+      ["4020004","오팔의 원석"],
+      ["4130000","장갑 제작의 촉진제"],
+      ["4130012","활 제작의 촉진제"],
+      ["4130021","전신 갑옷 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000004","엘릭서"],
+      ["2000006","마나 엘릭서"],
+      ["2040301","귀 장식 지력 주문서 60%"],
+      ["2040421","상의 체력 주문서 60%"],
+      ["2043001","한손검 공격력 주문서 60%"],
+      ["2044802","너클 공격력 주문서 10%"],
+      ["2049000","백의 주문서 1%"],
+      ["2330003","바이탈 불릿"],
+      ["1040093","다크 오리엔타이칸 (남)"],
+      ["1040104","오리할콘 플라틴 (남)"],
+      ["1040107","다크 스타드 (남)"],
+      ["1051064","그린 리네로스 (여)"],
+      ["1051065","다크 리네로스 (여)"],
+      ["1052119","블랙 로얄바롱"],
+      ["1060082","다크 오리엔타이칸 바지 (남)"],
+      ["1060092","오리할콘 플라틴 바지 (남)"],
+      ["1060095","다크 스타드 바지 (남)"],
+      ["1082062","레드 아르텐"],
+      ["1402003","호검"],
+      ["1402011","그리스"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 오리할콘 플라틴 바지 (하의)
+(function(){
+  var item={id:"1060092",name:"오리할콘 플라틴 바지 (남)",img:"https://drive.google.com/thumbnail?id=1FDIM8dYoFQadFVIna6o8G3dMppI41y_v&sz=w200",path:["장비","방어구","하의"],job:"전사",reqLevel:70,reqStr:240,str:2,pdd:60,acc:2,sellPrice:90000};
+  var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+  if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);
+})();
+// 크루
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"6130208",name:"크루",img:"https://drive.google.com/thumbnail?id=1hlgRpLgrcfWxLLYrwUj3PVwhwnJs9D-2&sz=w400",minLevel:68,category:"악마형",hp:12500,mp:100,exp:1325,acc:130,eva:26,pdd:190,mdd:250,desc:"정체를 알 수 없는 데비존의 수하이다. 오랫동안 데비존과 함께 바다를 떠돌며 사람들을 약탈하는데 크게 일조한 악랄한 몬스터로 지금은 데비존의 명령을 받아 도라지들을 괴롭히는데 온 힘을 쏟고 있다.",drops:drops([
+      ["4000296","해적의 표식"],
+      ["4004001","지혜의 크리스탈 원석"],
+      ["4007003","마법의 가루(초록)"],
+      ["4007005","마법의 가루(보라)"],
+      ["4010002","미스릴의 원석"],
+      ["4020005","사파이어의 원석"],
+      ["4130006","두손도끼 제작의 촉진제"],
+      ["4130008","창 제작의 촉진제"],
+      ["4130012","활 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000004","엘릭서"],
+      ["2000006","마나 엘릭서"],
+      ["2043302","단검 공격력 주문서 10%"],
+      ["2044902","건 공격력 주문서 10%"],
+      ["1002289","다크 웨어캡"],
+      ["1032015","메탈실버 이어링"],
+      ["1050081","레드 배틀로드 (남)"],
+      ["1050088","레드 아데스 (남)"],
+      ["1051078","레드 배틀엠프리스 (여)"],
+      ["1072080","블루 헌터부츠"],
+      ["1072085","레드 래피 부츠"],
+      ["1082204","블랙 비스크"],
+      ["1092015","스틸 에이션트 실드"],
+      ["1322018","타무스"],
+      ["1462008","골든 크로우"],
+      ["1472027","녹갑충"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 스틸 에이션트 실드 (방패)
+(function(){
+  var item={id:"1092015",name:"스틸 에이션트 실드",img:"https://drive.google.com/thumbnail?id=1sPoipUYAPvQEcYqF-JRJXXF27fWWnZiv&sz=w200",path:["장비","방어구","방패"],job:"전사",reqLevel:70,reqStr:220,pdd:56,mdd:20,sellPrice:200000};
+  var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+  if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);
+})();
+// 캡틴
+(function(){
+  function drops(rows){ return rows.map(function(x){ return {itemId:x[0],name:x[1]}; }); }
+  var added = [
+    {id:"7130104",name:"캡틴",img:"https://drive.google.com/thumbnail?id=1pe71r8-DaRqZItZ2Wh3_lnsOqsQlzlhI&sz=w400",minLevel:70,category:"악마형",hp:15000,mp:100,exp:1410,acc:165,eva:26,pdd:250,mdd:260,desc:"정체를 알 수 없는 데비존의 수하로 크루보다 한 단계 계급이 높다. 오랫동안 데비존과 함께 바다를 떠돌며 사람들을 약탈하는데 크게 일조한 악랄한 몬스터로 약탈한 갈퀴손을 지니고 다니곤 한다. 지금은 데비존의 명령을 받아 도라지들을 괴롭히는데 온 힘을 쏟고 있다.",drops:drops([
+      ["4000297","선장의 모자"],
+      ["4004000","힘의 크리스탈 원석"],
+      ["4006001","소환의 돌"],
+      ["4007004","마법의 가루(노랑)"],
+      ["4007005","마법의 가루(보라)"],
+      ["4010001","강철의 원석"],
+      ["4020000","가넷의 원석"],
+      ["4031436","갈퀴손"],
+      ["4130000","장갑 제작의 촉진제"],
+      ["4130017","건 제작의 촉진제"],
+      ["4130020","하의 제작의 촉진제"],
+      ["2000002","하얀포션"],
+      ["2000004","엘릭서"],
+      ["2000006","마나 엘릭서"],
+      ["2040002","투구 방어력 주문서 10%"],
+      ["2040427","상의 행운 주문서 10%"],
+      ["2040705","신발 점프력 주문서 10%"],
+      ["2040824","장갑 체력 주문서 60%"],
+      ["2049100","혼돈의 주문서 60%"],
+      ["1002095","미스릴 플레닛"],
+      ["1032020","골드드롭 이어링"],
+      ["1051054","브라운 레퀴에르 (여)"],
+      ["1072163","레드 루티드슈즈"],
+      ["1082110","블루 코든"],
+      ["1082204","블랙 비스크"],
+      ["1102023","흰색 가이아의 망토"],
+      ["1332018","칸디네"],
+      ["1422010","호프만"],
+      ["1472028","청갑충"]
+    ])}
+  ];
+  added.forEach(function(mon){ if (!window.MONSTERS.some(function(old){ return String(old.id)===String(mon.id); })) window.MONSTERS.push(mon); });
+})();
+// 갈퀴손 (퀘스트 아이템)
+(function(){
+  var item={id:"4031436",name:"갈퀴손",img:"https://drive.google.com/thumbnail?id=1B5wBuxHgEFxQDKE2nAQd8dW2e5eetCpx&sz=w200",path:["기타","퀘스트"],sellPrice:1,desc:"갈고리 모양으로 된 손이다. 캡틴이 적에게서 빼앗은 것 같다."};
+  var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+  if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);
+})();
+// 중앙 복도 · 모건 · 로도스 · 롤로네 · 카산드라 · 돈틀레스 · 바르톨 · 갤리 · 세릴
+(function(){
+  // 상점 판매가 반영 (id:가격)
+  "1002610:900,1002613:4000,1002616:12000,1002619:20000,1052095:4000,1052098:8000,1052101:16000,1052104:30000,1052107:60000,1072285:5000,1072288:8000,1302007:3000,1322007:6000,1442004:24000,1482000:3000,1482001:6000,1482002:10000,1482003:20000,1482004:52000,1492000:3000,1492001:6000,1492002:10000,1492003:22000,1492004:50000,2000000:50,2000001:160,2000002:320,2000003:200,2000006:620,2001515:500,2001516:400,2001533:50,2002002:500,2002004:500,2002005:500,2010000:30,2010001:106,2010003:100,2010004:310,2020028:3000,2030000:400,2060000:1,2061000:1,2070000:500,2330000:600".split(',').forEach(function(row){var p=row.split(':');var it=window.ITEMS&&window.ITEMS.find(function(i){return i&&String(i.id)===p[0];});if(it)it.buyPrice=Number(p[1]);});
+  var place={name:"중앙 복도",code:"120000200",region:"노틸러스",img:"https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400"};
+  [
+    {id:"1091000",name:"모건",role:"무기상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1Pwr8skn3E70UFX_S5eCfimHp87jJbFb8&sz=w400",place:place,sells:["1492000","1492001","1492002","1492003","1492004","1482000","1482001","1482002","1482003","1482004","1302007","1322007","1442004"],dialogues:[]},
+    {id:"1091001",name:"로도스",role:"방어구 상인",category:"상점",img:"https://drive.google.com/thumbnail?id=11AuO1mEKyqorQuwtl__MdQJYTKbvwqD2&sz=w400",place:place,sells:["1002610","1002613","1002616","1002619","1052095","1052098","1052101","1052104","1052107","1072285","1072288"],dialogues:[]},
+    {id:"1092012",name:"롤로네",img:"https://drive.google.com/thumbnail?id=1fY3vkjQZkcmqIXT3pTRCKh3nrI7lJS8y&sz=w400",place:place,dialogues:[]},
+    {id:"1091004",name:"돈틀레스",role:"창고지기",category:"상점",img:"https://drive.google.com/thumbnail?id=1qdKUSMamTE10KAb6d3O6ilzSGSvaEljc&sz=w400",place:place,dialogues:[]},
+    {id:"1092011",name:"바르톨",img:"https://drive.google.com/thumbnail?id=1mvEOGmH3Spc3kz81gzVUG4TMikfoZ7o0&sz=w400",place:place,dialogues:[]},
+    {id:"1091002",name:"갤리",role:"잡화 상인",category:"상점",img:"https://drive.google.com/thumbnail?id=1n5p6fr6uQ78TSmq80Y2SECZLQNmMtikG&sz=w400",place:place,sells:["2000000","2000001","2000002","2000003","2000006","2001515","2001516","2002002","2002004","2002005","2010000","2001533","2010001","2010003","2010004","2020028","2030000","2061000","2060000","2070000","2330000"],dialogues:[]},
+    {id:"1091003",name:"세릴",role:"아이템 제작자",category:"상점",img:"https://drive.google.com/thumbnail?id=1dK8prJm7z11lf9mS0RZVy5yjvQK1bfdX&sz=w400",place:place,crafts:{"너클":[{"name":"레더 암즈","itemId":"1482001","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":20}],"price":1000},{"name":"더블테일 너클","itemId":"1482002","materials":[{"name":"강철","itemId":"4011001","qty":1},{"name":"청동","itemId":"4011000","qty":1},{"name":"동물의 가죽","itemId":"4000021","qty":10},{"name":"나사","itemId":"4003000","qty":5}],"price":2000},{"name":"노만 그립","itemId":"1482003","materials":[{"name":"청동","itemId":"4011000","qty":2},{"name":"강철","itemId":"4011001","qty":1},{"name":"나사","itemId":"4003000","qty":10}],"price":5000},{"name":"프라임 핸즈","itemId":"1482004","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"강철","itemId":"4011001","qty":1},{"name":"동물의 가죽","itemId":"4000021","qty":30},{"name":"나사","itemId":"4003000","qty":10}],"price":15000},{"name":"실버 메이든","itemId":"1482005","materials":[{"name":"청동","itemId":"4011000","qty":2},{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":30},{"name":"나사","itemId":"4003000","qty":20}],"price":30000},{"name":"네오자드","itemId":"1482006","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"강철","itemId":"4011001","qty":1},{"name":"가넷","itemId":"4021000","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":50},{"name":"나사","itemId":"4003000","qty":20}],"price":50000},{"name":"데빌클로","itemId":"1482007","materials":[{"name":"아이언호그의 철발굽","itemId":"4000039","qty":150},{"name":"청동","itemId":"4011000","qty":1},{"name":"강철","itemId":"4011001","qty":2},{"name":"용의 가죽","itemId":"4000030","qty":20},{"name":"동물의 가죽","itemId":"4000021","qty":20},{"name":"나사","itemId":"4003000","qty":20}],"price":100000}],"건":[{"name":"델린져","itemId":"1492001","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"나사","itemId":"4003000","qty":5},{"name":"가공된 나무","itemId":"4003001","qty":1}],"price":1000},{"name":"개런드 피스톨","itemId":"1492002","materials":[{"name":"청동","itemId":"4011000","qty":1},{"name":"나사","itemId":"4003000","qty":10},{"name":"가공된 나무","itemId":"4003001","qty":5},{"name":"동물의 가죽","itemId":"4000021","qty":10}],"price":2000},{"name":"골든훅","itemId":"1492003","materials":[{"name":"청동","itemId":"4011000","qty":2},{"name":"나사","itemId":"4003000","qty":10}],"price":5000},{"name":"콜드마인드","itemId":"1492004","materials":[{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":10},{"name":"나사","itemId":"4003000","qty":10}],"price":15000},{"name":"슈팅 스타","itemId":"1492005","materials":[{"name":"금","itemId":"4011006","qty":1},{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":5},{"name":"나사","itemId":"4003000","qty":10}],"price":30000},{"name":"루나 슈터","itemId":"1492006","materials":[{"name":"은","itemId":"4011004","qty":1},{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":10},{"name":"나사","itemId":"4003000","qty":20}],"price":50000},{"name":"라스펠트건","itemId":"1492007","materials":[{"name":"금","itemId":"4011006","qty":1},{"name":"은","itemId":"4011004","qty":2},{"name":"강철","itemId":"4011001","qty":4},{"name":"용의 가죽","itemId":"4000030","qty":30},{"name":"나사","itemId":"4003000","qty":30}],"price":100000}],"장갑":[{"name":"그린 래거 하프글로브","itemId":"1082180","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":15},{"name":"에메랄드","itemId":"4021003","qty":1}],"price":1000},{"name":"브라운 레더 아머글로브","itemId":"1082183","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":35}],"price":8000},{"name":"하드레더 글로브","itemId":"1082186","materials":[{"name":"강철","itemId":"4011001","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":20}],"price":15000},{"name":"옐로우 타르티스","itemId":"1082189","materials":[{"name":"토파즈","itemId":"4021006","qty":2},{"name":"동물의 가죽","itemId":"4000021","qty":50},{"name":"나사","itemId":"4003000","qty":10}],"price":25000},{"name":"브라운 쥬얼드","itemId":"1082192","materials":[{"name":"청동","itemId":"4011000","qty":3},{"name":"동물의 가죽","itemId":"4000021","qty":60},{"name":"나사","itemId":"4003000","qty":15}],"price":30000},{"name":"브라운 바르비","itemId":"1082195","materials":[{"name":"동물의 가죽","itemId":"4000021","qty":80},{"name":"청동","itemId":"4011000","qty":3},{"name":"강철","itemId":"4011001","qty":3},{"name":"나사","itemId":"4003000","qty":25}],"price":40000},{"name":"브라운 로이스","itemId":"1082198","materials":[{"name":"청동","itemId":"4011000","qty":3},{"name":"동물의 가죽","itemId":"4000021","qty":20},{"name":"용의 가죽","itemId":"4000030","qty":40},{"name":"나사","itemId":"4003000","qty":30}],"price":50000},{"name":"블랙 슐트","itemId":"1082201","materials":[{"name":"달의 돌","itemId":"4011007","qty":1},{"name":"흑수정","itemId":"4021008","qty":1},{"name":"다이아몬드","itemId":"4021007","qty":1},{"name":"용의 가죽","itemId":"4000030","qty":50},{"name":"나사","itemId":"4003000","qty":50}],"price":70000}]},dialogues:[]}
+  ].forEach(function(n){var old=window.NPCS.find(function(x){return String(x.id)===n.id;});if(old)Object.keys(n).forEach(function(k){old[k]=n[k];});else window.NPCS.push(n);});
+  // 이미 등록된 카산드라에 위치 추가
+  var cass=window.NPCS.find(function(x){return String(x.id)==="9000031";});
+  if(cass){var list=Array.isArray(cass.places)&&cass.places.length?cass.places.slice():(cass.place?[cass.place]:[]);list=list.filter(function(p){return String(p.code)!==place.code;});list.push(place);cass.places=list;if(!cass.place)cass.place=list[0];}
+  // 세릴 제작 결과물 역참조
+  if(window.CRAFT_MAKERS){
+    var seril=window.NPCS.find(function(x){return String(x.id)==="1091003";});
+    window.CRAFT_MAKERS=window.CRAFT_MAKERS.filter(function(c){return !(c.npc&&String(c.npc.id)==="1091003");});
+    if(seril&&seril.crafts)Object.keys(seril.crafts).forEach(function(type){seril.crafts[type].forEach(function(recipe){if(recipe.itemId)window.CRAFT_MAKERS.push({itemId:String(recipe.itemId),type:type,recipe:recipe,npc:{id:"1091003",name:seril.name,img:seril.img}});});});
+  }
+})();
+// 노틸러스 귀환 주문서 (갤리 판매)
+(function(){
+  var item={id:"2030019",name:"노틸러스 귀환 주문서",img:"https://drive.google.com/thumbnail?id=1hoIv1U4fShvg3XP37Qh7x30Tj0HSO3_M&sz=w200",path:["소비","이동"],buyPrice:500,sellPrice:250,desc:"해적 마을인 노틸러스로 귀환할 수 있는 주문서이다. 한 번 사용하면 사라진다."};
+  if(window.ITEMS){var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+    if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);}
+  var galli=window.NPCS&&window.NPCS.find(function(n){ return String(n.id)==="1091002"; });
+  if(galli){var s=(galli.sells||[]).filter(function(x){ return String(x)!=="2030019"; });var at=s.indexOf("2030000");s.splice(at>-1?at+1:s.length,0,"2030019");galli.sells=s;}
+})();
+// 검은색 가람 (한벌옷)
+(function(){
+  var item={id:"1040018",name:"검은색 가람 (남)",img:"https://drive.google.com/thumbnail?id=15RXFCWL3tw8KqZN66nhpQMBs-l5q09Fm&sz=w200",path:["장비","방어구","한벌옷"],job:"마법사",reqLevel:18,reqInt:55,reqLuk:20,int:1,pdd:15,mdd:10,sellPrice:4250};
+  var old=window.ITEMS.find(function(i){ return i && String(i.id)===item.id; });
+  if (old) Object.keys(item).forEach(function(k){ old[k]=item[k]; }); else window.ITEMS.push(item);
+})();
 </script>
 <script>
 (function(){
@@ -44740,23 +45686,18 @@ window.MONSTERS = [
   if (craftedBy.length){
     html += '<div class="section"><h2>제작 정보</h2>';
     craftedBy.forEach(function(c){
-      html += '<div class="card" style="margin-bottom:10px;">';
-      html += '<div class="ibox-grid">';
-      html += '<a class="ibox" href="npc-detail.html?id='+c.npc.id+'">'+safeImg(c.npc.img,c.npc.name,'thumb')+'<div><div class="lbl">'+c.type+' 제작 NPC</div><div class="val">'+c.npc.name+'</div></div></a>';
-      if (c.recipe && c.recipe.price!=null){
-        html += '<div class="ibox">'+safeImg('https://drive.google.com/thumbnail?id=1DaKmV5jEHVr7yW2AzdZfYPzi89jgEBpI&sz=w200','메소','thumb')+'<div><div class="lbl">필요 메소</div><div class="val">'+c.recipe.price.toLocaleString()+' 메소</div></div></div>';
-      }
-      html += '</div>';
-      if (c.recipe && c.recipe.materials && c.recipe.materials.length){
-        html += '<h3 style="font-size:13px;margin:14px 0 8px;">제작 재료</h3><div class="ibox-grid">';
-        html += c.recipe.materials.map(function(m){
+      var makerHead='<div class="item-chip" style="cursor:default;">'+safeImg(c.npc.img,c.npc.name,'icon')+'<div class="txt"><div class="lbl">'+c.type+' 제작 NPC</div><div class="val">'+c.npc.name+'</div></div></div>';
+      if (c.recipe){
+        var mats=(c.recipe.materials||[]).map(function(m){
           var materialItem=ITEMS.find(function(it){ return (m.itemId && String(it.id)===String(m.itemId)) || it.name===m.name; });
-          var inner=safeImg(materialItem&&materialItem.img,m.name,'thumb')+'<div><div class="lbl">필요 수량 ×'+m.qty+'</div><div class="val">'+m.name+'</div></div>';
-          return m.itemId ? '<a class="ibox" href="item-detail.html?id='+m.itemId+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+          var chip=safeImg(materialItem&&materialItem.img,m.name,'icon')+'<div class="txt"><div class="lbl">'+m.qty+'개</div><div class="val">'+m.name+'</div></div>';
+          return m.itemId ? '<a class="item-chip" href="item-detail.html?id='+m.itemId+'">'+chip+'</a>' : '<div class="item-chip">'+chip+'</div>';
         }).join('');
-        html += '</div>';
+        var badge=c.recipe.price!=null ? c.recipe.price.toLocaleString()+'메소' : (c.recipe.yield!=null ? c.recipe.yield.toLocaleString()+'개 제작' : '');
+        html += '<details class="craft-card"><summary class="craft-card-head">'+makerHead+(badge?'<span class="craft-price">'+badge+'</span>':'')+'</summary><div class="craft-mats item-chip-list">'+mats+'</div></details>';
+      } else {
+        html += '<div class="craft-card">'+makerHead+'</div>';
       }
-      html += '</div>';
     });
     html += '</div>';
   }
