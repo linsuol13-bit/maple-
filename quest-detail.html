@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>퀘스트 상세 · 로나월드</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css">
 <style>
 /* =========================================================
    로나월드 — 디자인 토큰 (메이플 나무액자 퀘스트창 스타일)
@@ -51,7 +50,7 @@ html,body{ margin:0; padding:0; }
 body{
   background: var(--bg);
   color: var(--ink);
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: "NanumSquare", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   line-height:1.55;
 }
 a{ color:inherit; text-decoration:none; }
@@ -59,7 +58,7 @@ img{ max-width:100%; display:block; }
 button{ font:inherit; }
 
 .font-display{
-  font-family: "Jua", "Pretendard", sans-serif;
+  font-family: "NanumSquare", sans-serif;
   letter-spacing: -.01em;
 }
 
@@ -327,7 +326,7 @@ button{ font:inherit; }
   background: var(--paper-soft); border:3px dashed var(--wood-light);
   border-radius: var(--radius-lg);
 }
-.empty .big{ font-family:"Jua",sans-serif; font-size:19px; color:var(--ink); margin-bottom:6px; }
+.empty .big{ font-family:"NanumSquare",sans-serif; font-size:19px; color:var(--ink); margin-bottom:6px; }
 
 /* ---------- 상세 페이지 공통 ---------- */
 .back-link{
@@ -351,7 +350,7 @@ button{ font:inherit; }
   padding:4px 11px; border-radius:999px; margin-bottom:10px;
 }
 .detail-header h1{
-  font-family:"Jua",sans-serif; font-weight:400; font-size:25px; margin:0 0 6px;
+  font-family:"NanumSquare",sans-serif; font-weight:400; font-size:25px; margin:0 0 6px;
   text-shadow: 2px 2px 0 rgba(78,45,16,.15);
 }
 .detail-header .sub{ font-size:13px; color:var(--ink-soft); font-weight:700; }
@@ -539,7 +538,7 @@ button{ font:inherit; }
 
 /* ---------- 즐겨찾기 탭 ---------- */
 .fav-group{ margin-bottom:26px; }
-.fav-group-label{ font-size:15px; font-weight:900; font-family:'Jua',sans-serif; color:var(--ink); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.fav-group-label{ font-size:15px; font-weight:900; font-family:'NanumSquare',sans-serif; color:var(--ink); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
 .fav-group-label .n{ font-size:12px; font-weight:800; color:var(--ink-soft); background:var(--paper-soft); border-radius:999px; padding:2px 9px; }
 
 .notready{
@@ -2625,7 +2624,7 @@ window.QUEST_DETAILS = {
   var $detail = document.getElementById('detail');
 
   if (!listItem && !detail){
-    $detail.innerHTML = '<div class="notready"><div class="big font-display" style="font-family:Jua,sans-serif;font-size:18px;margin-bottom:6px;">퀘스트를 찾을 수 없어요</div><div>주소의 id 값을 다시 확인해 주세요.</div></div>';
+    $detail.innerHTML = '<div class="notready"><div class="big font-display" style="font-family:NanumSquare,sans-serif;font-size:18px;margin-bottom:6px;">퀘스트를 찾을 수 없어요</div><div>주소의 id 값을 다시 확인해 주세요.</div></div>';
     return;
   }
 
@@ -2701,7 +2700,7 @@ window.QUEST_DETAILS = {
   if (!detail){
     // 목록 데이터만 있는 경우: 요약 정보 + 준비중 안내
     html += '<div class="notready" style="margin-bottom:20px;">';
-    html += '<div class="big font-display" style="font-family:Jua,sans-serif;font-size:17px;margin-bottom:6px;">이 퀘스트의 상세 대사·조건 정보는 아직 준비 중이에요</div>';
+    html += '<div class="big font-display" style="font-family:NanumSquare,sans-serif;font-size:17px;margin-bottom:6px;">이 퀘스트의 상세 대사·조건 정보는 아직 준비 중이에요</div>';
     html += '<div>대사, 시작/완료 NPC, 세부 요구 조건은 곧 추가될 예정이에요. 아래는 현재까지 확인 가능한 보상 정보예요.</div>';
     html += '</div>';
     if (listItem && listItem.rewards && listItem.rewards.length){
