@@ -22866,6 +22866,66 @@ window.MONSTERS = [
     m.portals.forEach(function(p){p.icon=(p.note==="히든 이동")?moveIcon:portalIcon;});
   });
 })();
+// 허름한 빈집 등록 · NPC 자노
+(function(){
+  var place={"name":"허름한 빈집","code":"260000201","region":"아리안트","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/260000201.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="허름한빈집"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:840,imgHeight:600,portals:[{"toCode":"260000200","toName":"아리안트마을","note":"이동","x":150,"y":109,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2101010","name":"자노","img":"https://drive.google.com/thumbnail?id=1QB4ys0-YaxbwOux5JYkRqoy32k7D-SGw&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 아리안트마을 → 허름한 빈집 포탈
+(function(){if(!window.MAPS)return;var m=window.MAPS.find(function(x){return String(x.code)==="260000200";});if(!m)return;m.portals=m.portals||[];if(!m.portals.some(function(p){return String(p.toCode)==="260000201";}))m.portals.push({toCode:"260000201",toName:"허름한 빈집",note:"이동",x:4079,y:408,unit:"px"});})();
+// 붉은 전갈단의 소굴 등록 · NPC 보물상자
+(function(){
+  var place={"name":"붉은 전갈단의 소굴","code":"260010402","region":"아리안트","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/260010402.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="붉은전갈단의소굴"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1477,imgHeight:350,portals:[{"toCode":"260010401","toName":"바위 언덕","note":"이동","x":53,"y":271,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2103007","name":"보물상자","img":"https://drive.google.com/thumbnail?id=1EspiSjjIKhSSjzfv6XNOqh_NCNkLDz4a&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 바위 언덕 → 붉은 전갈단의 소굴 포탈
+(function(){if(!window.MAPS)return;var m=window.MAPS.find(function(x){return String(x.code)==="260010401";});if(!m)return;m.portals=m.portals||[];if(!m.portals.some(function(p){return String(p.toCode)==="260010402";}))m.portals.push({toCode:"260010402",toName:"붉은 전갈단의 소굴",note:"이동",x:421,y:667,unit:"px"});})();
 </script>
 <script src="data-map-detail.js"></script>
 </body>

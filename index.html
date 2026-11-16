@@ -26783,6 +26783,36 @@ window.ITEMS = [
     "desc": "아이언호그의 다리를 감싸고 있던 강철로 된 발굽이다."
 },
 {
+  "id": "4031579",
+  "name": "작은 보물주머니",
+  "img": "https://drive.google.com/thumbnail?id=1vInh6tmvyZ6epim6lAK1DsLmJlGfwT3b&sz=w200",
+  "path": [
+    "기타",
+    "퀘스트"
+  ],
+  "desc": "보물의 무더기에서 조금 가져온 보물이다. 작은 주머니에 들어 있다."
+},
+{
+  "id": "4031578",
+  "name": "왕비의 반지",
+  "img": "https://drive.google.com/thumbnail?id=1SDxFrBpzNy-T1j1yLdDk5pzTSqODZAsl&sz=w200",
+  "path": [
+    "기타",
+    "퀘스트"
+  ],
+  "desc": "호화롭게 장식된 반지이다. 무척 비싸 보인다."
+},
+{
+  "id": "4031570",
+  "name": "티건의 수염가닥",
+  "img": "https://drive.google.com/thumbnail?id=1nw-wK4a2e6GiV_JypwJeClxuOV2TNPEo&sz=w200",
+  "path": [
+    "기타",
+    "퀘스트"
+  ],
+  "desc": "티건의 수염을 한 가닥 뽑은 것이다."
+},
+{
   "id": "4031580",
   "name": "포장된 음식물",
   "img": "https://drive.google.com/thumbnail?id=1WWzJJ9_420JI2wa1JmBDpk5pAWgtDYV4&sz=w200",
@@ -88319,6 +88349,66 @@ window.CHANGELOG = [
     m.portals.forEach(function(p){p.icon=(p.note==="히든 이동")?moveIcon:portalIcon;});
   });
 })();
+// 허름한 빈집 등록 · NPC 자노
+(function(){
+  var place={"name":"허름한 빈집","code":"260000201","region":"아리안트","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/260000201.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="허름한빈집"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:840,imgHeight:600,portals:[{"toCode":"260000200","toName":"아리안트마을","note":"이동","x":150,"y":109,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2101010","name":"자노","img":"https://drive.google.com/thumbnail?id=1QB4ys0-YaxbwOux5JYkRqoy32k7D-SGw&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 아리안트마을 → 허름한 빈집 포탈
+(function(){if(!window.MAPS)return;var m=window.MAPS.find(function(x){return String(x.code)==="260000200";});if(!m)return;m.portals=m.portals||[];if(!m.portals.some(function(p){return String(p.toCode)==="260000201";}))m.portals.push({toCode:"260000201",toName:"허름한 빈집",note:"이동",x:4079,y:408,unit:"px"});})();
+// 붉은 전갈단의 소굴 등록 · NPC 보물상자
+(function(){
+  var place={"name":"붉은 전갈단의 소굴","code":"260010402","region":"아리안트","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/260010402.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="붉은전갈단의소굴"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1477,imgHeight:350,portals:[{"toCode":"260010401","toName":"바위 언덕","note":"이동","x":53,"y":271,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2103007","name":"보물상자","img":"https://drive.google.com/thumbnail?id=1EspiSjjIKhSSjzfv6XNOqh_NCNkLDz4a&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 바위 언덕 → 붉은 전갈단의 소굴 포탈
+(function(){if(!window.MAPS)return;var m=window.MAPS.find(function(x){return String(x.code)==="260010401";});if(!m)return;m.portals=m.portals||[];if(!m.portals.some(function(p){return String(p.toCode)==="260010402";}))m.portals.push({toCode:"260010402",toName:"붉은 전갈단의 소굴",note:"이동",x:421,y:667,unit:"px"});})();
 </script>
 <script>
 (function(){
@@ -91194,7 +91284,7 @@ window.CHANGELOG = [
     '블랙로드':'https://drive.google.com/thumbnail?id=1LntTAE7pF0YXTz2yIE_zkGNjGuJGLO3S&sz=w400',
     '무릉':'https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400'
   };
-  var PANEL_ARIANT_ICON_MAPS = {'아리안트':1,'아리안트궁전':1,'아리안트마을':1,'민가1':1,'민가2':1,'민가3':1,'민가4':1,'민가5':1,'민가6':1,'아리안트 정거장':1,'아리안트 서문 밖':1,'어린 카투스 사막':1,'선인장 사막1':1,'선인장 사막2':1,'로얄 카투스 사막':1,'흰 바위 사막':1,'벨라모아의 굴':1,'작열하는 사막':1,'바위 언덕':1,'메마른 사막':1,'프릴드 서식지대':1,'유랑단의 텐트':1,'아리안트 동문 밖':1};
+  var PANEL_ARIANT_ICON_MAPS = {'허름한 빈집':1,'아리안트':1,'아리안트궁전':1,'아리안트마을':1,'민가1':1,'민가2':1,'민가3':1,'민가4':1,'민가5':1,'민가6':1,'아리안트 정거장':1,'아리안트 서문 밖':1,'어린 카투스 사막':1,'선인장 사막1':1,'선인장 사막2':1,'로얄 카투스 사막':1,'흰 바위 사막':1,'벨라모아의 굴':1,'작열하는 사막':1,'바위 언덕':1,'메마른 사막':1,'프릴드 서식지대':1,'유랑단의 텐트':1,'아리안트 동문 밖':1};
   var PANEL_HENESIS_ICON_MAPS = {'헤네시스':1,'헤네시스시장':1,'헤네시스 서쪽숲':1,'헤네시스 서쪽언덕':1,'헤네시스 사냥터 1':1,'헤네시스 사냥터 2':1,'헤네시스 사냥터 3':1,'비어있는집':1,'버섯공원 1':1,'버섯공원 2':1,'남의집':1,'버섯동산':1,'버섯공원쉼터':1,'궁수 교육원':1};
   var PANEL_ORBIS_ICON_MAPS = {'상담실':1,'구름공원1':1,'구름공원2':1,'구름공원3':1,'구름공원4':1,'구름공원5':1,'구름공원6':1,'산책로':1,'산책로2':1,'버려진화원':1,'노파의집':1,'세가지빛정원으로가는길':1,'붉은빛의정원1':1,'붉은빛의정원2':1,'노란빛의정원1':1,'노란빛의정원2':1,'푸른빛의정원1':1,'푸른빛의정원2':1,'하늘계단1':1,'하늘계단2':1,'검은빛의정원1':1,'검은빛의정원2':1,'엘리쟈의정원':1,'알수없는탑':1,'길드본부<영웅의전당>':1,'만남의 언덕':1};
   var PANEL_ELNATH_ICON_MAPS = {'눈 덮인 언덕':1,'장로의관저':1,'빙판조심1':1,'빙판조심2':1,'차가운벌판1':1,'차가운벌판2':1,'왕관을휘날리며':1,'차디찬벌판':1,'라이더의 벌판':1,'얼음골짜기1':1,'얼음골짜기2':1,'날카로운절벽1':1,'날카로운절벽2':1,'설원의성지':1,'늑대의영역1':1,'늑대의영역2':1,'위험한절벽':1,'늑대의영역3':1,'늑대의영역4':1,'늑대의영역5':1,'죽은나무의숲1':1,'죽은나무의숲2':1,'죽은나무의숲3':1,'죽은나무의숲4':1,'폐광1':1,'폐광2':1,'폐광3':1,'폐광4':1,'통로':1,'시련의동굴1':1,'시련의동굴2':1,'동굴속동굴':1,'시련의동굴3':1,'자쿰으로통하는문':1,'자쿰의제단':1,'설인의 골짜기':1,'눈의정령 쉼터':1};
