@@ -92678,6 +92678,8 @@ window.CHANGELOG = [
   var RECENT_ADD_LIMIT = 12;
   // 통합 검색 전체 결과 (검색창에서 Enter)
   var SEARCH_ALL_LIMIT = 300;
+  // 검색 결과 퀘스트 아이콘: 시작 NPC 이미지 → 목록의 npcImg 순서로 사용
+  function questSearchIcon(x){ var d=(typeof QUEST_DETAILS!=='undefined'&&QUEST_DETAILS)?QUEST_DETAILS[String(x.id)]:null; return (d&&d.start&&d.start.npc&&d.start.npc.img)||x.npcImg||x.img||''; }
   function searchAllMatches(q){
     q = String(q||'').trim(); var qn = normQ(q);
     if (!q) return null;
@@ -92698,7 +92700,7 @@ window.CHANGELOG = [
     if (!total) return html + '<div class="gs-empty">"'+esc(q)+'"에 대한 검색 결과가 없어요.</div>';
     var groups = [
       { key:'item', label:'🎒 아이템', link:function(x){ return 'item-detail.html?id='+x.id; }, name:function(x){ return x.name; }, meta:function(x){ return itemPathOf(x).join(' · '); }, img:function(x){ return x.img; } },
-      { key:'quest', label:'📜 퀘스트', link:function(x){ return 'quest-detail.html?id='+x.id; }, name:function(x){ return (x.code?x.code+' · ':'')+x.title; }, meta:function(x){ return (x.region||'')+(x.minLevel?' · Lv.'+x.minLevel:''); }, img:function(x){ return x.npcImg||x.img; } },
+      { key:'quest', label:'📜 퀘스트', link:function(x){ return 'quest-detail.html?id='+x.id; }, name:function(x){ return (x.code?x.code+' · ':'')+x.title; }, meta:function(x){ return (x.region||'')+(x.minLevel?' · Lv.'+x.minLevel:''); }, img:function(x){ return questSearchIcon(x); } },
       { key:'monster', label:'🐾 몬스터', link:function(x){ return 'monster-detail.html?id='+x.id; }, name:function(x){ return x.name; }, meta:function(x){ return x.minLevel?'Lv.'+x.minLevel:''; }, img:function(x){ return x.img; } },
       { key:'npc', label:'💬 NPC', link:function(x){ return 'npc-detail.html?id='+x.id; }, name:function(x){ return x.name; }, meta:function(x){ return (x.place&&x.place.name)||''; }, img:function(x){ return x.img; } },
       { key:'map', label:'🗺️ 맵', link:function(x){ return 'map-detail.html?code='+x.code; }, name:function(x){ return x.name; }, meta:function(x){ return (x.region||'')+' · 코드 '+x.code; }, img:function(x){ return (typeof __mapThumbSrc==="function") ? __mapThumbSrc(x) : x.img; } }
@@ -92896,7 +92898,7 @@ window.CHANGELOG = [
     var nm = NPCS.filter(function(x){ return normQ(x.name).indexOf(qn)>-1 || String(x.id||'').indexOf(q)>-1; }).slice(0,6);
     var pm = MAPS.filter(function(x){ return normQ(x.name).indexOf(qn)>-1 || String(x.code||'').indexOf(q)>-1; }).sort(function(a,b){ return Number(a.code) - Number(b.code); }).slice(0,6);
     if (qm.length){
-      html += '<div class="gs-group-label">📜 퀘스트</div>' + qm.map(function(x){ return gsRowHtml('quest', x.id, x.img, (x.code?x.code+' · ':'')+x.title, x.region); }).join('');
+      html += '<div class="gs-group-label">📜 퀘스트</div>' + qm.map(function(x){ return gsRowHtml('quest', x.id, questSearchIcon(x), (x.code?x.code+' · ':'')+x.title, x.region); }).join('');
     }
     if (mm.length){
       html += '<div class="gs-group-label">🐾 몬스터</div>' + mm.map(function(x){ return gsRowHtml('monster', x.id, x.img, x.name, x.minLevel?'Lv.'+x.minLevel:''); }).join('');
