@@ -882,7 +882,7 @@ button{ font:inherit; }
       '무릉':'https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400'
     };
   var VICTORIA_ICON = 'https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400';
-  function placeIconOf(pl){var __dc=String((pl&&pl.code)||"");if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";
+  function placeIconOf(pl){var __dc=String((pl&&pl.code)||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";
     var key = pl.town || pl.name;
     if (PLACE_ICONS[key]) return PLACE_ICONS[key];
     if (TOWN_ICONS[key]) return TOWN_ICONS[key];
