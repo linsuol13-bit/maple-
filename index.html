@@ -91647,17 +91647,18 @@ window.CHANGELOG = [
       return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
     }
     function rewardBox(r){
+    var tierTag = r.tier ? '<b style="color:#db2777">['+r.tier+']</b> ' : '';
       if (typeof r.exp === 'number'){
-        return '<div class="ibox">'+safeImg(r.img,'EXP','thumb')+'<div><div class="lbl">경험치</div><div class="val">'+fmt(r.exp)+' exp</div></div></div>';
+        return '<div class="ibox">'+safeImg(r.img,'EXP','thumb')+'<div><div class="lbl">'+tierTag+'경험치</div><div class="val">'+fmt(r.exp)+' exp</div></div></div>';
       }
       if (typeof r.meso === 'number'){
-        return '<div class="ibox">'+safeImg(r.img,'메소','thumb')+'<div><div class="lbl">메소</div><div class="val">'+fmt(r.meso)+' 메소</div></div></div>';
+        return '<div class="ibox">'+safeImg(r.img,'메소','thumb')+'<div><div class="lbl">'+tierTag+'메소</div><div class="val">'+fmt(r.meso)+' 메소</div></div></div>';
       }
       if (typeof r.fame === 'number'){
-        return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">인기도</div><div class="val">⭐ +'+r.fame+'</div></div></div>';
+        return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">'+tierTag+'인기도</div><div class="val">⭐ +'+r.fame+'</div></div></div>';
       }
       var title = (r.name||'')+((r.qty&&r.qty>0)?' ×'+r.qty:'')+(r.chance!=null?' · '+r.chance+'%':'');
-      var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+(r.random?'확률 보상 아이템':(r.choice?'선택 보상 아이템':'보상 아이템'))+(r.job?' · '+r.job:'')+'</div><div class="val">'+title+'</div></div>';
+      var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+tierTag+(r.random?'확률 보상 아이템':(r.choice?'선택 보상 아이템':'보상 아이템'))+(r.job?' · '+r.job:'')+'</div><div class="val">'+title+'</div></div>';
       return r.itemId ? '<a class="ibox" href="item-detail.html?id='+r.itemId+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
     }
   function craftHtml(detail){
