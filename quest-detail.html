@@ -701,6 +701,7 @@ button{ font:inherit; }
       list.forEach(function(r){var k=r.tier||'';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(Object.assign({},r,{tier:null}));});
       return order.map(function(k){return '<div style="margin:10px 0 6px;font-weight:700;color:#db2777;">'+(k?(k+' 가져가면'):'공통')+'</div><div class="ibox-grid">'+groups[k].map(rewardBox).join('')+'</div>';}).join('');
     }
+    var FAME_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZlMDY2Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZmZiODAwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHBhdGggZD0iTTMyIDRsOC40IDE3LjkgMTkuNiAyLjQtMTQuNSAxMy40IDMuOSAxOS40TDMyIDQ3LjQgMTQuNiA1Ny4xbDMuOS0xOS40TDQgMjQuM2wxOS42LTIuNHoiIGZpbGw9InVybCgjZykiIHN0cm9rZT0iI2UwOWIwMCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4="; // 인기도 보상 기본 아이콘
   function rewardBox(r){
     var tierTag = r.tier ? '<b style="color:#db2777">['+r.tier+']</b> ' : '';
     if (typeof r.exp === 'number'){
@@ -710,7 +711,7 @@ button{ font:inherit; }
       return '<div class="ibox">'+safeImg(r.img,'메소','thumb')+'<div><div class="lbl">'+tierTag+'메소</div><div class="val">'+fmt(r.meso)+' 메소</div></div></div>';
     }
     if (typeof r.fame === 'number'){
-      return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">'+tierTag+'인기도</div><div class="val">⭐ '+(r.fame>=0?'+':'')+r.fame+'</div></div></div>';
+      return '<div class="ibox">'+safeImg(r.img||FAME_ICON,'인기도','thumb')+'<div><div class="lbl">'+tierTag+'인기도</div><div class="val">⭐ '+(r.fame>=0?'+':'')+r.fame+'</div></div></div>';
     }
     var title = (r.name||'')+((r.qty&&r.qty>0)?' ×'+r.qty:'')+(r.chance!=null?' · '+r.chance+'%':'');
     var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+tierTag+(r.random?'확률 보상 아이템':(r.choice?'선택 보상 아이템':'보상 아이템'))+(r.job?' · '+r.job:'')+'</div><div class="val">'+title+'</div></div>';

@@ -1107,11 +1107,11 @@ button{ font:inherit; }
       </div>
     </div>
     <div class="field">
-      <label for="playerLevelInput">내 캐릭터 레벨 (입력 시 못 하는 퀘스트 숨김)</label>
+      <label for="playerLevelInput">캐릭터 레벨</label>
       <input id="playerLevelInput" type="number" min="1" max="210" value="" placeholder="비우면 전체 표시">
     </div>
     <div class="field">
-      <label for="questExpRatioInput">경험치 비율 이상만 보기 (내 캐릭터 레벨 기준) · <b id="questExpRatioVal" style="color:#db2777">끄기</b></label>
+      <label for="questExpRatioInput">경험치 비율 이상만 보기 (캐릭터 레벨 기준) · <b id="questExpRatioVal" style="color:#db2777">끄기</b></label>
       <input id="questExpRatioInput" type="range" min="0" max="100" step="1" value="0" style="width:100%;accent-color:#ec4899;">
     </div>
     <div class="field">
@@ -26931,6 +26931,21 @@ window.ITEMS = [
   "jump": 2
 },
 {
+  "id": "1102048",
+  "name": "빨간색 실리스의 망토",
+  "img": "https://drive.google.com/thumbnail?id=1U_phUhJHLvRhSLiPdhWJlKJ9xuOaFW0c&sz=w200",
+  "path": [
+    "장비",
+    "방어구",
+    "망토"
+  ],
+  "job": "공용",
+  "reqLevel": 95,
+  "pdd": 39,
+  "mdd": 44,
+  "sellPrice": 340000
+},
+{
   "id": "1102136",
   "name": "알카드노의 망토",
   "img": "https://drive.google.com/thumbnail?id=15LV4xOe-k9WIPB2vwTl2fo4fuyJs0dkf&sz=w200",
@@ -47117,7 +47132,7 @@ window.ITEMS = [
 },
 {
   "id": "4031252",
-  "name": "짖어진 노트",
+  "name": "찢어진 노트",
   "img": "https://drive.google.com/thumbnail?id=1tFcWPG1wZIIy18ZFy7jifox_O66QoLb0&sz=w200",
   "path": [
     "기타",
@@ -76287,7 +76302,7 @@ window.CHANGELOG = [
 // 샤크 등록 (난파선의 무덤, 아쿠아로드)
 (function(){
   if(window.MONSTERS){
-    var shark={id:"8150100",name:"샤크",img:"https://drive.google.com/thumbnail?id=10BEcrebY4B0ctJj1i4wa-vTYBHTZRcA4&sz=w200",category:"어류형",minLevel:100,hp:56000,mp:230,exp:15000,acc:205,eva:38,pdd:850,mdd:570,note:"불속성 공격 반감",desc:"아쿠아로드 깊은 곳에서 서식하는 상어이다. 아쿠아로드를 정화하는 힘이 사라지면서 난폭하게 변해버렸다고 한다. 뾰족한 이빨을 드러내며 심해로 들어온 여행자를 공격하는데 샤크에게 물리면 치명적인 상처를 입는다. 용감한 여행자들 사이에서는 샤크의 이빨을 수집하는 것이 하나의 자랑거리가 될정도다.",places:[{name:"난파선의 무덤",code:"230040400",count:19}],place:{name:"난파선의 무덤",code:"230040400",count:19},drops:[{itemId:"4000180",name:"상어 틀니"},{itemId:"4004002",name:"민첩성의 크리스탈 원석"},{itemId:"4006000",name:"마법의 돌"},{itemId:"4006001",name:"소환의 돌"},{itemId:"4007000",name:"마법의 가루(갈색)"},{itemId:"4007004",name:"마법의 가루(노랑)"},{itemId:"4010005",name:"오리할콘의 원석"},{itemId:"4031252",name:"짖어진 노트"},{itemId:"4031254",name:"망가진 손전등"},{itemId:"4031255",name:"고장난 카메라"},{itemId:"4130006",name:"두손도끼 제작의 촉진제"},{itemId:"4130007",name:"두손둔기 제작의 촉진제"},{itemId:"4130019",name:"상의 제작의 촉진제"},{itemId:"4161018",name:"[스토리북]오래된 책"},{itemId:"2000005",name:"파워 엘릭서"},{itemId:"2000006",name:"마나 엘릭서"},{itemId:"2020013",name:"순록의 우유"},{itemId:"2022003",name:"장어구이"},{itemId:"2040901",name:"방패 방어력 주문서 60%"},{itemId:"2041001",name:"망토 마법 방어력 주문서 60%"},{itemId:"2041013",name:"망토 힘 주문서 60%"},{itemId:"2044902",name:"건 공격력 주문서 10%"},{itemId:"2290118",name:"[마스터리북]래피드 파이어 30"},{itemId:"1002366",name:"흑견랑건"},{itemId:"1002405",name:"다크 아데스햇"},{itemId:"1032017",name:"장미꽃 귀고리"},{itemId:"1040112",name:"블루 제너럴 (남)"},{itemId:"1052131",name:"레드 벨리듀크"},{itemId:"1060101",name:"블루 제너럴 바지 (남)"},{itemId:"1072192",name:"그린 쉐도우부츠"},{itemId:"1072204",name:"그린 아데스슈즈"},{itemId:"1072214",name:"블루 가티나부츠"},{itemId:"1072315",name:"블랙 마르킨츠"},{itemId:"1082142",name:"그린 미스트라"},{itemId:"1322028",name:"골든 해머"},{itemId:"1332022",name:"카타르"}]};
+    var shark={id:"8150100",name:"샤크",img:"https://drive.google.com/thumbnail?id=10BEcrebY4B0ctJj1i4wa-vTYBHTZRcA4&sz=w200",category:"어류형",minLevel:100,hp:56000,mp:230,exp:15000,acc:205,eva:38,pdd:850,mdd:570,note:"불속성 공격 반감",desc:"아쿠아로드 깊은 곳에서 서식하는 상어이다. 아쿠아로드를 정화하는 힘이 사라지면서 난폭하게 변해버렸다고 한다. 뾰족한 이빨을 드러내며 심해로 들어온 여행자를 공격하는데 샤크에게 물리면 치명적인 상처를 입는다. 용감한 여행자들 사이에서는 샤크의 이빨을 수집하는 것이 하나의 자랑거리가 될정도다.",places:[{name:"난파선의 무덤",code:"230040400",count:19}],place:{name:"난파선의 무덤",code:"230040400",count:19},drops:[{itemId:"4000180",name:"상어 틀니"},{itemId:"4004002",name:"민첩성의 크리스탈 원석"},{itemId:"4006000",name:"마법의 돌"},{itemId:"4006001",name:"소환의 돌"},{itemId:"4007000",name:"마법의 가루(갈색)"},{itemId:"4007004",name:"마법의 가루(노랑)"},{itemId:"4010005",name:"오리할콘의 원석"},{itemId:"4031252",name:"찢어진 노트"},{itemId:"4031254",name:"망가진 손전등"},{itemId:"4031255",name:"고장난 카메라"},{itemId:"4130006",name:"두손도끼 제작의 촉진제"},{itemId:"4130007",name:"두손둔기 제작의 촉진제"},{itemId:"4130019",name:"상의 제작의 촉진제"},{itemId:"4161018",name:"[스토리북]오래된 책"},{itemId:"2000005",name:"파워 엘릭서"},{itemId:"2000006",name:"마나 엘릭서"},{itemId:"2020013",name:"순록의 우유"},{itemId:"2022003",name:"장어구이"},{itemId:"2040901",name:"방패 방어력 주문서 60%"},{itemId:"2041001",name:"망토 마법 방어력 주문서 60%"},{itemId:"2041013",name:"망토 힘 주문서 60%"},{itemId:"2044902",name:"건 공격력 주문서 10%"},{itemId:"2290118",name:"[마스터리북]래피드 파이어 30"},{itemId:"1002366",name:"흑견랑건"},{itemId:"1002405",name:"다크 아데스햇"},{itemId:"1032017",name:"장미꽃 귀고리"},{itemId:"1040112",name:"블루 제너럴 (남)"},{itemId:"1052131",name:"레드 벨리듀크"},{itemId:"1060101",name:"블루 제너럴 바지 (남)"},{itemId:"1072192",name:"그린 쉐도우부츠"},{itemId:"1072204",name:"그린 아데스슈즈"},{itemId:"1072214",name:"블루 가티나부츠"},{itemId:"1072315",name:"블랙 마르킨츠"},{itemId:"1082142",name:"그린 미스트라"},{itemId:"1322028",name:"골든 해머"},{itemId:"1332022",name:"카타르"}]};
     var oldShark=window.MONSTERS.find(function(m){return String(m.id)===shark.id;});
     if(oldShark)Object.keys(shark).forEach(function(k){oldShark[k]=shark[k];});else window.MONSTERS.push(shark);
   }
@@ -89303,7 +89318,7 @@ window.CHANGELOG = [
   playerLevelInput.addEventListener('input', render);
   var questExpRatioInput = document.getElementById('questExpRatioInput');
   var questExpRatioVal = document.getElementById('questExpRatioVal');
-  function syncQuestExpRatioLabel(){ var v = Number(questExpRatioInput.value)||0; questExpRatioVal.textContent = v>0 ? (v+'% 이상'+(Number(playerLevelInput.value)?'':' (내 레벨 입력 필요)')) : '끄기'; }
+  function syncQuestExpRatioLabel(){ var v = Number(questExpRatioInput.value)||0; questExpRatioVal.textContent = v>0 ? (v+'% 이상'+(Number(playerLevelInput.value)?'':' (캐릭터 레벨 입력 필요)')) : '끄기'; }
   questExpRatioInput.addEventListener('input', function(){ syncQuestExpRatioLabel(); render(); });
   playerLevelInput.addEventListener('input', syncQuestExpRatioLabel);
   var sortSelect = document.getElementById('sortSelect');
@@ -91679,6 +91694,7 @@ window.CHANGELOG = [
       list.forEach(function(r){var k=r.tier||'';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(Object.assign({},r,{tier:null}));});
       return order.map(function(k){return '<div style="margin:10px 0 6px;font-weight:700;color:#db2777;">'+(k?(k+' 가져가면'):'공통')+'</div><div class="ibox-grid">'+groups[k].map(rewardBox).join('')+'</div>';}).join('');
     }
+    var FAME_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZlMDY2Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZmZiODAwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHBhdGggZD0iTTMyIDRsOC40IDE3LjkgMTkuNiAyLjQtMTQuNSAxMy40IDMuOSAxOS40TDMyIDQ3LjQgMTQuNiA1Ny4xbDMuOS0xOS40TDQgMjQuM2wxOS42LTIuNHoiIGZpbGw9InVybCgjZykiIHN0cm9rZT0iI2UwOWIwMCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4="; // 인기도 보상 기본 아이콘
     function rewardBox(r){
     var tierTag = r.tier ? '<b style="color:#db2777">['+r.tier+']</b> ' : '';
       if (typeof r.exp === 'number'){
@@ -91688,7 +91704,7 @@ window.CHANGELOG = [
         return '<div class="ibox">'+safeImg(r.img,'메소','thumb')+'<div><div class="lbl">'+tierTag+'메소</div><div class="val">'+fmt(r.meso)+' 메소</div></div></div>';
       }
       if (typeof r.fame === 'number'){
-        return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">'+tierTag+'인기도</div><div class="val">⭐ +'+r.fame+'</div></div></div>';
+        return '<div class="ibox">'+safeImg(r.img||FAME_ICON,'인기도','thumb')+'<div><div class="lbl">'+tierTag+'인기도</div><div class="val">⭐ +'+r.fame+'</div></div></div>';
       }
       var title = (r.name||'')+((r.qty&&r.qty>0)?' ×'+r.qty:'')+(r.chance!=null?' · '+r.chance+'%':'');
       var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+tierTag+(r.random?'확률 보상 아이템':(r.choice?'선택 보상 아이템':'보상 아이템'))+(r.job?' · '+r.job:'')+'</div><div class="val">'+title+'</div></div>';
