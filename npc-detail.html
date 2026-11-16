@@ -12669,6 +12669,8 @@ window.ITEMS = [
 })();
 // 바위 언덕 → 붉은 전갈단의 소굴 포탈
 (function(){if(!window.MAPS)return;var m=window.MAPS.find(function(x){return String(x.code)==="260010401";});if(!m)return;m.portals=m.portals||[];if(!m.portals.some(function(p){return String(p.toCode)==="260010402";}))m.portals.push({toCode:"260010402",toName:"붉은 전갈단의 소굴",note:"이동",x:421,y:667,unit:"px"});})();
+// 비급 드롭 추가: 신선의 두루마리<상급>
+(function(){if(!window.MONSTERS)return;var mon=window.MONSTERS.find(function(x){return String(x.id)==="5120506";});if(mon){mon.drops=mon.drops||[];if(!mon.drops.some(function(d){return String(d.itemId)==="4031432";}))mon.drops.push({"itemId":"4031432","name":"신선의 두루마리<상급>"});}})();
 </script>
 <script>
 (function(){
