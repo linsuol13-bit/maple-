@@ -317,6 +317,7 @@ button{ font:inherit; }
 .t-use.ribbon-pill{ background:var(--sun-soft); color:var(--sun-ink); }
 .t-move.ribbon-pill{ background:var(--sky-soft); color:var(--sky-ink); }
 .t-investigate.ribbon-pill{ background:var(--leaf-soft); color:var(--leaf-ink); }
+.t-job.ribbon-pill{ background:#E9DFF7; color:#5a3d99; }
 .t-etc.ribbon-pill{ background:#EEE4D2; color:var(--ink-soft); }
 
 /* ---------- 빈 상태 ---------- */
@@ -403,6 +404,31 @@ button{ font:inherit; }
 .bubble.left{ background:#fff; color:var(--ink); border-bottom-left-radius:4px; }
 .bubble.right{ background: var(--berry); color:#fff; border-bottom-right-radius:4px; border-color: var(--berry); }
 .bubble.right .name{ color: rgba(255,255,255,.9); }
+
+/* 대사: 게임 대화창 (제자리에서 한 장씩) */
+.gdlg{ background:#fdfbf4; border:2px solid #3a4a6b; border-radius:12px; box-shadow:0 0 0 1.5px #c9d3ea inset; overflow:hidden; }
+.gdlg .gd-line{ display:none; gap:8px; padding:10px 12px 8px; align-items:flex-start; }
+.gdlg .gd-line.on{ display:flex; }
+.gdlg .gd-line.player{ flex-direction:row-reverse; background:#eef4ff; }
+.gdlg .gd-face{ flex:none; display:flex; }
+.gdlg .gd-face img, .gdlg .gd-ph{ width:38px; height:38px; object-fit:cover; background:#fff; border:1.5px solid #d6dbe8; border-radius:50%; }
+.gdlg .gd-ph{ display:flex; align-items:center; justify-content:center; font-size:18px; color:#9aa6c2; background:#f4f6fb; }
+.gdlg .gd-body{ flex:1; min-width:0; }
+.gdlg .gd-line.player .gd-body{ text-align:right; }
+.gdlg .gd-name{ display:inline-block; background:#3a4a6b; color:#fff; font-size:11.5px; font-weight:800; padding:0 8px; border-radius:999px; margin-bottom:2px; }
+.gdlg .gd-line.player .gd-name{ background:#2f6fd0; }
+.gdlg .gd-text{ font-size:13.5px; line-height:1.5; color:#1d2433; white-space:pre-line; word-break:keep-all; overflow-wrap:anywhere; text-align:left; }
+.gdlg .gd-bot{ display:flex; align-items:center; gap:6px; padding:4px 10px 6px; border-top:1px dashed #d6dbe8; background:#fbf8ee; }
+.gdlg .gd-cnt{ font-size:11.5px; font-weight:700; color:#6b7590; margin-right:auto; }
+.gdlg .gd-btn{ border:1.5px solid #3a4a6b; background:#fff; color:#3a4a6b; font-weight:800; font-size:11.5px; padding:1px 9px; border-radius:7px; cursor:pointer; }
+.gdlg .gd-btn.main{ background:linear-gradient(#ffcf5a,#f3a712); border-color:#b97900; color:#3a2500; }
+.gdlg .gd-btn:disabled{ opacity:.35; cursor:default; }
+
+.gdlg .gd-line{ height:104px; box-sizing:border-box; }
+.gdlg .gd-body{ height:100%; display:flex; flex-direction:column; }
+.gdlg .gd-name{ align-self:flex-start; flex:none; }
+.gdlg .gd-line.player .gd-name{ align-self:flex-end; }
+.gdlg .gd-text{ flex:1; min-height:0; overflow-y:auto; padding-right:4px; scrollbar-width:thin; }
 
 .chain-link{ display:flex; align-items:center; gap:10px; }
 .chain-link .arrow{ color: var(--ink-soft); font-size:18px; flex:none; }
@@ -574,7 +600,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quest-detail.js"></script>
+<script src="data-quests.js"></script>
 <script>
 (function(){
   'use strict';
@@ -595,14 +621,16 @@ button{ font:inherit; }
   var TYPE_MAP = {
     '대화':{cls:'t-talk'}, '몬스터 사냥':{cls:'t-hunt'}, '아이템 수집':{cls:'t-collect'},
     '아이템 전달':{cls:'t-deliver'}, '아이템 사용':{cls:'t-use'}, '이동':{cls:'t-move'},
-    '조사':{cls:'t-investigate'}, '퀘스트 완료':{cls:'t-etc'}
+    '조사':{cls:'t-investigate'}, '퀘스트 완료':{cls:'t-etc'}, '전직':{cls:'t-job'}
   };
   function primaryType(t){ return String(t||'').split(/[,·]/)[0].trim() || '기타'; }
   function typeCls(t){ return (TYPE_MAP[primaryType(t)]||{cls:'t-etc'}).cls; }
 
+  // 목록/카드용 이미지는 작은 크기로 요청해서 로딩을 줄임 (큰 원본은 상세 화면에서만 사용)
+  function __smallImg(u){ return (typeof u==='string') ? u.replace(/([?&]sz=w)(\d+)/, function(m,a,b){ return a+Math.min(+b,400); }) : u; }
   function safeImg(src, alt, cls){
     var d = 'https://placehold.co/120x120/FFF9F0/9A8574?text=%20';
-    return '<img src="'+(src||d)+'" alt="'+(alt||'')+'" class="'+(cls||'thumb')+'" onerror="this.onerror=null;this.src=\''+d+'\';">';
+    return '<img src="'+__smallImg(src||d)+'" loading="lazy" decoding="async" alt="'+(alt||'')+'" class="'+(cls||'thumb')+'" onerror="this.onerror=null;this.src=\''+d+'\';">';
   }
   function fmt(n){ return Number(n||0).toLocaleString(); }
 
@@ -623,6 +651,22 @@ button{ font:inherit; }
     if (detail.finish && detail.finish.npc && who===detail.finish.npc.name) return detail.finish.npc.img;
     return '';
   }
+    // 대사를 게임 대화창 형태로 (제자리에서 한 장씩 넘겨 보기)
+    function gameDialogHtml(list){
+      var n = list.length;
+      var lines = list.map(function(d, k){
+        var p = isPlayer(d.who); var av = p ? '' : avatarFor(d.who);
+        var pimg = ''; if (p) { try { pimg = localStorage.getItem('lonaPlayerImg') || ''; } catch(e){} }
+        if (pimg) av = pimg;
+        var face = av ? '<img src="'+av+'" alt="'+(p?'플레이어':(d.who||''))+'">' : '<div class="gd-ph">'+(p?'🧑':'💬')+'</div>';
+        return '<div class="gd-line'+(p?' player':'')+(k===0?' on':'')+'"><div class="gd-face">'+face+'</div><div class="gd-body"><div class="gd-name">'+(p?'플레이어':(d.who||''))+'</div><div class="gd-text">'+(d.text||'')+'</div></div></div>';
+      }).join('');
+      return '<div class="gdlg" data-i="0">' + lines +
+        '<div class="gd-bot"><span class="gd-cnt">1 / '+n+'</span>' +
+        (list.some(function(d){ return isPlayer(d.who); }) ? '<button type="button" class="gd-btn gd-pset" title="내 캐릭터 이미지를 넣으면 플레이어 대사에 그 이미지가 나와요">🧑 내 이미지</button><button type="button" class="gd-btn gd-pclr" title="플레이어 이미지 지우기" style="'+(function(){ try { return localStorage.getItem('lonaPlayerImg') ? '' : 'display:none;'; } catch(e){ return 'display:none;'; } })()+'">✕</button>' : '') +
+        '<button type="button" class="gd-btn gd-prev" disabled>◀ 이전</button>' +
+        '<button type="button" class="gd-btn main gd-next"'+(n<2?' disabled':'')+'>다음 ▶</button></div></div>';
+    }
   function dialogueRow(d){
     var left = !isPlayer(d.who);
     var av = left ? avatarFor(d.who) : '';
@@ -639,10 +683,12 @@ button{ font:inherit; }
   }
 
   function reqBox(r){
+    if (r.kind==='quest'){ return '<a class="ibox" href="quest-detail.html?id='+r.id+'"><div><div class="lbl">완료해야 할 퀘스트</div><div class="val">'+(r.name||'')+'</div></div></a>'; }
+    if (r.kind==='meso'){ return '<div class="ibox">'+safeImg(r.img,'메소','thumb')+'<div><div class="lbl">필요 메소</div><div class="val">'+fmt(r.meso)+' 메소</div></div></div>'; }
     var isItem = r.kind==='item';
     var isUse = r.kind==='use';
-    var title = (r.name||'')+(r.qty?' ×'+r.qty:'');
-    var href = r.id ? ((isItem||isUse) ? ('item-detail.html?id='+r.id) : ('https://linsuol13-bit.github.io/LO/monster-'+r.id+'.html')) : '';
+    var title = (r.name||'')+(r.qty!=null?' ×'+r.qty:'');
+    var href = r.id ? ((isItem||isUse) ? ('item-detail.html?id='+r.id) : ('monster-detail.html?id='+r.id)) : '';
     var label = isUse ? '사용 아이템' : (isItem ? '필요 아이템' : '처치 대상');
     var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+label+'</div><div class="val">'+title+'</div></div>';
     return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
@@ -651,21 +697,51 @@ button{ font:inherit; }
     if (typeof r.exp === 'number'){
       return '<div class="ibox">'+safeImg(r.img,'EXP','thumb')+'<div><div class="lbl">경험치</div><div class="val">'+fmt(r.exp)+' exp</div></div></div>';
     }
+    if (typeof r.meso === 'number'){
+      return '<div class="ibox">'+safeImg(r.img,'메소','thumb')+'<div><div class="lbl">메소</div><div class="val">'+fmt(r.meso)+' 메소</div></div></div>';
+    }
     if (typeof r.fame === 'number'){
-      return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">인기도</div><div class="val">⭐ +'+r.fame+'</div></div></div>';
+      return '<div class="ibox">'+safeImg(r.img,'인기도','thumb')+'<div><div class="lbl">인기도</div><div class="val">⭐ '+(r.fame>=0?'+':'')+r.fame+'</div></div></div>';
     }
     var title = (r.name||'')+((r.qty&&r.qty>0)?' ×'+r.qty:'')+(r.chance!=null?' · '+r.chance+'%':'');
-    var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">보상 아이템</div><div class="val">'+title+'</div></div>';
+    var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+(r.random?'확률 보상 아이템':(r.choice?'선택 보상 아이템':'보상 아이템'))+(r.job?' · '+r.job:'')+'</div><div class="val">'+title+'</div></div>';
     return r.itemId ? '<a class="ibox" href="item-detail.html?id='+r.itemId+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
   }
   function tipBox(t){
+    if (t.kind==='npc'){ var nh=t.id?('npc-detail.html?id='+t.id):''; var ni=safeImg(t.img,t.name,'thumb')+'<div><div class="lbl">'+(t.subtitle||'NPC')+'</div><div class="val">'+(t.name||'')+'</div></div>'; return nh?('<a class="ibox" href="'+nh+'">'+ni+'</a>'):('<div class="ibox">'+ni+'</div>'); }
+    if (t.kind==='map'){ var mh=t.code?('map-detail.html?code='+t.code):''; var mi=safeImg(t.img,t.name,'thumb')+'<div><div class="lbl">'+(t.subtitle||'이동할 맵')+'</div><div class="val">'+(t.name||'')+'</div></div>'; return mh?('<a class="ibox" href="'+mh+'">'+mi+'</a>'):('<div class="ibox">'+mi+'</div>'); }
+    if (t.kind==='image'){
+      return '<div class="ibox" style="grid-column:1/-1;display:block;"><div class="lbl">'+(t.subtitle||'TIP')+(t.name?' · '+t.name:'')+' <a href="'+t.img+'" target="_blank" rel="noopener" style="margin-left:6px;color:var(--pink-ink);">새 창에서 크게 보기</a></div><a href="'+t.img+'" target="_blank" rel="noopener"><img src="'+t.img+'" alt="'+(t.name||'TIP')+'" style="display:block;width:100%;height:auto;margin-top:8px;border-radius:10px;background:#fff;border:2px solid var(--line);" onerror="this.outerHTML=\'<div style=&quot;padding:14px;color:var(--ink-soft);font-size:12px;&quot;>이미지를 불러오지 못했어요. 위 링크를 눌러 새 창에서 열어보세요.</div>\'"></a></div>';
+    }
+    if (t.kind==='text' || (!t.img && !t.id)){
+      return '<div class="ibox" style="grid-column:1/-1;"><div class="val">'+(t.name||'')+'</div></div>';
+    }
     var subtitle = t.kind==='monster' ? '몬스터 사냥' : (t.subtitle||'TIP');
-    var href = t.id ? (t.kind==='monster' ? ('https://linsuol13-bit.github.io/LO/monster-'+t.id+'.html') : ('item-detail.html?id='+t.id)) : '';
-    var inner = safeImg(t.img, t.name, 'thumb')+'<div><div class="lbl">'+subtitle+'</div><div class="val">'+(t.name||'')+'</div></div>';
+    var href = t.id ? (t.kind==='monster' ? ('monster-detail.html?id='+t.id) : ('item-detail.html?id='+t.id)) : '';
+    var inner = safeImg(t.img, t.name, 'thumb')+'<div><div class="lbl">'+subtitle+'</div><div class="val">'+(t.name||'')+(t.level?' (Lv.'+t.level+')':'')+'</div></div>';
     return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
   }
+  function craftHtml(detail){
+    var h = '';
+    if (detail.craftReqs && detail.craftReqs.length){
+      h += '<div class="section"><h2>제작 시 필요 아이템</h2><div class="ibox-grid">' + detail.craftReqs.map(function(r){
+        var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">제작 재료</div><div class="val">'+(r.name||'')+(r.qty?' ×'+r.qty:'')+'</div></div>';
+        return r.id ? '<a class="ibox" href="item-detail.html?id='+r.id+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+      }).join('') + '</div></div>';
+    }
+    if (detail.craftNpcs && detail.craftNpcs.length){
+      h += '<div class="section"><h2>제작 NPC</h2><div class="ibox-grid">' + detail.craftNpcs.map(function(n){
+        var href = n.npcId ? 'npc-detail.html?id='+n.npcId : (n.mapId ? 'map-detail.html?id='+n.mapId : '');
+        var inner = (n.img ? safeImg(n.img, n.name, 'thumb') : '')+'<div><div class="lbl">제작 NPC</div><div class="val">'+(n.name||'')+'</div>'+(n.place?'<div class="lbl">'+n.place+'</div>':'')+'</div>';
+        return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+      }).join('') + '</div></div>';
+    }
+    return h;
+  }
   function chainBox(item, label){
-    return '<a class="ibox" href="quest-detail.html?id='+item.id+'"><div><div class="lbl">'+label+'</div><div class="val">['+item.id+'] '+item.title+'</div></div></a>';
+    var inner = '<div><div class="lbl">'+label+'</div><div class="val">'+(/^\d+$/.test(String(item.id))?'['+item.id+'] ':'')+item.title+'</div></div>';
+    var ok = QUESTS.some(function(q){ return String(q.id)===String(item.id); });
+    return ok ? '<a class="ibox" href="quest-detail.html?id='+item.id+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
   }
 
   var html = '';
@@ -675,11 +751,13 @@ button{ font:inherit; }
   var jobsTxt = (base.jobs && base.jobs.length) ? base.jobs.join(', ') : '전체';
   var REGION_ICONS = {
     '메이플로드': 'https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w800',
-    '암허스트': 'https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w800'
+    '암허스트': 'https://drive.google.com/thumbnail?id=1Glz6VdIrrGs_xQqv5m9_sgvamM-k7LjH&sz=w800',
+    '엘린숲': 'https://drive.google.com/thumbnail?id=1s__sBIjBWwoO5JiZgv4tTu73gkq7BdVN&sz=w800',
+    '엘린 숲': 'https://drive.google.com/thumbnail?id=1s__sBIjBWwoO5JiZgv4tTu73gkq7BdVN&sz=w800'
   };
   var regionIcon = REGION_ICONS[base.region];
-  var regionHtml = (regionIcon ? '<img src="'+regionIcon+'" alt="'+base.region+'" style="width:16px;height:16px;object-fit:contain;vertical-align:-3px;border-radius:4px;margin-right:3px;" onerror="this.style.display=\'none\';">' : '') + (base.region||'-');
-  html += '<div class="sub">' + regionHtml + ' · Lv.' + (base.minLevel||'-') + ' · 가능 직업: ' + jobsTxt + '</div>';
+  var regionHtml = (base.region||'-');
+  html += '<div class="sub">' + (regionIcon ? '<img src="'+regionIcon+'" alt="" style="width:18px;height:18px;border-radius:4px;object-fit:cover;vertical-align:-3px;margin-right:4px;">' : '') + regionHtml + ' · Lv.' + (base.minLevel||'-') + ' · 가능 직업: ' + jobsTxt + '</div>';
   html += '</div>';
 
   if (!detail){
@@ -700,24 +778,127 @@ button{ font:inherit; }
     html += '<div class="section"><h2>선행 퀘스트</h2><div class="ibox-grid">' + detail.prereqs.map(function(p){ return chainBox(p, '선행 퀘스트'); }).join('') + '</div></div>';
   }
 
+  // ---- 오픈 조건 (히든 퀘스트 등) ----
+  if (detail.openConds && detail.openConds.length){
+    html += '<div class="section"><h2>오픈 조건</h2><div class="ibox-grid">' + detail.openConds.map(function(p){ return chainBox(p, p.state || '오픈 조건'); }).join('') + '</div></div>';
+  }
+
+  // ---- 시작 조건 (퀘스트/아이템 링크 형식: 완료 · 진행 중 · 분실 등) ----
+  if (detail.startConds && detail.startConds.length){
+    html += '<div class="section"><h2>시작 조건</h2><div class="ibox-grid">' + detail.startConds.map(function(c){
+      var isItem = c.kind === 'item';
+      var st = c.state ? '<span style="display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:800;margin-right:6px;background:'+(c.state==='완료'?'#e3f5e8;color:#1f7a3d':(c.state==='분실'?'#fde8e8;color:#b42318':'#e4effd;color:#2f5fa3'))+';">'+c.state+'</span>' : '';
+      var inner = (isItem && c.img ? safeImg(c.img, c.title, 'thumb') : '') + '<div><div class="lbl">'+st+(isItem?'아이템':'퀘스트')+'</div><div class="val">'+c.title+'</div></div>';
+      var href = isItem ? (c.id ? 'item-detail.html?id='+c.id : '') : ((QUEST_DETAILS[c.id] || (typeof questById==='function' && questById(c.id))) ? 'quest-detail.html?id='+c.id : '');
+      return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
+    }).join('') + '</div></div>';
+  }
+  // ---- 시작 조건 ----
+  if (detail.startCond && (detail.startCond.text || detail.startCond.img || detail.startCond.id)){
+    var sc0 = detail.startCond;
+    var scInner0 = (sc0.img ? safeImg(sc0.img, '시작 조건', 'thumb') : '') + '<div style="flex:1;"><div class="val" style="white-space:pre-line;">' + (sc0.text || '') + '</div></div>';
+    var scBody0 = '<div class="card desc-box" style="display:flex;align-items:center;gap:12px;">' + scInner0 + '</div>';
+    html += '<div class="section"><h2>시작 조건</h2>' + (sc0.id ? '<a style="display:block;color:inherit;text-decoration:none;" href="item-detail.html?id=' + sc0.id + '">' + scBody0 + '</a>' : scBody0) + '</div>';
+  }
+
   // ---- 시작/완료 ----
   html += '<div class="two-col" style="margin-bottom:22px;">';
   html += '<div class="card"><h2 style="font-size:13px;font-weight:700;color:var(--ink-soft);margin:0 0 10px;">시작</h2>';
   html += '<div class="ibox-grid">';
-  html += '<a class="ibox" href="npc-detail.html?id='+detail.start.npc.id+'">'+safeImg(detail.start.npc.img, detail.start.npc.name,'thumb')+'<div><div class="lbl">시작 NPC</div><div class="val">'+detail.start.npc.name+'</div></div></a>';
+  html += '<a class="ibox"'+(detail.start.npc.id?' href="npc-detail.html?id='+detail.start.npc.id+'"':'')+'>'+safeImg(detail.start.npc.img, detail.start.npc.name,'thumb')+'<div><div class="lbl">시작 NPC</div><div class="val">'+detail.start.npc.name+'</div></div></a>';
+  // 퀘스트 장소 아이콘: 마을(town) 기준. place.town 이 있으면 그 마을, 없으면 장소 이름으로 찾음
+  var PLACE_ICONS = {
+    '궁수 교육원': 'https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400',
+    '엘리니아': 'https://drive.google.com/thumbnail?id=11eysMAYVH4D0qt9Qz_14o-311YN52EVe&sz=w400',
+    '암허스트': 'https://drive.google.com/thumbnail?id=10PylQuQSDfJEUbciZ63UxawVMTGfhzet&sz=w400',
+    '모험가의 수련장 입구': 'https://drive.google.com/thumbnail?id=10PylQuQSDfJEUbciZ63UxawVMTGfhzet&sz=w400',
+    '아리안트': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '아리안트궁전': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '아리안트마을': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '민가1': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '민가2': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '민가3': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '민가4': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '민가5': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '민가6': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '아리안트 정거장': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '아리안트 서문 밖': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '어린 카투스 사막': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '선인장 사막1': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '선인장 사막2': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '로얄 카투스 사막': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '흰 바위 사막': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '벨라모아의 굴': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '작열하는 사막': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '바위 언덕': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '메마른 사막': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '프릴드 서식지대': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '유랑단의 텐트': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+    '아리안트 동문 밖': 'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400'
+  };
+
+  var TOWN_ICONS = {
+      '엘린숲':'https://drive.google.com/thumbnail?id=1s__sBIjBWwoO5JiZgv4tTu73gkq7BdVN&sz=w400',
+      '메이플로드':'https://drive.google.com/thumbnail?id=13IgjAD_0K3s6uUJ1XHhPcgIgl6fQz6lK&sz=w400',
+      '암허스트':'https://drive.google.com/thumbnail?id=1-MzGEHdV1YX9ZM2LvNznH4XsHCv4he56&sz=w400',
+      '빅토리아 아일랜드':'https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400',
+      '헤네시스':'https://drive.google.com/thumbnail?id=1DHyZxIGD_36QG3yjuxhl_veS9AqzwAmh&sz=w400',
+      '엘리니아':'https://drive.google.com/thumbnail?id=11eysMAYVH4D0qt9Qz_14o-311YN52EVe&sz=w400',
+      '커닝시티':'https://drive.google.com/thumbnail?id=1Z9t4AbnhDHlv-ZbAvUDhzsrGyn65AcMc&sz=w400',
+      '페리온':'https://drive.google.com/thumbnail?id=1qJDR5g4TOiMfzm-fVKnPzgzxOo7-R0CJ&sz=w400',
+      '버섯의성':'https://drive.google.com/thumbnail?id=1wMvaZVLaK45xu0KBWLcQOzcJowDxWfMK&sz=w400',
+      '커닝스퀘어':'https://drive.google.com/thumbnail?id=1-WTiV08Xb71vq71Wjqo7SlUDSneDDhze&sz=w400',
+      '노틸러스':'https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400',
+      '오르비스':'https://drive.google.com/thumbnail?id=1WQU-Z0vjTusdGLkJ87Z6ylE-h-gPdKL8&sz=w400',
+      '지구방위본부':'https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400',
+      '루디브리엄':'https://drive.google.com/thumbnail?id=1Pp55px2ogqw3OfzX4cPQkg4H2gz2_6R0&sz=w400',
+      '아쿠아리움':'https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400',
+      '아쿠아로드':'https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400',
+      '리프레':'https://drive.google.com/thumbnail?id=1k8lHn6IWCSV2qlg38ROCT0Le97Mx3hCs&sz=w400',
+      '아리안트':'https://drive.google.com/thumbnail?id=1wAtCZADGrWe4j3gRN6pVMD1OqFHYrpJZ&sz=w400',
+      '마가티아':'https://drive.google.com/thumbnail?id=1HWQMOQBRg7oEWpaIvlfMMafDGKAfl2_h&sz=w400',
+      '슬리피우드':'https://drive.google.com/thumbnail?id=1h1iLbH6jpV31zyk-xMOjT8HD9udHbGt1&sz=w400',
+      '리엔':'https://drive.google.com/thumbnail?id=1-Vur3U1Jw-nQaOLTLIHEOuPkcR5E4EWY&sz=w400',
+      '백초마을':'https://drive.google.com/thumbnail?id=1S-t4n1TtxnjjhGBvES8Vxil-ReF9zrem&sz=w400',
+      '아랫마을':'https://drive.google.com/thumbnail?id=1U5VBqop7cUN5eKJ8P18d6illAZW_H1fZ&sz=w400',
+      '엘나스':'https://drive.google.com/thumbnail?id=1V7hGToqGOnRPcoVjQ_Z9yIaomTifrATF&sz=w400',
+      '엘나스 산맥':'https://drive.google.com/thumbnail?id=1V7hGToqGOnRPcoVjQ_Z9yIaomTifrATF&sz=w400',
+      '버섯의 성':'https://drive.google.com/thumbnail?id=1wMvaZVLaK45xu0KBWLcQOzcJowDxWfMK&sz=w400',
+      '에레브':'https://drive.google.com/thumbnail?id=1iHru2B52U0xXou0mEePAUjeruoICXWJA&sz=w400',
+      '파괴된 헤네시스':'https://drive.google.com/thumbnail?id=1qHLkpBvi9ZGQON8SPGZjhfvcXPWcpcQC&sz=w400',
+      '폐광':'https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400',
+      '플로리나비치':'https://drive.google.com/thumbnail?id=1_awfHf-lXFRxjgcIEQlu2VXNPZeWYf6Y&sz=w400',
+      '블랙로드':'https://drive.google.com/thumbnail?id=1LntTAE7pF0YXTz2yIE_zkGNjGuJGLO3S&sz=w400',
+      '무릉':'https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400'
+    };
+  var VICTORIA_ICON = 'https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400';
+  function placeIconOf(pl){var __dc=String((pl&&pl.code)||"");if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";
+    var key = pl.town || pl.name;
+    if (PLACE_ICONS[key]) return PLACE_ICONS[key];
+    if (TOWN_ICONS[key]) return TOWN_ICONS[key];
+    if (/^14\d{7}$/.test(String(pl.code||''))) return 'https://drive.google.com/thumbnail?id=1-Vur3U1Jw-nQaOLTLIHEOuPkcR5E4EWY&sz=w400'; // 리엔 지역 맵
+    if (/^300\d{6}$/.test(String(pl.code||''))) return TOWN_ICONS['엘린숲']; // 엘린숲 지역 맵
+    if (/^22[01]\d{6}$/.test(String(pl.code||''))) return TOWN_ICONS['루디브리엄']; // 루디브리엄(에오스탑/헬리오스탑 등) 지역 맵
+    // 맵 코드 앞 3자리로 지역 아이콘 찾기 (빅토리아 아일랜드 밖 지역)
+    var __pre={"110":"플로리나비치","120":"노틸러스","130":"에레브","140":"리엔","200":"오르비스","211":"엘나스","222":"아랫마을","230":"아쿠아리움","240":"리프레","250":"무릉","251":"백초마을","260":"아리안트","261":"마가티아","300":"엘린숲"}[String(pl.code||"").slice(0,3)];
+    if (__pre && String(pl.code||"").length===9 && TOWN_ICONS[__pre]) return TOWN_ICONS[__pre];
+    // 맵 코드가 9자리 이상이면 빅토리아 아일랜드 쪽 마을 (예: 리스항구)
+    if (String(pl.code||'').length >= 9) return VICTORIA_ICON;
+    return '';
+  }
   var placeIcon = REGION_ICONS[base.region] || '';
-  html += '<a class="ibox" href="map-detail.html?code='+detail.start.place.code+'">'+safeImg(placeIcon || detail.start.place.img, detail.start.place.name,'thumb')+'<div><div class="lbl">시작 장소</div><div class="val">'+detail.start.place.name+'</div></div></a>';
+  html += '<a class="ibox"'+(detail.start.place.code?' href="map-detail.html?code='+detail.start.place.code+'"':'')+'>'+safeImg(placeIconOf(detail.start.place) || placeIcon || detail.start.place.img, detail.start.place.name,'thumb')+'<div><div class="lbl">시작 장소</div><div class="val">'+detail.start.place.name+'</div></div></a>';
   html += '</div></div>';
   html += '<div class="card"><h2 style="font-size:13px;font-weight:700;color:var(--ink-soft);margin:0 0 10px;">완료</h2>';
   html += '<div class="ibox-grid">';
-  html += '<a class="ibox" href="npc-detail.html?id='+detail.finish.npc.id+'">'+safeImg(detail.finish.npc.img, detail.finish.npc.name,'thumb')+'<div><div class="lbl">완료 NPC</div><div class="val">'+detail.finish.npc.name+'</div></div></a>';
-  html += '<a class="ibox" href="map-detail.html?code='+detail.finish.place.code+'">'+safeImg(placeIcon || detail.finish.place.img, detail.finish.place.name,'thumb')+'<div><div class="lbl">완료 장소</div><div class="val">'+detail.finish.place.name+'</div></div></a>';
+  html += '<a class="ibox"'+(detail.finish.npc.id?' href="npc-detail.html?id='+detail.finish.npc.id+'"':'')+'>'+safeImg(detail.finish.npc.img, detail.finish.npc.name,'thumb')+'<div><div class="lbl">완료 NPC</div><div class="val">'+detail.finish.npc.name+'</div></div></a>';
+  html += '<a class="ibox"'+(detail.finish.place.code?' href="map-detail.html?code='+detail.finish.place.code+'"':'')+'>'+safeImg(placeIconOf(detail.finish.place) || placeIcon || detail.finish.place.img, detail.finish.place.name,'thumb')+'<div><div class="lbl">완료 장소</div><div class="val">'+detail.finish.place.name+'</div></div></a>';
   html += '</div></div>';
   html += '</div>';
 
   // ---- 대사 ----
   if (detail.dialogues && detail.dialogues.length){
-    html += '<div class="section"><h2>대사</h2><div class="card bubble-list">' + detail.dialogues.map(dialogueRow).join('') + '</div></div>';
+    html += '<div class="section"><h2>대사</h2>' + gameDialogHtml(detail.dialogues) + '</div>';
   }
 
   // ---- 조건/설명 (내용이 있을 때만 표시) ----
@@ -732,10 +913,17 @@ button{ font:inherit; }
     html += '</div>';
   }
 
+  // ---- 소리 ----
+  if (detail.audio && detail.audio.url){
+    html += '<div class="section"><h2>소리</h2><div class="card"><audio controls preload="metadata" playsinline style="width:100%"><source src="' + detail.audio.url + '" type="audio/mpeg">브라우저에서 오디오를 재생할 수 없습니다.</audio></div></div>';
+  }
+
   // ---- 완료 대사 ----
   if (detail.completionDialogues && detail.completionDialogues.length){
-    html += '<div class="section"><h2>완료 대사</h2><div class="card bubble-list">' + detail.completionDialogues.map(dialogueRow).join('') + '</div></div>';
+    html += '<div class="section"><h2>완료 대사</h2>' + gameDialogHtml(detail.completionDialogues) + '</div>';
   }
+
+  html += craftHtml(detail);
 
   // ---- 보상 ----
   if (detail.rewards && detail.rewards.length){
@@ -748,6 +936,65 @@ button{ font:inherit; }
   }
 
   $detail.innerHTML = html;
+})();
+</script>
+
+<script>
+// 게임 대화창: 이전/다음 버튼 (패널이 다시 그려져도 동작하도록 문서 전체에서 처리)
+(function(){
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('.gdlg .gd-prev, .gdlg .gd-next');
+    if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var box = b.closest('.gdlg'), ls = box.querySelectorAll('.gd-line'), i = +box.getAttribute('data-i') || 0;
+    i += b.classList.contains('gd-next') ? 1 : -1;
+    if (i < 0 || i >= ls.length) return;
+    box.setAttribute('data-i', i);
+    for (var k = 0; k < ls.length; k++) ls[k].classList.toggle('on', k === i);
+    box.querySelector('.gd-cnt').textContent = (i+1) + ' / ' + ls.length;
+    box.querySelector('.gd-prev').disabled = (i === 0);
+    box.querySelector('.gd-next').disabled = (i === ls.length - 1);
+  }, true);
+})();
+</script>
+<script>
+// 플레이어 이미지: 이 브라우저에 저장해 두고 대사 창의 플레이어 얼굴로 사용
+(function(){
+  var KEY='lonaPlayerImg';
+  function get(){ try{ return localStorage.getItem(KEY)||''; }catch(e){ return ''; } }
+  function apply(){
+    var src=get();
+    document.querySelectorAll('.gdlg .gd-line.player .gd-face').forEach(function(f){
+      f.innerHTML = src ? '<img src="'+src+'" alt="플레이어">' : '<div class="gd-ph">🧑</div>';
+    });
+    document.querySelectorAll('.gdlg .gd-pclr').forEach(function(b){ b.style.display = src ? '' : 'none'; });
+  }
+  window.__applyPlayerImg = apply;
+  var inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.style.display='none';
+  document.addEventListener('DOMContentLoaded',function(){ document.body.appendChild(inp); });
+  if (document.body) document.body.appendChild(inp);
+  inp.addEventListener('change',function(){
+    var file=inp.files&&inp.files[0]; inp.value=''; if(!file) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      var im=new Image();
+      im.onload=function(){
+        var S=128, c=document.createElement('canvas'); c.width=S; c.height=S;
+        var g=c.getContext('2d'), r=Math.min(im.width,im.height), sx=(im.width-r)/2, sy=(im.height-r)/2;
+        g.drawImage(im,sx,sy,r,r,0,0,S,S);
+        try{ localStorage.setItem(KEY,c.toDataURL('image/png')); }catch(e){ alert('이미지를 저장하지 못했어요.'); return; }
+        apply();
+      };
+      im.src=rd.result;
+    };
+    rd.readAsDataURL(file);
+  });
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('.gdlg .gd-pset, .gdlg .gd-pclr'); if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    if(b.classList.contains('gd-pset')) inp.click();
+    else { try{ localStorage.removeItem(KEY); }catch(err){} apply(); }
+  },true);
 })();
 </script>
 </body>
