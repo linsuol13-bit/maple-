@@ -38229,6 +38229,16 @@ window.ITEMS = [
   "desc": "곰발바닥을 재료로 만든 한약이다. 마시면 머리가 맑아지며, 15분간 DEX가 10 증가한다."
 },
 {
+  "id": "2022143",
+  "name": "신선탕",
+  "img": "https://drive.google.com/thumbnail?id=1e37DOd9X8o98V_dDv4uloIzM54fktLPM&sz=w200",
+  "path": [
+    "소비",
+    "음식"
+  ],
+  "desc": "신선으로 만들어 준다고 하는 명약이다. 마시면 15분 동안 마력이 10 상승한다."
+},
+{
   "id": "2022144",
   "name": "사미인탕",
   "img": "https://drive.google.com/thumbnail?id=1hdPma1BBvSAyGSooz6wZuIWBxhTptpdh&sz=w200",
@@ -91646,6 +91656,14 @@ window.CHANGELOG = [
       var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+label+'</div><div class="val">'+title+'</div></div>';
       return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
     }
+    // 개수별 보상: tier가 있으면 개수마다 따로 묶어서 표시
+    function rewardsHtml(list){
+      list=list||[];
+      if(!list.some(function(r){return r&&r.tier;})) return '<div class="ibox-grid">'+list.map(rewardBox).join('')+'</div>';
+      var order=[],groups={};
+      list.forEach(function(r){var k=r.tier||'';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(Object.assign({},r,{tier:null}));});
+      return order.map(function(k){return '<div style="margin:10px 0 6px;font-weight:700;color:#db2777;">'+(k?(k+' 가져가면'):'공통')+'</div><div class="ibox-grid">'+groups[k].map(rewardBox).join('')+'</div>';}).join('');
+    }
     function rewardBox(r){
     var tierTag = r.tier ? '<b style="color:#db2777">['+r.tier+']</b> ' : '';
       if (typeof r.exp === 'number'){
@@ -91947,7 +91965,7 @@ window.CHANGELOG = [
       html += '<div>대사, 시작/완료 NPC, 세부 요구 조건은 곧 추가될 예정이에요. 아래는 현재까지 확인 가능한 보상 정보예요.</div>';
       html += '</div>';
       if (listItem && listItem.rewards && listItem.rewards.length){
-        html += '<div class="section"><h2>완료 보상</h2><div class="ibox-grid">' + listItem.rewards.map(rewardBox).join('') + '</div></div>';
+        html += '<div class="section"><h2>완료 보상</h2>' + rewardsHtml(listItem.rewards) + '</div>';
       }
       html += '<div class="section"><div class="complete-zone" data-panel-quest-id="'+id+'">'+completeZoneHTML(base)+'</div></div>';
       return html;
@@ -92026,7 +92044,7 @@ window.CHANGELOG = [
     html += craftHtml(detail);
 
     if (detail.rewards && detail.rewards.length){
-      html += '<div class="section"><h2>완료 보상</h2><div class="ibox-grid">' + detail.rewards.map(rewardBox).join('') + '</div></div>';
+      html += '<div class="section"><h2>완료 보상</h2>' + rewardsHtml(detail.rewards) + '</div>';
     }
 
     html += '<div class="section"><div class="complete-zone" data-panel-quest-id="'+id+'">'+completeZoneHTML(base)+'</div></div>';

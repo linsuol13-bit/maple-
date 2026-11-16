@@ -693,6 +693,14 @@ button{ font:inherit; }
     var inner = safeImg(r.img, r.name, 'thumb')+'<div><div class="lbl">'+label+'</div><div class="val">'+title+'</div></div>';
     return href ? '<a class="ibox" href="'+href+'">'+inner+'</a>' : '<div class="ibox">'+inner+'</div>';
   }
+    // 개수별 보상: tier가 있으면 개수마다 따로 묶어서 표시
+    function rewardsHtml(list){
+      list=list||[];
+      if(!list.some(function(r){return r&&r.tier;})) return '<div class="ibox-grid">'+list.map(rewardBox).join('')+'</div>';
+      var order=[],groups={};
+      list.forEach(function(r){var k=r.tier||'';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(Object.assign({},r,{tier:null}));});
+      return order.map(function(k){return '<div style="margin:10px 0 6px;font-weight:700;color:#db2777;">'+(k?(k+' 가져가면'):'공통')+'</div><div class="ibox-grid">'+groups[k].map(rewardBox).join('')+'</div>';}).join('');
+    }
   function rewardBox(r){
     var tierTag = r.tier ? '<b style="color:#db2777">['+r.tier+']</b> ' : '';
     if (typeof r.exp === 'number'){
@@ -768,7 +776,7 @@ button{ font:inherit; }
     html += '<div>대사, 시작/완료 NPC, 세부 요구 조건은 곧 추가될 예정이에요. 아래는 현재까지 확인 가능한 보상 정보예요.</div>';
     html += '</div>';
     if (listItem && listItem.rewards && listItem.rewards.length){
-      html += '<div class="section"><h2>완료 보상</h2><div class="ibox-grid">' + listItem.rewards.map(rewardBox).join('') + '</div></div>';
+      html += '<div class="section"><h2>완료 보상</h2>' + rewardsHtml(listItem.rewards) + '</div>';
     }
     $detail.innerHTML = html;
     return;
@@ -929,7 +937,7 @@ button{ font:inherit; }
 
   // ---- 보상 ----
   if (detail.rewards && detail.rewards.length){
-    html += '<div class="section"><h2>완료 보상</h2><div class="ibox-grid">' + detail.rewards.map(rewardBox).join('') + '</div></div>';
+    html += '<div class="section"><h2>완료 보상</h2>' + rewardsHtml(detail.rewards) + '</div>';
   }
 
   // ---- 다음 퀘스트 ----
