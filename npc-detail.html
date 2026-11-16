@@ -12599,6 +12599,16 @@ window.ITEMS = [
     });
   }
 })();
+// 아리안트궁전 포탈 아이콘 정리
+(function(){
+  if(!window.MAPS)return;
+  var portalIcon="https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200";
+  var moveIcon="https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200";
+  ["260000300","260000301","260000302","260000303"].forEach(function(c){
+    var m=window.MAPS.find(function(x){return String(x.code)===c;});if(!m||!m.portals)return;
+    m.portals.forEach(function(p){p.icon=(p.note==="히든 이동")?moveIcon:portalIcon;});
+  });
+})();
 </script>
 <script>
 (function(){
