@@ -13546,6 +13546,123 @@ window.ITEMS = [
     });
   }
 })();
+// 붉은 켄타우로스의 영역 등록 · 서식 몬스터
+(function(){
+  var place={"name":"붉은 켄타우로스의 영역","code":"240020000","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240020000.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="붉은켄타우로스의영역"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2091,imgHeight:1739,portals:[{"toCode":"240020100","toName":"불과 어둠의 전장","note":"이동","x":1964,"y":1378,"unit":"px"},{"toCode":null,"toName":"불과 물의 전장","note":"이동","x":1951,"y":415,"unit":"px"},{"toCode":"240010200","toName":"심술쟁이의 숲","note":"이동","x":172,"y":1081,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140102","name":"붉은 켄타우로스","img":"https://drive.google.com/thumbnail?id=1Nzp9szU7Y8BQgbY9HPRqHNwgUCOIjFqh&sz=w200","category":"정령형","minLevel":88,"hp":37000,"mp":200,"exp":8000,"acc":170,"eva":28,"pdd":800,"mdd":495,"note":"불속성 공격 반감, 얼음속성 공격에 약함","desc":"상체는 인간이고 하체는 말의 형태를 하고 있는 정령이다. 머리 양쪽에 뿔이 달린 투구를 쓰고 창을 들고 있어 얼핏 보면 말을 탄 기사처럼 보이기도 한다. 강함을 추구하는 전사의 종족으로, 인간은 헤아리기도 어려울 정도로 긴 시간 동안 서로의 강함을 증명하기 위해 켄타우로스 간의 전쟁을 해 왔다고 한다. 화염의 힘을 가지고 있어 냉속성 공격을 두려워한다.","drops":[{"itemId":"4000232","name":"켄타우로스의 불꽃"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4031465","name":"헬레나의 오래된 장갑"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"4130023","name":"블레이드 제작의 촉진제"},{"itemId":"4161015","name":"[스토리북]타오르는 불꽃의 책"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040321","name":"귀 장식 행운 주문서 60%"},{"itemId":"2040622","name":"하의 체력 주문서 10%"},{"itemId":"2040703","name":"신발 점프력 주문서 100%"},{"itemId":"2040805","name":"장갑 공격력 주문서 10%"},{"itemId":"2044807","name":"너클 명중률 주문서 60%"},{"itemId":"2331000","name":"블레이즈 캡슐"},{"itemId":"1002274","name":"다크 크로스햇"},{"itemId":"1002643","name":"레드 브레브하말"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1072211","name":"블루 리버스부츠"},{"itemId":"1082118","name":"그린 로버"},{"itemId":"1092023","name":"스틸 아퀼라 실드"},{"itemId":"1332023","name":"용천권"},{"itemId":"1382035","name":"블루마린"},{"itemId":"1402004","name":"청운검"},{"itemId":"1422027","name":"골든 스미스해머"},{"itemId":"1432004","name":"장팔사모"},{"itemId":"1452019","name":"화이트 니스록"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140102",11]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 불과 물의 전장 등록 · 서식 몬스터
+(function(){
+  var place={"name":"불과 물의 전장","code":"240020500","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240020500.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="불과물의전장"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2046,imgHeight:1595,portals:[{"toCode":null,"toName":"푸른 켄타우로스의 영역","note":"이동","x":1840,"y":156,"unit":"px"},{"toCode":"240020000","toName":"붉은 켄타우로스의 영역","note":"이동","x":218,"y":391,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140102","name":"붉은 켄타우로스","img":"https://drive.google.com/thumbnail?id=1Nzp9szU7Y8BQgbY9HPRqHNwgUCOIjFqh&sz=w200","category":"정령형","minLevel":88,"hp":37000,"mp":200,"exp":8000,"acc":170,"eva":28,"pdd":800,"mdd":495,"note":"불속성 공격 반감, 얼음속성 공격에 약함","desc":"상체는 인간이고 하체는 말의 형태를 하고 있는 정령이다. 머리 양쪽에 뿔이 달린 투구를 쓰고 창을 들고 있어 얼핏 보면 말을 탄 기사처럼 보이기도 한다. 강함을 추구하는 전사의 종족으로, 인간은 헤아리기도 어려울 정도로 긴 시간 동안 서로의 강함을 증명하기 위해 켄타우로스 간의 전쟁을 해 왔다고 한다. 화염의 힘을 가지고 있어 냉속성 공격을 두려워한다.","drops":[{"itemId":"4000232","name":"켄타우로스의 불꽃"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4031465","name":"헬레나의 오래된 장갑"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"4130023","name":"블레이드 제작의 촉진제"},{"itemId":"4161015","name":"[스토리북]타오르는 불꽃의 책"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040321","name":"귀 장식 행운 주문서 60%"},{"itemId":"2040622","name":"하의 체력 주문서 10%"},{"itemId":"2040703","name":"신발 점프력 주문서 100%"},{"itemId":"2040805","name":"장갑 공격력 주문서 10%"},{"itemId":"2044807","name":"너클 명중률 주문서 60%"},{"itemId":"2331000","name":"블레이즈 캡슐"},{"itemId":"1002274","name":"다크 크로스햇"},{"itemId":"1002643","name":"레드 브레브하말"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1072211","name":"블루 리버스부츠"},{"itemId":"1082118","name":"그린 로버"},{"itemId":"1092023","name":"스틸 아퀼라 실드"},{"itemId":"1332023","name":"용천권"},{"itemId":"1382035","name":"블루마린"},{"itemId":"1402004","name":"청운검"},{"itemId":"1422027","name":"골든 스미스해머"},{"itemId":"1432004","name":"장팔사모"},{"itemId":"1452019","name":"화이트 니스록"}]},{"id":"8140103","name":"푸른 켄타우로스","img":"https://drive.google.com/thumbnail?id=11PZz7rE1_UYG-Dyy8aMRVJ5oGnapcdId&sz=w200","category":"정령형","minLevel":88,"hp":37000,"mp":200,"exp":8000,"acc":170,"eva":28,"pdd":800,"mdd":495,"note":"얼음속성 공격 반감, 불속성 공격에 약함","desc":"상체는 인간이고 하체는 말의 형태를 하고 있는 정령이다. 머리에 푸른 술이 달린 투구를 쓰고 창을 들고 있어 얼핏 보면 말을 탄 기사처럼 보이기도 한다. 강함을 추구하는 전사의 종족으로, 인간은 헤아리기도 어려울 정도로 긴 시간 동안 서로의 강함을 증명하기 위해 켄타우로스 간의 전쟁을 해 왔다고 한다. 빙염의 힘을 가지고 있어 화속성 공격을 두려워한다.","drops":[{"itemId":"4000233","name":"켄타우로스의 정수"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010000","name":"청동의 원석"},{"itemId":"4020001","name":"자수정의 원석"},{"itemId":"4031465","name":"헬레나의 오래된 장갑"},{"itemId":"4130005","name":"두손검 제작의 촉진제"},{"itemId":"4130011","name":"스태프 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4161016","name":"[스토리북]얼어붙은 얼음의 책"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040004","name":"투구 체력 주문서 60%"},{"itemId":"2043714","name":"완드 마력 주문서 60%"},{"itemId":"2044314","name":"창 명중률 주문서 10%"},{"itemId":"2332000","name":"글레이스 캡슐"},{"itemId":"1002277","name":"그린 골드윙캡"},{"itemId":"1041106","name":"레드 피라티드 (여)"},{"itemId":"1061105","name":"레드 피라티드 치마 (여)"},{"itemId":"1072177","name":"그린 크리시아슈즈"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1102032","name":"자주색 자일즈의 망토"},{"itemId":"1322045","name":"배틀해머"},{"itemId":"1332051","name":"골드 트윈 나이프"},{"itemId":"1412009","name":"헬리오스"},{"itemId":"1412021","name":"타바르"},{"itemId":"1432011","name":"페어프로즌"},{"itemId":"1442019","name":"월아산"},{"itemId":"1452013","name":"파이어 아룬드"},{"itemId":"1492010","name":"인피티니"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140102",10],["8140103",7]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 푸른 켄타우로스의 영역 등록 · 서식 몬스터
+(function(){
+  var place={"name":"푸른 켄타우로스의 영역","code":"240020400","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240020400.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="푸른켄타우로스의영역"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2847,imgHeight:1417,portals:[{"toCode":"240020500","toName":"불과 물의 전장","note":"이동","x":116,"y":1236,"unit":"px"},{"toCode":null,"toName":"마뇽의 숲","note":"이동","x":2298,"y":1234,"unit":"px"},{"toCode":"240020300","toName":"물과 어둠의 전장","note":"이동","x":2744,"y":1232,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140103","name":"푸른 켄타우로스","img":"https://drive.google.com/thumbnail?id=11PZz7rE1_UYG-Dyy8aMRVJ5oGnapcdId&sz=w200","category":"정령형","minLevel":88,"hp":37000,"mp":200,"exp":8000,"acc":170,"eva":28,"pdd":800,"mdd":495,"note":"얼음속성 공격 반감, 불속성 공격에 약함","desc":"상체는 인간이고 하체는 말의 형태를 하고 있는 정령이다. 머리에 푸른 술이 달린 투구를 쓰고 창을 들고 있어 얼핏 보면 말을 탄 기사처럼 보이기도 한다. 강함을 추구하는 전사의 종족으로, 인간은 헤아리기도 어려울 정도로 긴 시간 동안 서로의 강함을 증명하기 위해 켄타우로스 간의 전쟁을 해 왔다고 한다. 빙염의 힘을 가지고 있어 화속성 공격을 두려워한다.","drops":[{"itemId":"4000233","name":"켄타우로스의 정수"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010000","name":"청동의 원석"},{"itemId":"4020001","name":"자수정의 원석"},{"itemId":"4031465","name":"헬레나의 오래된 장갑"},{"itemId":"4130005","name":"두손검 제작의 촉진제"},{"itemId":"4130011","name":"스태프 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4161016","name":"[스토리북]얼어붙은 얼음의 책"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040004","name":"투구 체력 주문서 60%"},{"itemId":"2043714","name":"완드 마력 주문서 60%"},{"itemId":"2044314","name":"창 명중률 주문서 10%"},{"itemId":"2332000","name":"글레이스 캡슐"},{"itemId":"1002277","name":"그린 골드윙캡"},{"itemId":"1041106","name":"레드 피라티드 (여)"},{"itemId":"1061105","name":"레드 피라티드 치마 (여)"},{"itemId":"1072177","name":"그린 크리시아슈즈"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1102032","name":"자주색 자일즈의 망토"},{"itemId":"1322045","name":"배틀해머"},{"itemId":"1332051","name":"골드 트윈 나이프"},{"itemId":"1412009","name":"헬리오스"},{"itemId":"1412021","name":"타바르"},{"itemId":"1432011","name":"페어프로즌"},{"itemId":"1442019","name":"월아산"},{"itemId":"1452013","name":"파이어 아룬드"},{"itemId":"1492010","name":"인피티니"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140103",22]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 마뇽의 숲 등록 · 서식 몬스터
+(function(){
+  var place={"name":"마뇽의 숲","code":"240020401","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240020401.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="마뇽의숲"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1618,imgHeight:643,portals:[{"toCode":"240020400","toName":"푸른 켄타우로스의 영역","note":"이동","x":941,"y":461,"unit":"px"},{"toCode":"240020600","toName":"외딴 숲","note":"이동","x":200,"y":461,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140103","name":"푸른 켄타우로스","img":"https://drive.google.com/thumbnail?id=11PZz7rE1_UYG-Dyy8aMRVJ5oGnapcdId&sz=w200","category":"정령형","minLevel":88,"hp":37000,"mp":200,"exp":8000,"acc":170,"eva":28,"pdd":800,"mdd":495,"note":"얼음속성 공격 반감, 불속성 공격에 약함","desc":"상체는 인간이고 하체는 말의 형태를 하고 있는 정령이다. 머리에 푸른 술이 달린 투구를 쓰고 창을 들고 있어 얼핏 보면 말을 탄 기사처럼 보이기도 한다. 강함을 추구하는 전사의 종족으로, 인간은 헤아리기도 어려울 정도로 긴 시간 동안 서로의 강함을 증명하기 위해 켄타우로스 간의 전쟁을 해 왔다고 한다. 빙염의 힘을 가지고 있어 화속성 공격을 두려워한다.","drops":[{"itemId":"4000233","name":"켄타우로스의 정수"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010000","name":"청동의 원석"},{"itemId":"4020001","name":"자수정의 원석"},{"itemId":"4031465","name":"헬레나의 오래된 장갑"},{"itemId":"4130005","name":"두손검 제작의 촉진제"},{"itemId":"4130011","name":"스태프 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4161016","name":"[스토리북]얼어붙은 얼음의 책"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040004","name":"투구 체력 주문서 60%"},{"itemId":"2043714","name":"완드 마력 주문서 60%"},{"itemId":"2044314","name":"창 명중률 주문서 10%"},{"itemId":"2332000","name":"글레이스 캡슐"},{"itemId":"1002277","name":"그린 골드윙캡"},{"itemId":"1041106","name":"레드 피라티드 (여)"},{"itemId":"1061105","name":"레드 피라티드 치마 (여)"},{"itemId":"1072177","name":"그린 크리시아슈즈"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1102032","name":"자주색 자일즈의 망토"},{"itemId":"1322045","name":"배틀해머"},{"itemId":"1332051","name":"골드 트윈 나이프"},{"itemId":"1412009","name":"헬리오스"},{"itemId":"1412021","name":"타바르"},{"itemId":"1432011","name":"페어프로즌"},{"itemId":"1442019","name":"월아산"},{"itemId":"1452013","name":"파이어 아룬드"},{"itemId":"1492010","name":"인피티니"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140103",6]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 몬스터 등록: 마뇽
+(function(){
+  if(!window.MONSTERS)return;
+  [{"id":"8180000","name":"마뇽","img":"https://drive.google.com/thumbnail?id=1wyJeyPhBS_AOvE_vErtAc0MIiQWYAarA&sz=w200","category":"파충류형","minLevel":105,"hp":3700000,"mp":1500,"exp":67500,"acc":200,"eva":39,"pdd":900,"mdd":850,"note":"불속성 공격 반감, 얼음속성 공격에 약함","desc":"마뇽의 숲에 서식하는 사악한 용족의 일종이다. 상급의 용족으로 매우 영리하여 다양한 마법을 구사할 줄 안다. 신체적인 능력 역시 뛰어나 단단한 껍질과 쇠도 녹이는 강력한 브레스를 가졌으며, 작지만 날개가 달려 있어 날아다니기도 한다. 과거에는 하플링과 우호적이었지만, 어째서인지 적대적으로 돌아섰다.","places":[{"name":"마뇽의 숲","code":"240020401","count":1}],"place":{"name":"마뇽의 숲","code":"240020401","count":1},"drops":[{"itemId":"4000235","name":"마뇽의 꼬리"},{"itemId":"4000244","name":"드래곤의 영혼"},{"itemId":"4000245","name":"드래곤의 비늘"},{"itemId":"4001076","name":"마뇽의 울음소리"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4004001","name":"지혜의 크리스탈 원석"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":null,"name":"영웅의 펜타곤"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2040328","name":"귀 장식 체력 주문서 10%"},{"itemId":"2040805","name":"장갑 공격력 주문서 10%"},{"itemId":"2040824","name":"장갑 체력 주문서 60%"},{"itemId":"2043001","name":"한손검 공격력 주문서 60%"},{"itemId":"2043101","name":"한손도끼 공격력 주문서 60%"},{"itemId":"2043112","name":"한손도끼 명중률 주문서 60%"},{"itemId":"2043201","name":"한손둔기 공격력 주문서 60%"},{"itemId":"2043301","name":"단검 공격력 주문서 60%"},{"itemId":"2043714","name":"완드 마력 주문서 60%"},{"itemId":"2043801","name":"스태프 마력 주문서 60%"},{"itemId":"2044001","name":"두손검 공격력 주문서 60%"},{"itemId":"2044014","name":"두손검 명중률 주문서 10%"},{"itemId":"2044101","name":"두손도끼 공격력 주문서 60%"},{"itemId":"2044201","name":"두손둔기 공격력 주문서 60%"},{"itemId":"2044301","name":"창 공격력 주문서 60%"},{"itemId":"2044401","name":"폴암 공격력 주문서 60%"},{"itemId":"2044501","name":"활 공격력 주문서 60%"},{"itemId":"2044601","name":"석궁 공격력 주문서 60%"},{"itemId":"2044701","name":"아대 공격력 주문서 60%"},{"itemId":"2044801","name":"너클 공격력 주문서 60%"},{"itemId":"2044901","name":"건 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2290003","name":"[마스터리북]아킬레스 30"},{"itemId":"2290015","name":"[마스터리북]블로킹 30"},{"itemId":"2290030","name":"[마스터리북]페럴라이즈 20"},{"itemId":"2290035","name":"[마스터리북]홀리 실드 30"},{"itemId":"2290289","name":"[마스터리북]파이어데몬30"},{"itemId":null,"name":"[마스터리북]피닉스 30"},{"itemId":"2290080","name":"[마스터리북]쇼다운 20"},{"itemId":"2290098","name":"[마스터리북]드래곤 스트라이크 30"},{"itemId":"2290101","name":"[마스터리북]슈퍼 트랜스폼 20"},{"itemId":"2290117","name":"[마스터리북]래피드 파이어 20"},{"itemId":"2290130","name":"[마스터리북]프리즈 스탠딩 20"},{"itemId":"2290144","name":"[마스터리북]매직 마스터리 20"},{"itemId":"2290156","name":"[마스터리북]플라잉 어썰터 20"},{"itemId":"1302056","name":"스파타"},{"itemId":"1312030","name":"토마호크"},{"itemId":"1322045","name":"배틀해머"},{"itemId":"1332051","name":"골드 트윈 나이프"},{"itemId":"1332052","name":"블러드 대거"},{"itemId":"1372010","name":"다이몬의 완드"},{"itemId":"1382035","name":"블루마린"},{"itemId":"1402035","name":"참화도"},{"itemId":"1412021","name":"타바르"},{"itemId":"1422027","name":"골든 스미스해머"},{"itemId":"1432030","name":"피나카"},{"itemId":"1442044","name":"제드버그"},{"itemId":"1452019","name":"화이트 니스록"},{"itemId":"1462015","name":"화이트 네쉐르"},{"itemId":"1472053","name":"레드 크리븐"},{"itemId":"1482012","name":"킹 센트"},{"itemId":"1492012","name":"콘체르토"}]}].forEach(function(m){var o=window.MONSTERS.find(function(x){return String(x.id)===String(m.id);});if(o)Object.keys(m).forEach(function(k){o[k]=m[k];});else window.MONSTERS.push(m);});
+})();
 </script>
 <script>
 (function(){
