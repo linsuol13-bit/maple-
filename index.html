@@ -92412,19 +92412,22 @@ window.CHANGELOG = [
       html += '<div class="wm-route-line">이미 같은 맵에 있어요: <b>'+esc((mapByCode(same[0])||{}).name||same[0])+'</b></div>';
     } else {
       var route = routeBest(startCodes, toCodes, routeGraph({ warp:true }));
-      var taxi = routeBest(startCodes, toCodes, routeGraph({ warp:true, taxi:true }));
-      var taxiUsed = taxi && taxi.steps.some(function(st){ return st.edge.kind === 'taxi'; });
+      var taxi = routeBestTaxi(startCodes, toCodes);
+      var taxiUsed = !!taxi;
       if (!route && !(taxiUsed)){
         html += '<div class="wm-route-msg"><b>'+esc(A.name)+'</b>에서 갈 수 있는 길을 찾지 못했어요. 이어지지 않은 맵이 있을 수 있어요.</div>';
       } else {
-        var shown = route || taxi;
+        var taxiFirst = taxiUsed && (!route || taxi.steps.length < route.steps.length);
+        var shown = taxiFirst ? taxi : route;
         var destMap = mapByCode(shown.to);
         var who = (T.type==='npc'||T.type==='monster') ? ' '+esc(routeWho(T, shown.to)) : '';
         html += '<div class="wm-route-line">📍 <b>'+esc(A.name)+'</b> → <b>'+esc(destMap ? destMap.name : shown.to)+'</b>'+who+' · <span class="n">'+shown.steps.length+'번 이동</span>'+(wmRouteFocus ? ' <span style="font-weight:700;color:var(--ink-soft);">(선택한 위치)</span>' : (T.codes.length>1 ? ' <span style="font-weight:700;color:var(--ink-soft);">(가장 가까운 곳)</span>' : ''))+'</div>';
         html += wmRouteSteps(shown, T);
-        if (taxiUsed && route && taxi.steps.length < route.steps.length){
-          var fare = taxi.steps.reduce(function(a, st){ return a + (st.edge.kind==='taxi' && st.edge.fare ? st.edge.fare : 0); }, 0);
-          html += '<div class="wm-route-taxi">🚕 모범택시를 타면 '+taxi.steps.length+'번 이동'+(fare ? ' (택시비 '+fare.toLocaleString()+'메소)' : '')+'</div>';
+        var fare = taxiUsed ? taxi.steps.reduce(function(a, st){ return a + (st.edge.kind==='taxi' && st.edge.fare ? st.edge.fare : 0); }, 0) : 0;
+        if (taxiFirst){
+          html += '<div class="wm-route-taxi">🚕 택시 이용'+(fare ? ' (택시비 '+fare.toLocaleString()+'메소)' : '')+(route ? ' · 택시 없이 가면 '+route.steps.length+'번 이동' : '')+'</div>';
+        } else if (taxiUsed){
+          html += '<div class="wm-route-taxi">🚕 택시를 타면 '+taxi.steps.length+'번 이동'+(fare ? ' (택시비 '+fare.toLocaleString()+'메소)' : '')+'</div>';
         }
       }
       html += '<div class="wm-route-actions"><button type="button" class="wm-quick wm-rt-more">길찾기 자세히 →</button>'+(wmRouteFocus ? '<button type="button" class="wm-quick wm-rt-unfocus">✕ 가까운 곳으로</button>' : '')+'</div>';
@@ -92947,11 +92950,13 @@ window.CHANGELOG = [
     }
     if (opts.taxi){
       NPCS.forEach(function(n){
-        if (!/모범택시/.test(n.name) || !n.fees || !n.fees.length) return;   // 택시는 모범택시만 포함
+        if (!/모범택시|총알택시/.test(n.name) || !n.fees || !n.fees.length) return;   // 택시는 모범택시 · 총알택시만 포함
         wmPlacesOf(n).forEach(function(pl){
           var from = String(pl.code);
           if (!g[from]) return;
+          var fromMap = mapByCode(from);
           n.fees.forEach(function(f){
+            if (f.place && fromMap && normQ(f.place) !== normQ(fromMap.name)) return;   // 요금표가 마을별로 나뉜 택시는 그 마을에서만 타요.
             var dest = MAPS.find(function(m){ return normQ(m.name) === normQ(f.label); });
             if (!dest) return;
             var to = String(dest.code);
@@ -92987,6 +92992,23 @@ window.CHANGELOG = [
   function hiddenWarpCount(code){
     var m = mapByCode(code);
     return m ? (m.portals || []).filter(function(p){ return p.destX != null; }).length : 0;
+  }
+  // 모범택시를 한 번 이상 타는 경로 중 가장 적게 이동하는 경로 (맵 이동 포함/미포함 중 더 짧은 쪽). 택시를 안 타면 null.
+  function routeBestTaxi(fromCodes, toCodes){
+    var usesTaxi = function(r){ return r && r.steps.some(function(st){ return st.edge.kind === 'taxi'; }); };
+    var cands = [routeBest(fromCodes, toCodes, routeGraph({ warp:true, taxi:true })), routeBest(fromCodes, toCodes, routeGraph({ taxi:true }))].filter(usesTaxi);
+    // 택시 정류장(모범택시가 있는 맵)에서 출발해 택시를 먼저 타는 경로도 확인해요.
+    var g = routeGraph({ warp:true, taxi:true });
+    fromCodes.forEach(function(f){
+      (g[f] || []).forEach(function(e){
+        if (e.kind !== 'taxi') return;
+        if (toCodes.indexOf(e.to) > -1){ cands.push({ from:f, to:e.to, steps:[{ to:e.to, edge:e, from:f }] }); return; }
+        var rest = routeBest([e.to], toCodes, g);
+        if (rest) cands.push({ from:f, to:rest.to, steps:[{ to:e.to, edge:e, from:f }].concat(rest.steps) });
+      });
+    });
+    cands.sort(function(a, b){ return a.steps.length - b.steps.length; });
+    return cands[0] || null;
   }
   // 시작 위치들 중에서 목표 위치들 중 하나까지 가장 적게 이동하는 경로
   function routeBest(fromCodes, toCodes, g){
@@ -93052,7 +93074,7 @@ window.CHANGELOG = [
       if (wc.length){ A = { type:'multi', virtual:true, id:'warp', name:'맵 이동', icon:'🌀', codes:wc, counts:{} }; routeVirtualFrom = A; }
     }
     if (!A || !B){
-      routeResultEl.innerHTML = ROUTE_MSG('<b>도착</b>만 검색해도 길을 찾아줘요. 출발을 비워 두면 🌀 무료 맵 이동으로 갈 수 있는 곳 중 가장 가까운 곳에서 출발해요. 맵 이름뿐 아니라 <b>NPC나 몬스터 이름</b>도 검색할 수 있어요. 🌀 무료 맵 이동과 🚕 모범택시도 함께 계산해요.');
+      routeResultEl.innerHTML = ROUTE_MSG('<b>도착</b>만 검색해도 길을 찾아줘요. 출발을 비워 두면 🌀 무료 맵 이동으로 갈 수 있는 곳 중 가장 가까운 곳에서 출발해요. 맵 이름뿐 아니라 <b>NPC나 몬스터 이름</b>도 검색할 수 있어요. 🌀 무료 맵 이동과 🚕 모범택시 · 총알택시도 함께 계산해요.');
       return;
     }
     if (!A.codes.length){ routeResultEl.innerHTML = routeNoPlace(A); return; }
@@ -93068,16 +93090,23 @@ window.CHANGELOG = [
     }
     // 로나월드에서는 무료 맵 이동을 항상 쓸 수 있으니, 맵 이동을 포함한 최단 경로가 기본이에요.
     var route = routeBest(fromCodes, toCodes, routeGraph({ warp:true }));
-    var taxi = routeBest(fromCodes, toCodes, routeGraph({ warp:true, taxi:true }));
+    var taxi = routeBestTaxi(fromCodes, toCodes);
     var routeUsesWarp = route && route.steps.some(function(st){ return st.edge.kind === 'warp'; });
-    var taxiUsed = taxi && taxi.steps.some(function(st){ return st.edge.kind === 'taxi'; });
+    var taxiUsed = !!taxi;
     var html = '';
     function addCard(title, best, tag){
       routeCache.push({ label:'🧭 경로'+tag+': '+A.name+' → '+B.name, codes:[best.from].concat(best.steps.map(function(s){ return s.to; })) });
       html += routeCardHtml(title, best, routeCache.length-1);
     }
-    if (route) addCard(routeUsesWarp ? '🌀 최단 경로 (맵 이동 이용)' : '🧭 최단 경로', route, '');
-    if (taxiUsed && (!route || taxi.steps.length < route.steps.length)) addCard('🚕 모범택시 이용 — 더 빨라요', taxi, '(택시)');
+    // 모범택시까지 포함해서 가장 적게 이동하는 길을 먼저 보여 주고, 다른 길은 그 아래에 보여 줘요.
+    var taxiFirst = taxiUsed && (!route || taxi.steps.length < route.steps.length);
+    if (taxiFirst){
+      addCard('🚕 최단 경로 (택시 이용)', taxi, '(택시)');
+      if (route) addCard(routeUsesWarp ? '🌀 택시 없이 가는 길 (맵 이동 이용)' : '🧭 택시 없이 가는 길', route, '');
+    } else {
+      if (route) addCard(routeUsesWarp ? '🌀 최단 경로 (맵 이동 이용)' : '🧭 최단 경로', route, '');
+      if (taxiUsed) addCard('🚕 택시 이용 경로', taxi, '(택시)');
+    }
     if (!html){
       html = ROUTE_MSG('<b>'+esc(A.name)+' → '+esc(B.name)+'</b> 경로를 찾지 못했어요.<br>포털은 한 방향으로만 이어진 곳도 있고, 아직 등록되지 않은 맵이 사이에 있을 수 있어요. (예: 이름만 있고 맵이 없는 포털 목적지)');
     } else {
@@ -93130,7 +93159,7 @@ window.CHANGELOG = [
     document.getElementById('routeFromMy').disabled = !myLoc;
     document.getElementById('routeFromMy').textContent = myLoc ? '📍 내 현재 위치: '+myLoc.name : '📍 내 현재 위치 (설정 안 됨)';
     var names = warpDestMaps().map(function(m){ return m.name; });
-    document.getElementById('routeHint').textContent = '🌀 무료 맵 이동 (등록된 곳만 반영): ' + (names.length ? names.join(' · ') : '없음') + ' · 🚕 택시는 모범택시만 포함해요.';
+    document.getElementById('routeHint').textContent = '🌀 무료 맵 이동 (등록된 곳만 반영): ' + (names.length ? names.join(' · ') : '없음') + ' · 🚕 택시는 모범택시 · 위험지역 총알택시만 포함해요.';
     routeCompute();
   }
 
