@@ -24734,7 +24734,59 @@ window.MONSTERS = [
     if(m)(m.portals||[]).forEach(function(p){if(String(p.toCode)===pr[1])p.needItem=true;});
   });
 })();
+// 테라숲 타임 게이트 등록 · NPC 앤디
+(function(){
+  var place={"name":"테라숲 타임 게이트","code":"240070000","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070000.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="테라숲타임게이트"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1442,imgHeight:773,portals:[{"toCode":"240010900","toName":"미나르숲 동쪽 경계","note":"이동","x":94,"y":589,"unit":"px"},{"toCode":null,"toName":"테라숲고목나무","note":"이동","x":679,"y":479,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082004","name":"앤디","img":"https://drive.google.com/thumbnail?id=1S8eBSNYa1SVRtWSRdNGMm1tH2hMaEp0E&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
 </script>
 <script src="data-map-detail.js"></script>
+<script>
+// 포탈 이름 표시 켜기/끄기 (기본: 켜짐, 브라우저에 기억)
+(function(){
+  var KEY='rona_portal_labels';
+  function isOn(){ try{ return localStorage.getItem(KEY)!=='off'; }catch(e){ return true; } }
+  function apply(on){
+    document.querySelectorAll('.portal-label').forEach(function(el){ el.style.display = on ? '' : 'none'; });
+    document.querySelectorAll('[data-plabel-state]').forEach(function(el){ el.textContent = on ? 'ON' : 'OFF'; });
+    document.querySelectorAll('[data-plabel-toggle]').forEach(function(b){ b.style.background = on ? 'var(--sun, #ffe28a)' : 'var(--paper)'; });
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-plabel-toggle]'); if (!b) return;
+    var on = !isOn(); try{ localStorage.setItem(KEY, on ? 'on' : 'off'); }catch(err){}
+    apply(on);
+  });
+  // 지도 확대/축소와 상관없이 이름표 글씨 크기를 일정하게 (--plz = 현재 배율)
+  function syncZoom(){ document.querySelectorAll('[data-plabel-toggle]').forEach(function(b){ var el=document.getElementById(b.getAttribute('data-plabel-toggle')); if(!el) return; var z=parseFloat(el.style.zoom||el.getAttribute('data-scale')||'1')||1; el.style.setProperty('--plz', z); }); }
+  document.addEventListener('click', function(){ setTimeout(syncZoom, 0); });
+  window.addEventListener('resize', function(){ setTimeout(syncZoom, 50); });
+  function init(){ apply(isOn()); syncZoom(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  setTimeout(init, 300); setTimeout(init, 1500);
+})();
+</script>
 </body>
 </html>

@@ -5529,7 +5529,7 @@ window.WORLD_MAPS["미나르숲"] = {
   baseHeight: 940,  /* TODO: 실제 이미지 원본 세로 픽셀로 교체 필요 */
   points: [
     { code:null, name:"동굴 입구", type:"special", x:531, y:335 },
-    { code:null, name:"테라숲 타임 게이트", type:"special", x:1191, y:201 },
+    { code:"240070000", name:"테라숲 타임 게이트", type:"special", x:1191, y:201 },
     { code:"240000000", name:"리프레", type:"town", x:954, y:150 },
     { code:"240010000", name:"리프레 서쪽 숲", type:"field", x:738, y:200 },
     { code:"240010100", name:"미나르숲 서쪽 경계", type:"field", x:704, y:346 },
@@ -90947,6 +90947,34 @@ window.CHANGELOG = [
     if(m)(m.portals||[]).forEach(function(p){if(String(p.toCode)===pr[1])p.needItem=true;});
   });
 })();
+// 테라숲 타임 게이트 등록 · NPC 앤디
+(function(){
+  var place={"name":"테라숲 타임 게이트","code":"240070000","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070000.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="테라숲타임게이트"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1442,imgHeight:773,portals:[{"toCode":"240010900","toName":"미나르숲 동쪽 경계","note":"이동","x":94,"y":589,"unit":"px"},{"toCode":null,"toName":"테라숲고목나무","note":"이동","x":679,"y":479,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082004","name":"앤디","img":"https://drive.google.com/thumbnail?id=1S8eBSNYa1SVRtWSRdNGMm1tH2hMaEp0E&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
 </script>
 <script>
 (function(){
@@ -93879,7 +93907,7 @@ window.CHANGELOG = [
   var PANEL_ORBIS_ICON_MAPS = {'상담실':1,'구름공원1':1,'구름공원2':1,'구름공원3':1,'구름공원4':1,'구름공원5':1,'구름공원6':1,'산책로':1,'산책로2':1,'버려진화원':1,'노파의집':1,'세가지빛정원으로가는길':1,'붉은빛의정원1':1,'붉은빛의정원2':1,'노란빛의정원1':1,'노란빛의정원2':1,'푸른빛의정원1':1,'푸른빛의정원2':1,'하늘계단1':1,'하늘계단2':1,'검은빛의정원1':1,'검은빛의정원2':1,'엘리쟈의정원':1,'알수없는탑':1,'길드본부<영웅의전당>':1,'만남의 언덕':1};
   var PANEL_ELNATH_ICON_MAPS = {'눈 덮인 언덕':1,'장로의관저':1,'빙판조심1':1,'빙판조심2':1,'차가운벌판1':1,'차가운벌판2':1,'왕관을휘날리며':1,'차디찬벌판':1,'라이더의 벌판':1,'얼음골짜기1':1,'얼음골짜기2':1,'날카로운절벽1':1,'날카로운절벽2':1,'설원의성지':1,'늑대의영역1':1,'늑대의영역2':1,'위험한절벽':1,'늑대의영역3':1,'늑대의영역4':1,'늑대의영역5':1,'죽은나무의숲1':1,'죽은나무의숲2':1,'죽은나무의숲3':1,'죽은나무의숲4':1,'폐광1':1,'폐광2':1,'폐광3':1,'폐광4':1,'통로':1,'시련의동굴1':1,'시련의동굴2':1,'동굴속동굴':1,'시련의동굴3':1,'자쿰으로통하는문':1,'자쿰의제단':1,'설인의 골짜기':1,'눈의정령 쉼터':1};
   var PANEL_ICON_AREA_ORDER = ['파괴된 헤네시스','커닝스퀘어','버섯의성','지구방위본부','플로리나비치','백초마을','아랫마을','슬리피우드','루디브리엄','아쿠아리움','노틸러스','엘리니아','커닝시티','페리온','오르비스','리프레','아리안트','마가티아','리엔','엘나스','에레브','폐광','블랙로드','무릉','헤네시스'];
-  function panelLocationIconFor(place, mapEntry){var __dc=String(((place&&place.code)||(mapEntry&&mapEntry.code))||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";if(!mapEntry&&__dc&&window.MAPS){mapEntry=window.MAPS.find(function(m){return String(m.code)===__dc;})||null;}
+  function panelLocationIconFor(place, mapEntry){var __dc=String(((place&&place.code)||(mapEntry&&mapEntry.code))||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";/* 테라숲 */if(/^2400700\d\d$/.test(__dc))return "https://drive.google.com/thumbnail?id=1zJstoKsJ_0GftjEE16A_n7OqJpAKvblz&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";if(!mapEntry&&__dc&&window.MAPS){mapEntry=window.MAPS.find(function(m){return String(m.code)===__dc;})||null;}
     var name = String(place && place.name || (mapEntry && mapEntry.name) || '');
     var area = PANEL_HENESIS_ICON_MAPS[name] ? '헤네시스' : '';
     if (!area && name.indexOf('버섯의 ')>-1) area = '버섯의성';
