@@ -1021,6 +1021,7 @@ button{ font:inherit; }
 .lp-maps-title{ width:100%; font-size:11.5px; font-weight:800; color:var(--ink-soft); }
 .lp-chip.map{ font-size:12px; padding:4px 9px; }
 
+body.plabel-off .portal-label{display:none !important;}
 </style>
 </head>
 <body>
@@ -1052,6 +1053,15 @@ button{ font:inherit; }
     <div id="recentStripList" class="recent-strip-list"></div>
   </div>
   <script>
+function __plabelOn(){ try{ return localStorage.getItem('rona_portal_labels')!=='off'; }catch(e){ return true; } }
+function __plabelSet(on){ try{ localStorage.setItem('rona_portal_labels', on?'on':'off'); }catch(e){} __plabelApply(); }
+function __plabelApply(){ var on=__plabelOn(); if(document.body) document.body.classList.toggle('plabel-off', !on);
+  document.querySelectorAll('[data-plabel-state]').forEach(function(el){ el.textContent = on?'ON':'OFF'; });
+  document.querySelectorAll('[data-plabel-toggle]').forEach(function(b){ b.style.background = on?'var(--sun, #ffe28a)':'var(--paper)'; }); }
+document.addEventListener('DOMContentLoaded', __plabelApply);
+new MutationObserver(function(){ var b=document.querySelector('[data-plabel-toggle]:not([data-pl-done])'); if(b){ document.querySelectorAll('[data-plabel-toggle]').forEach(function(x){x.setAttribute('data-pl-done','1');}); __plabelApply(); } }).observe(document.documentElement,{childList:true,subtree:true});
+</script>
+<script>
   /* 최근 본 항목 / 즐겨찾기 개수를 데이터 로딩 전에 먼저 그려서 나중에 갑자기 나타나지 않게 함 */
   (function(){
     try {
@@ -94878,6 +94888,7 @@ window.CHANGELOG = [
         html += '<span id="'+zoomId+'-label" style="font-size:13px;font-weight:800;color:var(--ink-soft);min-width:44px;text-align:center;">'+Math.round(fitScale*100)+'%</span>';
         html += '<button type="button" data-zoom-in="'+zoomId+'" style="border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:800;font-size:13px;cursor:pointer;">＋</button>';
         html += '<button type="button" data-zoom-reset="'+zoomId+'" style="border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:800;font-size:13px;cursor:pointer;">초기화</button>';
+        html += '<button type="button" data-plabel-toggle="'+zoomId+'" style="border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:800;font-size:13px;cursor:pointer;">🏷️ 포탈 이름 <b data-plabel-state>'+(__plabelOn()?'ON':'OFF')+'</b></button>';
         html += '</div>';
         html += '<div class="map-wrap-pending" style="overflow:auto;max-height:75vh;border-radius:12px;border:2.5px solid var(--wood-dark);margin-bottom:14px;">';
         html += '<div id="'+zoomId+'" data-scale="'+fitScale+'" data-native-width="'+(map.imgWidth||'')+'" style="'+zElStyle+'">';
@@ -94901,6 +94912,7 @@ window.CHANGELOG = [
             html += '<button type="button" data-warp-dest-x="'+(p.destX/map.imgWidth*100)+'" data-warp-dest-y="'+(p.destY/map.imgHeight*100)+'" title="'+(p.note||'이동')+' → '+(p.toName||'')+'" style="position:absolute;left:'+pLeftPct+'%;top:'+pTopPct+'%;transform:translate(-50%,'+(p.anchor==='center'?'-50%':'-100%')+');display:block;background:none;border:none;padding:0;cursor:pointer;">';
             var pSizeW = (p.size || 80) * (map.iconScale || 2.0);
             html += '<img src="'+(p.icon||'https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200')+'" alt="포탈" style="display:block;height:'+pSizeW+'px;width:auto;'+(p.flip?'transform:scaleX(-1);':'')+'" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'↑\';this.parentElement.style.cssText+=\'width:30px;height:30px;border-radius:50%;background:var(--sun);border:2.5px solid var(--wood-dark);display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;font-size:15px;\';">';
+            html += '<span class="portal-label" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:calc(3px / var(--plz,1));padding:calc(2px / var(--plz,1)) calc(8px / var(--plz,1));border-radius:999px;background:rgba(255,255,255,.92);border:calc(1.5px / var(--plz,1)) solid var(--wood-dark,#6b4a2b);color:var(--ink,#333);font-size:calc(12px / var(--plz,1));font-weight:800;white-space:nowrap;line-height:1.3;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.25);z-index:5;">'+esc((p.toName||p.note||'이동'))+'</span>';
             html += '</button>';
             return;
           }
@@ -94919,6 +94931,7 @@ window.CHANGELOG = [
             var href = p.toCode ? ('map-detail.html?code='+p.toCode) : (p.toName ? ('map-detail.html?name='+encodeURIComponent(p.toName)) : '#');
             html += '<a href="'+href+'" title="'+(p.note||'이동')+' → '+(p.toName||'')+'" style="position:absolute;left:'+pLeftPct+'%;top:'+pTopPct+'%;transform:translate(-50%,-100%);display:block;background:none;border:none;padding:0;cursor:pointer;">';
             html += '<img src="'+__iconUrl+'" alt="포탈" style="display:block;height:'+__pSize+'px;width:auto;" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'↑\';this.parentElement.style.cssText+=\'width:30px;height:30px;border-radius:50%;background:var(--sun);border:2.5px solid var(--wood-dark);display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;font-size:15px;\';">';
+            html += '<span class="portal-label" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:calc(3px / var(--plz,1));padding:calc(2px / var(--plz,1)) calc(8px / var(--plz,1));border-radius:999px;background:rgba(255,255,255,.92);border:calc(1.5px / var(--plz,1)) solid var(--wood-dark,#6b4a2b);color:var(--ink,#333);font-size:calc(12px / var(--plz,1));font-weight:800;white-space:nowrap;line-height:1.3;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.25);z-index:5;">'+esc((p.toName||('코드 '+(p.toCode||''))))+'</span>';
             html += '</a>';
           } else {
             var __menuId = zoomId+'-pm'+__gi;
@@ -94927,6 +94940,7 @@ window.CHANGELOG = [
             html += '<img src="'+__iconUrl+'" alt="포탈" style="display:block;height:'+__pSize+'px;width:auto;" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'↑\';this.parentElement.style.cssText+=\'width:30px;height:30px;border-radius:50%;background:var(--sun);border:2.5px solid var(--wood-dark);display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;font-size:15px;\';">';
             html += '<span style="position:absolute;top:-6px;right:-6px;min-width:17px;height:17px;padding:0 3px;border-radius:999px;background:var(--berry);color:#fff;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,.3);">'+__grp.length+'</span>';
             html += '</button>';
+            html += '<span class="portal-label" style="position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:calc(3px / var(--plz,1));padding:calc(2px / var(--plz,1)) calc(8px / var(--plz,1));border-radius:999px;background:rgba(255,255,255,.92);border:calc(1.5px / var(--plz,1)) solid var(--wood-dark,#6b4a2b);color:var(--ink,#333);font-size:calc(12px / var(--plz,1));font-weight:800;white-space:nowrap;line-height:1.3;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.25);z-index:5;">'+esc(__grp.map(function(__i){return __i.p.toName||('코드 '+(__i.p.toCode||''));}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(' / '))+'</span>';
             html += '<div id="'+__menuId+'" data-portal-menu style="display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:6px;background:#fff;border:1.5px solid var(--line);border-radius:10px;box-shadow:var(--pop-md);padding:6px;white-space:nowrap;z-index:60;">';
             __grp.forEach(function(__item){
               var __gp = __item.p;
@@ -95176,6 +95190,7 @@ window.CHANGELOG = [
         zEl.setAttribute('data-scale', fit);
         zEl.setAttribute('data-fit-scale', fit);
         zEl.style.zoom = fit;
+        zEl.style.setProperty('--plz', fit);
         var lbl = document.getElementById(zEl.id + '-label');
         if (lbl) lbl.textContent = Math.round(fit * 100) + '%';
       });
@@ -95414,6 +95429,8 @@ window.CHANGELOG = [
       }
       return;
     }
+    var plBtn = e.target.closest('[data-plabel-toggle]');
+    if (plBtn){ e.preventDefault(); __plabelSet(!__plabelOn()); return; }
     var zBtn = e.target.closest('[data-zoom-in],[data-zoom-out],[data-zoom-reset]');
     if (zBtn){
       var zid = zBtn.getAttribute('data-zoom-in') || zBtn.getAttribute('data-zoom-out') || zBtn.getAttribute('data-zoom-reset');
@@ -95426,6 +95443,7 @@ window.CHANGELOG = [
         else cur = parseFloat(el.getAttribute('data-fit-scale') || '1');
         el.setAttribute('data-scale', cur);
         el.style.zoom = cur;
+        el.style.setProperty('--plz', cur);
         if (label) label.textContent = Math.round(cur*100)+'%';
       }
       return;
