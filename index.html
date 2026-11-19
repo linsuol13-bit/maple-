@@ -1373,7 +1373,7 @@ new MutationObserver(function(){ var b=document.querySelector('[data-plabel-togg
   </div>
 </div>
 
-<script src="data-quests.js?v=202611181749"></script>
+<script src="data-quests.js?v=202611200109"></script>
 <script>
 window.NPCS = [
   {
@@ -5587,14 +5587,14 @@ window.WORLD_MAPS["네오시티"] = {
   baseWidth: 640,  /* TODO: 실제 이미지 원본 가로 픽셀로 교체 필요 */
   baseHeight: 470,  /* TODO: 실제 이미지 원본 세로 픽셀로 교체 필요 */
   points: [
-    { code:null, name:"마을 1", type:"town", x:312, y:355 },
-    { code:null, name:"필드 1", type:"field", x:141, y:323 },
-    { code:null, name:"필드 2", type:"field", x:149, y:206 },
-    { code:null, name:"필드 3", type:"field", x:75, y:136 },
-    { code:null, name:"필드 4", type:"field", x:524, y:305 },
-    { code:null, name:"필드 5", type:"field", x:487, y:179 },
-    { code:null, name:"필드 6", type:"field", x:329, y:96 },
-    { code:null, name:"필드 7", type:"field", x:312, y:428 }
+    { code:"240070000", name:"테라숲 타임 게이트", type:"town", x:312, y:355 },
+    { code:"240070100", name:"평범한마을입구", type:"field", x:141, y:323 },
+    { code:null, name:"폐허가된교차로", type:"field", x:149, y:206 },
+    { code:null, name:"위험한타워로비", type:"field", x:75, y:136 },
+    { code:null, name:"한밤의항만입구", type:"field", x:524, y:305 },
+    { code:null, name:"폭격맞은도심상점가", type:"field", x:487, y:179 },
+    { code:null, name:"천공전함뱃머리", type:"field", x:329, y:96 },
+    { code:"240070010", name:"테라숲고목나무", type:"field", x:312, y:428 }
   ]
 };
 window.WORLD_MAPS["시간의 신전"] = {
@@ -26798,6 +26798,26 @@ window.ITEMS = [
     ],
     "sellPrice": 38,
     "desc": "아이언호그의 다리를 감싸고 있던 강철로 된 발굽이다."
+},
+{
+  "id": "4032512",
+  "name": "사건의 실마리",
+  "img": "https://drive.google.com/thumbnail?id=12_KfC5T9F4xjzOLEmNMgl5gZ_-KOrlGU&sz=w200",
+  "path": [
+    "기타",
+    "퀘스트"
+  ],
+  "desc": "앤디가 찾으려고 하는 사건의 실마리가 적힌 종이다. 무엇이 적혀 있는지는 알 수 없다. 종이의 훼손 상태가 너무 심하다."
+},
+{
+  "id": "4001393",
+  "name": "시간여행자의 회중시계",
+  "img": "https://drive.google.com/thumbnail?id=1iTEE4vft8m7hKtn0qWxSBnmvmgcBHG37&sz=w200",
+  "path": [
+    "기타",
+    "퀘스트"
+  ],
+  "desc": "테라숲에 있는 타임 게이트를 이용할 수 있는 권리를 나타내는 물건이다. 평범한 회중시계처럼 생겼지만 시계 뒷면에 짧은 글귀가 적혀 있다. '시간은 금이다'"
 },
 {
   "id": "2041200",
@@ -90959,7 +90979,7 @@ window.CHANGELOG = [
 })();
 // 테라숲 타임 게이트 등록 · NPC 앤디
 (function(){
-  var place={"name":"테라숲 타임 게이트","code":"240070000","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070000.webp"};
+  var place={"name":"테라숲 타임 게이트","code":"240070000","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070000.webp"};
   if(window.MAPS){
     window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="테라숲타임게이트"){p.toCode=place.code;p.toName=place.name;}});});
     var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1442,imgHeight:773,portals:[{"toCode":"240010900","toName":"미나르숲 동쪽 경계","note":"이동","x":94,"y":589,"unit":"px"},{"toCode":null,"toName":"테라숲고목나무","note":"이동","x":679,"y":479,"unit":"px"}]};
@@ -90984,6 +91004,132 @@ window.CHANGELOG = [
       if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
     });
   }
+})();
+// 테라숲고목나무 등록 · 서식 몬스터
+(function(){
+  var place={"name":"테라숲고목나무","code":"240070010","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070010.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="테라숲고목나무"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1267,imgHeight:1179,portals:[{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":1204,"y":205,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120100","name":"문지기 넥스","img":"https://drive.google.com/thumbnail?id=1LsUMtboXDPF7CKMU8HsbX8leSyWg8M_3&sz=w400"}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120100",1]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 평범한마을입구 등록 · 서식 몬스터
+(function(){
+  var place={"name":"평범한마을입구","code":"240070100","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070100.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="평범한마을입구"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1890,imgHeight:726,portals:[{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":103,"y":507,"unit":"px"},{"toCode":null,"toName":"평범한마을놀이터","note":"이동","x":1795,"y":507,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120103","name":"레드 슬라임","img":"https://drive.google.com/thumbnail?id=1scu94LNhSokBrIMg927Y9yDb7C8915Rq&sz=w400","minLevel":70,"category":"무형","hp":15000,"mp":100,"exp":1690,"acc":165,"eva":26,"pdd":250,"mdd":260,"desc":"2030년 네오시티의 평화로운 어느 마을에 난데없이 나타난 빨간색의 변형 슬라임이다. 하지만 슬라임이라고 얕봤다간 큰일난다. 일반 슬라임보다 10배는 단단한 힘으로 누르기 때문에 매우 위험한 몬스터다. 하지만 슬라임의 본성을 버리지 못하고 아무 물건이나 줏어 먹어버린다.","drops":[{"itemId":"4000545","name":"레드슬라임의 액체"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4007007","name":"마법의 가루(검정)"},{"itemId":"4010004","name":"은의 원석"},{"itemId":"4010005","name":"오리할콘의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4020007","name":"다이아몬드의 원석"},{"itemId":"4032513","name":"구겨진 스케치북 낱장"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4130020","name":"하의 제작의 촉진제"},{"itemId":"4130021","name":"전신 갑옷 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040002","name":"투구 방어력 주문서 10%"},{"itemId":"2040427","name":"상의 행운 주문서 10%"},{"itemId":"2040618","name":"하의 점프 주문서 60%"},{"itemId":"2040705","name":"신발 점프력 주문서 10%"},{"itemId":"2040824","name":"장갑 체력 주문서 60%"},{"itemId":"2041021","name":"망토 행운 주문서 100%"},{"itemId":"2044301","name":"창 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049100","name":"혼돈의 주문서 60%"},{"itemId":"1002095","name":"미스릴 플레닛"},{"itemId":"1002246","name":"다크 세라피스"},{"itemId":"1032014","name":"분홍꽃 귀고리"},{"itemId":"1032016","name":"메탈하트 이어링"},{"itemId":"1032020","name":"골드드롭 이어링"},{"itemId":"1041095","name":"블러디 맨티스 (여)"},{"itemId":"1041102","name":"핑크 루티드"},{"itemId":"1050069","name":"브라운 레퀴엠 (남)"},{"itemId":"1050070","name":"다크 레퀴엠 (남)"},{"itemId":"1051054","name":"브라운 레퀴에르 (여)"},{"itemId":"1061094","name":"블러디 맨티스 바지 (여)"},{"itemId":"1061101","name":"핑크 루티드 바지"},{"itemId":"1072146","name":"그린 고어부츠"},{"itemId":"1072163","name":"레드 루티드슈즈"},{"itemId":"1072165","name":"베이지 리넥스슈즈"},{"itemId":"1082105","name":"다크 허스크"},{"itemId":"1082108","name":"다크 아이즈"},{"itemId":"1082110","name":"블루 코든"},{"itemId":"1102023","name":"흰색 가이아의 망토"},{"itemId":"1312009","name":"호크헤드"},{"itemId":"1332015","name":"게타"},{"itemId":"1332018","name":"칸디네"},{"itemId":"1372015","name":"엔젤윙즈"},{"itemId":"1372016","name":"피닉스 완드"},{"itemId":"1402011","name":"그리스"},{"itemId":"1422010","name":"호프만"},{"itemId":"1472028","name":"청갑충"},{"itemId":"1492009","name":"어비스 슈터"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120103",18]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 평범한마을놀이터 등록 · 서식 몬스터
+(function(){
+  var place={"name":"평범한마을놀이터","code":"240070101","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070101.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="평범한마을놀이터"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2700,imgHeight:682,portals:[{"toCode":"240070100","toName":"평범한마을입구","note":"이동","x":270,"y":461,"unit":"px"},{"toCode":null,"toName":"평범한마을변두리","note":"이동","x":2580,"y":464,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120104","name":"실버 슬라임","img":"https://drive.google.com/thumbnail?id=1kQCUCvJBuA2L7CCq50f5T5lpCSEzV9ly&sz=w400","minLevel":71,"category":"무형","hp":15100,"mp":100,"exp":1730,"acc":170,"eva":30,"pdd":260,"mdd":263,"desc":"2030년 네오시티의 평화로운 어느 마을에 난데없이 나타난 빨간색의 슬라임보다 조금 더 위험한 변형 슬라임이다. 투명하지만 강철과도 같이 단단한 몸체를 가지고 있기 때문에 쇠로 된 여러 기물을 파괴하면서 돌아다닌다.","drops":[{"itemId":"4000546","name":"실버슬라임의 액체"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007007","name":"마법의 가루(검정)"},{"itemId":"4010004","name":"은의 원석"},{"itemId":"4020007","name":"다이아몬드의 원석"},{"itemId":"4032513","name":"구겨진 스케치북 낱장"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130021","name":"전신 갑옷 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040618","name":"하의 점프 주문서 60%"},{"itemId":"2041021","name":"망토 행운 주문서 100%"},{"itemId":"2044301","name":"창 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2050000","name":"해독제"},{"itemId":"1002095","name":"미스릴 플레닛"},{"itemId":"1002246","name":"다크 세라피스"},{"itemId":"1032014","name":"분홍꽃 귀고리"},{"itemId":"1032016","name":"메탈하트 이어링"},{"itemId":"1041095","name":"블러디 맨티스 (여)"},{"itemId":"1041102","name":"핑크 루티드 (여)"},{"itemId":"1050069","name":"브라운 레퀴엠 (남)"},{"itemId":"1050070","name":"다크 레퀴엠 (남)"},{"itemId":"1051054","name":"브라운 레퀴에르 (여)"},{"itemId":"1061094","name":"블러디 맨티스 바지 (여)"},{"itemId":"1061101","name":"핑크 루티드 바지 (여)"},{"itemId":"1072146","name":"그린 고어부츠"},{"itemId":"1072165","name":"베이지 리넥스슈즈"},{"itemId":"1082105","name":"다크 허스크"},{"itemId":"1082108","name":"다크 아이즈"},{"itemId":"1312009","name":"호크헤드"},{"itemId":"1332015","name":"게타"},{"itemId":"1372015","name":"엔젤윙즈"},{"itemId":"1372016","name":"피닉스 완드"},{"itemId":"1402011","name":"그리스"},{"itemId":"1492009","name":"어비스 슈터"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120104",20]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 평범한마을변두리 등록 · 서식 몬스터
+(function(){
+  var place={"name":"평범한마을변두리","code":"240070102","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070102.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="평범한마을변두리"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2700,imgHeight:803,portals:[{"toCode":"240070101","toName":"평범한마을놀이터","note":"이동","x":115,"y":582,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120105","name":"골드 슬라임","img":"https://drive.google.com/thumbnail?id=1UabvkfMUDamMpJxHj9QELQn3QC1RveZS&sz=w400","minLevel":72,"category":"무형","hp":15200,"mp":100,"exp":1770,"acc":175,"eva":30,"pdd":320,"mdd":265,"desc":"2030년 네오시티의 평화로운 어느 마을에 난데없이 나타난 슬라임 중에 가장 위험한 슬라임이다. 금빛이 감도는 색때문에 예뻐보일 수 있지만 성격이 가장 난폭해서 화나게 하면 무차별 공격을 감행한다.","drops":[{"itemId":"4000547","name":"골드슬라임의 액체"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020006","name":"토파즈의 원석"},{"itemId":"4032513","name":"구겨진 스케치북 낱장"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130005","name":"두손검 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040512","name":"전신 갑옷 지력 주문서 100%"},{"itemId":"2041008","name":"망토 체력 주문서 10%"},{"itemId":"2044010","name":"두손검 명중률 주문서 100%"},{"itemId":"2044101","name":"두손도끼 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"1002287","name":"베이지 웨어캡"},{"itemId":"1051062","name":"블루 리네로스 (여)"},{"itemId":"1072211","name":"블루 리버스부츠"},{"itemId":"1082119","name":"퍼플 로버"},{"itemId":"1332019","name":"금강저"},{"itemId":"1452009","name":"레드 힌켈"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120105",24]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// NPC 똘똘한 소년 등록 (평범한마을입구)
+(function(){
+  if(!window.NPCS)return;
+  var n={id:"2082005",name:"똘똘한 소년",img:"https://drive.google.com/thumbnail?id=1a5vBSQFxRIx_tNRn26GhlKB6gFOjI4IH&sz=w400",place:{"name":"평범한마을입구","code":"240070100","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070100.webp"},dialogues:[]};
+  var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+  if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+})();
+// NPC 울고 있는 소녀 등록 (평범한마을입구)
+(function(){
+  if(!window.NPCS)return;
+  var n={id:"2082006",name:"울고 있는 소녀",img:"https://drive.google.com/thumbnail?id=1MNFlxUEP_r7UhaHkhOYlTUqJ_EAKgtZG&sz=w400",place:{"name":"평범한마을입구","code":"240070100","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070100.webp"},dialogues:[]};
+  var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+  if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
 })();
 </script>
 <script>
@@ -91877,6 +92023,9 @@ window.CHANGELOG = [
     ]},
     { world:'미나르숲', regions:['리프레'], defaultTown:'리프레', towns:[
       { name:'리프레', maps:[] }
+    ]},
+    { world:'네오시티', regions:['네오시티'], defaultTown:'네오시티', towns:[
+      { name:'네오시티', maps:[] }
     ]},
     { world:'니할 사막', regions:['아리안트','마가티아'], defaultTown:'아리안트', towns:[
       { name:'아리안트', maps:['아리안트','아리안트궁전','아리안트마을','민가1','민가2','민가3','민가4','민가5','민가6','아리안트 정거장','아리안트 서문 밖','어린 카투스 사막','선인장 사막1','선인장 사막2','로얄 카투스 사막','흰 바위 사막','벨라모아의 굴','작열하는 사막','바위 언덕','메마른 사막','프릴드 서식지대','유랑단의 텐트','아리안트 동문 밖','아리안트 북문 밖','북쪽 사막길1','북쪽 사막길2','붉은 모래 사막','사막유목민의 폐허','석양의 거인','피라미드 언덕'] },
@@ -93890,6 +94039,7 @@ window.CHANGELOG = [
     '버섯의성':'https://drive.google.com/thumbnail?id=1wMvaZVLaK45xu0KBWLcQOzcJowDxWfMK&sz=w400',
     '커닝스퀘어':'https://drive.google.com/thumbnail?id=1-WTiV08Xb71vq71Wjqo7SlUDSneDDhze&sz=w400',
     '노틸러스':'https://drive.google.com/thumbnail?id=172Bo5CRZkgLRaBJlqsZBoXfKBC5Z__N6&sz=w400',
+    '테라숲':'https://drive.google.com/thumbnail?id=1zJstoKsJ_0GftjEE16A_n7OqJpAKvblz&sz=w400',
     '오르비스':'https://drive.google.com/thumbnail?id=1WQU-Z0vjTusdGLkJ87Z6ylE-h-gPdKL8&sz=w400',
     '지구방위본부':'https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400',
     '루디브리엄':'https://drive.google.com/thumbnail?id=1Pp55px2ogqw3OfzX4cPQkg4H2gz2_6R0&sz=w400',
