@@ -730,7 +730,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611200109"></script>
+<script src="data-quests.js?v=202611201512"></script>
 <script>
 // 추가 몬스터: 레츠, 모래거인
 (function(){
@@ -48714,6 +48714,128 @@ window.MONSTERS = [
   var n={id:"2082006",name:"울고 있는 소녀",img:"https://drive.google.com/thumbnail?id=1MNFlxUEP_r7UhaHkhOYlTUqJ_EAKgtZG&sz=w400",place:{"name":"평범한마을입구","code":"240070100","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070100.webp"},dialogues:[]};
   var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
   if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+})();
+// 한밤의항만입구 등록 · 서식 몬스터
+(function(){
+  var place={"name":"한밤의항만입구","code":"240070200","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070200.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="한밤의항만입구"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2109,imgHeight:904,portals:[{"toCode":null,"toName":"한밤의항만하역장","note":"이동","x":1797,"y":752,"unit":"px"},{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":110,"y":747,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120106","name":"오버로드A","img":"https://drive.google.com/thumbnail?id=19vV74foLVuaaVP8OHjGOQqrpAPhHUpox&sz=w400","minLevel":73,"category":"무형","hp":15000,"mp":150,"exp":1650,"acc":150,"eva":30,"pdd":250,"mdd":250,"desc":"2099년 네오시티의 항만에 돌연 나타난 경비로봇이다. 레이더 센서로 움직이는 모든 것들을 감지해서 무차별적인 공격을 퍼붓는다. 무엇인가에 의해 조종당하고 있는 것처럼 보이지만 실체를 알아내기가 쉽지 않다. 탑재하고 있는 기술을 이미 2099년의 것이 아닌 것처럼 보인다.","drops":[{"itemId":"4000548","name":"오버로드A의 레이더 장치"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4010002","name":"미스릴의 원석"},{"itemId":"4020002","name":"아쿠아마린의 원석"},{"itemId":"4032514","name":"대피소 열쇠"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130004","name":"한손둔기 제작의 촉진제"},{"itemId":"4130012","name":"활 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2002003","name":"현자의 물약"},{"itemId":"2002004","name":"전사의 물약"},{"itemId":"2040301","name":"귀 장식 지력 주문서 60%"},{"itemId":"2040418","name":"상의 힘 주문서 60%"},{"itemId":"2040516","name":"전신 갑옷 행운 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"1040092","name":"블루 오리엔타이칸 (남)"},{"itemId":"1041092","name":"레드 트란도트 (여)"},{"itemId":"1041095","name":"블러디 맨티스 (여)"},{"itemId":"1050061","name":"블루 리넥스 (남)"},{"itemId":"1051054","name":"브라운 레퀴에르 (여)"},{"itemId":"1051063","name":"베이지 리네로스 (여)"},{"itemId":"1060081","name":"블루 오리엔타이칸 바지 (남)"},{"itemId":"1061091","name":"레드 트란도트 치마 (여)"},{"itemId":"1061094","name":"블러디 맨티스 바지 (여)"},{"itemId":"1072172","name":"그린 피레타부츠"},{"itemId":"1072177","name":"그린 크리시아슈즈"},{"itemId":"1072182","name":"블루 윙부츠"},{"itemId":"1072210","name":"레드 리버스부츠"},{"itemId":"1082207","name":"블루얼 하프글로브"},{"itemId":"1092023","name":"스틸 아퀼라 실드"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120106",13]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 한밤의항만하역장 등록 · 서식 몬스터
+(function(){
+  var place={"name":"한밤의항만하역장","code":"240070201","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070201.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="한밤의항만하역장"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1996,imgHeight:801,portals:[{"toCode":"240070200","toName":"한밤의항만입구","note":"이동","x":148,"y":648,"unit":"px"},{"toCode":null,"toName":"한밤의항만창고","note":"이동","x":1870,"y":651,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120106","name":"오버로드A","img":"https://drive.google.com/thumbnail?id=19vV74foLVuaaVP8OHjGOQqrpAPhHUpox&sz=w400","minLevel":73,"category":"무형","hp":15000,"mp":150,"exp":1650,"acc":150,"eva":30,"pdd":250,"mdd":250,"desc":"2099년 네오시티의 항만에 돌연 나타난 경비로봇이다. 레이더 센서로 움직이는 모든 것들을 감지해서 무차별적인 공격을 퍼붓는다. 무엇인가에 의해 조종당하고 있는 것처럼 보이지만 실체를 알아내기가 쉽지 않다. 탑재하고 있는 기술을 이미 2099년의 것이 아닌 것처럼 보인다.","drops":[{"itemId":"4000548","name":"오버로드A의 레이더 장치"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4010002","name":"미스릴의 원석"},{"itemId":"4020002","name":"아쿠아마린의 원석"},{"itemId":"4032514","name":"대피소 열쇠"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130004","name":"한손둔기 제작의 촉진제"},{"itemId":"4130012","name":"활 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2002003","name":"현자의 물약"},{"itemId":"2002004","name":"전사의 물약"},{"itemId":"2040301","name":"귀 장식 지력 주문서 60%"},{"itemId":"2040418","name":"상의 힘 주문서 60%"},{"itemId":"2040516","name":"전신 갑옷 행운 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"1040092","name":"블루 오리엔타이칸 (남)"},{"itemId":"1041092","name":"레드 트란도트 (여)"},{"itemId":"1041095","name":"블러디 맨티스 (여)"},{"itemId":"1050061","name":"블루 리넥스 (남)"},{"itemId":"1051054","name":"브라운 레퀴에르 (여)"},{"itemId":"1051063","name":"베이지 리네로스 (여)"},{"itemId":"1060081","name":"블루 오리엔타이칸 바지 (남)"},{"itemId":"1061091","name":"레드 트란도트 치마 (여)"},{"itemId":"1061094","name":"블러디 맨티스 바지 (여)"},{"itemId":"1072172","name":"그린 피레타부츠"},{"itemId":"1072177","name":"그린 크리시아슈즈"},{"itemId":"1072182","name":"블루 윙부츠"},{"itemId":"1072210","name":"레드 리버스부츠"},{"itemId":"1082207","name":"블루얼 하프글로브"},{"itemId":"1092023","name":"스틸 아퀼라 실드"}]},{"id":"7120107","name":"오버로드B","img":"https://drive.google.com/thumbnail?id=1wJ17_3-cBgwPBbi8AzSwzeSnn7tQxd7s&sz=w400","minLevel":75,"category":"무형","hp":15000,"mp":150,"exp":1650,"acc":150,"eva":30,"pdd":250,"mdd":250,"desc":"2099년 네오시티의 항만에 돌연 나타난 경비로봇이다. 오버로드A보다 조금 더 진화된 레이더 센서로 움직이지 살아 있는 생명체를 감지해 내서 무차별적인 공격을 퍼붓는다. 무엇인가에 의해 조종당하고 있는 것처럼 보이지만 실체를 알아내기가 쉽지 않다. 탑재하고 있는 기술을 이미 2099년의 것이 아닌 것처럼 보인다.","drops":[{"itemId":"4000549","name":"오버로드B의 레이더 장치"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010005","name":"오리할콘의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4032514","name":"대피소 열쇠"},{"itemId":"4130016","name":"너클 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4130020","name":"하의 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040513","name":"전신 갑옷 지력 주문서 60%"},{"itemId":"2040622","name":"하의 체력 주문서 10%"},{"itemId":"2040623","name":"하의 민첩성 주문서 100%"},{"itemId":"2043110","name":"한손도끼 명중률 주문서 100%"},{"itemId":"2044602","name":"석궁 공격력 주문서 10%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"2330004","name":"샤이니 불릿"},{"itemId":"1002252","name":"레드 키튼서클렛"},{"itemId":"1002277","name":"그린 골드윙캡"},{"itemId":"1002288","name":"그린 웨어캡"},{"itemId":"1002289","name":"다크 웨어캡"},{"itemId":"1002340","name":"다크 드래곤 바부타"},{"itemId":"1040090","name":"그린 오리엔타이칸 (남)"},{"itemId":"1040107","name":"다크 스타드 (남)"},{"itemId":"1040109","name":"레드 피라테 (남)"},{"itemId":"1041096","name":"엄버 맨티스 (여)"},{"itemId":"1041099","name":"블러드 플라티나 (여)"},{"itemId":"1051043","name":"황초로 (여)"},{"itemId":"1051055","name":"다크 레퀴에르 (여)"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1060079","name":"그린 오리엔타이칸 바지 (남)"},{"itemId":"1060095","name":"다크 스타드 바지 (남)"},{"itemId":"1060098","name":"레드 피라테 바지 (남)"},{"itemId":"1061095","name":"엄버 맨티스 바지 (여)"},{"itemId":"1061098","name":"블러드 플라티나 바지 (여)"},{"itemId":"1072160","name":"골드 라피스샌들"},{"itemId":"1322020","name":"모던스튬"},{"itemId":"1382010","name":"레이든 스태프"},{"itemId":"1472027","name":"녹갑충"},{"itemId":"1492009","name":"어비스 슈터"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120106",8],["7120107",8]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 한밤의항만창고 등록 · 서식 몬스터 · NPC 애드먼드 선장
+(function(){
+  var place={"name":"한밤의항만창고","code":"240070202","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070202.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="한밤의항만창고"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2009,imgHeight:977,portals:[{"toCode":"240070201","toName":"한밤의항만하역장","note":"이동","x":85,"y":755,"unit":"px"},{"toCode":null,"toName":"한밤의항만부둣가","note":"이동","x":1972,"y":747,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120107","name":"오버로드B","img":"https://drive.google.com/thumbnail?id=1wJ17_3-cBgwPBbi8AzSwzeSnn7tQxd7s&sz=w400","minLevel":75,"category":"무형","hp":15000,"mp":150,"exp":1650,"acc":150,"eva":30,"pdd":250,"mdd":250,"desc":"2099년 네오시티의 항만에 돌연 나타난 경비로봇이다. 오버로드A보다 조금 더 진화된 레이더 센서로 움직이지 살아 있는 생명체를 감지해 내서 무차별적인 공격을 퍼붓는다. 무엇인가에 의해 조종당하고 있는 것처럼 보이지만 실체를 알아내기가 쉽지 않다. 탑재하고 있는 기술을 이미 2099년의 것이 아닌 것처럼 보인다.","drops":[{"itemId":"4000549","name":"오버로드B의 레이더 장치"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010005","name":"오리할콘의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4032514","name":"대피소 열쇠"},{"itemId":"4130016","name":"너클 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4130020","name":"하의 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040513","name":"전신 갑옷 지력 주문서 60%"},{"itemId":"2040622","name":"하의 체력 주문서 10%"},{"itemId":"2040623","name":"하의 민첩성 주문서 100%"},{"itemId":"2043110","name":"한손도끼 명중률 주문서 100%"},{"itemId":"2044602","name":"석궁 공격력 주문서 10%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"2330004","name":"샤이니 불릿"},{"itemId":"1002252","name":"레드 키튼서클렛"},{"itemId":"1002277","name":"그린 골드윙캡"},{"itemId":"1002288","name":"그린 웨어캡"},{"itemId":"1002289","name":"다크 웨어캡"},{"itemId":"1002340","name":"다크 드래곤 바부타"},{"itemId":"1040090","name":"그린 오리엔타이칸 (남)"},{"itemId":"1040107","name":"다크 스타드 (남)"},{"itemId":"1040109","name":"레드 피라테 (남)"},{"itemId":"1041096","name":"엄버 맨티스 (여)"},{"itemId":"1041099","name":"블러드 플라티나 (여)"},{"itemId":"1051043","name":"황초로 (여)"},{"itemId":"1051055","name":"다크 레퀴에르 (여)"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1060079","name":"그린 오리엔타이칸 바지 (남)"},{"itemId":"1060095","name":"다크 스타드 바지 (남)"},{"itemId":"1060098","name":"레드 피라테 바지 (남)"},{"itemId":"1061095","name":"엄버 맨티스 바지 (여)"},{"itemId":"1061098","name":"블러드 플라티나 바지 (여)"},{"itemId":"1072160","name":"골드 라피스샌들"},{"itemId":"1322020","name":"모던스튬"},{"itemId":"1382010","name":"레이든 스태프"},{"itemId":"1472027","name":"녹갑충"},{"itemId":"1492009","name":"어비스 슈터"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120107",14]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082008","name":"애드먼드 선장","img":"https://drive.google.com/thumbnail?id=19FcRM9-sjYCiOFEWsQ4fxY-xLGZAGFtf&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 한밤의항만부둣가 등록 · 서식 몬스터
+(function(){
+  var place={"name":"한밤의항만부둣가","code":"240070203","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070203.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="한밤의항만부둣가"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:991,imgHeight:599,portals:[{"toCode":"240070200","toName":"한밤의항만입구","note":"이동","x":55,"y":366,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7220003","name":"베르가모트","isBoss":true,"img":"https://drive.google.com/thumbnail?id=1KE3Zo-OYpn_t3p8_Af8LKZJDzaNajNsm&sz=w400","minLevel":77,"category":"무형","hp":40000,"mp":700,"exp":15000,"acc":160,"eva":28,"pdd":600,"mdd":440,"desc":"깊은 밤, 2099년 네오시티의 항만에 갑자기 나타난 거대한 로봇이다. 누가 어디서 만들었고, 어째서 나타났는지는 전혀 알려진 바가 없다. 미래에서 온 앤디는 인공지능형 로봇의 첫번째 모델이라고 유추하고 있다.","drops":[]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7220003",1]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 테라숲 타임 게이트 → 평범한마을입구(2021) / 한밤의항만입구(2099): 회중시계 필요 (길찾기 제외)
+(function(){
+  if(!window.MAPS)return;
+  var m=window.MAPS.find(function(x){return String(x.code)==="240070000";});
+  if(!m)return; m.portals=m.portals||[];
+  [["240070100","평범한마을입구"],["240070200","한밤의항만입구"]].forEach(function(t){
+    if(m.portals.some(function(p){return String(p.toCode)===t[0];}))return;
+    m.portals.push({toCode:t[0],toName:t[1],note:"타임 게이트",x:1215,y:600,unit:"px",needItem:true});
+  });
 })();
 </script>
 <script>
