@@ -720,7 +720,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611201512"></script>
+<script src="data-quests.js?v=202611212050"></script>
 <script>
 window.NPCS = [
   {
@@ -12489,7 +12489,7 @@ window.ITEMS = [
 
 // 잊혀진 시간의 길<1> 등록 · 서식 몬스터 · NPC 고스트헌터 밥
 (function(){
-  var place={"name":"잊혀진 시간의 길<1>","code":"220070000","region":"루디브리엄","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070000.webp"};
+  var place={"name":"잊혀진 시간의 길<1>","code":"220070000","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070000.webp"};
   if(window.MAPS){
     window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="잊혀진시간의길<1>"){p.toCode=place.code;p.toName=place.name;}});});
     var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2539,imgHeight:2127,portals:[{"toCode":"220050300","toName":"시간의 통로","note":"이동","x":1871,"y":350,"unit":"px"},{"toCode":null,"toName":"잊혀진 시간의 길<2>","note":"이동","x":425,"y":2013,"unit":"px"}]};
@@ -14752,6 +14752,296 @@ window.ITEMS = [
     if(m.portals.some(function(p){return String(p.toCode)===t[0];}))return;
     m.portals.push({toCode:t[0],toName:t[1],note:"타임 게이트",x:1215,y:600,unit:"px",needItem:true});
   });
+})();
+// 잊혀진 시간의 길<2> 등록 · 서식 몬스터
+(function(){
+  var place={"name":"잊혀진 시간의 길<2>","code":"220070100","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070100.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="잊혀진시간의길<2>"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2554,imgHeight:2368,portals:[{"toCode":"220070000","toName":"잊혀진 시간의 길<1>","note":"이동","x":721,"y":327,"unit":"px"},{"toCode":null,"toName":"잊혀진 시간의 길<3>","note":"이동","x":2065,"y":2225,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140200","name":"클라크","img":"https://drive.google.com/thumbnail?id=1_iCZLPX7uFoxsuSaIVepyJkzPjolbYAg&sz=w400","minLevel":70,"category":"무형","note":"성속성 공격에 약함, 불속성 공격에 약함","hp":15000,"mp":180,"exp":1350,"acc":130,"eva":26,"pdd":250,"mdd":250,"desc":"차원의 균열이 이루어낸 시간의 혼돈은 멈춰 있던 루디브리엄의 시계에도 영향을 주었다. 뒤틀리고 고장난 시계 속에 차원의 균열로 인해 들어온 사악한 힘이 깃들자, 결국 시계는 몬스터가 되고 말았다.","drops":[{"itemId":"4000145","name":"봉인된 괘종시계"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020001","name":"자수정의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130014","name":"단검 제작의 촉진제"},{"itemId":"4130016","name":"너클 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2002003","name":"현자의 물약"},{"itemId":"2020014","name":"새벽의 이슬"},{"itemId":"2040302","name":"귀 장식 지력 주문서 10%"},{"itemId":"2040318","name":"귀 장식 민첩 주문서 10%"},{"itemId":"2040802","name":"장갑 민첩성 주문서 10%"},{"itemId":"2040925","name":"방패 행운 주문서 10%"},{"itemId":"1002270","name":"흑궁우"},{"itemId":"1032015","name":"메탈실버 이어링"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1040093","name":"다크 오리엔타이칸 (남)"},{"itemId":"1050054","name":"레드 아나카문 (남)"},{"itemId":"1050058","name":"주자로 (남)"},{"itemId":"1050073","name":"블루 크리시스 (남)"},{"itemId":"1051052","name":"블루 레퀴에르 (여)"},{"itemId":"1051062","name":"블루 리네로스 (여)"},{"itemId":"1060082","name":"다크 오리엔타이칸 바지 (남)"},{"itemId":"1072144","name":"레드 고어부츠"},{"itemId":"1072159","name":"브라운 라피스샌들"},{"itemId":"1072162","name":"블루 루티드슈즈"},{"itemId":"1072182","name":"블루 윙부츠"},{"itemId":"1082059","name":"브론즈 클랜치"},{"itemId":"1082104","name":"미스릴 허스크"},{"itemId":"1082114","name":"사파이어 엠페러"},{"itemId":"1322019","name":"스튬"},{"itemId":"1472022","name":"브론즈 기간틱"},{"itemId":"1482009","name":"베이아 크래쉬"}]},{"id":"8140300","name":"다크 클라크","img":"https://drive.google.com/thumbnail?id=15JwieZIeiwUX1_mm9WTn-qCYz2DSuxBF&sz=w400","minLevel":76,"category":"무형","note":"성속성 공격에 약함","hp":18000,"mp":200,"exp":1850,"acc":140,"eva":27,"pdd":380,"mdd":400,"desc":"차원의 균열이 이루어낸 시간의 혼돈은 멈춰 있던 루디브리엄의 시계에도 영향을 주었다. 뒤틀리고 고장난 시계 속에 차원의 균열로 인해 들어온 사악한 힘이 깃들자, 결국 시계는 몬스터가 되고 말았다. 클라크의 진화 형태로 긴 시간 사악한 힘에 물들어 더욱 강력한 어둠의 힘을 갖게 되었다.","drops":[{"itemId":"4000146","name":"사악한 영혼"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4010005","name":"오리할콘의 원석"},{"itemId":"4020007","name":"다이아몬드의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130016","name":"너클 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"4130020","name":"하의 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040513","name":"전신 갑옷 지력 주문서 60%"},{"itemId":"2040622","name":"하의 체력 주문서 10%"},{"itemId":"2040623","name":"하의 민첩성 주문서 100%"},{"itemId":"2043110","name":"한손도끼 명중률 주문서 100%"},{"itemId":"2044602","name":"석궁 공격력 주문서 10%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"1002252","name":"레드 키튼서클렛"},{"itemId":"1002277","name":"그린 골드윙캡"},{"itemId":"1002288","name":"그린 웨어캡"},{"itemId":"1002289","name":"다크 웨어캡"},{"itemId":"1002340","name":"다크 드래곤바부타"},{"itemId":"1040090","name":"그린 오리엔타이칸 (남)"},{"itemId":"1040107","name":"다크 스타드 (남)"},{"itemId":"1040109","name":"레드 피라테 (남)"},{"itemId":"1041096","name":"엄버 맨티스 (여)"},{"itemId":"1041099","name":"블러드 플라티나 (여)"},{"itemId":"1051043","name":"황초로 (여)"},{"itemId":"1051055","name":"다크 레퀴에르 (여)"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1060079","name":"그린 오리엔타이칸 바지"},{"itemId":"1060095","name":"다크 스타드 바지 (남)"},{"itemId":"1060098","name":"레드 피라테 바지 (남)"},{"itemId":"1061095","name":"엄버 맨티스 바지"},{"itemId":"1061098","name":"블러드 플라티나 바지"},{"itemId":"1072160","name":"골드 라피스샌들"},{"itemId":"1322020","name":"모던 스튬"},{"itemId":"1382010","name":"레이든 스태프"},{"itemId":"1472027","name":"녹갑충"},{"itemId":"1492009","name":"어비스 슈터"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140200",21],["8140300",11]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 잊혀진 시간의 길<3> 등록
+(function(){
+  var place={"name":"잊혀진 시간의 길<3>","code":"220070200","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070200.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="잊혀진시간의길<3>"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2554,imgHeight:2317,portals:[{"toCode":"220070100","toName":"잊혀진 시간의 길<2>","note":"이동","x":2151,"y":674,"unit":"px"},{"toCode":null,"toName":"사라진 시간","note":"이동","x":2340,"y":1572,"unit":"px"},{"toCode":null,"toName":"잊혀진 시간의 길<4>","note":"이동","x":455,"y":2186,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 사라진 시간 등록
+(function(){
+  var place={"name":"사라진 시간","code":"220070201","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070201.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="사라진시간"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2432,imgHeight:3007,portals:[{"toCode":"220070200","toName":"잊혀진 시간의 길<3>","note":"이동","x":1286,"y":502,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 몬스터 등록: 데스티니
+(function(){
+  if(!window.MONSTERS)return;
+  [{"id":"7130010","name":"데스티니","img":"https://drive.google.com/thumbnail?id=1XOGHmbHAUdtRkPlp_yqMv978V0gRuHDH&sz=w200","category":"악마형","minLevel":85,"hp":32000,"mp":180,"exp":6500,"acc":160,"eva":27,"pdd":700,"mdd":465,"note":"성속성 공격에 약함. 불속성 공격에 약함.","desc":"버려진 테니인형이 차원의 균열을 통해 들어온 저주받은 존재의 지배를 받아 허공을 떠돌게 되면서 탄생한 몬스터이다. 저주받은 존재가 테니인형이 가지고 있던 포근한 마음을 모두 먹어 치우자 버려진 테니인형에게는 원망이 남게 되었고, 그 힘이 사람들을 공격하기 시작했다. 테니인형이 본래 가지고 있던 모든 힘을 빼앗겨 인형의 형체는 거의 사라지고, 꼭두각시처럼 매달린 테니의 뒤에 조종하는 존재만이 선명히 보인다.","places":[{"name":"잊혀진 시간의 길<3>","code":"220070200","count":29}],"place":{"name":"잊혀진 시간의 길<3>","code":"220070200","count":29},"drops":[{"itemId":"4000147","name":"봉인된 테니인형"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4020005","name":"사파이어의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130004","name":"한손둔기 제작의 촉진제"},{"itemId":"4130006","name":"두손도끼 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2002005","name":"명사수의 물약"},{"itemId":"2020015","name":"황혼의 이슬"},{"itemId":"2040025","name":"투구 지력 주문서 60%"},{"itemId":"2040418","name":"상의 힘 주문서 60%"},{"itemId":"2040601","name":"하의 방어력 주문서 60%"},{"itemId":"2040923","name":"방패 행운 주문서 100%"},{"itemId":"2040928","name":"방패 체력 주문서 10%"},{"itemId":"2041016","name":"망토 지력 주문서 60%"},{"itemId":"2044412","name":"폴암 명중률 주문서 60%"},{"itemId":"2050004","name":"만병통치약"},{"itemId":"1002328","name":"그린 피레타햇"},{"itemId":"1041101","name":"블루 루티드 (여)"},{"itemId":"1050073","name":"블루 크리시스 (남)"},{"itemId":"1050088","name":"레드 아데스 (남)"},{"itemId":"1051065","name":"다크 리네로스 (여)"},{"itemId":"1051077","name":"옐로우 배틀엠프리스 (여)"},{"itemId":"1051078","name":"레드 배틀엠프리스 (여)"},{"itemId":"1061100","name":"블루 루티드 바지 (여)"},{"itemId":"1072154","name":"블루 카젠부츠"},{"itemId":"1072184","name":"그린 윙부츠"},{"itemId":"1072196","name":"에메랄드 워 그리브"},{"itemId":"1072209","name":"다크 넬리슈즈"},{"itemId":"1082118","name":"그린 로버"},{"itemId":"1082123","name":"다크 와이즈"},{"itemId":"1082142","name":"그린 미스트라"},{"itemId":"1082207","name":"블루얼 하프글로브"},{"itemId":"1102030","name":"검은색 세라프의 망토"},{"itemId":"1302016","name":"노란색 우산"},{"itemId":"1332022","name":"카타르"},{"itemId":"1372016","name":"피닉스 완드"},{"itemId":"1412009","name":"헬리오스"},{"itemId":"1452010","name":"블루 힌켈"}]}].forEach(function(m){var o=window.MONSTERS.find(function(x){return String(x.id)===String(m.id);});if(o)Object.keys(m).forEach(function(k){o[k]=m[k];});else window.MONSTERS.push(m);});
+})();
+// 몬스터 등록: 마스터 데스티니
+(function(){
+  if(!window.MONSTERS)return;
+  [{"id":"7130300","name":"마스터 데스티니","img":"https://drive.google.com/thumbnail?id=1F25Fi73Mx-Gh3KuVRS4gjT7Cqslc-IFP&sz=w200","category":"악마형","minLevel":89,"hp":40000,"mp":190,"exp":8600,"acc":180,"eva":28,"pdd":750,"mdd":480,"note":"성속성 공격에 약함. 얼음속성 공격 반감. 전기속성 공격 반감.","desc":"버려진 테니인형이 차원의 균열을 통해 들어온 저주받은 존재의 지배를 받아 허공을 떠돌게 되면서 탄생한 몬스터이다. 저주받은 존재가 테니인형이 가지고 있던 포근한 마음을 모두 먹어 치우자 버려진 테니인형에게는 원망이 남게 되었고, 그 힘이 사람들을 공격하기 시작했다. 테니인형이 본래 가지고 있던 모든 힘을 빼앗겨 인형의 형체는 거의 사라지고 테니를 조종하고 있는 존재의 사악함이 확연하게 느껴진다. 테니를 묶고 있는 사슬이 금색으로 변해 버렸다는 것은, 이미 테니가 가지고 있던 모든 마음이 사라져 시간의 미아가 되어 버렸다는 것을 의미한다.","places":[{"name":"사라진 시간","code":"220070201","count":15}],"place":{"name":"사라진 시간","code":"220070201","count":15},"drops":[{"itemId":"4000148","name":"속박의 굴레"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020006","name":"토파즈의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031171","name":"신비한 가루"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130019","name":"상의 제작의 촉진제"},{"itemId":"4130021","name":"전신 갑옷 제작의 촉진제"},{"itemId":"4130022","name":"방패 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2002004","name":"전사의 물약"},{"itemId":"2040031","name":"투구 민첩성 주문서 10%"},{"itemId":"2040823","name":"장갑 체력 주문서 100%"},{"itemId":"2041009","name":"망토 마나 주문서 100%"},{"itemId":"2043210","name":"한손둔기 명중률 주문서 100%"},{"itemId":"2044301","name":"창 공격력 주문서 60%"},{"itemId":"1002253","name":"블루 키튼서클렛"},{"itemId":"1002274","name":"다크 크로스햇"},{"itemId":"1002276","name":"레드 골드윙캡"},{"itemId":"1002284","name":"화이트 루크"},{"itemId":"1041107","name":"다크 피라티드 (여)"},{"itemId":"1041121","name":"다크 발퀴레 (여)"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1050080","name":"그린 배틀로드 (남)"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1061106","name":"다크 피라티드 치마 (여)"},{"itemId":"1061120","name":"블러드 발퀴레 치마 (여)"},{"itemId":"1072155","name":"퍼플 카젠부츠"},{"itemId":"1072167","name":"다크 리넥스슈즈"},{"itemId":"1072203","name":"레드 아데스슈즈"},{"itemId":"1072206","name":"블루 넬리슈즈"},{"itemId":"1072212","name":"다크 리버스부츠"},{"itemId":"1072312","name":"블루얼 페긴트"},{"itemId":"1082110","name":"블루 코든"},{"itemId":"1082143","name":"퍼플 미스트라"},{"itemId":"1302018","name":"아츠"}]}].forEach(function(m){var o=window.MONSTERS.find(function(x){return String(x.id)===String(m.id);});if(o)Object.keys(m).forEach(function(k){o[k]=m[k];});else window.MONSTERS.push(m);});
+})();
+// 잊혀진 시간의 길<4> 등록 · 서식 몬스터
+(function(){
+  var place={"name":"잊혀진 시간의 길<4>","code":"220070300","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070300.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="잊혀진시간의길<4>"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2556,imgHeight:2622,portals:[{"toCode":"220070200","toName":"잊혀진 시간의 길<3>","note":"이동","x":434,"y":229,"unit":"px"},{"toCode":null,"toName":"금지된 시간","note":"이동","x":1441,"y":2204,"unit":"px"},{"toCode":null,"toName":"잊혀진 회랑","note":"이동","x":501,"y":2507,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8142000","name":"팬텀워치","img":"https://drive.google.com/thumbnail?id=158xOvwMrmbrBJag5nyhCUqNmKFUGRwdq&sz=w400","minLevel":95,"category":"악마형","note":"얼음속성 공격 반감, 독속성 공격에 약함, 불속성 공격에 약함","hp":53000,"mp":200,"exp":11500,"acc":200,"eva":37,"pdd":835,"mdd":530,"desc":"오래 전, 사악한 죄를 지은 죄인에게 루디브리엄의 국왕은 끔찍한 형벌을 내렸다. 시계 속에 갖혀 영원한 시간 동안 죄를 뉘우치도록 하는 것이었다. 하지만, 시간에 균열이 생기면서 헤아릴 수 없을 정도로 긴 시간 동안 시계 속에 갇혀 있던 사악한 영혼이 깨어나고 말았다. 감옥의 시계는 아직도 사악한 영혼을 붙잡고 있지만, 실질적은 구속력은 미약하여 팬텀워치는 커다란 시계를 등에 짊어지고 떠다니면서 시간과 차원을 변화시키려는 자들에게 죽음처럼 싸늘한 공격을 하게 되었다.","drops":[{"itemId":"4000149","name":"봉인된 항아리"},{"itemId":"4001107","name":"[스토리북]검은 책"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4007007","name":"마법의 가루(검정)"},{"itemId":"4020003","name":"에메랄드의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130009","name":"폴암 제작의 촉진제"},{"itemId":"4130018","name":"투구 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2001516","name":"속도향상의 물약"},{"itemId":"2020015","name":"황혼의 이슬"},{"itemId":"2040427","name":"상의 행운 주문서 10%"},{"itemId":"2041022","name":"망토 행운 주문서 60%"},{"itemId":"2044001","name":"두손검 공격력 주문서 60%"},{"itemId":"1002339","name":"블루 드래곤 바부타"},{"itemId":"1040110","name":"다크 피라테 (남)"},{"itemId":"1040111","name":"그린 제너럴 (남)"},{"itemId":"1050076","name":"블루 프리스 (남)"},{"itemId":"1050091","name":"다크 아데스 (남)"},{"itemId":"1051056","name":"그린 크리시아 (여)"},{"itemId":"1051067","name":"블루 프리아"},{"itemId":"1051078","name":"레드 배틀엠프리스 (여)"},{"itemId":"1050094","name":"적견랑포 (남)"},{"itemId":"1060099","name":"다크 피라테 바지 (남)"},{"itemId":"1060100","name":"그린 제너럴 바지 (남)"},{"itemId":"1072212","name":"다크 리버스부츠"},{"itemId":"1082107","name":"골드 아이즈"},{"itemId":"1082112","name":"다크 코든"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1082133","name":"레드 파쵸네"},{"itemId":"1332023","name":"용천권"},{"itemId":"1432007","name":"스페판"},{"itemId":"1452013","name":"파이어 아룬드"},{"itemId":"1492011","name":"피스메이커"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8142000",26]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 금지된 시간 등록 · 서식 몬스터
+(function(){
+  var place={"name":"금지된 시간","code":"220070301","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070301.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="금지된시간"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2427,imgHeight:2942,portals:[{"toCode":"220070300","toName":"잊혀진 시간의 길<4>","note":"이동","x":1200,"y":395,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8143000","name":"G.팬텀워치","img":"https://drive.google.com/thumbnail?id=1lQSKZy84WHJLUs8hu1w4ixoTMPw0v08n&sz=w400","minLevel":99,"category":"악마형","note":"성속성 공격에 약함, 불속성 공격에 약함, 얼음속성 공격 무효","hp":60000,"mp":220,"exp":14000,"acc":205,"eva":38,"pdd":850,"mdd":570,"desc":"오래 전, 사악한 죄를 지은 죄인에게 루디브리엄의 국왕은 끔찍한 형벌을 내렸다. 시계 속에 갖혀 영원한 시간 동안 죄를 뉘우치도록 하는 것이었다. 하지만, 시간에 균열이 생기면서 헤아릴 수 없을 정도로 긴 시간 동안 시계 속에 갇혀 있던 사악한 영혼이 깨어나고 말았다. 긴긴 시간 동안 죄를 뉘우치기보다 복수를 곱씹으며 더 강력하고 악한 힘을 키워 온 죄인은 루디브리엄에 대한 증오를 감추지 않고 있다. 감옥의 시계는 아직도 사악한 영혼을 붙잡고 있지만, 실질적은 구속력은 미약하기만 하여 G.팬텀워치는 거리낌없이 모험가들을 공격하고 있다.","drops":[{"itemId":"4000150","name":"팬텀워치의 얼음조각"},{"itemId":"4001107","name":"[스토리북]검은 책"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4010002","name":"미스릴의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031176","name":"차원의 균열 조각 A"},{"itemId":"4031177","name":"차원의 균열 조각 B"},{"itemId":"4031178","name":"차원의 균열 조각 C"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130011","name":"스태프 제작의 촉진제"},{"itemId":"4130016","name":"너클 제작의 촉진제"},{"itemId":"4130017","name":"건 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2002002","name":"마법사의 물약"},{"itemId":"2022003","name":"장어 구이"},{"itemId":"2040401","name":"상의 방어력 주문서 60%"},{"itemId":"2043019","name":"한손검 명중률 주문서 10%"},{"itemId":"2044702","name":"아대 공격력 주문서 10%"},{"itemId":"1002283","name":"퍼플 루크"},{"itemId":"1002328","name":"그린 피레타햇"},{"itemId":"1002402","name":"레드 아데스햇"},{"itemId":"1040116","name":"브라운 쉐이드슈트 (남)"},{"itemId":"1041119","name":"그린 발퀴레 (여)"},{"itemId":"1050064","name":"다크 리넥스 (남)"},{"itemId":"1051084","name":"그린 아네스 (여)"},{"itemId":"1050092","name":"녹견랑포 (남)"},{"itemId":"1060105","name":"브라운 쉐이드슈트 바지 (남)"},{"itemId":"1061118","name":"그린 발퀴레 치마"},{"itemId":"1072179","name":"다크 크리시아슈즈"},{"itemId":"1072183","name":"레드 윙부츠"},{"itemId":"1082117","name":"다크 엠페러"},{"itemId":"1082120","name":"블러드 로버"},{"itemId":"1082122","name":"블루 와이즈"},{"itemId":"1082130","name":"다크 페로치"},{"itemId":"1092016","name":"실버 에이션트 실드"},{"itemId":"1422012","name":"크롬"},{"itemId":"1462010","name":"마린 샬리트"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8143000",14]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 잊혀진 회랑 등록 · 서식 몬스터
+(function(){
+  var place={"name":"잊혀진 회랑","code":"220070400","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220070400.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="잊혀진회랑"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:3043,imgHeight:663,portals:[{"toCode":"220070300","toName":"잊혀진 시간의 길<4>","note":"이동","x":2823,"y":547,"unit":"px"},{"toCode":null,"toName":"시계탑 깊은 곳","note":"이동","x":261,"y":547,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8170000","name":"타나토스","img":"https://drive.google.com/thumbnail?id=1MjkmF7iYPMWsua_xO3j7wXw1p0bIoeOq&sz=w200","minLevel":108,"category":"악마형","note":"성속성 공격에 약함, 얼음속성 공격 반감","hp":70000,"mp":300,"exp":20500,"acc":210,"eva":38,"pdd":850,"mdd":680,"desc":"시계탑 동력실로 접근하려는 침입자를 막기 위해 파풀라투스가 소환한 이차원의 존재이다. 차원의 균열을 통해 연결된 다른 차원의 마법사로 강력한 마법공격을 사용해서 잊혀진 회랑을 통해 동력실에 접근하려는 침입자를 막는다.","drops":[{"itemId":"4000152","name":"타나토스의 견장"},{"itemId":"4001107","name":"[스토리북]검은 책"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4010004","name":"은의 원석"},{"itemId":"4010005","name":"오리할콘의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031172","name":"루디브리엄의 메달"},{"itemId":"4031453","name":"영혼의 마법진"},{"itemId":"4031458","name":"타나토스의 검은돌풍"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130008","name":"창 제작의 촉진제"},{"itemId":"4130022","name":"방패 제작의 촉진제"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2001516","name":"속도향상의 물약"},{"itemId":"2040512","name":"전신 갑옷 지력 주문서 100%"},{"itemId":"2040702","name":"신발 민첩성 주문서 10%"},{"itemId":"2040802","name":"장갑 민첩성 주문서 10%"},{"itemId":"1002281","name":"브라운 루크"},{"itemId":"1002404","name":"그린 아데스햇"},{"itemId":"1032017","name":"장미꽃 귀고리"},{"itemId":"1040113","name":"다크 제너럴 (남)"},{"itemId":"1041107","name":"다크 피라티드 (여)"},{"itemId":"1050072","name":"그린 크리시스 (남)"},{"itemId":"1050083","name":"다크 배틀로드 (남)"},{"itemId":"1051097","name":"흑견랑포 (여)"},{"itemId":"1051069","name":"다크 프리아"},{"itemId":"1060102","name":"다크 제너럴 바지 (남)"},{"itemId":"1061106","name":"다크 피라티드 치마 (여)"},{"itemId":"1072177","name":"그린 크리시아슈즈"},{"itemId":"1072178","name":"퍼플 크리시아슈즈"},{"itemId":"1072211","name":"블루 리버스부츠"},{"itemId":"1072227","name":"레드 아르나슈즈"},{"itemId":"1092017","name":"골드 에이션트 실드"},{"itemId":"1092027","name":"실버 칼칸"},{"itemId":"1102031","name":"초록색 자일즈의 망토"},{"itemId":"1332018","name":"칸디네"},{"itemId":"1332019","name":"금강저"},{"itemId":"1452012","name":"마린 아룬드"},{"itemId":"1462013","name":"다크 샬리트"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8170000",2]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 시계탑 깊은 곳 등록 · NPC 조형물
+(function(){
+  var place={"name":"시계탑 깊은 곳","code":"220080000","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220080000.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="시계탑깊은곳"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:4096,imgHeight:975,portals:[{"toCode":"220070400","toName":"잊혀진 회랑","note":"이동","x":3911,"y":818,"unit":"px"},{"toCode":null,"toName":"뒤틀린 회랑","note":"이동","x":205,"y":817,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2041024","name":"조형물","img":"https://drive.google.com/thumbnail?id=1yfzM6LZGNGIm-tSe2QJ7yrgUdWabl6r8&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 뒤틀린 회랑 등록 · 서식 몬스터
+(function(){
+  var place={"name":"뒤틀린 회랑","code":"220060400","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220060400.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="뒤틀린회랑"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:3043,imgHeight:409,portals:[{"toCode":"220080000","toName":"시계탑 깊은 곳","note":"이동","x":2843,"y":291,"unit":"px"},{"toCode":null,"toName":"뒤틀린 시간의 길<4>","note":"이동","x":268,"y":292,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8160000","name":"게이트키퍼","img":"https://drive.google.com/thumbnail?id=1vAQxFctXKI4KOtZ5i7ZEiTZjTQ8btDcg&sz=w400","minLevel":108,"category":"악마형","note":"전기속성 공격 반감","hp":78000,"mp":200,"exp":21500,"acc":210,"eva":37,"pdd":900,"mdd":650,"desc":"시계탑 동력실로 접근하려는 침입자들을 막기 위해 파풀라투스가 소환한 강력한 수문장이다. 강력한 물리공격으로 침입자들을 막고있다. 뒤틀린 회랑에 발을 내딛는 모든 존재를 공포에 떨게 한다.","drops":[{"itemId":"4000151","name":"게이트키퍼의 완장"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":"4006000","name":"마법의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007004","name":"마법의 가루(노랑)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020002","name":"아쿠아마린의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031172","name":"루디브리엄의 메달"},{"itemId":"4031473","name":"이계의 열쇠"},{"itemId":"4031474","name":"영혼의 계약서"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130004","name":"한손둔기 제작의 촉진제"},{"itemId":"4130014","name":"단검 제작의 촉진제"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2022003","name":"장어 구이"},{"itemId":"2040602","name":"하의 방어력 주문서 10%"},{"itemId":"2040705","name":"신발 점프력 주문서 10%"},{"itemId":"2040924","name":"방패 행운 주문서 60%"},{"itemId":"1002329","name":"레드 피레타햇"},{"itemId":"1002403","name":"블루 아데스햇"},{"itemId":"1032023","name":"딸기 귀고리"},{"itemId":"1040118","name":"레드 쉐이드슈트 (남)"},{"itemId":"1041120","name":"퍼플 발퀴레 (여)"},{"itemId":"1051063","name":"베이지 리네로스 (여)"},{"itemId":"1050081","name":"레드 배틀로드 (남)"},{"itemId":"1051079","name":"블루 배틀엠프리스 (여)"},{"itemId":"1051095","name":"청견랑포 (여)"},{"itemId":"1052131","name":"레드 벨리듀크"},{"itemId":"1060107","name":"레드 쉐이드슈트 바지 (남)"},{"itemId":"1061119","name":"퍼플 발퀴레 치마"},{"itemId":"1072179","name":"다크 크리시아슈즈"},{"itemId":"1072213","name":"그린 가티나부츠"},{"itemId":"1082123","name":"다크 와이즈"},{"itemId":"1092015","name":"스틸 에이션트 실드"},{"itemId":"1092026","name":"브론즈 칼칸"},{"itemId":"1442019","name":"월아산"},{"itemId":"1452015","name":"다크 아룬드"},{"itemId":"1462009","name":"그로스야거"},{"itemId":"1472028","name":"청갑충"},{"itemId":"1472031","name":"코브라스티어"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8160000",2]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 뒤틀린 시간의 길<4> 등록 · 서식 몬스터
+(function(){
+  var place={"name":"뒤틀린 시간의 길<4>","code":"220060300","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220060300.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="뒤틀린시간의길<4>"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2181,imgHeight:2632,portals:[{"toCode":"220060400","toName":"뒤틀린 회랑","note":"이동","x":1956,"y":2520,"unit":"px"},{"toCode":null,"toName":"꼬여버린 시간","note":"이동","x":311,"y":168,"unit":"px"},{"toCode":null,"toName":"뒤틀린 시간의 길<3>","note":"이동","x":1534,"y":200,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8141000","name":"바이킹","img":"https://drive.google.com/thumbnail?id=1CfuQXCiZ_q3J7xO4kT2K7NzMFZodJS7d&sz=w400","minLevel":93,"category":"악마형","note":"불속성 공격 반감, 전기속성 공격에 약함","hp":50000,"mp":190,"exp":10500,"acc":200,"eva":37,"pdd":830,"mdd":530,"desc":"일반적인 방법으로는 볼 수도 들어갈 수도 없는 시공의 틈새에는, 무한을 떠도는 존재가 있다. 바이킹 역시 그런 존재들 중 하나이다. 시간 속을 항해하다 길을 잃고 시계탑으로 흘러들어왔으며, 다시 원래의 세계로 돌아가고 싶어한다. 시계탑 깊은 곳으로 내려온 사람들이 시간의 흐름을 방해한다고 생각해 무차별 공격을 가한다.","drops":[{"itemId":"4000134","name":"바이킹의 돛"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031193","name":"영혼 수집기"},{"itemId":"4031873","name":"바이킹의 깃발"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"4130018","name":"투구 제작의 촉진제"},{"itemId":"4130019","name":"상의 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040317","name":"귀 장식 민첩 주문서 60%"},{"itemId":"2040929","name":"방패 힘 주문서 100%"},{"itemId":"2044602","name":"석궁 공격력 주문서 10%"},{"itemId":"2044802","name":"너클 공격력 주문서 10%"},{"itemId":"2044809","name":"너클 명중률 주문서 10%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070006","name":"일비 표창"},{"itemId":"2290082","name":"[마스터리북] 닌자 앰부쉬 20"},{"itemId":"2290097","name":"[마스터리북] 드래곤 스트라이크 20"},{"itemId":"1002254","name":"다크 키튼서클렛"},{"itemId":"1002278","name":"다크 골드윙캡"},{"itemId":"1002285","name":"블러드 루크"},{"itemId":"1002327","name":"브라운 피레타햇"},{"itemId":"1040112","name":"블루 제너럴 (남)"},{"itemId":"1041106","name":"레드 피라티드 (여)"},{"itemId":"1041117","name":"퍼플 미스트슈트 (여)"},{"itemId":"1050072","name":"그린 크리시스 (남)"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1050076","name":"블루 프리스 (남)"},{"itemId":"1050083","name":"다크 배틀로드 (남)"},{"itemId":"1051063","name":"베이지 리네로스 (여)"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1051079","name":"블루 배틀엠프리스 (여)"},{"itemId":"1060101","name":"블루 제너럴 바지 (남)"},{"itemId":"1061105","name":"레드 피라티드 치마 (여)"},{"itemId":"1061116","name":"퍼플 미스트슈트 바지 (여)"},{"itemId":"1072315","name":"블랙 마르킨츠"},{"itemId":"1082115","name":"에메랄드 엠페러"},{"itemId":"1082132","name":"그린 파쵸네"},{"itemId":"1322028","name":"골든해머"},{"itemId":"1422010","name":"호프만"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8141000",14]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 꼬여버린 시간 등록 · 서식 몬스터
+(function(){
+  var place={"name":"꼬여버린 시간","code":"220060301","region":"시계탑 최하층","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/220060301.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="꼬여버린시간"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2059,imgHeight:3233,portals:[{"toCode":"220060300","toName":"뒤틀린 시간의 길<4>","note":"이동","x":663,"y":260,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8141100","name":"기간틱 바이킹","img":"https://drive.google.com/thumbnail?id=1aWp0UClHFNM3Dv54UQIcKNfSmFFaRzpa&sz=w400","minLevel":98,"category":"악마형","hp":50000,"mp":190,"exp":10500,"acc":200,"eva":37,"pdd":845,"mdd":580,"desc":"일반적인 방법으로는 볼 수도 들어갈 수도 없는 시공의 틈새에는, 무한을 떠도는 존재가 있다. 기간틱 바이킹 역시 그런 존재들 중 하나이다. 시간 속을 항해하다 길을 잃고 시계탑으로 흘러들어왔으며, 다시 원래의 세계로 돌아가고 싶어한다. 등 뒤에 달고 다니는 깃발은 헤어진 일행을 찾기 위해 달아놓은 것이라고 한다. 시계탑 깊은 곳으로 내려온 사람들이 시간의 흐름을 방해한다고 생각해 무차별 공격을 가한다.","drops":[{"itemId":"4000135","name":"기간틱 바이킹의 모자"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007007","name":"마법의 가루(검정)"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4031170","name":"타키온"},{"itemId":"4031176","name":"차원의 균열 조각 A"},{"itemId":"4031177","name":"차원의 균열 조각 B"},{"itemId":"4031178","name":"차원의 균열 조각 C"},{"itemId":"4031874","name":"바이킹의 증표"},{"itemId":"4031992","name":"태엽벌레"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130010","name":"완드 제작의 촉진제"},{"itemId":"4130016","name":"너클 제작의 촉진제"},{"itemId":"4131003","name":"두손검 제조법"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040025","name":"투구 지력 주문서 60%"},{"itemId":"2040031","name":"투구 민첩성 주문서 10%"},{"itemId":"2040418","name":"상의 힘 주문서 60%"},{"itemId":"2040427","name":"상의 행운 주문서 10%"},{"itemId":"2040902","name":"방패 방어력 주문서 10%"},{"itemId":"2043002","name":"한손검 공격력 주문서 10%"},{"itemId":"1002329","name":"레드 피레타햇"},{"itemId":"1041116","name":"브라운 미스트슈트 (여)"},{"itemId":"1050077","name":"그린 프리스 (남)"},{"itemId":"1050081","name":"레드 배틀로드 (남)"},{"itemId":"1050093","name":"청견랑포 (남)"},{"itemId":"1051058","name":"다크 크리시아 (여)"},{"itemId":"1051080","name":"다크 배틀엠프리스 (여)"},{"itemId":"1051083","name":"블루 아네스"},{"itemId":"1061115","name":"브라운 미스트슈트 바지 (여)"},{"itemId":"1072165","name":"베이지 리넥스슈즈"},{"itemId":"1072185","name":"다크 윙부츠"},{"itemId":"1082105","name":"다크 허스크"},{"itemId":"1082119","name":"퍼플 로버"},{"itemId":"1082134","name":"다크 파쵸네"},{"itemId":"1402015","name":"그레이트 로헨"},{"itemId":"1462012","name":"골든 샬리트"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8141100",26]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
 })();
 </script>
 <script>
