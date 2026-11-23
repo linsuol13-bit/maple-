@@ -724,7 +724,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611212050"></script>
+<script src="data-quests.js?v=202611231501"></script>
 <script>
 window.NPCS = [
   {
@@ -25005,7 +25005,7 @@ window.MONSTERS = [
   if(!window.MAPS)return;
   var m=window.MAPS.find(function(x){return String(x.code)==="240070000";});
   if(!m)return; m.portals=m.portals||[];
-  [["240070100","평범한마을입구"],["240070200","한밤의항만입구"]].forEach(function(t){
+  [["240070100","평범한마을입구"],["240070200","한밤의항만입구"],["240070300","폭격맞은도심상점가"]].forEach(function(t){
     if(m.portals.some(function(p){return String(p.toCode)===t[0];}))return;
     m.portals.push({toCode:t[0],toName:t[1],note:"타임 게이트",x:1215,y:600,unit:"px",needItem:true});
   });
@@ -25300,8 +25300,127 @@ window.MONSTERS = [
     });
   }
 })();
+// NPC 경관 등록 (한밤의항만입구)
+(function(){
+  if(!window.NPCS)return;
+  var n={id:"2082007",name:"경관",img:"https://drive.google.com/thumbnail?id=1l09NvOJsTTJhE0UR9c9xtPk1hXIpe1Zy&sz=w400",place:{"name":"한밤의항만입구","code":"240070200","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070200.webp"},dialogues:[]};
+  var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+  if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+})();
+// 폭격맞은도심상점가 등록 · 서식 몬스터 · NPC 메이
+(function(){
+  var place={"name":"폭격맞은도심상점가","code":"240070300","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070300.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폭격맞은도심상점가"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2430,imgHeight:777,portals:[{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":123,"y":630,"unit":"px"},{"toCode":null,"toName":"폭격맞은도심고가도로","note":"이동","x":2313,"y":636,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120108","name":"로비","img":"https://drive.google.com/thumbnail?id=1afYnxQQHfCMdU41PzPCdFYQNPobn0t5w&sz=w400","minLevel":77,"category":"무형","hp":19000,"mp":160,"exp":2310,"acc":168,"eva":22,"pdd":318,"mdd":400,"desc":"2215년 네오시티의 도심이 폭격을 맞은 직후 나타나기 시작한 초기 로봇의 형태를 하고 있는 몬스터다. 형태는 단순하게 생겼지만 인격이 형성된 프로그램을 가지고 있다. 시끄럽게 떠들어 대기 때문에 폭격으로 조용해진 도시의 어디에서나 로비의 거슬리는 소리를 들을 수 있다.","drops":[{"itemId":"4000550","name":"로비의 전자유도장치"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020003","name":"에메랄드의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2002008","name":"명사수의 알약"},{"itemId":"2040321","name":"귀 장식 행운 주문서 60%"},{"itemId":"2040534","name":"전신 갑옷 힘 주문서 10%"},{"itemId":"2041013","name":"망토 힘 주문서 60%"},{"itemId":"2043114","name":"한손도끼 명중률 주문서 10%"},{"itemId":"2044001","name":"두손검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"1002252","name":"레드 키튼서클렛"},{"itemId":"1002268","name":"토궁우"},{"itemId":"1002282","name":"블루 루크"},{"itemId":"1002289","name":"다크 웨어캡"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1040106","name":"블루 스타드 (남)"},{"itemId":"1041099","name":"블러드 플라티나 (여)"},{"itemId":"1050061","name":"블루 리넥스 (남)"},{"itemId":"1050077","name":"그린 프리스 (남)"},{"itemId":"1051046","name":"화이트 아나카룬 (여)"},{"itemId":"1051058","name":"다크 크리시아 (여)"},{"itemId":"1060094","name":"블루 스타드 바지 (남)"},{"itemId":"1061098","name":"블러드 플라티나 바지 (여)"},{"itemId":"1072149","name":"블러드 카멜부츠"},{"itemId":"1072173","name":"레드 피레타부츠"},{"itemId":"1082098","name":"브라운 로린"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1082207","name":"블루얼 하프글로브"},{"itemId":"1092017","name":"골드 에이션트 실드"},{"itemId":"1412008","name":"크로노"},{"itemId":"1472029","name":"흑갑충"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120108",15]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082009","name":"메이","img":"https://drive.google.com/thumbnail?id=1ZPUdyovpsR5g2jkznJuwayAv5ilZTbQB&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 폭격맞은도심고가도로 등록 · 서식 몬스터
+(function(){
+  var place={"name":"폭격맞은도심고가도로","code":"240070301","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070301.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폭격맞은도심고가도로"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1920,imgHeight:772,portals:[{"toCode":"240070300","toName":"폭격맞은도심상점가","note":"이동","x":120,"y":632,"unit":"px"},{"toCode":null,"toName":"폭격맞은도심쇼핑가","note":"이동","x":1850,"y":631,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120109","name":"이루워터","img":"https://drive.google.com/thumbnail?id=1O_jn9zlp3SqAqquvLmVKEdfjiL9QuTPz&sz=w400","minLevel":79,"category":"무형","hp":23500,"mp":200,"exp":3750,"acc":170,"eva":30,"pdd":625,"mdd":450,"desc":"2215년 네오시티의 도심이 폭격을 맞은 직후 나타나기 시작한 발달한 안드로이드 형태의 로봇이다. 여자의 형상을 하고 있지만 초공격형으로 제작된 안드로이드로 공격성향이 강하다. 하지만 인격은 형성되어 있지 않아서 모든 사물을 적으로 간주하고 파괴만을 일삼고 있다.","drops":[{"itemId":"4000551","name":"이루워터의 레이저소드"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4010004","name":"은의 원석"},{"itemId":"4020004","name":"오팔의 원석"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130009","name":"폴암 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040619","name":"하의 점프 주문서 10%"},{"itemId":"2041008","name":"망토 체력 주문서 10%"},{"itemId":"2044314","name":"창 명중률 주문서 10%"},{"itemId":"2044401","name":"폴암 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049100","name":"혼돈의 주문서 60%"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"1002338","name":"레드 드래곤 바부타"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1072161","name":"퍼플 루티드슈즈"},{"itemId":"1072312","name":"블루얼 페긴트"},{"itemId":"1082107","name":"골드 아이즈"},{"itemId":"1102029","name":"흰색 세라프의 망토"},{"itemId":"1322028","name":"골든해머"},{"itemId":"1402012","name":"그륜힐"},{"itemId":"1442030","name":"메이플 스노우보드"},{"itemId":"1452010","name":"블루 힌켈"}]},{"id":"7120108","name":"로비","img":"https://drive.google.com/thumbnail?id=1afYnxQQHfCMdU41PzPCdFYQNPobn0t5w&sz=w400","minLevel":77,"category":"무형","hp":19000,"mp":160,"exp":2310,"acc":168,"eva":22,"pdd":318,"mdd":400,"desc":"2215년 네오시티의 도심이 폭격을 맞은 직후 나타나기 시작한 초기 로봇의 형태를 하고 있는 몬스터다. 형태는 단순하게 생겼지만 인격이 형성된 프로그램을 가지고 있다. 시끄럽게 떠들어 대기 때문에 폭격으로 조용해진 도시의 어디에서나 로비의 거슬리는 소리를 들을 수 있다.","drops":[{"itemId":"4000550","name":"로비의 전자유도장치"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020003","name":"에메랄드의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2002008","name":"명사수의 알약"},{"itemId":"2040321","name":"귀 장식 행운 주문서 60%"},{"itemId":"2040534","name":"전신 갑옷 힘 주문서 10%"},{"itemId":"2041013","name":"망토 힘 주문서 60%"},{"itemId":"2043114","name":"한손도끼 명중률 주문서 10%"},{"itemId":"2044001","name":"두손검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"1002252","name":"레드 키튼서클렛"},{"itemId":"1002268","name":"토궁우"},{"itemId":"1002282","name":"블루 루크"},{"itemId":"1002289","name":"다크 웨어캡"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1040106","name":"블루 스타드 (남)"},{"itemId":"1041099","name":"블러드 플라티나 (여)"},{"itemId":"1050061","name":"블루 리넥스 (남)"},{"itemId":"1050077","name":"그린 프리스 (남)"},{"itemId":"1051046","name":"화이트 아나카룬 (여)"},{"itemId":"1051058","name":"다크 크리시아 (여)"},{"itemId":"1060094","name":"블루 스타드 바지 (남)"},{"itemId":"1061098","name":"블러드 플라티나 바지 (여)"},{"itemId":"1072149","name":"블러드 카멜부츠"},{"itemId":"1072173","name":"레드 피레타부츠"},{"itemId":"1082098","name":"브라운 로린"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1082207","name":"블루얼 하프글로브"},{"itemId":"1092017","name":"골드 에이션트 실드"},{"itemId":"1412008","name":"크로노"},{"itemId":"1472029","name":"흑갑충"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120109",14],["7120108",4]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 폭격맞은도심쇼핑가 등록 · 서식 몬스터 · NPC 봉이
+(function(){
+  var place={"name":"폭격맞은도심쇼핑가","code":"240070302","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070302.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폭격맞은도심쇼핑가"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1972,imgHeight:812,portals:[{"toCode":"240070301","toName":"폭격맞은도심고가도로","note":"이동","x":117,"y":669,"unit":"px"},{"toCode":null,"toName":"폭격맞은도심한복판","note":"이동","x":1848,"y":674,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"7120109","name":"이루워터","img":"https://drive.google.com/thumbnail?id=1O_jn9zlp3SqAqquvLmVKEdfjiL9QuTPz&sz=w400","minLevel":79,"category":"무형","hp":23500,"mp":200,"exp":3750,"acc":170,"eva":30,"pdd":625,"mdd":450,"desc":"2215년 네오시티의 도심이 폭격을 맞은 직후 나타나기 시작한 발달한 안드로이드 형태의 로봇이다. 여자의 형상을 하고 있지만 초공격형으로 제작된 안드로이드로 공격성향이 강하다. 하지만 인격은 형성되어 있지 않아서 모든 사물을 적으로 간주하고 파괴만을 일삼고 있다.","drops":[{"itemId":"4000551","name":"이루워터의 레이저소드"},{"itemId":"4004004","name":"어둠의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4010004","name":"은의 원석"},{"itemId":"4020004","name":"오팔의 원석"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130009","name":"폴암 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040619","name":"하의 점프 주문서 10%"},{"itemId":"2041008","name":"망토 체력 주문서 10%"},{"itemId":"2044314","name":"창 명중률 주문서 10%"},{"itemId":"2044401","name":"폴암 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049100","name":"혼돈의 주문서 60%"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"1002338","name":"레드 드래곤 바부타"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1072161","name":"퍼플 루티드슈즈"},{"itemId":"1072312","name":"블루얼 페긴트"},{"itemId":"1082107","name":"골드 아이즈"},{"itemId":"1102029","name":"흰색 세라프의 망토"},{"itemId":"1322028","name":"골든해머"},{"itemId":"1402012","name":"그륜힐"},{"itemId":"1442030","name":"메이플 스노우보드"},{"itemId":"1452010","name":"블루 힌켈"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["7120109",14]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082010","name":"봉이","img":"https://drive.google.com/thumbnail?id=1-GXNFBFzphSJdoKLgyw5V7Vzzq8bvqUT&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 폭격맞은도심한복판 등록 · 서식 몬스터
+(function(){
+  var place={"name":"폭격맞은도심한복판","code":"240070303","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070303.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폭격맞은도심한복판"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1080,imgHeight:453,portals:[{"toCode":"240070300","toName":"폭격맞은도심상점가","note":"이동","x":121,"y":313,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8220010","name":"듀나스","isBoss":true,"img":"https://drive.google.com/thumbnail?id=1o_Uwrbmrou9Aj2PNM1f6JwDw731yKOtP&sz=w400","minLevel":81,"category":"악마형","hp":300000,"mp":350,"exp":19000,"acc":155,"eva":30,"pdd":700,"mdd":440,"desc":"2215년 네오시티의 도심을 폭격하고 파괴한 존재로 유추되고 있는 인간형 안드로이드다. 로비와 이루워터를 무한 소환해 내면서 도시를 공포로 몰아넣고 있다. 그러나 목적이 무엇인지 어디서 왔는지 누가 만들어 냈는지는 여전히 알 수 없다.","drops":[{"itemId":"4032516","name":"듀나스의 시간모래"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8220010",1]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
 </script>
-<script src="data-map-detail.js?v=202611212050"></script>
+<script src="data-map-detail.js?v=202611231501"></script>
 <script>
 // 포탈 이름 표시 켜기/끄기 (기본: 켜짐, 브라우저에 기억)
 (function(){
