@@ -724,7 +724,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611231501"></script>
+<script src="data-quests.js?v=202611231931"></script>
 <script>
 window.NPCS = [
   {
@@ -13636,9 +13636,10 @@ window.MONSTERS = [
 (function(){
   var portalIcon="https://drive.google.com/thumbnail?id=1rHD7zAqEeFaKPNE2nt8dNHbfwkokQ24o&sz=w200";
   if(window.MAPS){
-    var m={code:"211042200",name:"시련의동굴3",region:"엘나스 산맥",img:"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/211042200.webp",imgWidth:5215,imgHeight:701,portals:[
-      {toCode:"211042100",toName:"시련의동굴2",note:"이동",x:91,y:276,unit:"px",icon:portalIcon},
-      {toCode:null,toName:"자쿰으로통하는문",note:"이동",x:5085,y:451,unit:"px",icon:portalIcon}
+    var m={code:"211042200",name:"시련의동굴3",region:"엘나스 산맥",img:"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/205.webp",imgWidth:5169,imgHeight:751,portals:[
+      {toCode:"211042100",toName:"시련의동굴2",note:"이동",x:253,y:276,unit:"px",icon:portalIcon},
+      {toCode:null,toName:"자쿰으로통하는문",note:"이동",x:5061,y:450,unit:"px",icon:portalIcon},
+      {toCode:null,toName:"피닉스의 둥지",note:"이동",x:886,y:452,unit:"px",icon:portalIcon}
     ]};
     var old=window.MAPS.find(function(x){return String(x.code)===m.code;});
     if(old)Object.keys(m).forEach(function(k){old[k]=m[k];});else window.MAPS.push(m);
@@ -25419,8 +25420,36 @@ window.MONSTERS = [
     });
   }
 })();
+// 피닉스의 둥지 등록
+(function(){
+  var place={"name":"피닉스의 둥지","code":"921100200","region":"엘나스 산맥","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/921100200.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="피닉스의둥지"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1080,imgHeight:687,portals:[{"toCode":"211042200","toName":"시련의동굴3","note":"이동","x":1000,"y":439,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
 </script>
-<script src="data-map-detail.js?v=202611231501"></script>
+<script src="data-map-detail.js?v=202611231931"></script>
 <script>
 // 포탈 이름 표시 켜기/끄기 (기본: 켜짐, 브라우저에 기억)
 (function(){

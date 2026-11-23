@@ -730,7 +730,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611231501"></script>
+<script src="data-quests.js?v=202611231931"></script>
 <script>
 // 추가 몬스터: 레츠, 모래거인
 (function(){
@@ -49230,6 +49230,34 @@ window.MONSTERS = [
   if(window.MONSTERS){
     [{"id":"8220010","name":"듀나스","isBoss":true,"img":"https://drive.google.com/thumbnail?id=1o_Uwrbmrou9Aj2PNM1f6JwDw731yKOtP&sz=w400","minLevel":81,"category":"악마형","hp":300000,"mp":350,"exp":19000,"acc":155,"eva":30,"pdd":700,"mdd":440,"desc":"2215년 네오시티의 도심을 폭격하고 파괴한 존재로 유추되고 있는 인간형 안드로이드다. 로비와 이루워터를 무한 소환해 내면서 도시를 공포로 몰아넣고 있다. 그러나 목적이 무엇인지 어디서 왔는지 누가 만들어 냈는지는 여전히 알 수 없다.","drops":[{"itemId":"4032516","name":"듀나스의 시간모래"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
     [["8220010",1]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 피닉스의 둥지 등록
+(function(){
+  var place={"name":"피닉스의 둥지","code":"921100200","region":"엘나스 산맥","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/921100200.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="피닉스의둥지"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1080,imgHeight:687,portals:[{"toCode":"211042200","toName":"시련의동굴3","note":"이동","x":1000,"y":439,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
       var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
       if(!mon)return;
       var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
