@@ -730,7 +730,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611231931"></script>
+<script src="data-quests.js?v=202611240202"></script>
 <script>
 // 추가 몬스터: 레츠, 모래거인
 (function(){
@@ -48827,14 +48827,14 @@ window.MONSTERS = [
     });
   }
 })();
-// 테라숲 타임 게이트 → 평범한마을입구(2021) / 한밤의항만입구(2099): 회중시계 필요 (길찾기 제외)
+// 테라숲 타임 게이트 → 평범한마을입구(2021) / 한밤의항만입구(2099)
 (function(){
   if(!window.MAPS)return;
   var m=window.MAPS.find(function(x){return String(x.code)==="240070000";});
   if(!m)return; m.portals=m.portals||[];
-  [["240070100","평범한마을입구"],["240070200","한밤의항만입구"],["240070300","폭격맞은도심상점가"]].forEach(function(t){
+  [["240070100","평범한마을입구"],["240070200","한밤의항만입구"],["240070300","폭격맞은도심상점가"],["240070400","폐허가된도시교차로"],["240070500","위험한타워로비"],["240070600","천공전함뱃머리"]].forEach(function(t){
     if(m.portals.some(function(p){return String(p.toCode)===t[0];}))return;
-    m.portals.push({toCode:t[0],toName:t[1],note:"타임 게이트",x:1215,y:600,unit:"px",needItem:true});
+    m.portals.push({toCode:t[0],toName:t[1],note:"타임 게이트",x:1215,y:600,unit:"px"});
   });
 })();
 // 잊혀진 시간의 길<2> 등록 · 서식 몬스터
@@ -49273,6 +49273,383 @@ window.MONSTERS = [
       if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
     });
   }
+})();
+// 하늘 둥지 꼭대기 등록
+(function(){
+  var place={"name":"하늘 둥지 꼭대기","code":"924000100","region":"리프레","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/924000100.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="하늘둥지꼭대기"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1350,imgHeight:1071,portals:[{"toCode":"240010700","toName":"하늘 둥지1","note":"이동","x":1163,"y":888,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 하늘 둥지1 → 하늘 둥지 꼭대기 히든 포탈
+(function(){
+  if(!window.MAPS)return;
+  var m=window.MAPS.find(function(x){return String(x.code)==="240010700";});
+  if(!m)return; m.portals=m.portals||[];
+  if(m.portals.some(function(p){return String(p.toCode)==="924000100";}))return;
+  m.portals.push({toCode:"924000100",toName:"하늘 둥지 꼭대기",note:"히든 이동",x:482,y:66,unit:"px",icon:"https://drive.google.com/thumbnail?id=14Mia7ZK7iFSkhmyZIkKDw_-D55a8Kp4F&sz=w200"});
+})();
+// 폐허가된도시교차로 등록 · 서식 몬스터 · NPC 켄
+(function(){
+  var place={"name":"폐허가된도시교차로","code":"240070400","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070400.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폐허가된도시교차로"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2429,imgHeight:442,portals:[{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":136,"y":303,"unit":"px"},{"toCode":null,"toName":"폐허가된도시중심","note":"이동","x":2338,"y":302,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8120102","name":"애프터로드","img":"https://drive.google.com/thumbnail?id=1tKoNmNysnzKyt168U6TPPPFlVILNL0Tv&sz=w400","minLevel":82,"category":"무형","hp":29000,"mp":100,"exp":6100,"acc":146,"eva":22,"pdd":690,"mdd":455,"desc":"2216년 파괴되어 황폐해진 네오시티에 나타난 전차형 로봇이다. 이미 폐허가 된 도시를 전차바퀴로 짖밟고 다니면서 생존자들을 공격한다. 들리는 소문에는 운전수도 없이 인공지능으로 움직이는 로봇이라고 하는데 누군가의 원격조종을 받고 있을지도 모른다.","drops":[{"itemId":"4000552","name":"애프터로드의 체인타이어"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4010000","name":"청동의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"2040532","name":"전신 갑옷 힘 주문서 60%"},{"itemId":"2044112","name":"두손도끼 명중률 주문서 60%"},{"itemId":"2044807","name":"너클 명중률 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2330004","name":"샤이니 불릿"},{"itemId":"1002640","name":"블루 샌프보우트햇"},{"itemId":"1040110","name":"다크 피라테 (남)"},{"itemId":"1041107","name":"다크 피라티드 (여)"},{"itemId":"1072179","name":"다크 크리시아슈즈"},{"itemId":"1082112","name":"다크 코든"},{"itemId":"1102028","name":"빨간색 세라프의 망토"},{"itemId":"1402015","name":"그레이트 로헨"},{"itemId":"1452011","name":"골든 힌켈"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8120102",6]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082017","name":"켄","img":"https://drive.google.com/thumbnail?id=1tTj0ZoDG7sWI3BV_-v0-yiUZK9EP0k8f&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 폐허가된도시중심 등록 · 서식 몬스터
+(function(){
+  var place={"name":"폐허가된도시중심","code":"240070401","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070401.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폐허가된도시중심"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1619,imgHeight:983,portals:[{"toCode":"240070400","toName":"폐허가된도시교차로","note":"이동","x":94,"y":843,"unit":"px"},{"toCode":null,"toName":"폐허가된도시공사장","note":"이동","x":1544,"y":843,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8120102","name":"애프터로드","img":"https://drive.google.com/thumbnail?id=1tKoNmNysnzKyt168U6TPPPFlVILNL0Tv&sz=w400","minLevel":82,"category":"무형","hp":29000,"mp":100,"exp":6100,"acc":146,"eva":22,"pdd":690,"mdd":455,"desc":"2216년 파괴되어 황폐해진 네오시티에 나타난 전차형 로봇이다. 이미 폐허가 된 도시를 전차바퀴로 짖밟고 다니면서 생존자들을 공격한다. 들리는 소문에는 운전수도 없이 인공지능으로 움직이는 로봇이라고 하는데 누군가의 원격조종을 받고 있을지도 모른다.","drops":[{"itemId":"4000552","name":"애프터로드의 체인타이어"},{"itemId":"4004002","name":"민첩성의 크리스탈 원석"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4010000","name":"청동의 원석"},{"itemId":"4020000","name":"가넷의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"2040532","name":"전신 갑옷 힘 주문서 60%"},{"itemId":"2044112","name":"두손도끼 명중률 주문서 60%"},{"itemId":"2044807","name":"너클 명중률 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2330004","name":"샤이니 불릿"},{"itemId":"1002640","name":"블루 샌프보우트햇"},{"itemId":"1040110","name":"다크 피라테 (남)"},{"itemId":"1041107","name":"다크 피라티드 (여)"},{"itemId":"1072179","name":"다크 크리시아슈즈"},{"itemId":"1082112","name":"다크 코든"},{"itemId":"1102028","name":"빨간색 세라프의 망토"},{"itemId":"1402015","name":"그레이트 로헨"},{"itemId":"1452011","name":"골든 힌켈"}]},{"id":"8120103","name":"프로토타입로드","img":"https://drive.google.com/thumbnail?id=1BXXWwMuuE-QE2Q2JhKY1wDrouSIyWpWB&sz=w400","minLevel":84,"category":"무형","hp":31000,"mp":170,"exp":7200,"acc":155,"eva":25,"pdd":700,"mdd":460,"desc":"2216년 파괴되어 황폐해진 네오시티에 나타난 반인간형 전차로봇이다. 애프터로드와는 달리 프로그램된 인격을 가지고 있으며, 매우 발달된 감지 센서를 가지고 있다.","drops":[{"itemId":"4000553","name":"프로토타입로드의 추진장치"},{"itemId":"4004001","name":"지혜의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020007","name":"다이아몬드의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130010","name":"완드 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040026","name":"투구 지력 주문서 10%"},{"itemId":"2040316","name":"귀 장식 민첩 주문서 100%"},{"itemId":"2040707","name":"신발 이동속도 주문서 60%"},{"itemId":"2043015","name":"한손검 명중률 주문서 100%"},{"itemId":"2043301","name":"단검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"1002339","name":"블루 드래곤 바부타"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1052125","name":"화이트 피니얼"},{"itemId":"1072173","name":"레드 피레타부츠"},{"itemId":"1082112","name":"다크 코든"},{"itemId":"1102030","name":"검은색 세라프의 망토"},{"itemId":"1382010","name":"레이든 스태프"},{"itemId":"1462012","name":"골든 샬리트"},{"itemId":"1472029","name":"흑갑충"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8120102",6],["8120103",6]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 폐허가된도시공사장 등록 · 서식 몬스터 · NPC 이사벨라
+(function(){
+  var place={"name":"폐허가된도시공사장","code":"240070402","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070402.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폐허가된도시공사장"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2159,imgHeight:998,portals:[{"toCode":"240070401","toName":"폐허가된도시중심","note":"이동","x":90,"y":853,"unit":"px"},{"toCode":null,"toName":"폐허가된도시랜드마크","note":"이동","x":2108,"y":852,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8120103","name":"프로토타입로드","img":"https://drive.google.com/thumbnail?id=1BXXWwMuuE-QE2Q2JhKY1wDrouSIyWpWB&sz=w400","minLevel":84,"category":"무형","hp":31000,"mp":170,"exp":7200,"acc":155,"eva":25,"pdd":700,"mdd":460,"desc":"2216년 파괴되어 황폐해진 네오시티에 나타난 반인간형 전차로봇이다. 애프터로드와는 달리 프로그램된 인격을 가지고 있으며, 매우 발달된 감지 센서를 가지고 있다.","drops":[{"itemId":"4000553","name":"프로토타입로드의 추진장치"},{"itemId":"4004001","name":"지혜의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020007","name":"다이아몬드의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130002","name":"한손검 제작의 촉진제"},{"itemId":"4130010","name":"완드 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040026","name":"투구 지력 주문서 10%"},{"itemId":"2040316","name":"귀 장식 민첩 주문서 100%"},{"itemId":"2040707","name":"신발 이동속도 주문서 60%"},{"itemId":"2043015","name":"한손검 명중률 주문서 100%"},{"itemId":"2043301","name":"단검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"1002339","name":"블루 드래곤 바부타"},{"itemId":"1032022","name":"하프 이어링"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1052125","name":"화이트 피니얼"},{"itemId":"1072173","name":"레드 피레타부츠"},{"itemId":"1082112","name":"다크 코든"},{"itemId":"1102030","name":"검은색 세라프의 망토"},{"itemId":"1382010","name":"레이든 스태프"},{"itemId":"1462012","name":"골든 샬리트"},{"itemId":"1472029","name":"흑갑충"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8120103",14]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082016","name":"이사벨라","img":"https://drive.google.com/thumbnail?id=1EnXSic8ztsE0zc5_L1CSr1dDbPaaCkuj&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 폐허가된도시랜드마크 등록 · 서식 몬스터
+(function(){
+  var place={"name":"폐허가된도시랜드마크","code":"240070403","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070403.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="폐허가된도시랜드마크"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2160,imgHeight:933,portals:[{"toCode":"240070400","toName":"폐허가된도시교차로","note":"이동","x":86,"y":794,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8220011","name":"아우프헤벤","isBoss":true,"img":"https://drive.google.com/thumbnail?id=1VRa3bveA7WM1e76eP7j8bEUA0YhKjDrC&sz=w400","minLevel":85,"category":"악마형","hp":410000,"mp":1500,"exp":21500,"acc":200,"eva":32,"pdd":700,"mdd":200,"desc":"2216년 폐허가된 도심에서 발견된 천사형 안드로이드다. 애프터로드와 프로토타입로드를 조종하는 주체로 의심되고 있으며, 폐허가 된 도시에서 무엇인가를 찾고 있었다는 사실이 보고된 바 있다.","drops":[{"itemId":"4032517","name":"아우프헤벤의 시간모래"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8220011",1]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 위험한타워로비 등록 · 서식 몬스터 · NPC 호야
+(function(){
+  var place={"name":"위험한타워로비","code":"240070500","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070500.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="위험한타워로비"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1828,imgHeight:860,portals:[{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":162,"y":641,"unit":"px"},{"toCode":null,"toName":"위험한타워환풍구","note":"이동","x":1723,"y":639,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8120104","name":"암슈트A","img":"https://drive.google.com/thumbnail?id=1N3NM0kd7BFA2pSnj-kj4QtXx51aT3inM&sz=w400","minLevel":86,"category":"무형","hp":32000,"mp":180,"exp":7800,"acc":160,"eva":27,"pdd":700,"mdd":465,"desc":"2230년 붕괴직전의 위험한 타워에 나타난 슈트형 기계 몬스터다. 추진장치를 장착하여 빠른 이동이 가능하고 레이저건을 소지하고 있어서 살상력이 뛰어난 위협적인 존재다.","drops":[{"itemId":"4000554","name":"암슈트A의 부품"},{"itemId":"4001110","name":"[스토리북]정체불명의 편지"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010003","name":"아다만티움의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130007","name":"두손둔기 제작의 촉진제"},{"itemId":"4130011","name":"스태프 제작의 촉진제"},{"itemId":"4131007","name":"폴암 제조법"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040619","name":"하의 점프 주문서 10%"},{"itemId":"2044401","name":"폴암 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"1002272","name":"블루 크로스햇"},{"itemId":"1002330","name":"다크 피레타햇"},{"itemId":"1032016","name":"메탈하트 이어링"},{"itemId":"1040107","name":"다크 스타드 (남)"},{"itemId":"1041105","name":"그린 피라티드 (여)"},{"itemId":"1041115","name":"그린 미스트슈트"},{"itemId":"1050070","name":"다크 레퀴엠 (남)"},{"itemId":"1050075","name":"레드 프리스 (남)"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1051066","name":"레드 프리아 (여)"},{"itemId":"1051077","name":"옐로우 배틀엠프리스 (여)"},{"itemId":"1060095","name":"다크 스타드 바지 (남)"},{"itemId":"1061104","name":"그린 피라티드 치마 (여)"},{"itemId":"1061114","name":"그린 미스트슈트 바지 (여)"},{"itemId":"1072173","name":"레드 피레타부츠"},{"itemId":"1072197","name":"오리할콘 워 그리브"},{"itemId":"1082103","name":"브론즈 허스크"},{"itemId":"1082109","name":"레드 코든"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1082121","name":"그린 와이즈"},{"itemId":"1082125","name":"레드 아데브"},{"itemId":"1082131","name":"블루 파쵸네"},{"itemId":"1452011","name":"골든 힌켈"},{"itemId":"1492010","name":"인피티니"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8120104",4]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082011","name":"호야","img":"https://drive.google.com/thumbnail?id=1bxwLv_MMaxyPzeFzmTe0AAOhiVVk4ALR&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 위험한타워환풍구 등록 · 서식 몬스터
+(function(){
+  var place={"name":"위험한타워환풍구","code":"240070501","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070501.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="위험한타워환풍구"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1848,imgHeight:1524,portals:[{"toCode":null,"toName":"위험한타워비상구","note":"이동","x":72,"y":219,"unit":"px"},{"toCode":"240070500","toName":"위험한타워로비","note":"이동","x":165,"y":1418,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8120104","name":"암슈트A","img":"https://drive.google.com/thumbnail?id=1N3NM0kd7BFA2pSnj-kj4QtXx51aT3inM&sz=w400","minLevel":86,"category":"무형","hp":32000,"mp":180,"exp":7800,"acc":160,"eva":27,"pdd":700,"mdd":465,"desc":"2230년 붕괴직전의 위험한 타워에 나타난 슈트형 기계 몬스터다. 추진장치를 장착하여 빠른 이동이 가능하고 레이저건을 소지하고 있어서 살상력이 뛰어난 위협적인 존재다.","drops":[{"itemId":"4000554","name":"암슈트A의 부품"},{"itemId":"4001110","name":"[스토리북]정체불명의 편지"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007001","name":"마법의 가루(흰색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010003","name":"아다만티움의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4130003","name":"한손도끼 제작의 촉진제"},{"itemId":"4130007","name":"두손둔기 제작의 촉진제"},{"itemId":"4130011","name":"스태프 제작의 촉진제"},{"itemId":"4131007","name":"폴암 제조법"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040619","name":"하의 점프 주문서 10%"},{"itemId":"2044401","name":"폴암 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070005","name":"뇌전 수리검"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"1002272","name":"블루 크로스햇"},{"itemId":"1002330","name":"다크 피레타햇"},{"itemId":"1032016","name":"메탈하트 이어링"},{"itemId":"1040107","name":"다크 스타드 (남)"},{"itemId":"1041105","name":"그린 피라티드 (여)"},{"itemId":"1041115","name":"그린 미스트슈트"},{"itemId":"1050070","name":"다크 레퀴엠 (남)"},{"itemId":"1050075","name":"레드 프리스 (남)"},{"itemId":"1051057","name":"퍼플 크리시아 (여)"},{"itemId":"1051066","name":"레드 프리아 (여)"},{"itemId":"1051077","name":"옐로우 배틀엠프리스 (여)"},{"itemId":"1060095","name":"다크 스타드 바지 (남)"},{"itemId":"1061104","name":"그린 피라티드 치마 (여)"},{"itemId":"1061114","name":"그린 미스트슈트 바지 (여)"},{"itemId":"1072173","name":"레드 피레타부츠"},{"itemId":"1072197","name":"오리할콘 워 그리브"},{"itemId":"1082103","name":"브론즈 허스크"},{"itemId":"1082109","name":"레드 코든"},{"itemId":"1082116","name":"블러드 엠페러"},{"itemId":"1082121","name":"그린 와이즈"},{"itemId":"1082125","name":"레드 아데브"},{"itemId":"1082131","name":"블루 파쵸네"},{"itemId":"1452011","name":"골든 힌켈"},{"itemId":"1492010","name":"인피티니"}]},{"id":"8120105","name":"암슈트S","img":"https://drive.google.com/thumbnail?id=1s8Nf4L7NIQZTdv1ogm7IyAKfFFTIVE_Y&sz=w400","minLevel":88,"category":"무형","hp":37000,"mp":200,"exp":9600,"acc":170,"eva":28,"pdd":800,"mdd":495,"desc":"2230년 붕괴직전의 위험한 타워에 나타난 슈트형 기계 몬스터다. 추적형에 최적화 되었으며, 어두운 곳에서 소리 없이 움직일 수 있다. 추진장치를 장착하여 빠른 이동이 가능하고 레이저건을 소지하고 있어서 살상력이 뛰어난 위협적인 존재다.","drops":[{"itemId":"4000555","name":"암슈트S의 레이저건"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4010003","name":"아다만티움의 원석"},{"itemId":"4020003","name":"에메랄드의 원석"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130007","name":"두손둔기 제작의 촉진제"},{"itemId":"4130012","name":"활 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040323","name":"귀 장식 행운 주문서 10%"},{"itemId":"2041014","name":"망토 힘 주문서 10%"},{"itemId":"2043214","name":"한손둔기 명중률 주문서 10%"},{"itemId":"2044001","name":"두손검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070006","name":"일비 표창"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"2330004","name":"샤이니 불릿"},{"itemId":"1002328","name":"그린 피레타햇"},{"itemId":"1032023","name":"딸기 귀고리"},{"itemId":"1051080","name":"다크 배틀엠프리스 (여)"},{"itemId":"1072183","name":"레드 윙부츠"},{"itemId":"1082122","name":"블루 와이즈"},{"itemId":"1092025","name":"골드 아퀼라 실드"},{"itemId":"1372016","name":"피닉스 완드"},{"itemId":"1432030","name":"피나카"},{"itemId":"1442044","name":"제드버그"},{"itemId":"1462015","name":"화이트 네쉐르"},{"itemId":"1472031","name":"코브라스티어"},{"itemId":"1482010","name":"스틸르노"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8120104",11],["8120105",5]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 위험한타워비상구 등록 · 서식 몬스터 · NPC 노이
+(function(){
+  var place={"name":"위험한타워비상구","code":"240070502","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070502.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="위험한타워비상구"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1882,imgHeight:1371,portals:[{"toCode":"240070501","toName":"위험한타워환풍구","note":"이동","x":197,"y":252,"unit":"px"},{"toCode":null,"toName":"위험한타워팬트하우스","note":"이동","x":1693,"y":255,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8120105","name":"암슈트S","img":"https://drive.google.com/thumbnail?id=1s8Nf4L7NIQZTdv1ogm7IyAKfFFTIVE_Y&sz=w400","minLevel":88,"category":"무형","hp":37000,"mp":200,"exp":9600,"acc":170,"eva":28,"pdd":800,"mdd":495,"desc":"2230년 붕괴직전의 위험한 타워에 나타난 슈트형 기계 몬스터다. 추적형에 최적화 되었으며, 어두운 곳에서 소리 없이 움직일 수 있다. 추진장치를 장착하여 빠른 이동이 가능하고 레이저건을 소지하고 있어서 살상력이 뛰어난 위협적인 존재다.","drops":[{"itemId":"4000555","name":"암슈트S의 레이저건"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4010003","name":"아다만티움의 원석"},{"itemId":"4020003","name":"에메랄드의 원석"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130007","name":"두손둔기 제작의 촉진제"},{"itemId":"4130012","name":"활 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040323","name":"귀 장식 행운 주문서 10%"},{"itemId":"2041014","name":"망토 힘 주문서 10%"},{"itemId":"2043214","name":"한손둔기 명중률 주문서 10%"},{"itemId":"2044001","name":"두손검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2070006","name":"일비 표창"},{"itemId":"2330003","name":"바이탈 불릿"},{"itemId":"2330004","name":"샤이니 불릿"},{"itemId":"1002328","name":"그린 피레타햇"},{"itemId":"1032023","name":"딸기 귀고리"},{"itemId":"1051080","name":"다크 배틀엠프리스 (여)"},{"itemId":"1072183","name":"레드 윙부츠"},{"itemId":"1082122","name":"블루 와이즈"},{"itemId":"1092025","name":"골드 아퀼라 실드"},{"itemId":"1372016","name":"피닉스 완드"},{"itemId":"1432030","name":"피나카"},{"itemId":"1442044","name":"제드버그"},{"itemId":"1462015","name":"화이트 네쉐르"},{"itemId":"1472031","name":"코브라스티어"},{"itemId":"1482010","name":"스틸르노"}]},{"id":"8120106","name":"암슈트D","img":"https://drive.google.com/thumbnail?id=14BhkvsRypE0XR7aIFXkGyLLRmYgujC9h&sz=w400","minLevel":89,"category":"무형","hp":40000,"mp":190,"exp":10320,"acc":180,"eva":28,"pdd":750,"mdd":480,"desc":"2230년 붕괴직전의 위험한 타워에 나타난 슈트형 기계 몬스터다. 암슈트S의 진화형으로 비행이 가능해서 움직임이 더욱 자유롭다. 행동반경이 넓기 때문에 언제 어디서 나타날지 모르니 항상 경계해야한다.","drops":[{"itemId":"4000556","name":"암슈트D의 부스터"},{"itemId":"4006001","name":"소환의 돌"},{"itemId":"4007003","name":"마법의 가루(초록)"},{"itemId":"4007005","name":"마법의 가루(보라)"},{"itemId":"4010006","name":"금의 원석"},{"itemId":"4020006","name":"토파즈의 원석"},{"itemId":"4130000","name":"장갑 제작의 촉진제"},{"itemId":"4130019","name":"상의 제작의 촉진제"},{"itemId":"4130021","name":"전신 갑옷 제작의 촉진제"},{"itemId":"4130022","name":"방패 제작의 촉진제"},{"itemId":"2000004","name":"엘릭서"},{"itemId":"2000005","name":"파워 엘릭서"},{"itemId":"2002004","name":"전사의 물약"},{"itemId":"2040031","name":"투구 민첩성 주문서 10%"},{"itemId":"2040823","name":"장갑 체력 주문서 100%"},{"itemId":"2041009","name":"망토 마나 주문서 100%"},{"itemId":"2043210","name":"한손둔기 명중률 주문서 100%"},{"itemId":"2044301","name":"창 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"1002253","name":"블루 키튼서클렛"},{"itemId":"1002274","name":"다크 크로스햇"},{"itemId":"1002276","name":"레드 골드윙캡"},{"itemId":"1002284","name":"화이트 루크"},{"itemId":"1041107","name":"다크 피라티드 (여)"},{"itemId":"1041121","name":"다크 발퀴레 (여)"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1050080","name":"그린 배틀로드 (남)"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1061106","name":"다크 피라티드 치마 (여)"},{"itemId":"1061120","name":"블러드 발퀴레 치마 (여)"},{"itemId":"1072155","name":"퍼플 카젠부츠"},{"itemId":"1072167","name":"다크 리넥스슈즈"},{"itemId":"1072203","name":"레드 아데스슈즈"},{"itemId":"1072206","name":"블루 넬리슈즈"},{"itemId":"1072212","name":"다크 리버스부츠"},{"itemId":"1072312","name":"블루얼 페긴트"},{"itemId":"1082110","name":"블루 코든"},{"itemId":"1082143","name":"퍼플 미스트라"},{"itemId":"1302018","name":"아츠"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8120105",7],["8120106",6]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082012","name":"노이","img":"https://drive.google.com/thumbnail?id=1BIv82XtpHx1IyMJhsH_tj12xydpVSjaj&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 위험한타워팬트하우스 등록 · 서식 몬스터
+(function(){
+  var place={"name":"위험한타워팬트하우스","code":"240070503","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070503.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="위험한타워팬트하우스"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:1080,imgHeight:702,portals:[{"toCode":"240070500","toName":"위험한타워로비","note":"이동","x":85,"y":537,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8220012","name":"오베론","isBoss":true,"img":"https://drive.google.com/thumbnail?id=1ex9SW_HEIjfYzKcmvbCtuEPDCKvBT0-g&sz=w400","minLevel":90,"category":"악마형","hp":450000,"mp":300,"exp":27500,"acc":185,"eva":37,"pdd":800,"mdd":700,"desc":"2230년 위험한 타워를 장악하고 암슈트들을 조종해서 도시를 장악하고 있는 인공지능 안드로이드다. 실체를 가지고 있지 않고 오직 전기신호인 홀로그램으로 존재하기 때문에 그 존재가 가히 악마와도 같이 여겨지고 있다.","drops":[{"itemId":"4032518","name":"오베론의 시간모래"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8220012",1]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 천공전함뱃머리 등록 · 서식 몬스터 · NPC 아아시아
+(function(){
+  var place={"name":"천공전함뱃머리","code":"240070600","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070600.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="천공전함뱃머리"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2898,imgHeight:1356,portals:[{"toCode":"240070000","toName":"테라숲 타임 게이트","note":"이동","x":1069,"y":364,"unit":"px"},{"toCode":null,"toName":"천공전함A구역","note":"이동","x":2659,"y":785,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140511","name":"파워암슈트A","img":"https://drive.google.com/thumbnail?id=1eww6amrJvJ0dQQ6BnAyG8UtwAkk5Mtlt&sz=w400","minLevel":91,"category":"무형","hp":43000,"mp":170,"exp":11400,"acc":190,"eva":37,"pdd":650,"mdd":670,"desc":"2503년 천공전함 헤르메스호를 타고 총공격을 감행한 병사형 로봇이다. 침공을 위해 제작되었다고 불릴만큼 전쟁에 최적화 되어 있다. 행동이 재빠르고 움직임이 유연해서 근접전에 주로 사용되는 로봇이다.","drops":[{"itemId":"4000557","name":"파워암슈트A의 진공관"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020001","name":"자수정의 원석"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130014","name":"단검 제작의 촉진제"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2022003","name":"장어 구이"},{"itemId":"2040029","name":"투구 민첩성 주문서 60%"},{"itemId":"2040321","name":"귀 장식 행운 주문서 60%"},{"itemId":"2043301","name":"단검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049001","name":"백의 주문서 3%"},{"itemId":"2290050","name":"[마스터리북] 엔젤레이 20"},{"itemId":"1002532","name":"다크 그레이스 헬멧"},{"itemId":"1051097","name":"흑견랑포 (여)"},{"itemId":"1052128","name":"화이트 마르퀴니"},{"itemId":"1072205","name":"다크 아데스슈즈"},{"itemId":"1082144","name":"다크 미스트라"},{"itemId":"1312015","name":"비펜니스"},{"itemId":"1382035","name":"블루마린"},{"itemId":"1402005","name":"참마도"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140511",16]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082014","name":"아아시아","img":"https://drive.google.com/thumbnail?id=1uKAbwuMyCoP_aaYNQQUb1p3fBS1KMSvJ&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 천공전함A구역 등록 · 서식 몬스터
+(function(){
+  var place={"name":"천공전함A구역","code":"240070601","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070601.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="천공전함A구역"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2431,imgHeight:1355,portals:[{"toCode":"240070600","toName":"천공전함뱃머리","note":"이동","x":403,"y":786,"unit":"px"},{"toCode":null,"toName":"천공전함B구역","note":"이동","x":2236,"y":782,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140511","name":"파워암슈트A","img":"https://drive.google.com/thumbnail?id=1eww6amrJvJ0dQQ6BnAyG8UtwAkk5Mtlt&sz=w400","minLevel":91,"category":"무형","hp":43000,"mp":170,"exp":11400,"acc":190,"eva":37,"pdd":650,"mdd":670,"desc":"2503년 천공전함 헤르메스호를 타고 총공격을 감행한 병사형 로봇이다. 침공을 위해 제작되었다고 불릴만큼 전쟁에 최적화 되어 있다. 행동이 재빠르고 움직임이 유연해서 근접전에 주로 사용되는 로봇이다.","drops":[{"itemId":"4000557","name":"파워암슈트A의 진공관"},{"itemId":"4004003","name":"행운의 크리스탈 원석"},{"itemId":"4007000","name":"마법의 가루(갈색)"},{"itemId":"4007006","name":"마법의 가루(빨강)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020001","name":"자수정의 원석"},{"itemId":"4130001","name":"신발 제작의 촉진제"},{"itemId":"4130014","name":"단검 제작의 촉진제"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2022003","name":"장어 구이"},{"itemId":"2040029","name":"투구 민첩성 주문서 60%"},{"itemId":"2040321","name":"귀 장식 행운 주문서 60%"},{"itemId":"2043301","name":"단검 공격력 주문서 60%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049001","name":"백의 주문서 3%"},{"itemId":"2290050","name":"[마스터리북] 엔젤레이 20"},{"itemId":"1002532","name":"다크 그레이스 헬멧"},{"itemId":"1051097","name":"흑견랑포 (여)"},{"itemId":"1052128","name":"화이트 마르퀴니"},{"itemId":"1072205","name":"다크 아데스슈즈"},{"itemId":"1082144","name":"다크 미스트라"},{"itemId":"1312015","name":"비펜니스"},{"itemId":"1382035","name":"블루마린"},{"itemId":"1402005","name":"참마도"}]},{"id":"8140512","name":"파워암슈트B","img":"https://drive.google.com/thumbnail?id=1ml_RoHVGVMNe8JanJ7H5eyIpGsIS_jKg&sz=w400","minLevel":93,"category":"무형","hp":50000,"mp":250,"exp":12600,"acc":200,"eva":37,"pdd":830,"mdd":530,"desc":"2503년 천공전함 헤르메스호를 타고 총공격을 감행한 병사형 로봇이다. 침공을 위해 제작되었다고 불릴만큼 전쟁에 최적화 되어 있다. 레이더 감지 센서가 좋고, 관절마다 반동장치가 장착되어 있어서 미사일을 주로 사용하는 원거리 공격에 최적화되어 있다.","drops":[{"itemId":"4000558","name":"파워암슈트B의 견갑"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"4130018","name":"투구 제작의 촉진제"},{"itemId":"4130019","name":"상의 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040317","name":"귀 장식 민첩 주문서 60%"},{"itemId":"2040929","name":"방패 힘 주문서 100%"},{"itemId":"2044602","name":"석궁 공격력 주문서 10%"},{"itemId":"2044802","name":"너클 공격력 주문서 10%"},{"itemId":"2044809","name":"너클 명중률 주문서 10%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049001","name":"백의 주문서 3%"},{"itemId":"2070006","name":"일비 표창"},{"itemId":"1002254","name":"다크 키튼서클렛"},{"itemId":"1002278","name":"다크 골드윙캡"},{"itemId":"1002285","name":"블러드 루크"},{"itemId":"1002327","name":"브라운 피레타햇"},{"itemId":"1040112","name":"블루 제너럴 (남)"},{"itemId":"1041106","name":"레드 피라티드 (여)"},{"itemId":"1041117","name":"퍼플 미스트슈트 (여)"},{"itemId":"1050072","name":"그린 크리시스 (남)"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1050076","name":"블루 프리스 (남)"},{"itemId":"1050083","name":"다크 배틀로드 (남)"},{"itemId":"1051063","name":"베이지 리네로스 (여)"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1051079","name":"블루 배틀엠프리스 (여)"},{"itemId":"1060101","name":"블루 제너럴 바지 (남)"},{"itemId":"1061105","name":"레드 피라티드 치마 (여)"},{"itemId":"1061116","name":"퍼플 미스트슈트 바지 (여)"},{"itemId":"1072315","name":"블랙 마르킨츠"},{"itemId":"1082115","name":"에메랄드 엠페러"},{"itemId":"1082132","name":"그린 파쵸네"},{"itemId":"1322028","name":"골든해머"},{"itemId":"1422010","name":"호프만"},{"itemId":"2290082","name":"[마스터리북] 닌자 앰부쉬 20"},{"itemId":"2290097","name":"[마스터리북] 드래곤 스트라이크 20"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140511",10],["8140512",8]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 천공전함B구역 등록 · 서식 몬스터 · NPC 아슈라
+(function(){
+  var place={"name":"천공전함B구역","code":"240070602","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070602.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="천공전함B구역"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:2445,imgHeight:1117,portals:[{"toCode":"240070601","toName":"천공전함A구역","note":"이동","x":294,"y":547,"unit":"px"},{"toCode":null,"toName":"천공전함후미","note":"이동","x":2246,"y":549,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [{"id":"8140512","name":"파워암슈트B","img":"https://drive.google.com/thumbnail?id=1ml_RoHVGVMNe8JanJ7H5eyIpGsIS_jKg&sz=w400","minLevel":93,"category":"무형","hp":50000,"mp":250,"exp":12600,"acc":200,"eva":37,"pdd":830,"mdd":530,"desc":"2503년 천공전함 헤르메스호를 타고 총공격을 감행한 병사형 로봇이다. 침공을 위해 제작되었다고 불릴만큼 전쟁에 최적화 되어 있다. 레이더 감지 센서가 좋고, 관절마다 반동장치가 장착되어 있어서 미사일을 주로 사용하는 원거리 공격에 최적화되어 있다.","drops":[{"itemId":"4000558","name":"파워암슈트B의 견갑"},{"itemId":"4004000","name":"힘의 크리스탈 원석"},{"itemId":"4007002","name":"마법의 가루(파랑)"},{"itemId":"4010001","name":"강철의 원석"},{"itemId":"4020008","name":"흑수정의 원석"},{"itemId":"4130013","name":"석궁 제작의 촉진제"},{"itemId":"4130018","name":"투구 제작의 촉진제"},{"itemId":"4130019","name":"상의 제작의 촉진제"},{"itemId":"2000002","name":"하얀포션"},{"itemId":"2000006","name":"마나 엘릭서"},{"itemId":"2040317","name":"귀 장식 민첩 주문서 60%"},{"itemId":"2040929","name":"방패 힘 주문서 100%"},{"itemId":"2044602","name":"석궁 공격력 주문서 10%"},{"itemId":"2044802","name":"너클 공격력 주문서 10%"},{"itemId":"2044809","name":"너클 명중률 주문서 10%"},{"itemId":"2049000","name":"백의 주문서 1%"},{"itemId":"2049001","name":"백의 주문서 3%"},{"itemId":"2070006","name":"일비 표창"},{"itemId":"1002254","name":"다크 키튼서클렛"},{"itemId":"1002278","name":"다크 골드윙캡"},{"itemId":"1002285","name":"블러드 루크"},{"itemId":"1002327","name":"브라운 피레타햇"},{"itemId":"1040112","name":"블루 제너럴 (남)"},{"itemId":"1041106","name":"레드 피라티드 (여)"},{"itemId":"1041117","name":"퍼플 미스트슈트 (여)"},{"itemId":"1050072","name":"그린 크리시스 (남)"},{"itemId":"1050074","name":"다크 크리시스 (남)"},{"itemId":"1050076","name":"블루 프리스 (남)"},{"itemId":"1050083","name":"다크 배틀로드 (남)"},{"itemId":"1051063","name":"베이지 리네로스 (여)"},{"itemId":"1051068","name":"그린 프리아 (여)"},{"itemId":"1051079","name":"블루 배틀엠프리스 (여)"},{"itemId":"1060101","name":"블루 제너럴 바지 (남)"},{"itemId":"1061105","name":"레드 피라티드 치마 (여)"},{"itemId":"1061116","name":"퍼플 미스트슈트 바지 (여)"},{"itemId":"1072315","name":"블랙 마르킨츠"},{"itemId":"1082115","name":"에메랄드 엠페러"},{"itemId":"1082132","name":"그린 파쵸네"},{"itemId":"1322028","name":"골든해머"},{"itemId":"1422010","name":"호프만"},{"itemId":"2290082","name":"[마스터리북] 닌자 앰부쉬 20"},{"itemId":"2290097","name":"[마스터리북] 드래곤 스트라이크 20"}]}].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [["8140512",16]].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [{"id":"2082013","name":"아슈라","img":"https://drive.google.com/thumbnail?id=15Kks2dl7osEjMs86lTCErEB4SdmY2B5b&sz=w400","place":place,"dialogues":[]}].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 천공전함후미 등록
+(function(){
+  var place={"name":"천공전함후미","code":"240070603","region":"네오시티","img":"https://pub-b1bfaf79f2314c35b75cfc476757f313.r2.dev/240070603.webp"};
+  if(window.MAPS){
+    window.MAPS.forEach(function(m){(m.portals||[]).forEach(function(p){if(!p.toCode&&String(p.toName||"").replace(/\s/g,"")==="천공전함후미"){p.toCode=place.code;p.toName=place.name;}});});
+    var map={code:place.code,name:place.name,region:place.region,img:place.img,imgWidth:918,imgHeight:544,portals:[{"toCode":"240070600","toName":"천공전함뱃머리","note":"이동","x":66,"y":126,"unit":"px"}]};
+    var old=window.MAPS.find(function(m){return String(m.code)===map.code;});
+    if(old)Object.keys(map).forEach(function(k){old[k]=map[k];});else window.MAPS.push(map);
+  }
+  if(window.MONSTERS){
+    [].forEach(function(m){if(!window.MONSTERS.some(function(x){return String(x.id)===String(m.id);}))window.MONSTERS.push(m);});
+    [].forEach(function(row){
+      var mon=window.MONSTERS.find(function(m){return String(m.id)===row[0];});
+      if(!mon)return;
+      var list=Array.isArray(mon.places)?mon.places.slice():(mon.place?[mon.place]:[]);
+      list=list.filter(function(p){return String(p.code)!==place.code;});
+      list.push({name:place.name,code:place.code,count:row[1]});
+      mon.places=list;
+      if(!mon.place)mon.place=list[0];
+    });
+  }
+  if(window.NPCS){
+    [].forEach(function(n){
+      var o=window.NPCS.find(function(x){return String(x.id)===n.id;});
+      if(o)Object.keys(n).forEach(function(k){o[k]=n[k];});else window.NPCS.push(n);
+    });
+  }
+})();
+// 몬스터 등록: 니벨룽겐 전함
+(function(){
+  if(!window.MONSTERS)return;
+  [{"id":"8220013","name":"니벨룽겐 전함","img":"https://drive.google.com/thumbnail?id=1_TGzib1xJm7OBBBSZDBzMWqFeNkhLB7Y&sz=w400","category":"무형","minLevel":95,"hp":240000,"mp":600,"exp":31700,"acc":200,"eva":37,"pdd":850,"mdd":820,"isBoss":true,"desc":"2503년 네오시티를 침공한 인공지능 로봇 군단의 핵심 병력이다. 최첨단 배리어 기능을 탑재한 공중 전함으로 기동성이 좋다.\n인간의 생명을 위협하고 있는 살인 병기로서 반드시 파괴해야 하는 대상이다.","places":[{"name":"천공전함후미","code":"240070603","count":1}],"place":{"name":"천공전함후미","code":"240070603","count":1},"drops":[]}].forEach(function(m){var o=window.MONSTERS.find(function(x){return String(x.id)===String(m.id);});if(o)Object.keys(m).forEach(function(k){o[k]=m[k];});else window.MONSTERS.push(m);});
 })();
 </script>
 <script>
