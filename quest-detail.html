@@ -600,7 +600,7 @@ button{ font:inherit; }
   <div id="detail"></div>
 </div>
 
-<script src="data-quests.js?v=202611250004"></script>
+<script src="data-quests.js?v=202611250053"></script>
 <script>
 (function(){
   'use strict';
@@ -880,11 +880,13 @@ button{ font:inherit; }
       '파괴된 헤네시스':'https://drive.google.com/thumbnail?id=1qHLkpBvi9ZGQON8SPGZjhfvcXPWcpcQC&sz=w400',
       '폐광':'https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400',
       '플로리나비치':'https://drive.google.com/thumbnail?id=1_awfHf-lXFRxjgcIEQlu2VXNPZeWYf6Y&sz=w400',
-      '블랙로드':'https://drive.google.com/thumbnail?id=1LntTAE7pF0YXTz2yIE_zkGNjGuJGLO3S&sz=w400',
+      '블랙로드':'https://drive.google.com/thumbnail?id=1o1kcuoLUC6doZIm_g6D_1TRqV_OoCw-k&sz=w400',
+      '시계탑 최하층':'https://drive.google.com/thumbnail?id=1kSCHL7c6FkejQ_apw1JIxQ1-udQcnhaZ&sz=w400',
+      '시간의 신전':'https://drive.google.com/thumbnail?id=1YYMJaDjhaZjSfgtQTuMFJFojLdBMdyM7&sz=w400',
       '무릉':'https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400'
     };
   var VICTORIA_ICON = 'https://drive.google.com/thumbnail?id=1u8he4VAl-2zo7NNSdGxzRyImiNoTLljH&sz=w400';
-  function placeIconOf(pl){var __dc=String((pl&&pl.code)||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";/* 테라숲 */if(/^2400700\d\d$/.test(__dc))return "https://drive.google.com/thumbnail?id=1zJstoKsJ_0GftjEE16A_n7OqJpAKvblz&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";
+  function placeIconOf(pl){var __dc=String((pl&&pl.code)||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";/* 테라숲 */if(/^2400700\d\d$/.test(__dc))return "https://drive.google.com/thumbnail?id=1zJstoKsJ_0GftjEE16A_n7OqJpAKvblz&sz=w400";/* 시간의 신전 */if(/^27\d{7}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1YYMJaDjhaZjSfgtQTuMFJFojLdBMdyM7&sz=w400";/* 시계탑 최하층 */if(/^220(06|07|08)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1kSCHL7c6FkejQ_apw1JIxQ1-udQcnhaZ&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";
     var key = pl.town || pl.name;
     if (PLACE_ICONS[key]) return PLACE_ICONS[key];
     if (TOWN_ICONS[key]) return TOWN_ICONS[key];

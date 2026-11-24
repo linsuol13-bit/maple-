@@ -1373,7 +1373,7 @@ new MutationObserver(function(){ var b=document.querySelector('[data-plabel-togg
   </div>
 </div>
 
-<script src="data-quests.js?v=202611250004"></script>
+<script src="data-quests.js?v=202611250053"></script>
 <script>
 window.NPCS = [
   {
@@ -92839,8 +92839,8 @@ window.CHANGELOG = [
     { world:'시계탑 최하층', regions:['시계탑 최하층'], defaultTown:'시계탑 최하층', towns:[
       { name:'시계탑 최하층', maps:[] }
     ]},
-    { world:'시간의 신전', regions:['시간의 신전'], defaultTown:'시간의 신전', towns:[
-      { name:'시간의 신전', maps:[] }
+    { world:'시간의 신전', regions:['시간의 신전'], defaultTown:'세 개의 문', towns:[
+      { name:'세 개의 문', maps:[] }
     ]}
 ,
     { world:'리엔', regions:['리엔'], defaultTown:'리엔', towns:[
@@ -94891,7 +94891,9 @@ window.CHANGELOG = [
     '파괴된 헤네시스':'https://drive.google.com/thumbnail?id=1qHLkpBvi9ZGQON8SPGZjhfvcXPWcpcQC&sz=w400',
     '폐광':'https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400',
     '플로리나비치':'https://drive.google.com/thumbnail?id=1_awfHf-lXFRxjgcIEQlu2VXNPZeWYf6Y&sz=w400',
-    '블랙로드':'https://drive.google.com/thumbnail?id=1LntTAE7pF0YXTz2yIE_zkGNjGuJGLO3S&sz=w400',
+    '블랙로드':'https://drive.google.com/thumbnail?id=1o1kcuoLUC6doZIm_g6D_1TRqV_OoCw-k&sz=w400',
+    '시계탑 최하층':'https://drive.google.com/thumbnail?id=1kSCHL7c6FkejQ_apw1JIxQ1-udQcnhaZ&sz=w400',
+    '시간의 신전':'https://drive.google.com/thumbnail?id=1YYMJaDjhaZjSfgtQTuMFJFojLdBMdyM7&sz=w400',
     '무릉':'https://drive.google.com/thumbnail?id=12MQ5WRrjP-P7wkAgpGog2MLojL7QolA8&sz=w400'
   };
   var PANEL_ARIANT_ICON_MAPS = {'허름한 빈집':1,'아리안트':1,'아리안트궁전':1,'아리안트마을':1,'민가1':1,'민가2':1,'민가3':1,'민가4':1,'민가5':1,'민가6':1,'아리안트 정거장':1,'아리안트 서문 밖':1,'어린 카투스 사막':1,'선인장 사막1':1,'선인장 사막2':1,'로얄 카투스 사막':1,'흰 바위 사막':1,'벨라모아의 굴':1,'작열하는 사막':1,'바위 언덕':1,'메마른 사막':1,'프릴드 서식지대':1,'유랑단의 텐트':1,'아리안트 동문 밖':1};
@@ -94899,7 +94901,7 @@ window.CHANGELOG = [
   var PANEL_ORBIS_ICON_MAPS = {'상담실':1,'구름공원1':1,'구름공원2':1,'구름공원3':1,'구름공원4':1,'구름공원5':1,'구름공원6':1,'산책로':1,'산책로2':1,'버려진화원':1,'노파의집':1,'세가지빛정원으로가는길':1,'붉은빛의정원1':1,'붉은빛의정원2':1,'노란빛의정원1':1,'노란빛의정원2':1,'푸른빛의정원1':1,'푸른빛의정원2':1,'하늘계단1':1,'하늘계단2':1,'검은빛의정원1':1,'검은빛의정원2':1,'엘리쟈의정원':1,'알수없는탑':1,'길드본부<영웅의전당>':1,'만남의 언덕':1};
   var PANEL_ELNATH_ICON_MAPS = {'눈 덮인 언덕':1,'장로의관저':1,'빙판조심1':1,'빙판조심2':1,'차가운벌판1':1,'차가운벌판2':1,'왕관을휘날리며':1,'차디찬벌판':1,'라이더의 벌판':1,'얼음골짜기1':1,'얼음골짜기2':1,'날카로운절벽1':1,'날카로운절벽2':1,'설원의성지':1,'늑대의영역1':1,'늑대의영역2':1,'위험한절벽':1,'늑대의영역3':1,'늑대의영역4':1,'늑대의영역5':1,'죽은나무의숲1':1,'죽은나무의숲2':1,'죽은나무의숲3':1,'죽은나무의숲4':1,'폐광1':1,'폐광2':1,'폐광3':1,'폐광4':1,'통로':1,'시련의동굴1':1,'시련의동굴2':1,'동굴속동굴':1,'시련의동굴3':1,'자쿰으로통하는문':1,'자쿰의제단':1,'설인의 골짜기':1,'눈의정령 쉼터':1};
   var PANEL_ICON_AREA_ORDER = ['파괴된 헤네시스','커닝스퀘어','버섯의성','지구방위본부','플로리나비치','백초마을','아랫마을','슬리피우드','루디브리엄','아쿠아리움','노틸러스','엘리니아','커닝시티','페리온','오르비스','리프레','아리안트','마가티아','리엔','엘나스','에레브','폐광','블랙로드','무릉','헤네시스'];
-  function panelLocationIconFor(place, mapEntry){var __dc=String(((place&&place.code)||(mapEntry&&mapEntry.code))||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";/* 테라숲 */if(/^2400700\d\d$/.test(__dc))return "https://drive.google.com/thumbnail?id=1zJstoKsJ_0GftjEE16A_n7OqJpAKvblz&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";if(!mapEntry&&__dc&&window.MAPS){mapEntry=window.MAPS.find(function(m){return String(m.code)===__dc;})||null;}
+  function panelLocationIconFor(place, mapEntry){var __dc=String(((place&&place.code)||(mapEntry&&mapEntry.code))||"");/* 폐광 지역(폐광1~자쿰으로통하는문) */if(/^2110(41[5-9]|42[0-3])\d{2}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1aJ7JQqB1xKMCUVUtn4EXYhRd5gKCgFE9&sz=w400";/* 테라숲 */if(/^2400700\d\d$/.test(__dc))return "https://drive.google.com/thumbnail?id=1zJstoKsJ_0GftjEE16A_n7OqJpAKvblz&sz=w400";/* 시간의 신전 */if(/^27\d{7}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1YYMJaDjhaZjSfgtQTuMFJFojLdBMdyM7&sz=w400";/* 시계탑 최하층 */if(/^220(06|07|08)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=1kSCHL7c6FkejQ_apw1JIxQ1-udQcnhaZ&sz=w400";if(/^22(100|103|104)\d{4}$/.test(__dc))return "https://drive.google.com/thumbnail?id=10T4shZT54ZUMo5gJjdkGodmck3o-riQM&sz=w400";if(/^20008230[01]$/.test(__dc))return "https://drive.google.com/thumbnail?id=1n04Ssk-ihxkD8BG3qLt5kd33X2YFK-lM&sz=w400";if(!mapEntry&&__dc&&window.MAPS){mapEntry=window.MAPS.find(function(m){return String(m.code)===__dc;})||null;}
     var name = String(place && place.name || (mapEntry && mapEntry.name) || '');
     var area = PANEL_HENESIS_ICON_MAPS[name] ? '헤네시스' : '';
     if (!area && name.indexOf('버섯의 ')>-1) area = '버섯의성';
